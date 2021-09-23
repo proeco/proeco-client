@@ -27,8 +27,30 @@
       "source.fixAll.markdownlint": true
     },
     "cSpell.words": [
-        "itizawa",
-        "proeco"
-    ],
+      "browserconfig",
+      "commentout",
+      "countup",
+      "favicons",
+      "gtag",
+      "hoge",
+      "huga",
+      "ipagp",
+      "itizawa",
+      "kzmat",
+      "mixins",
+      "msapplication",
+      "NEXTAUTH",
+      "noopener",
+      "noreferrer",
+      "pageview",
+      "piyo",
+      "proeco",
+      "randomstring",
+      "stylelint",
+      "Subnav",
+      "toastr",
+      "unstyled",
+      "Webev"
+    ]
   }
   
