@@ -8,4 +8,4 @@ COPY . /client
 RUN yarn install
 
 EXPOSE 3000
-CMD sh -c "npx lerna bootstrap && yarn start"
+CMD sh -c "yarn && yarn start"

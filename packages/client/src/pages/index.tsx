@@ -1,8 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { User } from '@proeco/domain';
-import styles from '../styles/Home.module.css';
+
+import styles from '~/styles/Home.module.css';
+import { User } from '~/domains';
 
 const Home: NextPage = () => {
   const user = new User({ name: 'hoge' });

@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: client
-    command: sh -c "npx lerna bootstrap && yarn dev"
+    command: sh -c "yarn && yarn dev"
     ports:
       - 3000:3000
     volumes:
