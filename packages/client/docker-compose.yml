@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: client
+    command: sh -c "npx lerna bootstrap && yarn dev"
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/client
+      - /client/node_modules
+      - /client/.next
+    networks:
+      - webev_link
+
+networks:
+  webev_link:
+    external: true
