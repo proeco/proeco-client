@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
+import { useSession, signIn, signOut } from 'next-auth/client';
 
 import { Button, Container } from '@mui/material';
-import { User } from '~/domains';
 
 const Home: NextPage = () => {
-  const user = new User({ name: 'hoge' });
-  console.log(user);
+  const [session] = useSession();
+
   return (
     <Container
       sx={{
@@ -18,9 +18,18 @@ const Home: NextPage = () => {
       }}
     >
       <h1>Top Page</h1>
-      <Button variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }}>
-        Start!!
-      </Button>
+      {session ? (
+        <>
+          <h3>Hello {session.user?.name}!</h3>
+          <Button variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={() => signOut()}>
+            Logout
+          </Button>
+        </>
+      ) : (
+        <Button variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={() => signIn('google')}>
+          Login
+        </Button>
+      )}
     </Container>
   );
 };
