@@ -17,7 +17,7 @@
     "@mui/material": "^5.0.1",
     "@mui/styled-engine-sc": "^5.0.0",
     "@mui/types": "^7.0.0",
-    "mongodb": "^4.1.2",
+    "mongodb": "^3.5.9",
     "next": "^11.1.2",
     "next-auth": "^3.29.0",
     "react": "latest",
