@@ -1,16 +1,19 @@
 import { memo, VFC } from 'react';
-import Router from 'next/router';
-import Button from '@mui/material/Button';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import { Link } from '@mui/material';
 
 export const UserIcon: VFC = memo(() => {
-  const goToDashboard = () => {
-    Router.push('/dashboard');
-  };
-
   return (
-    <Button onClick={() => goToDashboard()}>
-      <PersonOutlineIcon />
-    </Button>
+    <Link
+      href="/dashboard"
+      sx={{
+        width: '40px',
+        height: '40px',
+        borderRadius: '50%',
+        backgroundColor: '#fff',
+      }}
+    >
+      <PersonOutlineIcon sx={{ color: '#ccc', width: '100%', height: 'auto' }} />
+    </Link>
   );
 });

@@ -26,7 +26,7 @@ const Home: NextPage = () => {
           </Button>
         </>
       ) : (
-        <Button variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={() => signIn('google')}>
+        <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={() => signIn('google')}>
           Login
         </Button>
       )}
