@@ -1464,11 +1464,6 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@kzmat/eslint-plugin-commentout@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@kzmat/eslint-plugin-commentout/-/eslint-plugin-commentout-0.0.4.tgz#fe7f597a17eb130f18d58ec0120b2cba4f3e2b18"
-  integrity sha512-ywestfX7Pybl74FKkza3fl+N+P4YO/y92G5tQ0K6se2c8DuaLDLqpE/2kj4C2mHxQlmA/b6iE9yM8rnWheEVsg==
-
 "@mui/core@5.0.0-alpha.48":
   version "5.0.0-alpha.48"
   resolved "https://registry.yarnpkg.com/@mui/core/-/core-5.0.0-alpha.48.tgz#ed9517bd3d2c2da12142f1958df2503567be459a"
