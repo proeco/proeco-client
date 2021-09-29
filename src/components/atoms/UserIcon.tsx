@@ -2,10 +2,12 @@ import { memo, VFC } from 'react';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Link } from '@mui/material';
 
+import { DASHBOARD_PATH } from '../../constants/urls';
+
 export const UserIcon: VFC = memo(() => {
   return (
     <Link
-      href="/dashboard"
+      href={DASHBOARD_PATH}
       sx={{
         width: '40px',
         height: '40px',

@@ -2,7 +2,7 @@ import '~/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 
-import theme from '../theme';
+import { theme } from '../theme';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
