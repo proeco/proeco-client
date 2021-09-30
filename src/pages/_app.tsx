@@ -4,7 +4,7 @@ import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import { theme } from '../theme';
-import { NavigationBar } from '~/components/NavigationBar';
+import { NavigationBar } from '~/components/parts/layout/organisms/NavigationBar/NavigationBar';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
