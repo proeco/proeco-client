@@ -1,14 +1,19 @@
 import '~/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import { theme } from '../theme';
+import { NavigationBar } from '~/components/NavigationBar';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <MaterialThemeProvider theme={theme}>
+      <StyledThemeProvider theme={theme}>
+        <NavigationBar />
+        <Component {...pageProps} />
+      </StyledThemeProvider>
+    </MaterialThemeProvider>
   );
 }
 
