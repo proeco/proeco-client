@@ -13,17 +13,17 @@ const Template: ComponentStory<typeof Button> = (args) => (
   <Box>
     <Box display="flex" alignItems="start" gap="20px" mb="30px">
       <Box>
-        <Button size="small" {...args}>
+        <Button size="small" color="primary" {...args}>
           Button!
         </Button>
       </Box>
       <Box>
-        <Button size="medium" {...args}>
+        <Button size="medium" color="primary" {...args}>
           Button!
         </Button>
       </Box>
       <Box>
-        <Button size="large" {...args}>
+        <Button size="large" color="primary" {...args}>
           Button!
         </Button>
       </Box>
