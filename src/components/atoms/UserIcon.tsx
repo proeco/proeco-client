@@ -7,13 +7,13 @@ import { DASHBOARD_PATH } from '../../constants/urls';
 
 export const UserIcon: VFC = memo(() => {
   return (
-    <SLink href={DASHBOARD_PATH}>
-      <SPersonOutlineIcon />
-    </SLink>
+    <StyledLink href={DASHBOARD_PATH}>
+      <StyledPersonOutlineIcon />
+    </StyledLink>
   );
 });
 
-const SLink = styled(Link)`
+const StyledLink = styled(Link)`
   display: block;
   width: 40px;
   height: 40px;
@@ -21,7 +21,7 @@ const SLink = styled(Link)`
   background-color: #fff;
 `;
 
-const SPersonOutlineIcon = styled(PersonOutlineIcon)`
+const StyledPersonOutlineIcon = styled(PersonOutlineIcon)`
   color: #ccc;
   width: 100%;
   height: auto;
