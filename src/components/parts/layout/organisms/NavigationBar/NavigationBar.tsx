@@ -2,7 +2,7 @@ import { AppBar } from '@mui/material';
 import { memo, VFC } from 'react';
 import styled from 'styled-components';
 
-import { UserIcon } from './atoms/UserIcon';
+import { UserIcon } from '~/components/domains/user/atoms/UserIcon';
 
 export const NavigationBar: VFC = memo(() => {
   return (

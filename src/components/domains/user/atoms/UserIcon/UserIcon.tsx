@@ -3,7 +3,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Link } from '@mui/material';
 import styled from 'styled-components';
 
-import { DASHBOARD_PATH } from '../../constants/urls';
+import { DASHBOARD_PATH } from '~/constants/urls';
 
 export const UserIcon: VFC = memo(() => {
   return (
