@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
 import { useSession, signIn, signOut } from 'next-auth/client';
 
-import { Button, Container } from '@mui/material';
+import { Container } from '@mui/material';
+import { Button, Typography } from '~/components/parts/commons/atoms';
 
 const Home: NextPage = () => {
   const [session] = useSession();
@@ -17,11 +18,11 @@ const Home: NextPage = () => {
         height: '100vh',
       }}
     >
-      <h1>Top Page</h1>
+      <Typography variant="h1">Top Page</Typography>
       {session ? (
         <>
-          <h3>Hello {session.user?.name}!</h3>
-          <Button variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={() => signOut()}>
+          <Typography variant="h3">Hello {session.user?.name}!</Typography>
+          <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={() => signOut()}>
             Logout
           </Button>
         </>
