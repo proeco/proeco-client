@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
+import { Typography } from './Typography';
 
 export default {
-  title: 'typography',
+  title: 'parts/commons/atoms/Typography',
 };
 
 const Template = () => (
