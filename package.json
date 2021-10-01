@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "chromatic": "npx chromatic --project-token=09b693341c4e"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
