@@ -1,5 +1,4 @@
-import '~/styles/globals.css';
-import type { AppProps } from 'next/app';
+import { AppProps } from 'next/app';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
