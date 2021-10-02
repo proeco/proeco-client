@@ -1,6 +1,6 @@
 import { AppBar } from '@mui/material';
 import { memo, VFC } from 'react';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
 import { UserIcon } from '~/components/domains/user/atoms/UserIcon';
 

@@ -1,7 +1,7 @@
 import { memo, VFC } from 'react';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Link } from '@mui/material';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
 import { DASHBOARD_PATH } from '~/constants/urls';
 

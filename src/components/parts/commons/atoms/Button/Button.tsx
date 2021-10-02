@@ -1,5 +1,5 @@
 import React, { VFC, ComponentProps } from 'react';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 import { Button as MuiButton } from '@mui/material';
 
 type Props = ComponentProps<typeof MuiButton>;

@@ -1,6 +1,6 @@
 import React, { VFC, ComponentProps } from 'react';
 import { Typography as MuiTypography } from '@mui/material';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 
 type Bold = {
   bold?: boolean;
