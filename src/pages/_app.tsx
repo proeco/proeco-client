@@ -1,7 +1,6 @@
 import '~/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import { theme } from '../theme';
 import { NavigationBar } from '~/components/parts/layout/organisms/NavigationBar/NavigationBar';
@@ -9,10 +8,8 @@ import { NavigationBar } from '~/components/parts/layout/organisms/NavigationBar
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <MaterialThemeProvider theme={theme}>
-      <StyledThemeProvider theme={theme}>
-        <NavigationBar />
-        <Component {...pageProps} />
-      </StyledThemeProvider>
+      <NavigationBar />
+      <Component {...pageProps} />
     </MaterialThemeProvider>
   );
 }

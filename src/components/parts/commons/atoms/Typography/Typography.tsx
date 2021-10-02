@@ -9,10 +9,10 @@ type Bold = {
 type Props = ComponentProps<typeof MuiTypography> & Bold;
 
 export const Typography: VFC<Props> = ({ bold, ...rest }) => {
-  return <StyledTypography bold={bold} {...rest} />;
+  return <StyledTypography bold={bold ? 1 : 0} {...rest} />;
 };
 
-const StyledTypography = styled(MuiTypography)<{ bold?: boolean }>`
+const StyledTypography = styled(MuiTypography)<{ bold: number }>`
   text-transform: none;
   font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
 `;

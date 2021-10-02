@@ -18,7 +18,9 @@ const Home: NextPage = () => {
         height: '100vh',
       }}
     >
-      <Typography variant="h1">Top Page</Typography>
+      <Typography variant="h1" bold>
+        Top Page
+      </Typography>
       {session ? (
         <>
           <Typography variant="h3">Hello {session.user?.name}!</Typography>
