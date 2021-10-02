@@ -1,11 +1,12 @@
 import type { NextPage } from 'next';
-import { useSession, signIn, signOut } from 'next-auth/client';
+import { signIn, signOut } from 'next-auth/client';
 
 import { Container } from '@mui/material';
 import { Button, Typography } from '~/components/parts/commons/atoms';
+import { useCurrentUser } from '~/hooks/user/useCurrentUser';
 
 const Home: NextPage = () => {
-  const [session] = useSession();
+  const { data: currentUser } = useCurrentUser();
 
   return (
     <Container
@@ -21,9 +22,10 @@ const Home: NextPage = () => {
       <Typography variant="h1" bold>
         Top Page
       </Typography>
-      {session ? (
+      {currentUser ? (
         <>
-          <Typography variant="h3">Hello {session.user?.name}!</Typography>
+          <Typography variant="h3">Hello {currentUser.name}!</Typography>
+          <img height="200px" width="200px" src={currentUser.image} />
           <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={() => signOut()}>
             Logout
           </Button>
