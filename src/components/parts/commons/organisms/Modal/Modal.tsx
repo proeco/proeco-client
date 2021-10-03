@@ -32,7 +32,7 @@ const StyledBox = styled(Box)`
   background-color: #fff;
   width: 600px;
   border-radius: 4px;
-  padding-top: 7px;
+  padding-top: 8px;
 `;
 
 const StyledTypography = styled(Typography)`
