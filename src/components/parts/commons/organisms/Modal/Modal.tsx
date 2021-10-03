@@ -13,17 +13,28 @@ type Props = {
 
 export const Modal: VFC<Props> = ({ open, title, content, onCancel }) => {
   return (
-    <MuiModal open={open} onClose={onCancel}>
+    <StyledMuiModal open={open} onClose={onCancel}>
       <StyledBox>
-        <Typography variant="h4">{title}</Typography>
+        <StyledTypography variant="h4">{title}</StyledTypography>
         {content}
       </StyledBox>
-    </MuiModal>
+    </StyledMuiModal>
   );
 };
 
+const StyledMuiModal = styled(MuiModal)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const StyledBox = styled(Box)`
   background-color: #fff;
-  max-width: 600px;
+  width: 600px;
   border-radius: 4px;
+  padding-top: 7px;
+`;
+
+const StyledTypography = styled(Typography)`
+  text-align: center;
 `;
