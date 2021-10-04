@@ -1,5 +1,6 @@
 import React, { VFC, ComponentProps } from 'react';
 import { Card as MuiCard } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 type Card = {
   padding?: number;
@@ -9,14 +10,11 @@ type Card = {
 type Props = ComponentProps<typeof MuiCard> & Card;
 
 export const Card: VFC<Props> = ({ padding = 20, square = false, ...rest }) => {
-  return (
-    <MuiCard
-      sx={{
-        width: 'fit-content',
-        padding: `${padding}px`,
-        borderRadius: `${square ? '0px' : '4px'}`,
-      }}
-      {...rest}
-    />
-  );
+  return <StyledMuiCard padding={padding} square={square} {...rest} />;
 };
+
+const StyledMuiCard = styled(MuiCard)<{ square: boolean; padding: number }>`
+  width: fit-content;
+  padding: ${(props) => props.padding}px;
+  border-radius: ${(props) => (props.square ? '0px' : '4px')};
+`;
