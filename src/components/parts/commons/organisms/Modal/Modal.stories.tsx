@@ -31,10 +31,3 @@ OpenModal.args = {
   content: Content,
   title: 'ここにタイトルが入る',
 };
-
-export const CloseModal = Template.bind({});
-CloseModal.args = {
-  open: false,
-  content: Content,
-  title: 'ここにタイトルが入る',
-};
