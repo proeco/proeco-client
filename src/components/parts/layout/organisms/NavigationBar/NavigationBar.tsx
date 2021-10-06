@@ -1,14 +1,14 @@
-import { AppBar } from '@mui/material';
-import { memo, VFC } from 'react';
-import { styled } from '@mui/material/styles';
 import Image from 'next/image';
+import { memo, VFC } from 'react';
+import { AppBar } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import { UserIcon } from '~/components/domains/user/atoms/UserIcon';
 
 export const NavigationBar: VFC = memo(() => {
   return (
     <StyledAppBar>
-      <Image src="/images/Original.svg" alt="proecoのLogo" width={195} height={40} />
+      <Image src="/images/Original.svg" alt="Proeco Logo" width={195} height={40} />
       <UserIcon />
     </StyledAppBar>
   );
