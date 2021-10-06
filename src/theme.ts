@@ -2,17 +2,6 @@ import { createTheme } from '@mui/material/styles';
 
 import { PRIMARY_COLOR, PRIMARY_LIGHT_COLOR, SECONDARY_COLOR, GREEN_COLOR, TEXT_COLOR, TEXT_LIGHT_COLOR } from '~/constants/colors';
 
-declare module '@mui/material/styles' {
-  interface Palette {
-    green: Palette['primary'];
-    textColor: Palette['primary'];
-  }
-  interface PaletteOptions {
-    green: PaletteOptions['primary'];
-    textColor: PaletteOptions['primary'];
-  }
-}
-
 export const theme = createTheme({
   palette: {
     primary: {
