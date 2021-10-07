@@ -3,12 +3,12 @@ import { Divider as MuiDivider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 type DividerType = {
-  margin: number;
+  margin?: number;
 };
 
 type Props = ComponentProps<typeof MuiDivider> & DividerType;
 
-export const Divider: VFC<Props> = ({ margin, orientation, ...rest }) => {
+export const Divider: VFC<Props> = ({ margin = 0, orientation = 'horizontal', ...rest }) => {
   return <StyledMuiDivider margin={margin} orientation={orientation} {...rest} />;
 };
 

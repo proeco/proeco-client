@@ -2,7 +2,8 @@ import React, { VFC } from 'react';
 import { styled } from '@mui/material/styles';
 import { Modal as MuiModal } from '@mui/material';
 import { Box } from '@mui/system';
-import { Typography } from '../../atoms/Typography';
+import { Typography } from '~/components/parts/commons/atoms/Typography';
+import { Divider } from '~/components/parts/commons/atoms/Divider';
 
 type Props = {
   open: boolean;
@@ -15,9 +16,10 @@ export const Modal: VFC<Props> = ({ open, title, content, onClose }) => {
   return (
     <MuiModal open={open} onClose={onClose}>
       <StyledBox width="600px">
-        <Box py="4px">
+        <Box py="8px">
           <StyledTypography variant="h4">{title}</StyledTypography>
         </Box>
+        <Divider />
         <Box p="20px">{content}</Box>
       </StyledBox>
     </MuiModal>
