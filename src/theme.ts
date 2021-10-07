@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-import { PRIMARY_COLOR, PRIMARY_LIGHT_COLOR, SECONDARY_COLOR, GREEN_COLOR, TEXT_COLOR, TEXT_LIGHT_COLOR } from '~/constants/colors';
+import { PRIMARY_COLOR, PRIMARY_LIGHT_COLOR, SECONDARY_COLOR, GREEN_COLOR, TEXT_COLOR, TEXT_LIGHT_COLOR, BORDER_COLOR } from '~/constants/colors';
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -28,6 +28,9 @@ export const theme = createTheme({
     textColor: {
       main: TEXT_COLOR,
       light: TEXT_LIGHT_COLOR,
+    },
+    borderColor: {
+      main: BORDER_COLOR,
     },
   },
   typography: {
