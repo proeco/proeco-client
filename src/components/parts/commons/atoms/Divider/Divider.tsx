@@ -8,11 +8,14 @@ type DividerType = {
 
 type Props = ComponentProps<typeof MuiDivider> & DividerType;
 
-export const Divider: VFC<Props> = ({ margin, ...rest }) => {
-  return <StyledMuiDivider margin={margin} {...rest} />;
+export const Divider: VFC<Props> = ({ margin, orientation, ...rest }) => {
+  return <StyledMuiDivider margin={margin} orientation={orientation} {...rest} />;
 };
 
-const StyledMuiDivider = styled(MuiDivider)<{ margin: number }>`
-  margin: ${(props) => props.margin}px 0;
-  border-color: #eaecf1;
+const StyledMuiDivider = styled(MuiDivider)<{
+  margin: number;
+  orientation: 'vertical' | 'horizontal' | undefined;
+}>`
+  margin: ${(props) => (props.orientation === 'vertical' ? `0 ${props.margin}px` : `${props.margin}px 0`)};
+  border-color: ${(props) => props.theme.palette.borderColor.main};
 `;
