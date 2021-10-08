@@ -17,7 +17,9 @@ export const Modal: VFC<Props> = ({ open, title, content, onClose }) => {
     <MuiModal open={open} onClose={onClose}>
       <StyledBox width="600px">
         <Box py="8px">
-          <StyledTypography variant="h4">{title}</StyledTypography>
+          <StyledTypography color="textColor.main" variant="h4">
+            {title}
+          </StyledTypography>
         </Box>
         <Divider />
         <Box p="20px">{content}</Box>
