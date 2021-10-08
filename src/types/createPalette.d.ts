@@ -3,6 +3,7 @@ import { SimplePaletteColorOptions } from '@mui/material/styles';
 
 interface CustomPalette {
   green: SimplePaletteColorOptions;
+  black: SimplePaletteColorOptions;
   textColor: SimplePaletteColorOptions;
   borderColor: SimplePaletteColorOptions;
 }
