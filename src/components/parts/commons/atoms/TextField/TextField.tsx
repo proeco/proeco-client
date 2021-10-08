@@ -17,6 +17,6 @@ const StyledMuiTextField = styled(MuiTextField)`
     padding: 0px;
   }
   .MuiOutlinedInput-notchedOutline {
-    border: 1px solid #000;
+    border: 1px solid ${(props) => props.theme.palette.black.main};
   }
 `;

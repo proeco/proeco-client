@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-import { PRIMARY_COLOR, PRIMARY_LIGHT_COLOR, SECONDARY_COLOR, GREEN_COLOR, TEXT_COLOR, TEXT_LIGHT_COLOR, BORDER_COLOR } from '~/constants/colors';
+import { PRIMARY_COLOR, PRIMARY_LIGHT_COLOR, SECONDARY_COLOR, GREEN_COLOR, TEXT_COLOR, TEXT_LIGHT_COLOR, BORDER_COLOR, BLACK_COLOR } from '~/constants/colors';
 
 export const theme = createTheme({
   palette: {
@@ -13,6 +13,9 @@ export const theme = createTheme({
     },
     green: {
       main: GREEN_COLOR,
+    },
+    black: {
+      main: BLACK_COLOR,
     },
     textColor: {
       main: TEXT_COLOR,
