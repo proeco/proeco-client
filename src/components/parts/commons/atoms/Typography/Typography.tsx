@@ -8,8 +8,8 @@ type Bold = {
 
 type Props = ComponentProps<typeof MuiTypography> & Bold;
 
-export const Typography: VFC<Props> = ({ bold, ...rest }) => {
-  return <StyledTypography bold={bold ? 1 : 0} {...rest} />;
+export const Typography: VFC<Props> = ({ bold, color = 'textColor.main', ...rest }) => {
+  return <StyledTypography color={color} bold={bold ? 1 : 0} {...rest} />;
 };
 
 const StyledTypography = styled(MuiTypography)<{ bold: number }>`
