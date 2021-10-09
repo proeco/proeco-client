@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/client';
 
 export const useAuthenticationSWR = <Data, Error>(_key: Key, fetcher: Fetcher<Data>, option: SWRConfiguration): SWRResponse<Data, Error> => {
   const [session] = useSession();
-  const key = session == null ? null : _key;
+  const key = session ? _key : null;
 
   return useSWR(key, fetcher, option);
 };
