@@ -1,9 +1,11 @@
 import React, { VFC, useState } from 'react';
+
+import { Emoji } from 'emoji-mart';
 import { Box } from '@mui/system';
+import { styled } from '@mui/material/styles';
 
 import { Modal } from '~/components/parts/commons/organisms/Modal';
-import { Button, Typography } from '~/components/parts/commons/atoms';
-import { TextField } from '~/components/parts/commons/atoms/TextField';
+import { Button, Typography, TextField } from '~/components/parts/commons/atoms';
 
 type Props = {
   open: boolean;
@@ -36,7 +38,12 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
         <Typography mb="4px" variant="body1">
           ストーリー名
         </Typography>
-        <TextField fullWidth value={storyTitle} onChange={handleChangeStoryTitle} />
+        <Box display="flex">
+          <StyledBox width="56px" height="56px" p="8px" mr="8px">
+            <Emoji emoji="tada" size={40} />
+          </StyledBox>
+          <TextField fullWidth value={storyTitle} onChange={handleChangeStoryTitle} />
+        </Box>
       </Box>
       <Box mb="16px">
         <Typography mb="4px" variant="body1">
@@ -53,3 +60,10 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
   );
   return <Modal content={content} title={title} open={open} onClose={onClose} />;
 };
+
+const StyledBox = styled(Box)`
+  cursor: pointer;
+  border: ${(props) => props.theme.palette.borderColor.main} 2px solid;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
