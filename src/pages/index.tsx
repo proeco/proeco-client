@@ -1,24 +1,17 @@
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import { signIn, signOut } from 'next-auth/client';
 
-import { Container } from '@mui/material';
-import { Button, Typography } from '~/components/parts/commons/atoms';
 import { useCurrentUser } from '~/hooks/user/useCurrentUser';
+
+import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
+import { Button, Typography } from '~/components/parts/commons/atoms';
 
 const Home: NextPage = () => {
   const { data: currentUser } = useCurrentUser();
 
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100vh',
-      }}
-    >
+    <>
+      <ProecoOgpHead />
       <Typography variant="h1" bold>
         Top Page
       </Typography>
@@ -35,7 +28,7 @@ const Home: NextPage = () => {
           Login
         </Button>
       )}
-    </Container>
+    </>
   );
 };
 

@@ -51,14 +51,17 @@ const Template: ComponentStory<typeof Button> = (args) => (
 export const Contained = Template.bind({});
 Contained.args = {
   variant: 'contained',
+  bold: true,
 };
 
 export const Outlined = Template.bind({});
 Outlined.args = {
   variant: 'outlined',
+  bold: true,
 };
 
 export const Text = Template.bind({});
 Text.args = {
   variant: 'text',
+  bold: true,
 };

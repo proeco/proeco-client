@@ -1,0 +1,1 @@
+export { ProecoOgpHead } from './ProecoOgpHead';

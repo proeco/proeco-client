@@ -8,7 +8,7 @@ import { UserIcon } from '~/components/domains/user/atoms/UserIcon';
 
 export const NavigationBar: VFC = memo(() => {
   return (
-    <StyledAppBar>
+    <StyledAppBar position="static">
       <Link href="/">
         <a>
           <Image src="/images/Original.svg" alt="Proeco Logo" width={195} height={40} />
