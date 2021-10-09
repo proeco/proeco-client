@@ -46,7 +46,7 @@ export const StoryListTable: VFC = () => {
           {stories &&
             stories.docs.map((doc) => {
               return (
-                <TableRow key={doc._id}>
+                <StyledTableRow key={doc._id} hover>
                   <StyledBodyTableCell component="th" scope="row">
                     <Typography variant="body2">{doc.title}</Typography>
                   </StyledBodyTableCell>
@@ -59,7 +59,7 @@ export const StoryListTable: VFC = () => {
                   <StyledBodyTableCell align="right">
                     <Typography variant="body2">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</Typography>
                   </StyledBodyTableCell>
-                </TableRow>
+                </StyledTableRow>
               );
             })}
           {!stories && <Typography>No Stories</Typography>}
@@ -78,5 +78,11 @@ const StyledHeaderTableCell = styled(TableCell)`
 const StyledBodyTableCell = styled(TableCell)`
   &.MuiTableCell-root {
     padding: 20px 16px;
+  }
+`;
+
+const StyledTableRow = styled(TableRow)`
+  &.MuiTableRow-root {
+    cursor: pointer;
   }
 `;
