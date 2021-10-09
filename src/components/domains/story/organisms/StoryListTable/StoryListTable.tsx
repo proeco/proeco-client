@@ -1,5 +1,7 @@
 import { VFC } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Typography } from '~/components/parts/commons/atoms';
+import { TEXT_LIGHT_COLOR } from '~/constants/colors';
 
 export const StoryListTable: VFC = () => {
   return (
@@ -7,10 +9,26 @@ export const StoryListTable: VFC = () => {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>ストーリー名</TableCell>
-            <TableCell align="right">ステータス</TableCell>
-            <TableCell align="right">応援者</TableCell>
-            <TableCell align="right">最終更新日</TableCell>
+            <TableCell>
+              <Typography color={TEXT_LIGHT_COLOR} variant="caption">
+                ストーリー名
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography color={TEXT_LIGHT_COLOR} variant="caption">
+                ステータス
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography color={TEXT_LIGHT_COLOR} variant="caption">
+                応援者
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography color={TEXT_LIGHT_COLOR} variant="caption">
+                最終更新日
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
