@@ -92,7 +92,6 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
                 setIsEmojiSettingMode(false);
               }}
               title="Proeco"
-              emoji=""
             />
           </StyledEmojiPickerWrapper>
         </>
