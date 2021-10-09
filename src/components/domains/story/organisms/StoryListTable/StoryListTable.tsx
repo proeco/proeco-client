@@ -54,21 +54,14 @@ export const StoryListTable: VFC = () => {
               return (
                 <StyledTableRow key={doc._id} hover onClick={() => handleClickRow(doc._id)}>
                   <StyledBodyTableCell component="th" scope="row">
-                    <Typography variant="body2">{doc.title}</Typography>
+                    {doc.title}
                   </StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">
-                    <Typography variant="body2">完了</Typography>
-                  </StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">
-                    <Typography variant="body2">TBD</Typography>
-                  </StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">
-                    <Typography variant="body2">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</Typography>
-                  </StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</StyledBodyTableCell>
                 </StyledTableRow>
               );
             })}
-          {!stories && <Typography>No Stories</Typography>}
         </TableBody>
       </Table>
     </TableContainer>
@@ -84,6 +77,7 @@ const StyledHeaderTableCell = styled(TableCell)`
 const StyledBodyTableCell = styled(TableCell)`
   &.MuiTableCell-root {
     padding: 20px 16px;
+    font-size: 14px;
   }
 `;
 
