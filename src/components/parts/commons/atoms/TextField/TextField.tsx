@@ -17,6 +17,9 @@ const StyledMuiTextField = styled(MuiTextField)`
     border: ${(props) => props.theme.palette.borderColor.main} 2px solid;
     border-radius: 4px;
     box-sizing: border-box;
+    &:focus-within {
+      border: ${(props) => props.theme.palette.primary.main} 2px solid;
+    }
   }
   .MuiOutlinedInput-root {
     padding: 0px;
