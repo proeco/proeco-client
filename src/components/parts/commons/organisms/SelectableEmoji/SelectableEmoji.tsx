@@ -43,13 +43,13 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, size, onSelectEmoji }) =>
 
   return (
     <>
-      <StyledBox height={size} p="6px" ref={emojiRef}>
-        {/* Paddingの分サイズをひく */}
+      <StyledBox height={size} width={size} p="4px" ref={emojiRef}>
+        {/* Paddingとborderの分サイズをひく */}
         {emoji && <Emoji emoji={emoji} size={size - 12} onClick={handleClickEmoji} />}
       </StyledBox>
       {isEmojiSettingMode && (
         <>
-          <Box position="fixed" top={0} left={0} right={0} bottom={0} zIndex={10} onClick={() => setIsEmojiSettingMode(false)} />
+          <Box position="fixed" top={0} left={0} right={0} bottom={0} onClick={() => setIsEmojiSettingMode(false)} />
           <StyledEmojiPickerWrapper top={pickerTop} left={pickerLeft} zIndex={1}>
             <Picker onSelect={handleSelectEmoji} title="Proeco" />
           </StyledEmojiPickerWrapper>
