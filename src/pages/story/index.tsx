@@ -1,13 +1,13 @@
 import { NextPage } from 'next';
 import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
 
-const Dashboard: NextPage = () => {
+const StoryList: NextPage = () => {
   return (
     <>
       <ProecoOgpHead />
-      <p>Dashboard</p>
+      <p>Stroy!</p>
     </>
   );
 };
 
-export default Dashboard;
+export default StoryList;
