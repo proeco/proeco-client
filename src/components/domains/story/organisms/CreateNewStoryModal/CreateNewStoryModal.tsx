@@ -2,6 +2,7 @@ import React, { VFC, useState } from 'react';
 import 'emoji-mart/css/emoji-mart.css';
 
 import { Box } from '@mui/system';
+import { styled } from '@mui/material/styles';
 
 import { Modal } from '~/components/parts/commons/organisms/Modal';
 import { Button, Typography, TextField } from '~/components/parts/commons/atoms';
@@ -40,8 +41,10 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
         <Typography mb="4px" variant="body1" color="textColor.light">
           ストーリー名
         </Typography>
-        <Box display="flex">
-          <SelectableEmoji emojiId={emojiId} onSelectEmoji={(emojiId) => setEmojiId(emojiId)} />
+        <Box display="flex" alignItems="center">
+          <StyledBox mr="8px" p="8px">
+            <SelectableEmoji emojiId={emojiId} size={24} onSelectEmoji={(emojiId) => setEmojiId(emojiId)} />
+          </StyledBox>
           <TextField fullWidth value={storyTitle} onChange={handleChangeStoryTitle} />
         </Box>
       </Box>
@@ -60,3 +63,9 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
   );
   return <Modal content={content} title={title} open={open} onClose={onClose} />;
 };
+
+const StyledBox = styled(Box)`
+  border: ${(props) => props.theme.palette.borderColor.main} 2px solid;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;

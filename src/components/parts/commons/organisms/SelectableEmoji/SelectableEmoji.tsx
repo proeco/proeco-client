@@ -6,14 +6,13 @@ import { styled } from '@mui/material/styles';
 
 import 'emoji-mart/css/emoji-mart.css';
 
-const emojiSize = 40;
-
 type Props = {
   emojiId: string;
+  size: number;
   onSelectEmoji: (emojiId: string) => void;
 };
 
-export const SelectableEmoji: VFC<Props> = ({ emojiId, onSelectEmoji }) => {
+export const SelectableEmoji: VFC<Props> = ({ emojiId, size, onSelectEmoji }) => {
   const [emoji, setEmoji] = useState<EmojiData>();
   const [isEmojiSettingMode, setIsEmojiSettingMode] = useState<boolean>();
   const [pickerTop, setPickerTop] = useState<number>(0);
@@ -23,7 +22,7 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, onSelectEmoji }) => {
   const handleClickEmoji = () => {
     setIsEmojiSettingMode(true);
     if (emojiRef.current != null) {
-      setPickerTop(emojiRef.current.offsetTop + emojiSize + 10);
+      setPickerTop(emojiRef.current.offsetTop + size + 10);
       setPickerLeft(emojiRef.current.offsetLeft);
     }
   };
@@ -44,8 +43,8 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, onSelectEmoji }) => {
 
   return (
     <>
-      <StyledBox width="56px" height="56px" p="8px" mr="8px" ref={emojiRef}>
-        {emoji && <Emoji emoji={emoji} size={40} onClick={handleClickEmoji} />}
+      <StyledBox height={size} ref={emojiRef}>
+        {emoji && <Emoji emoji={emoji} size={size} onClick={handleClickEmoji} />}
       </StyledBox>
       {isEmojiSettingMode && (
         <>
@@ -61,9 +60,6 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, onSelectEmoji }) => {
 
 const StyledBox = styled(Box)`
   cursor: pointer;
-  border: ${(props) => props.theme.palette.borderColor.main} 2px solid;
-  border-radius: 4px;
-  box-sizing: border-box;
   .emoji-mart-emoji {
     cursor: pointer;
   }
