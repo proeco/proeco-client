@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { VFC } from 'react';
 
 import { format } from 'date-fns';
@@ -14,6 +15,11 @@ const limit = 10;
 export const StoryListTable: VFC = () => {
   const { data: currentUser } = useCurrentUser();
   const { data: stories } = useStories({ userId: currentUser?._id, page, limit });
+  const router = useRouter();
+
+  const handleClickRow = (storyId: string) => {
+    router.push(`/story/${storyId}`);
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -46,7 +52,7 @@ export const StoryListTable: VFC = () => {
           {stories &&
             stories.docs.map((doc) => {
               return (
-                <StyledTableRow key={doc._id} hover>
+                <StyledTableRow key={doc._id} hover onClick={() => handleClickRow(doc._id)}>
                   <StyledBodyTableCell component="th" scope="row">
                     <Typography variant="body2">{doc.title}</Typography>
                   </StyledBodyTableCell>
