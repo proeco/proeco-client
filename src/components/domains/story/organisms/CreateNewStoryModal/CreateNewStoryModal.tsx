@@ -35,7 +35,7 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
   const content = (
     <>
       <Box mb="16px">
-        <Typography mb="4px" variant="body1">
+        <Typography mb="4px" variant="body1" color="textColor.light">
           ストーリー名
         </Typography>
         <Box display="flex">
@@ -46,7 +46,7 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
         </Box>
       </Box>
       <Box mb="16px">
-        <Typography mb="4px" variant="body1">
+        <Typography mb="4px" variant="body1" color="textColor.light">
           概要(任意)
         </Typography>
         <TextField fullWidth multiline rows={4} value={storyDescription} onChange={handleChangeStoryDescription} />
