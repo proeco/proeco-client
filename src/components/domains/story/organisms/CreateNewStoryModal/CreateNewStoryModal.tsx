@@ -12,7 +12,7 @@ type Props = {
 
 const title = '✨ ストーリーを作成する';
 
-export const CreateNewStoryModal: VFC<Props> = ({ ...rest }) => {
+export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
   const [storyTitle, setStoryTitle] = useState('');
   const [storyDescription, setStoryDescription] = useState('');
 
@@ -27,6 +27,7 @@ export const CreateNewStoryModal: VFC<Props> = ({ ...rest }) => {
   const handleClickCreateNewStoryButton = () => {
     // TODO: 後続タスクで処理を実装する
     console.log('TODO');
+    onClose();
   };
 
   const content = (
@@ -50,5 +51,5 @@ export const CreateNewStoryModal: VFC<Props> = ({ ...rest }) => {
       </Box>
     </>
   );
-  return <Modal content={content} title={title} {...rest} />;
+  return <Modal content={content} title={title} open={open} onClose={onClose} />;
 };
