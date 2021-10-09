@@ -35,6 +35,7 @@ module.exports = {
         alwaysTryTypes: true,
       },
     },
+    'import/ignore': ['node_modules'],
     react: {
       version: 'detect',
     },
