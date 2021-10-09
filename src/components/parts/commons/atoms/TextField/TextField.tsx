@@ -11,5 +11,18 @@ export const TextField: VFC<Props> = ({ variant = 'outlined', hiddenLabel = fals
 const StyledMuiTextField = styled(MuiTextField)`
   .MuiOutlinedInput-input {
     color: ${(props) => props.theme.palette.textColor.main};
+    padding: 8px 12px;
+  }
+  &.MuiFormControl-root {
+    border: ${(props) => props.theme.palette.borderColor.main} 2px solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .MuiOutlinedInput-root {
+    padding: 0px;
+    height: 100%;
+  }
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
   }
 `;
