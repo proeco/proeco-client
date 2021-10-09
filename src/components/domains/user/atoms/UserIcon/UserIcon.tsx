@@ -11,7 +11,7 @@ type Props = {
   size: 'small' | 'midium' | 'large';
 };
 
-export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size }) => {
+export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size = 'small' }) => {
   if (!imagePath) {
     return (
       <StyledBox size={size}>
@@ -20,11 +20,11 @@ export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = fal
     );
   }
 
-  if (!isLink) return <StyledAvatar size={size} alt="" src={imagePath} />;
+  if (!isLink) return <StyledAvatar size={size} alt={userId} src={imagePath} />;
 
   return (
     <Link href={'/user/' + userId}>
-      <StyledAvatar size={size} alt="" src={imagePath} />
+      <StyledAvatar size={size} alt={userId} src={imagePath} />
     </Link>
   );
 });
@@ -36,7 +36,7 @@ const sizeMap: { [key in IconSizes]: number } = {
   large: 80,
 };
 
-const StyledBox = styled(Box)<{ size: 'small' | 'midium' | 'large' }>`
+const StyledBox = styled(Box)<{ size: IconSizes }>`
   width: ${(props) => sizeMap[props.size]}px;
   height: ${(props) => sizeMap[props.size]}px;
   border-radius: 50%;
@@ -50,22 +50,7 @@ const StyledPersonOutlineIcon = styled(PersonOutlineIcon)`
   height: auto;
 `;
 
-const StyledAvatar = styled(Avatar)<{ size: 'small' | 'midium' | 'large' }>`
+const StyledAvatar = styled(Avatar)<{ size: IconSizes }>`
   width: ${(props) => sizeMap[props.size]}px;
   height: ${(props) => sizeMap[props.size]}px;
 `;
-
-// const StyledImageBox = styled(StyledBox)`
-//   position: relative;
-//   overflow: hidden;
-// `;
-
-// const StyledImage = styled('img')`
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   width: 100%;
-//   height: 100%;
-//   object-fit: cover;
-// `;
