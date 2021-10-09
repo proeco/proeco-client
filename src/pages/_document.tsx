@@ -13,7 +13,6 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link rel="icon" href="/images/favicon.ico" />
           <meta name="theme-color" content={PRIMARY_COLOR} />
-          <title>Proeco</title>
         </Head>
         <body>
           <Main />
