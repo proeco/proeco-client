@@ -43,30 +43,26 @@ export const StoryListTable: VFC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {stories ? (
-            <>
-              {stories.docs.map((doc) => {
-                return (
-                  <TableRow key={doc._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <StyledBodyTableCell component="th" scope="row">
-                      <Typography variant="body2">{doc.title}</Typography>
-                    </StyledBodyTableCell>
-                    <StyledBodyTableCell align="right">
-                      <Typography variant="body2">完了</Typography>
-                    </StyledBodyTableCell>
-                    <StyledBodyTableCell align="right">
-                      <Typography variant="body2">TBD</Typography>
-                    </StyledBodyTableCell>
-                    <StyledBodyTableCell align="right">
-                      <Typography variant="body2">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</Typography>
-                    </StyledBodyTableCell>
-                  </TableRow>
-                );
-              })}
-            </>
-          ) : (
-            <Typography>No Stories</Typography>
-          )}
+          {stories &&
+            stories.docs.map((doc) => {
+              return (
+                <TableRow key={doc._id}>
+                  <StyledBodyTableCell component="th" scope="row">
+                    <Typography variant="body2">{doc.title}</Typography>
+                  </StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">
+                    <Typography variant="body2">完了</Typography>
+                  </StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">
+                    <Typography variant="body2">TBD</Typography>
+                  </StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">
+                    <Typography variant="body2">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</Typography>
+                  </StyledBodyTableCell>
+                </TableRow>
+              );
+            })}
+          {!stories && <Typography>No Stories</Typography>}
         </TableBody>
       </Table>
     </TableContainer>
