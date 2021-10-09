@@ -42,10 +42,10 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
           ストーリー名
         </Typography>
         <Box display="flex" alignItems="center">
-          <StyledBox mr="8px" p="8px">
-            <SelectableEmoji emojiId={emojiId} size={24} onSelectEmoji={(emojiId) => setEmojiId(emojiId)} />
-          </StyledBox>
-          <TextField fullWidth value={storyTitle} onChange={handleChangeStoryTitle} />
+          <Box mr="8px">
+            <SelectableEmoji emojiId={emojiId} size={40} onSelectEmoji={(emojiId) => setEmojiId(emojiId)} />
+          </Box>
+          <StyledTextField fullWidth value={storyTitle} onChange={handleChangeStoryTitle} />
         </Box>
       </Box>
       <Box mb="16px">
@@ -64,8 +64,6 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
   return <Modal content={content} title={title} open={open} onClose={onClose} />;
 };
 
-const StyledBox = styled(Box)`
-  border: ${(props) => props.theme.palette.borderColor.main} 2px solid;
-  border-radius: 4px;
-  box-sizing: border-box;
+const StyledTextField = styled(TextField)`
+  height: 40px;
 `;

@@ -43,8 +43,9 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, size, onSelectEmoji }) =>
 
   return (
     <>
-      <StyledBox height={size} ref={emojiRef}>
-        {emoji && <Emoji emoji={emoji} size={size} onClick={handleClickEmoji} />}
+      <StyledBox height={size} p="6px" ref={emojiRef}>
+        {/* Paddingの分サイズをひく */}
+        {emoji && <Emoji emoji={emoji} size={size - 12} onClick={handleClickEmoji} />}
       </StyledBox>
       {isEmojiSettingMode && (
         <>
@@ -60,6 +61,9 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, size, onSelectEmoji }) =>
 
 const StyledBox = styled(Box)`
   cursor: pointer;
+  border: ${(props) => props.theme.palette.borderColor.main} 2px solid;
+  border-radius: 4px;
+  box-sizing: border-box;
   .emoji-mart-emoji {
     cursor: pointer;
   }
