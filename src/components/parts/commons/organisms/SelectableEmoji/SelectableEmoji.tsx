@@ -50,7 +50,7 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, onSelectEmoji }) => {
       {isEmojiSettingMode && (
         <>
           <Box position="fixed" top={0} left={0} right={0} bottom={0} zIndex={10} onClick={() => setIsEmojiSettingMode(false)} />
-          <StyledEmojiPickerWrapper top={pickerTop} left={pickerLeft}>
+          <StyledEmojiPickerWrapper top={pickerTop} left={pickerLeft} zIndex={1}>
             <Picker onSelect={handleSelectEmoji} title="Proeco" />
           </StyledEmojiPickerWrapper>
         </>
