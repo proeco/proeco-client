@@ -12,24 +12,21 @@ type Props = {
 };
 
 export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size }) => {
-  const UserIconContent = () => {
-    if (imagePath && isLink) {
-      return (
-        <Link href={'/user/' + userId}>
-          <StyledAvatar size={size} alt="" src={imagePath} />
-        </Link>
-      );
-    } else if (imagePath && !isLink) {
-      return <StyledAvatar size={size} alt="" src={imagePath} />;
-    } else {
-      return (
-        <StyledBox size={size}>
-          <StyledPersonOutlineIcon />
-        </StyledBox>
-      );
-    }
-  };
-  return <UserIconContent />;
+  if (!imagePath) {
+    return (
+      <StyledBox size={size}>
+        <StyledPersonOutlineIcon />
+      </StyledBox>
+    );
+  }
+
+  if (!isLink) return <StyledAvatar size={size} alt="" src={imagePath} />;
+
+  return (
+    <Link href={'/user/' + userId}>
+      <StyledAvatar size={size} alt="" src={imagePath} />
+    </Link>
+  );
 });
 
 type IconSizes = 'small' | 'midium' | 'large';
