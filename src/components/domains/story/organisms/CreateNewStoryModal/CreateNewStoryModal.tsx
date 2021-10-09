@@ -29,6 +29,7 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
 
   const handleClickCreateNewStoryButton = () => {
     // TODO: 後続タスクで処理を実装する
+    console.log('Formの値', storyTitle, storyDescription, emojiId);
     console.log('TODO');
     onClose();
   };
