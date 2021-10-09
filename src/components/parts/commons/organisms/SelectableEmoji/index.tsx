@@ -1,0 +1,1 @@
+export { SelectableEmoji } from './SelectableEmoji';
