@@ -4,11 +4,12 @@ import { Avatar, Link } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
+type IconSizes = 'small' | 'medium' | 'large';
 type Props = {
   imagePath?: string;
   userId?: string;
   isLink?: boolean;
-  size: 'small' | 'midium' | 'large';
+  size: IconSizes;
 };
 
 export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size = 'small' }) => {
@@ -29,10 +30,9 @@ export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = fal
   );
 });
 
-type IconSizes = 'small' | 'midium' | 'large';
 const sizeMap: { [key in IconSizes]: number } = {
   small: 40,
-  midium: 60,
+  medium: 60,
   large: 80,
 };
 
