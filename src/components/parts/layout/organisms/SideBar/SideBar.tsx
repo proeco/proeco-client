@@ -2,6 +2,7 @@ import { memo, VFC } from 'react';
 
 import { Box } from '@mui/system';
 import { Add as AddIcon } from '@mui/icons-material';
+import { Button } from '~/components/parts/commons/atoms';
 
 type Props = {
   openStoryModal: () => void;
@@ -10,7 +11,9 @@ type Props = {
 export const SideBar: VFC<Props> = memo(({ openStoryModal }) => {
   return (
     <Box>
-      <AddIcon width="20px" height="20px" onClick={openStoryModal} />
+      <Button variant="text">
+        <AddIcon onClick={openStoryModal} />
+      </Button>
     </Box>
   );
 });
