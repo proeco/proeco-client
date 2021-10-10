@@ -7,15 +7,12 @@ import { styled } from '@mui/material/styles';
 import { Modal } from '~/components/parts/commons/organisms/Modal';
 import { Button, Typography, TextField } from '~/components/parts/commons/atoms';
 import { SelectableEmoji } from '~/components/parts/commons/organisms/SelectableEmoji';
-
-type Props = {
-  open: boolean;
-  onClose: () => void;
-};
+import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 
 const title = '✨ ストーリーを作成する';
 
-export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
+export const CreateNewStoryModal: VFC = () => {
+  const { data: isOpenCreateNewStoryModal = false, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
   const [storyTitle, setStoryTitle] = useState('');
   const [storyDescription, setStoryDescription] = useState('');
   const [emojiId, setEmojiId] = useState<string>('open_file_folder');
@@ -32,7 +29,11 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
     // TODO: 後続タスクで処理を実装する
     console.log('Formの値', storyTitle, storyDescription, emojiId);
     console.log('TODO');
-    onClose();
+    handleClose();
+  };
+
+  const handleClose = () => {
+    mutateIsOpenCreateNewStoryModal(false);
   };
 
   const content = (
@@ -61,7 +62,7 @@ export const CreateNewStoryModal: VFC<Props> = ({ open, onClose }) => {
       </Box>
     </>
   );
-  return <Modal content={content} title={title} open={open} onClose={onClose} />;
+  return <Modal content={content} title={title} open={isOpenCreateNewStoryModal} onClose={handleClose} />;
 };
 
 const StyledTextField = styled(TextField)`

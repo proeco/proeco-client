@@ -7,18 +7,15 @@ import { CreateNewStoryModal } from './CreateNewStoryModal';
 export default {
   title: 'domains/story/organisms/CreateNewStoryModal',
   component: CreateNewStoryModal,
-  argTypes: { onClose: { action: 'closed' } },
 } as ComponentMeta<typeof CreateNewStoryModal>;
 
-const Template: ComponentStory<typeof CreateNewStoryModal> = (args) => {
+const Template: ComponentStory<typeof CreateNewStoryModal> = () => {
   return (
     <Box>
-      <CreateNewStoryModal {...args}></CreateNewStoryModal>
+      <CreateNewStoryModal />
     </Box>
   );
 };
 
 export const OpenModal = Template.bind({});
-OpenModal.args = {
-  open: true,
-};
+OpenModal.args = {};
