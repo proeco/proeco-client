@@ -13,7 +13,7 @@ export default {
 const Template: ComponentStory<typeof UserIcon> = ({ ...rest }) => (
   <Box width="300px" display="flex" alignItems="center" justifyContent="space-around">
     <UserIcon {...rest} size="small" />
-    <UserIcon {...rest} size="midium" />
+    <UserIcon {...rest} size="medium" />
     <UserIcon {...rest} size="large" />
   </Box>
 );
