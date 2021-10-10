@@ -10,7 +10,7 @@ export default {
   component: UserIconGroup,
 } as ComponentMeta<typeof UserIconGroup>;
 
-const mockUser = createMockUser({ _id: 'hoge', image: 'https://pbs.twimg.com/profile_images/1334520870811750401/gdnAYVqz_400x400.jpg' });
+const mockUser = createMockUser({ _id: 'hoge', image: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' });
 
 const Template: ComponentStory<typeof UserIconGroup> = ({ users, maxCount }) => (
   <Box width="300px" bgcolor="gray" p={4} display="flex" alignItems="center">

@@ -18,7 +18,7 @@ const Template: ComponentStory<typeof UserIcon> = ({ ...rest }) => (
   </Box>
 );
 
-const mockUser = createMockUser({ _id: 'hoge', image: 'https://pbs.twimg.com/profile_images/1334520870811750401/gdnAYVqz_400x400.jpg' });
+const mockUser = createMockUser({ _id: 'hoge', image: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' });
 
 export const guestUser = Template.bind({});
 export const loginUser = Template.bind({});
