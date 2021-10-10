@@ -16,7 +16,6 @@ export const CreateNewStoryModal: VFC = () => {
   const [storyTitle, setStoryTitle] = useState('');
   const [storyDescription, setStoryDescription] = useState('');
   const [emojiId, setEmojiId] = useState<string>('open_file_folder');
-  console.log(isOpenCreateNewStoryModal);
 
   const handleChangeStoryTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStoryTitle(e.target.value);
