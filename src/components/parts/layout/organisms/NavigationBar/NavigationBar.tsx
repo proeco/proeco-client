@@ -14,7 +14,7 @@ export const NavigationBar: VFC = memo(() => {
           <Image src="/images/Original.svg" alt="Proeco Logo" width={195} height={40} />
         </a>
       </Link>
-      <UserIcon />
+      <UserIcon size="small" />
     </StyledAppBar>
   );
 });
