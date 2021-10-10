@@ -2,7 +2,7 @@ import { SWRResponse } from 'swr';
 
 import { restClient } from '~/utils/rest-client';
 import { User } from '~/domains/user';
-import { useAuthenticationSWR } from '~/hooks/useAuthenticationSWR';
+import { useAuthenticationSWR } from '~/stores/useAuthenticationSWR';
 
 /**
  * 現在ログイン中のユーザーを取得するSWR
