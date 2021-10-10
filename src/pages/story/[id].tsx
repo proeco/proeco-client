@@ -27,6 +27,7 @@ const StoryPage: NextPage<Props> = ({ story }) => {
             {story.title}
           </Typography>
         </Box>
+        <Typography variant="h4">{story.description}</Typography>
       </Box>
     </>
   );
