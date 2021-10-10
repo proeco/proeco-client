@@ -23,8 +23,7 @@ const StoryList: NextPage = () => {
           <Typography variant="h3" bold>
             ストーリーリスト
           </Typography>
-          <Button variant="contained" bold onClick={handleClickCreateStoryButton}>
-            <CreateOutlinedIcon />
+          <Button variant="contained" bold onClick={handleClickCreateStoryButton} startIcon={<CreateOutlinedIcon />}>
             ストーリーを追加する
           </Button>
         </Box>
