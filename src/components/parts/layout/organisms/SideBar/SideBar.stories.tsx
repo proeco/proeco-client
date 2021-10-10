@@ -7,12 +7,13 @@ import { SideBar } from '~/components/parts/layout/organisms/SideBar';
 export default {
   title: 'parts/layout/organisms/SideBar',
   component: SideBar,
+  argTypes: { openStoryModal: { action: 'open' } },
 } as ComponentMeta<typeof SideBar>;
 
-const Template: ComponentStory<typeof SideBar> = (args) => {
+const Template: ComponentStory<typeof SideBar> = ({ openStoryModal }) => {
   return (
     <Box>
-      <SideBar {...args} />
+      <SideBar openStoryModal={openStoryModal} />
     </Box>
   );
 };
