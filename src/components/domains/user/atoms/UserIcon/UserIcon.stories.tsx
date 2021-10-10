@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
+import { Box } from '@mui/system';
 import { UserIcon } from './UserIcon';
 
 export default {
@@ -8,6 +9,13 @@ export default {
   component: UserIcon,
 } as ComponentMeta<typeof UserIcon>;
 
-const Template: ComponentStory<typeof UserIcon> = (args) => <UserIcon {...args} />;
+const Template: ComponentStory<typeof UserIcon> = ({ ...rest }) => (
+  <Box display="flex" alignItems="center">
+    <UserIcon {...rest} size="small" />
+    <UserIcon {...rest} size="midium" />
+    <UserIcon {...rest} size="large" />
+  </Box>
+);
 
-export const Default = Template.bind({});
+export const guestUser = Template.bind({});
+export const loginUser = Template.bind({});
