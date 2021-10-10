@@ -6,8 +6,15 @@ import { CreateOutlined as CreateOutlinedIcon } from '@mui/icons-material';
 import { StoryListTable } from '~/components/domains/story/organisms/StoryListTable';
 import { Button, Typography } from '~/components/parts/commons/atoms';
 import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
+import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 
 const StoryList: NextPage = () => {
+  const { mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
+
+  const handleClickCreateStoryButton = () => {
+    mutateIsOpenCreateNewStoryModal(true);
+  };
+
   return (
     <>
       <ProecoOgpHead />
@@ -16,7 +23,7 @@ const StoryList: NextPage = () => {
           <Typography variant="h3" bold>
             ストーリーリスト
           </Typography>
-          <Button variant="contained" bold>
+          <Button variant="contained" bold onClick={handleClickCreateStoryButton}>
             <CreateOutlinedIcon />
             ストーリーを追加する
           </Button>

@@ -12,10 +12,11 @@ import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewS
 const title = '✨ ストーリーを作成する';
 
 export const CreateNewStoryModal: VFC = () => {
-  const { data: isOpenCreateNewStoryModal = false, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
+  const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
   const [storyTitle, setStoryTitle] = useState('');
   const [storyDescription, setStoryDescription] = useState('');
   const [emojiId, setEmojiId] = useState<string>('open_file_folder');
+  console.log(isOpenCreateNewStoryModal);
 
   const handleChangeStoryTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStoryTitle(e.target.value);
@@ -62,7 +63,7 @@ export const CreateNewStoryModal: VFC = () => {
       </Box>
     </>
   );
-  return <Modal content={content} title={title} open={isOpenCreateNewStoryModal} onClose={handleClose} />;
+  return <Modal content={content} title={title} open={!!isOpenCreateNewStoryModal} onClose={handleClose} />;
 };
 
 const StyledTextField = styled(TextField)`
