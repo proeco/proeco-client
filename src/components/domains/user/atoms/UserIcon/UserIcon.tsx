@@ -23,7 +23,7 @@ export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = fal
   if (!isLink) return <StyledAvatar size={size} alt={userId} src={imagePath} />;
 
   return (
-    <Link href={'/user/' + userId}>
+    <Link underline="none" href={'/user/' + userId}>
       <StyledAvatar size={size} alt={userId} src={imagePath} />
     </Link>
   );
