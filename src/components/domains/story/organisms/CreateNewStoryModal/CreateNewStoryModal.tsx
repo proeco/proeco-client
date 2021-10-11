@@ -1,4 +1,6 @@
 import React, { VFC, useState } from 'react';
+import { useRouter } from 'next/router';
+
 import 'emoji-mart/css/emoji-mart.css';
 
 import { Box } from '@mui/system';
@@ -15,6 +17,8 @@ import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewS
 const title = '✨ ストーリーを作成する';
 
 export const CreateNewStoryModal: VFC = () => {
+  const router = useRouter();
+
   const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
   const [storyTitle, setStoryTitle] = useState('');
   const [storyDescription, setStoryDescription] = useState('');
@@ -30,11 +34,13 @@ export const CreateNewStoryModal: VFC = () => {
 
   const handleClickCreateNewStoryButton = async () => {
     try {
-      const response = await restClient.apiPost<Story>('/stories', { story: { title: storyTitle, description: storyDescription, emojiId } });
+      const { data } = await restClient.apiPost<Story>('/stories', { story: { title: storyTitle, description: storyDescription, emojiId } });
 
       // TODO: ユーザーに保存したことがわかるようにする
-      console.log(response.data);
+      console.log(data);
 
+      // 作成後に作成したstoryの詳細ページに遷移する
+      router.push(`/story/${data._id}`);
       handleClose();
     } catch (error) {
       // TODO: ユーザーにエラーがわかるようにする
