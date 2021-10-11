@@ -4,16 +4,16 @@ import { styled } from '@mui/system';
 import { ListItemIcon, ListItemText } from '@mui/material';
 
 type SideBarListItemType = {
-  typography: JSX.Element;
+  icon: JSX.Element;
 };
 
 type Props = ComponentProps<typeof ListItemButton> & SideBarListItemType;
 
-export const SideBarListItem: VFC<Props> = ({ children, selected, typography }) => {
+export const SideBarListItem: VFC<Props> = ({ children, selected, icon }) => {
   return (
     <StyledListItemButton selected={selected}>
-      <StyledListItemIcon>{children}</StyledListItemIcon>
-      <StyledListItemText disableTypography primary={typography} />
+      <StyledListItemIcon>{icon}</StyledListItemIcon>
+      <StyledListItemText disableTypography primary={children} />
     </StyledListItemButton>
   );
 };
@@ -23,8 +23,9 @@ const StyledListItemButton = styled(ListItemButton)`
   border-radius: 4px;
   &.Mui-selected {
     background-color: ${(props) => props.theme.palette.primary.main};
-    .MuiSvgIcon-root {
-      color: #fff;
+    &:hover {
+      background-color: ${(props) => props.theme.palette.primary.main};
+      opacity: 0.7;
     }
     .MuiTypography-root {
       color: #fff;

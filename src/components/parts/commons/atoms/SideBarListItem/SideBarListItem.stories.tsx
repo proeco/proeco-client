@@ -12,11 +12,11 @@ export default {
   component: SideBarListItem,
 } as ComponentMeta<typeof SideBarListItem>;
 
-const Template: ComponentStory<typeof SideBarListItem> = ({ typography, selected }) => {
+const Template: ComponentStory<typeof SideBarListItem> = ({ icon, selected }) => {
   return (
     <StyledList>
-      <SideBarListItem typography={typography} selected={selected}>
-        <StyledDashboardOutlinedIcon fontSize="small" />
+      <SideBarListItem icon={icon} selected={selected}>
+        <Typography variant="body1">ダッシュボード</Typography>
       </SideBarListItem>
     </StyledList>
   );
@@ -26,18 +26,14 @@ const StyledList = styled(List)`
   width: 280px;
 `;
 
-const StyledDashboardOutlinedIcon = styled(DashboardOutlinedIcon)`
-  color: ${(props) => props.theme.palette.textColor.main};
-`;
-
 export const Default = Template.bind({});
 Default.args = {
-  typography: <Typography variant="body1">ダッシュボード</Typography>,
+  icon: <DashboardOutlinedIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
   selected: false,
 };
 
 export const Selected = Template.bind({});
 Selected.args = {
-  typography: <Typography variant="body1">ダッシュボード</Typography>,
+  icon: <DashboardOutlinedIcon fontSize="small" sx={{ color: '#fff' }} />,
   selected: true,
 };
