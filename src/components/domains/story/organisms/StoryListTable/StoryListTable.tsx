@@ -6,8 +6,8 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { styled } from '@mui/system';
 import { Typography } from '~/components/parts/commons/atoms';
 import { TEXT_LIGHT_COLOR } from '~/constants/colors';
-import { useStories } from '~/hooks/story/useStories';
-import { useCurrentUser } from '~/hooks/user/useCurrentUser';
+import { useStories } from '~/stores/story/useStories';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 const page = 1;
 const limit = 10;
