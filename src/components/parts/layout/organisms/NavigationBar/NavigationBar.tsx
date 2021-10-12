@@ -15,7 +15,7 @@ type Props = {
   currentUser?: User;
 };
 
-const Component: VFC<Props> = memo(({ currentUser }) => {
+export const Component: VFC<Props> = memo(({ currentUser }) => {
   return (
     <StyledAppBar position="static">
       <Link href="/">
