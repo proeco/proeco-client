@@ -13,9 +13,10 @@ import { User } from '~/domains';
 
 type Props = {
   currentUser?: User;
+  onClickLoginButton: () => void;
 };
 
-export const Component: VFC<Props> = memo(({ currentUser }) => {
+export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton }) => {
   return (
     <StyledAppBar position="static">
       <Link href="/">
@@ -26,7 +27,7 @@ export const Component: VFC<Props> = memo(({ currentUser }) => {
       {currentUser ? (
         <UserIcon size="small" imagePath={currentUser.image} userId={currentUser._id} />
       ) : (
-        <StyledButton bold onClick={() => signIn('google')}>
+        <StyledButton bold onClick={onClickLoginButton}>
           Login Button
         </StyledButton>
       )}
@@ -56,5 +57,5 @@ const StyledButton = styled(Button)`
 export const NavigationBar: VFC = memo(() => {
   const { data: currentUser } = useCurrentUser();
 
-  return <Component currentUser={currentUser} />;
+  return <Component currentUser={currentUser} onClickLoginButton={() => signIn('google')} />;
 });

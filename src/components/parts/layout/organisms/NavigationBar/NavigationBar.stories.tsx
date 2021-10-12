@@ -7,10 +7,11 @@ import { createMockUser } from '~/mock';
 export default {
   title: 'parts/layout/organisms/NavigationBar',
   component: Component,
+  argTypes: { onClose: { action: 'onClickLoginButton' } },
 } as ComponentMeta<typeof Component>;
 
-const Template: ComponentStory<typeof Component> = ({ currentUser }) => {
-  return <Component currentUser={currentUser} />;
+const Template: ComponentStory<typeof Component> = ({ currentUser, onClickLoginButton }) => {
+  return <Component currentUser={currentUser} onClickLoginButton={onClickLoginButton} />;
 };
 
 export const GuestUser = Template.bind({});
