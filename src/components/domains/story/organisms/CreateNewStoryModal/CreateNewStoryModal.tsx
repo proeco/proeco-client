@@ -14,44 +14,29 @@ import { SelectableEmoji } from '~/components/parts/commons/organisms/Selectable
 import { Button, Typography, TextField } from '~/components/parts/commons/atoms';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 
-const title = '✨ ストーリーを作成する';
+type Props = {
+  isOpen: boolean;
+  title: string;
+  description: string;
+  emojiId: string;
+  onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeDescription: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClickCreateNewStoryButton: () => void;
+  onSelectEmoji: (emojiId: string) => void;
+  onCloseModal: () => void;
+};
 
-export const CreateNewStoryModal: VFC = () => {
-  const router = useRouter();
-
-  const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
-  const [storyTitle, setStoryTitle] = useState('');
-  const [storyDescription, setStoryDescription] = useState('');
-  const [emojiId, setEmojiId] = useState<string>('open_file_folder');
-
-  const handleChangeStoryTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStoryTitle(e.target.value);
-  };
-
-  const handleChangeStoryDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStoryDescription(e.target.value);
-  };
-
-  const handleClickCreateNewStoryButton = async () => {
-    try {
-      const { data } = await restClient.apiPost<Story>('/stories', { story: { title: storyTitle, description: storyDescription, emojiId } });
-
-      // TODO: ユーザーに保存したことがわかるようにする
-      console.log(data);
-
-      // 作成後に作成したstoryの詳細ページに遷移する
-      router.push(`/story/${data._id}`);
-      handleClose();
-    } catch (error) {
-      // TODO: ユーザーにエラーがわかるようにする
-      console.log(error);
-    }
-  };
-
-  const handleClose = () => {
-    mutateIsOpenCreateNewStoryModal(false);
-  };
-
+export const Component: VFC<Props> = ({
+  isOpen,
+  title,
+  description,
+  emojiId,
+  onChangeTitle,
+  onChangeDescription,
+  onClickCreateNewStoryButton,
+  onSelectEmoji,
+  onCloseModal,
+}) => {
   const content = (
     <>
       <Box mb="16px">
@@ -60,27 +45,81 @@ export const CreateNewStoryModal: VFC = () => {
         </Typography>
         <Box display="flex" alignItems="center">
           <Box mr="8px">
-            <SelectableEmoji emojiId={emojiId} size={40} onSelectEmoji={(emojiId) => setEmojiId(emojiId)} />
+            <SelectableEmoji emojiId={emojiId} size={40} onSelectEmoji={onSelectEmoji} />
           </Box>
-          <StyledTextField fullWidth value={storyTitle} onChange={handleChangeStoryTitle} />
+          <StyledTextField fullWidth value={title} onChange={onChangeTitle} />
         </Box>
       </Box>
       <Box mb="16px">
         <Typography mb="4px" variant="body1" color="textColor.light">
           説明(任意)
         </Typography>
-        <TextField fullWidth multiline rows={4} value={storyDescription} onChange={handleChangeStoryDescription} />
+        <TextField fullWidth multiline rows={4} value={description} onChange={onChangeDescription} />
       </Box>
       <Box width="100%" textAlign="center">
-        <Button variant="contained" onClick={handleClickCreateNewStoryButton}>
+        <Button variant="contained" onClick={onClickCreateNewStoryButton}>
           ストーリーを作る！
         </Button>
       </Box>
     </>
   );
-  return <Modal content={content} title={title} open={!!isOpenCreateNewStoryModal} onClose={handleClose} />;
+
+  return <Modal content={content} title="✨ ストーリーを作成する" open={isOpen} onClose={onCloseModal} />;
 };
 
 const StyledTextField = styled(TextField)`
   height: 40px;
 `;
+
+export const CreateNewStoryModal: VFC = () => {
+  const router = useRouter();
+
+  const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [emojiId, setEmojiId] = useState<string>('open_file_folder');
+
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
+  };
+
+  const handleClickCreateNewStoryButton = async () => {
+    try {
+      const { data } = await restClient.apiPost<Story>('/stories', { story: { title, description, emojiId } });
+
+      // TODO: ユーザーに保存したことがわかるようにする
+      console.log(data);
+
+      // 作成後に作成したstoryの詳細ページに遷移する
+      router.push(`/story/${data._id}`);
+      handleCloseModal();
+    } catch (error) {
+      // TODO: ユーザーにエラーがわかるようにする
+      console.log(error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    mutateIsOpenCreateNewStoryModal(false);
+  };
+
+  const handleSelectEmoji = (emojiId: string) => setEmojiId(emojiId);
+
+  return (
+    <Component
+      isOpen={!!isOpenCreateNewStoryModal}
+      title={title}
+      description={description}
+      emojiId={emojiId}
+      onChangeTitle={handleChangeTitle}
+      onChangeDescription={handleChangeDescription}
+      onClickCreateNewStoryButton={handleClickCreateNewStoryButton}
+      onCloseModal={handleCloseModal}
+      onSelectEmoji={handleSelectEmoji}
+    />
+  );
+};
