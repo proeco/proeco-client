@@ -9,10 +9,13 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { UserIcon } from '~/components/domains/user/atoms/UserIcon';
 import { Button } from '~/components/parts/commons/atoms';
+import { User } from '~/domains';
 
-export const NavigationBar: VFC = memo(() => {
-  const { data: currentUser } = useCurrentUser();
+type Props = {
+  currentUser?: User;
+};
 
+const Component: VFC<Props> = memo(({ currentUser }) => {
   return (
     <StyledAppBar position="static">
       <Link href="/">
@@ -49,3 +52,9 @@ const StyledButton = styled(Button)`
     opacity: 0.7;
   }
 `;
+
+export const NavigationBar: VFC = memo(() => {
+  const { data: currentUser } = useCurrentUser();
+
+  return <Component currentUser={currentUser} />;
+});
