@@ -57,5 +57,9 @@ const StyledButton = styled(Button)`
 export const NavigationBar: VFC = memo(() => {
   const { data: currentUser } = useCurrentUser();
 
-  return <Component currentUser={currentUser} onClickLoginButton={() => signIn('google')} />;
+  const handleClickLoginButton = () => {
+    signIn('google');
+  };
+
+  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} />;
 });
