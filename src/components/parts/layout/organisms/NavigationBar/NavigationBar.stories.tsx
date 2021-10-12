@@ -20,5 +20,5 @@ GuestUser.args = {
 
 export const LoginUser = Template.bind({});
 LoginUser.args = {
-  currentUser: createMockUser({}),
+  currentUser: createMockUser({ image: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' }),
 };
