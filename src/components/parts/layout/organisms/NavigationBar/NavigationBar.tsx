@@ -9,10 +9,14 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { UserIcon } from '~/components/domains/user/atoms/UserIcon';
 import { Button } from '~/components/parts/commons/atoms';
+import { User } from '~/domains';
 
-export const NavigationBar: VFC = memo(() => {
-  const { data: currentUser } = useCurrentUser();
+type Props = {
+  currentUser?: User;
+  onClickLoginButton: () => void;
+};
 
+export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton }) => {
   return (
     <StyledAppBar position="static">
       <Link href="/">
@@ -23,7 +27,7 @@ export const NavigationBar: VFC = memo(() => {
       {currentUser ? (
         <UserIcon size="small" imagePath={currentUser.image} userId={currentUser._id} />
       ) : (
-        <StyledButton bold onClick={() => signIn('google')}>
+        <StyledButton bold onClick={onClickLoginButton}>
           Login Button
         </StyledButton>
       )}
@@ -49,3 +53,9 @@ const StyledButton = styled(Button)`
     opacity: 0.7;
   }
 `;
+
+export const NavigationBar: VFC = memo(() => {
+  const { data: currentUser } = useCurrentUser();
+
+  return <Component currentUser={currentUser} onClickLoginButton={() => signIn('google')} />;
+});
