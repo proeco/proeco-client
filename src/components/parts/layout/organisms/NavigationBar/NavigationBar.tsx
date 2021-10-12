@@ -12,7 +12,6 @@ import { Button } from '~/components/parts/commons/atoms';
 
 export const NavigationBar: VFC = memo(() => {
   const { data: currentUser } = useCurrentUser();
-  console.log(`NavigationBar : ${currentUser}`);
 
   return (
     <StyledAppBar position="static">
