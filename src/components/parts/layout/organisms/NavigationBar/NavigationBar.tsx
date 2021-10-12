@@ -1,14 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { signIn } from 'next-auth/client';
 import { memo, VFC } from 'react';
 import { AppBar } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { signIn } from 'next-auth/client';
+
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { UserIcon } from '~/components/domains/user/atoms/UserIcon';
 import { Button } from '~/components/parts/commons/atoms';
 
 export const NavigationBar: VFC = memo(() => {
+  const { data: currentUser } = useCurrentUser();
+  console.log(`NavigationBar : ${currentUser}`);
+
   return (
     <StyledAppBar position="static">
       <Link href="/">
@@ -16,10 +21,13 @@ export const NavigationBar: VFC = memo(() => {
           <Image src="/images/Original.svg" alt="Proeco Logo" width={195} height={40} />
         </a>
       </Link>
-      <StyledButton bold onClick={() => signIn('google')}>
-        Login Button
-      </StyledButton>
-      {/* <UserIcon size="small" /> */}
+      {currentUser ? (
+        <UserIcon size="small" imagePath={currentUser.image} userId={currentUser._id} />
+      ) : (
+        <StyledButton bold onClick={() => signIn('google')}>
+          Login Button
+        </StyledButton>
+      )}
     </StyledAppBar>
   );
 });
