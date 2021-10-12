@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { signIn, useSession } from 'next-auth/client';
+import { signIn } from 'next-auth/client';
 import { memo, VFC } from 'react';
 import { AppBar } from '@mui/material';
 import { styled } from '@mui/material/styles';
+
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { UserIcon } from '~/components/domains/user/atoms/UserIcon';
 import { Button } from '~/components/parts/commons/atoms';
@@ -53,11 +55,11 @@ const StyledButton = styled(Button)`
 `;
 
 export const NavigationBar: VFC = memo(() => {
-  const [session] = useSession();
+  const { data: currentUser } = useCurrentUser();
 
   const handleClickLoginButton = () => {
     signIn('google');
   };
 
-  return <Component currentUser={session?.user as User} onClickLoginButton={handleClickLoginButton} />;
+  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} />;
 });
