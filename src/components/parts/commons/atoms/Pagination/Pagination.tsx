@@ -3,6 +3,6 @@ import { Pagination as MuiPagination } from '@mui/material';
 
 type Props = ComponentProps<typeof MuiPagination>;
 
-export const Pagination: VFC<Props> = ({ ...rest }) => {
-  return <MuiPagination {...rest} />;
+export const Pagination: VFC<Props> = ({ color = 'primary', ...rest }) => {
+  return <MuiPagination color={color} {...rest} />;
 };
