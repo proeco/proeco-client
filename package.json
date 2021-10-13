@@ -47,7 +47,7 @@
     "@types/jest": "27.0.2",
     "@types/next-auth": "3.15.0",
     "@types/node": "16.9.6",
-    "@types/react": "17.0.24",
+    "@types/react": "17.0.29",
     "@types/react-beautiful-dnd": "13.1.2",
     "@types/react-copy-to-clipboard": "5.0.1",
     "@types/react-test-renderer": "17.0.1",
