@@ -52,7 +52,7 @@
     "@types/react-copy-to-clipboard": "5.0.1",
     "@types/react-test-renderer": "17.0.1",
     "@types/socket.io-client": "3.0.0",
-    "@types/styled-components": "5.1.14",
+    "@types/styled-components": "5.1.15",
     "@types/throttle-debounce": "2.1.0",
     "@types/toastr": "2.1.39",
     "@typescript-eslint/eslint-plugin": "4.31.2",
