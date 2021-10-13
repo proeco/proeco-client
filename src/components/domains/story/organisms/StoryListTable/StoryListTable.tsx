@@ -18,15 +18,19 @@ export const StoryListTable: VFC = () => {
   const { data: currentUser } = useCurrentUser();
   const { data: stories } = useStories({ userId: currentUser?._id, page, limit });
   const router = useRouter();
-  const [isDeleteStoryModalOpen, setIsDeleteStoryModalOpen] = useState(false);
+  const [deleteStoryId, setDeleteStoryId] = useState<string | null>(null);
 
   const handleClickRow = (storyId: string) => {
     router.push(`/story/${storyId}`);
   };
 
-  const handleDeleteStory = (e: MouseEvent, storyId: string) => {
+  const handleDeleteStoryConfirm = (e: MouseEvent, storyId: string) => {
     e.stopPropagation();
-    setIsDeleteStoryModalOpen(true);
+    setDeleteStoryId(storyId);
+  };
+
+  const handleDeleteStory = () => {
+    console.log(deleteStoryId);
   };
 
   return (
@@ -70,7 +74,7 @@ export const StoryListTable: VFC = () => {
                     <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
                     <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</StyledBodyTableCell>
                     <TableCell align="right">
-                      <IconButton onClick={(e) => handleDeleteStory(e, doc._id)}>
+                      <IconButton onClick={(e) => handleDeleteStoryConfirm(e, doc._id)}>
                         <MoreVertIcon />
                       </IconButton>
                     </TableCell>
@@ -80,7 +84,7 @@ export const StoryListTable: VFC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <DeleteStoryModal isOpen={isDeleteStoryModalOpen} onClose={() => setIsDeleteStoryModalOpen(false)} />
+      <DeleteStoryModal isOpen={!!deleteStoryId} onClose={() => setDeleteStoryId(null)} onDeleteStory={handleDeleteStory} />
     </>
   );
 };
