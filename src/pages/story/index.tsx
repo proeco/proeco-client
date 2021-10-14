@@ -4,13 +4,32 @@ import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 import { CreateOutlined as CreateOutlinedIcon } from '@mui/icons-material';
 
+import { ChangeEvent, useState } from 'react';
 import { StoryListTable } from '~/components/domains/story/organisms/StoryListTable';
 import { Button, Pagination, Typography } from '~/components/parts/commons/atoms';
 import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useStories } from '~/stores/story';
+
+const limit = 10;
 
 const StoryList: NextPage = () => {
+  const [page, setPage] = useState(1);
+  const { data: currentUser } = useCurrentUser();
+  const { data: stories } = useStories({
+    userId: currentUser?._id,
+    page,
+    limit,
+  });
   const { mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
+
+  const count = stories ? Math.ceil(stories.totalDocs / limit) : 1;
+
+  const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
+    if (!value) return;
+    setPage(value);
+  };
 
   const handleClickCreateStoryButton = () => {
     mutateIsOpenCreateNewStoryModal(true);
@@ -28,8 +47,8 @@ const StoryList: NextPage = () => {
             ストーリーを追加する
           </Button>
         </Box>
-        <StoryListTable />
-        <StyledPagination count={10} />
+        <StoryListTable page={page} limit={limit} />
+        <StyledPagination count={count} page={page} onChange={handleChangePage} />
       </Box>
     </>
   );
