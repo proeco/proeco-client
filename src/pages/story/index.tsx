@@ -4,7 +4,7 @@ import { Box } from '@mui/system';
 import { CreateOutlined as CreateOutlinedIcon } from '@mui/icons-material';
 
 import { StoryListTable } from '~/components/domains/story/organisms/StoryListTable';
-import { Button, Typography } from '~/components/parts/commons/atoms';
+import { Button, Pagination, Typography } from '~/components/parts/commons/atoms';
 import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 
@@ -28,6 +28,7 @@ const StoryList: NextPage = () => {
           </Button>
         </Box>
         <StoryListTable />
+        <Pagination count={10} />
       </Box>
     </>
   );
