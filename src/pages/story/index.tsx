@@ -24,7 +24,7 @@ const StoryList: NextPage = () => {
   });
   const { mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
 
-  const count = stories ? Math.ceil(stories.totalDocs / limit) : 1;
+  const count = stories ? stories.totalPages : 1;
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
     if (!value) return;
