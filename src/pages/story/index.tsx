@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
 
 import { Box } from '@mui/system';
+import { styled } from '@mui/material/styles';
 import { CreateOutlined as CreateOutlinedIcon } from '@mui/icons-material';
 
 import { StoryListTable } from '~/components/domains/story/organisms/StoryListTable';
@@ -28,10 +29,17 @@ const StoryList: NextPage = () => {
           </Button>
         </Box>
         <StoryListTable />
-        <Pagination count={10} />
+        <StyledPagination count={10} />
       </Box>
     </>
   );
 };
+
+const StyledPagination = styled(Pagination)`
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 export default StoryList;
