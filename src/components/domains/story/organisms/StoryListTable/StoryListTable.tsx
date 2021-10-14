@@ -9,12 +9,18 @@ import { TEXT_LIGHT_COLOR } from '~/constants/colors';
 import { useStories } from '~/stores/story/useStories';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-const page = 1;
-const limit = 10;
+type Props = {
+  page: number;
+  limit: 10;
+};
 
-export const StoryListTable: VFC = () => {
+export const StoryListTable: VFC<Props> = ({ page, limit }) => {
   const { data: currentUser } = useCurrentUser();
-  const { data: stories } = useStories({ userId: currentUser?._id, page, limit });
+  const { data: stories } = useStories({
+    userId: currentUser?._id,
+    page,
+    limit,
+  });
   const router = useRouter();
 
   const handleClickRow = (storyId: string) => {
