@@ -1,5 +1,6 @@
 import React, { VFC, useState } from 'react';
 import { useRouter } from 'next/router';
+import { VariantType, useSnackbar } from "notistack";
 
 import 'emoji-mart/css/emoji-mart.css';
 
@@ -45,7 +46,11 @@ export const Component: VFC<Props> = ({
         </Typography>
         <Box display="flex" alignItems="center">
           <Box mr="8px">
-            <SelectableEmoji emojiId={emojiId} size={40} onSelectEmoji={onSelectEmoji} />
+            <SelectableEmoji
+              emojiId={emojiId}
+              size={40}
+              onSelectEmoji={onSelectEmoji}
+            />
           </Box>
           <StyledTextField fullWidth value={title} onChange={onChangeTitle} />
         </Box>
@@ -54,7 +59,13 @@ export const Component: VFC<Props> = ({
         <Typography mb="4px" variant="body1" color="textColor.light">
           説明(任意)
         </Typography>
-        <TextField fullWidth multiline rows={4} value={description} onChange={onChangeDescription} />
+        <TextField
+          fullWidth
+          multiline
+          rows={4}
+          value={description}
+          onChange={onChangeDescription}
+        />
       </Box>
       <Box width="100%" textAlign="center">
         <Button variant="contained" onClick={onClickCreateNewStoryButton}>
@@ -73,6 +84,7 @@ const StyledTextField = styled(TextField)`
 
 export const CreateNewStoryModal: VFC = () => {
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
   const [title, setTitle] = useState('');
@@ -87,23 +99,33 @@ export const CreateNewStoryModal: VFC = () => {
     setDescription(e.target.value);
   };
 
+  const handleClickVariant = (message: string, variant: VariantType) => {
+    enqueueSnackbar(message, { variant });
+  };
+
   const handleClickCreateNewStoryButton = async () => {
     try {
-      const { data } = await restClient.apiPost<Story>('/stories', { story: { title, description, emojiId } });
+      const { data } = await restClient.apiPost<Story>("/stories", {
+        story: { title, description, emojiId },
+      });
 
-      // TODO: ユーザーに保存したことがわかるようにする
       console.log(data);
 
+      // successのSnackbarを表示する
+      handleClickVariant("ストーリーの作成に成功しました!", "success");
+
       // stateの初期化
-      setTitle('');
-      setDescription('');
-      setEmojiId('open_file_folder');
+      setTitle("");
+      setDescription("");
+      setEmojiId("open_file_folder");
 
       // 作成後に作成したstoryの詳細ページに遷移する
       router.push(`/story/${data._id}`);
       handleCloseModal();
     } catch (error) {
-      // TODO: ユーザーにエラーがわかるようにする
+      // errorのSnackbarを表示する
+      handleClickVariant("ストーリーの作成に失敗しました!", "error");
+
       console.log(error);
     }
   };
