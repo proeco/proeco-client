@@ -94,6 +94,11 @@ export const CreateNewStoryModal: VFC = () => {
       // TODO: ユーザーに保存したことがわかるようにする
       console.log(data);
 
+      // stateの初期化
+      setTitle('');
+      setDescription('');
+      setEmojiId('open_file_folder');
+
       // 作成後に作成したstoryの詳細ページに遷移する
       router.push(`/story/${data._id}`);
       handleCloseModal();
