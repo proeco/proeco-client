@@ -1,30 +1,33 @@
-import { memo, VFC } from 'react';
+import { memo, VFC, ComponentProps } from 'react';
 import { Avatar, Link } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { PersonOutline as PersonOutlineIcon } from '@mui/icons-material';
 
 type IconSizes = 'small' | 'medium' | 'large';
-type Props = {
+
+type UserIconType = {
   imagePath?: string;
   userId?: string;
   isLink?: boolean;
   size: IconSizes;
 };
 
-export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size = 'small' }) => {
+type Props = ComponentProps<typeof Avatar> & UserIconType;
+
+export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size = 'small', ...rest }) => {
   if (!imagePath) {
     return (
-      <StyledAvatar size={size}>
+      <StyledAvatar size={size} {...rest}>
         <StyledPersonOutlineIcon />
       </StyledAvatar>
     );
   }
 
-  if (!isLink) return <StyledAvatar size={size} alt={userId} src={imagePath} />;
+  if (!isLink) return <StyledAvatar size={size} alt={userId} src={imagePath} {...rest} />;
 
   return (
     <Link underline="none" href={'/user/' + userId}>
-      <StyledAvatar size={size} alt={userId} src={imagePath} />
+      <StyledAvatar size={size} alt={userId} src={imagePath} {...rest} />
     </Link>
   );
 });
