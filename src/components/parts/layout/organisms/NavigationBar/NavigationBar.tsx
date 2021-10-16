@@ -63,6 +63,9 @@ const StyledAppBar = styled(AppBar)`
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+  a {
+    height: 40px;
+  }
 `;
 
 const StyledButton = styled(Button)`
