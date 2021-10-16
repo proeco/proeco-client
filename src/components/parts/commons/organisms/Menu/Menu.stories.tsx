@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { Logout } from '@mui/icons-material';
+import { Logout, Settings } from '@mui/icons-material';
 import { Menu } from './Menu';
 
 export default {
@@ -20,6 +20,9 @@ const Template: ComponentStory<typeof Menu> = ({ ...rest }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  menuItemArray: [{ icon: <Logout fontSize="small" sx={{ color: 'textColor.main' }} />, text: 'ログアウト' }],
+  menuItemArray: [
+    { icon: <Settings fontSize="small" sx={{ color: 'textColor.main' }} />, text: 'Settings' },
+    { icon: <Logout fontSize="small" sx={{ color: 'textColor.main' }} />, text: 'Logout' },
+  ],
   open: true,
 };
