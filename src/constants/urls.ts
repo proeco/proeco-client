@@ -1,1 +1,3 @@
-export const DASHBOARD_PATH = 'dashboard';
+export const URLS = {
+  DASHBOARD_PATH: 'dashboard',
+};

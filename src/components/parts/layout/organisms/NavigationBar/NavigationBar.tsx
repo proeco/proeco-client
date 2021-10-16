@@ -13,6 +13,8 @@ import { Button } from '~/components/parts/commons/atoms';
 import { Menu } from '~/components/parts/commons/organisms/Menu';
 import { User } from '~/domains';
 
+import { IMAGE_PATH } from '~/constants';
+
 type Props = {
   currentUser?: User;
   onClickLoginButton: () => void;
@@ -21,9 +23,10 @@ type Props = {
     text: string;
     onClick: () => void;
   }[];
+  logoImagePath: string;
 };
 
-export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton, menuItems }) => {
+export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton, menuItems, logoImagePath }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -37,7 +40,7 @@ export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton, me
     <StyledAppBar position="static">
       <Link href="/">
         <a>
-          <Image src="/images/Original.svg" alt="Proeco Logo" width={195} height={40} />
+          <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
         </a>
       </Link>
       {currentUser ? (
@@ -60,6 +63,9 @@ const StyledAppBar = styled(AppBar)`
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+  a {
+    height: 40px;
+  }
 `;
 
 const StyledButton = styled(Button)`
@@ -92,5 +98,5 @@ export const NavigationBar: VFC = memo(() => {
     signIn('google');
   };
 
-  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} menuItems={menuItems} />;
+  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} menuItems={menuItems} logoImagePath={IMAGE_PATH.LOGO} />;
 });

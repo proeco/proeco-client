@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { VFC } from 'react';
-import { imagePath } from '~/constants/imagePath';
+import { IMAGE_PATH } from '~/constants/imagePath';
 
 type Props = {
   siteName?: string;
@@ -27,11 +27,11 @@ export const ProecoOgpHead: VFC<Props> = (props) => {
         <meta property="og:title" content={title || 'Proeco'} />
         <meta property="og:url" content={url || 'https://www.proeco.app'} />
         {/* TODO: create eye catch for all ogp */}
-        <meta property="og:image" content={image || `https://www.proeco.app/${imagePath.TWITTER_OGP}`} />
+        <meta property="og:image" content={image || `https://www.proeco.app/${IMAGE_PATH.TWITTER_OGP}`} />
         <meta property="og:description" content={description || DESCRIPTION} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title || 'Proeco'} />
-        <meta name="twitter:image" content={image || `https://www.proeco.app/${imagePath.TWITTER_OGP}`} />
+        <meta name="twitter:image" content={image || `https://www.proeco.app/${IMAGE_PATH.TWITTER_OGP}`} />
         <meta name="twitter:description" content={description || DESCRIPTION} />
       </Head>
     </>
