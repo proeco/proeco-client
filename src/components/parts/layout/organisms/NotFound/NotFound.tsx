@@ -1,8 +1,8 @@
 import { VFC } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import Link from 'next/link';
-import { styled } from '@mui/material/styles';
 
+import { styled } from '@mui/material/styles';
 import { Stack } from '@mui/material';
 import { Button, Typography } from '~/components/parts/commons/atoms';
 
@@ -11,20 +11,17 @@ import { IMAGE_PATH } from '~/constants';
 type Props = {
   message?: string;
   ErrorImagePath: string;
+  onClickReturnTopButton: () => void;
 };
 
-export const Component: VFC<Props> = ({ message = 'ページが見つかりませんでした', ErrorImagePath }) => {
+export const Component: VFC<Props> = ({ message = 'ページが見つかりませんでした', ErrorImagePath, onClickReturnTopButton }) => {
   return (
     <StyledStack spacing="20px" alignItems="center">
       <Typography variant="h3">{message}</Typography>
       <Image src={ErrorImagePath} alt="NotFound" width={500} height={315} />
-      <Link href="/">
-        <a>
-          <Button variant="contained" bold>
-            Topページに戻る
-          </Button>
-        </a>
-      </Link>
+      <Button variant="contained" bold onClick={onClickReturnTopButton}>
+        Topページに戻る
+      </Button>
     </StyledStack>
   );
 };
@@ -36,5 +33,7 @@ const StyledStack = styled(Stack)`
 `;
 
 export const NotFound: VFC<{ message?: string }> = ({ message = 'ページが見つかりませんでした' }) => {
-  return <Component message={message} ErrorImagePath={IMAGE_PATH.ERROR_404} />;
+  const router = useRouter();
+
+  return <Component message={message} ErrorImagePath={IMAGE_PATH.ERROR_404} onClickReturnTopButton={() => router.push('/')} />;
 };
