@@ -12,13 +12,16 @@ export default {
   argTypes: { onClose: { action: 'onClickLoginButton' } },
 } as ComponentMeta<typeof Component>;
 
-const Template: ComponentStory<typeof Component> = ({ currentUser, onClickLoginButton, menuItems }) => {
-  return <Component currentUser={currentUser} onClickLoginButton={onClickLoginButton} menuItems={menuItems} />;
+const LOGO_URL = 'https://itizawa-tech.growi.cloud/attachment/615b8f0da86ba4005158b0e9';
+
+const Template: ComponentStory<typeof Component> = ({ currentUser, onClickLoginButton, menuItems, logoImagePath }) => {
+  return <Component currentUser={currentUser} onClickLoginButton={onClickLoginButton} menuItems={menuItems} logoImagePath={logoImagePath} />;
 };
 
 export const GuestUser = Template.bind({});
 GuestUser.args = {
   currentUser: undefined,
+  logoImagePath: LOGO_URL,
 };
 
 export const LoginUser = Template.bind({});
@@ -31,4 +34,5 @@ LoginUser.args = {
       onClick: action('signOut'),
     },
   ],
+  logoImagePath: LOGO_URL,
 };
