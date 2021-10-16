@@ -36,5 +36,5 @@ const StyledStack = styled(Stack)`
 `;
 
 export const NotFound: VFC<{ message?: string }> = ({ message = 'ページが見つかりませんでした' }) => {
-  return <Component message={message} ErrorImagePath={IMAGE_PATH.ERROR} />;
+  return <Component message={message} ErrorImagePath={IMAGE_PATH.ERROR_404} />;
 };
