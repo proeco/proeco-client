@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { signIn } from 'next-auth/client';
+import { signIn, signOut } from 'next-auth/client';
 import { memo, VFC, useState, MouseEvent } from 'react';
 import { AppBar } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -16,17 +16,14 @@ import { User } from '~/domains';
 type Props = {
   currentUser?: User;
   onClickLoginButton: () => void;
+  menuItems: {
+    icon: JSX.Element;
+    text: string;
+    onClick: () => void;
+  }[];
 };
 
-const menuItems = [
-  {
-    icon: <Logout fontSize="small" sx={{ color: 'textColor.main' }} />,
-    text: 'Logout',
-    onClick: () => console.log('click'),
-  },
-];
-
-export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton }) => {
+export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton, menuItems }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -81,11 +78,19 @@ const StyledUserIcon = styled(UserIcon)`
 `;
 
 export const NavigationBar: VFC = memo(() => {
+  const menuItems = [
+    {
+      icon: <Logout fontSize="small" sx={{ color: 'textColor.main' }} />,
+      text: 'Logout',
+      onClick: () => signOut(),
+    },
+  ];
+
   const { data: currentUser } = useCurrentUser();
 
   const handleClickLoginButton = () => {
     signIn('google');
   };
 
-  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} />;
+  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} menuItems={menuItems} />;
 });
