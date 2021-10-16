@@ -1,15 +1,20 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { NotFound } from './NotFound';
+import { Component } from './NotFound';
 
 export default {
   title: 'parts/layout/organisms/NotFound',
-  component: NotFound,
-} as ComponentMeta<typeof NotFound>;
+  component: Component,
+} as ComponentMeta<typeof Component>;
 
-const Template: ComponentStory<typeof NotFound> = () => {
-  return <NotFound />;
+const ERROR_URL = 'https://itizawa-tech.growi.cloud/attachment/616ac89556919852099e354e';
+
+const Template: ComponentStory<typeof Component> = ({ message, ErrorImagePath }) => {
+  return <Component message={message} ErrorImagePath={ErrorImagePath} />;
 };
 
 export const Default = Template.bind({});
+Default.args = {
+  ErrorImagePath: ERROR_URL,
+};
