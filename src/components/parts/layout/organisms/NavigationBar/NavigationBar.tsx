@@ -13,7 +13,7 @@ import { Button } from '~/components/parts/commons/atoms';
 import { Menu } from '~/components/parts/commons/organisms/Menu';
 import { User } from '~/domains';
 
-import { imagePath } from '~/constants/imagePath';
+import { IMAGE_PATH } from '~/constants';
 
 type Props = {
   currentUser?: User;
@@ -95,5 +95,5 @@ export const NavigationBar: VFC = memo(() => {
     signIn('google');
   };
 
-  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} menuItems={menuItems} logoImagePath={imagePath.LOGO} />;
+  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} menuItems={menuItems} logoImagePath={IMAGE_PATH.LOGO} />;
 });
