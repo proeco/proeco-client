@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
+import { Logout } from '@mui/icons-material';
 import { Menu } from './Menu';
 
 export default {
@@ -9,12 +10,16 @@ export default {
   component: Menu,
 } as ComponentMeta<typeof Menu>;
 
-const Template: ComponentStory<typeof Menu> = (args) => {
+const Template: ComponentStory<typeof Menu> = ({ ...rest }) => {
   return (
     <Box>
-      <Menu {...args}></Menu>
+      <Menu {...rest}></Menu>
     </Box>
   );
 };
 
-export const OpenMenu = Template.bind({});
+export const Default = Template.bind({});
+Default.args = {
+  menuItemArray: [{ icon: <Logout fontSize="small" sx={{ color: 'textColor.main' }} />, text: 'ログアウト' }],
+  open: true,
+};
