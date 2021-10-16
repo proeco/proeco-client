@@ -1,5 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { Box } from '@mui/system';
 import { Logout, Settings } from '@mui/icons-material';
@@ -20,9 +21,9 @@ const Template: ComponentStory<typeof Menu> = ({ ...rest }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  menuItemArray: [
-    { icon: <Settings fontSize="small" sx={{ color: 'textColor.main' }} />, text: 'Settings' },
-    { icon: <Logout fontSize="small" sx={{ color: 'textColor.main' }} />, text: 'Logout' },
+  menuItems: [
+    { icon: <Settings fontSize="small" sx={{ color: 'textColor.main' }} />, text: 'Settings', onClick: action('clickSettings') },
+    { icon: <Logout fontSize="small" sx={{ color: 'textColor.main' }} />, text: 'Logout', onClick: action('clickLogout') },
   ],
   open: true,
 };
