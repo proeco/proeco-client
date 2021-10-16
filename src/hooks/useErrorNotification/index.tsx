@@ -1,1 +1,1 @@
-export { useErrorNotification } from "./useErrorNotification";
+export { useErrorNotification } from './useErrorNotification';

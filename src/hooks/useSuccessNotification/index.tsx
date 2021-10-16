@@ -1,1 +1,1 @@
-export { useSuccessNotification } from "./useSuccessNotification";
+export { useSuccessNotification } from './useSuccessNotification';
