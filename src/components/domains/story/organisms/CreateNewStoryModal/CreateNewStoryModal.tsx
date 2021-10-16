@@ -13,6 +13,8 @@ import { Modal } from '~/components/parts/commons/organisms/Modal';
 import { SelectableEmoji } from '~/components/parts/commons/organisms/SelectableEmoji';
 import { Button, Typography, TextField } from '~/components/parts/commons/atoms';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
+import { useSuccessNotification } from '~/hooks/useSuccessNotification';
+import { useErrorNotification } from '~/hooks/useErrorNotification';
 
 type Props = {
   isOpen: boolean;
@@ -73,6 +75,8 @@ const StyledTextField = styled(TextField)`
 
 export const CreateNewStoryModal: VFC = () => {
   const router = useRouter();
+  const { notifySuccessMessage } = useSuccessNotification();
+  const { notifyErrorMessage } = useErrorNotification();
 
   const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
   const [title, setTitle] = useState('');
@@ -89,10 +93,12 @@ export const CreateNewStoryModal: VFC = () => {
 
   const handleClickCreateNewStoryButton = async () => {
     try {
-      const { data } = await restClient.apiPost<Story>('/stories', { story: { title, description, emojiId } });
+      const { data } = await restClient.apiPost<Story>('/stories', {
+        story: { title, description, emojiId },
+      });
 
-      // TODO: ユーザーに保存したことがわかるようにする
-      console.log(data);
+      // successのSnackbarを表示する
+      notifySuccessMessage('ストーリーの作成に成功しました!');
 
       // stateの初期化
       setTitle('');
@@ -103,8 +109,8 @@ export const CreateNewStoryModal: VFC = () => {
       router.push(`/story/${data._id}`);
       handleCloseModal();
     } catch (error) {
-      // TODO: ユーザーにエラーがわかるようにする
-      console.log(error);
+      // errorのSnackbarを表示する
+      notifyErrorMessage('ストーリーの作成に失敗しました!');
     }
   };
 
