@@ -5,13 +5,16 @@ import Loader from 'react-loader-spinner';
 
 import { Box } from '@mui/system';
 import { COLORS, URLS } from '~/constants';
+import { useErrorNotification } from '~/hooks/useErrorNotification';
 
 export const LoginRequiredWrapper: FC = ({ children }) => {
   const [session, loading] = useSession();
   const router = useRouter();
+  const { notifyErrorMessage } = useErrorNotification();
 
   useEffect(() => {
-    if (!loading && session == null) {
+    if (!loading && !session) {
+      notifyErrorMessage('ログインが必要です');
       router.push(URLS.TOP);
     }
   }, [loading, session]);
