@@ -11,7 +11,7 @@ export const LoginRequiredWrapper: FC = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && session == null) {
+    if (!loading && session != null) {
       router.push(URLS.TOP);
     }
   }, [loading, session]);
@@ -23,7 +23,7 @@ export const LoginRequiredWrapper: FC = ({ children }) => {
       </Box>
     );
 
-  if (session != null) {
+  if (session == null) {
     return <>{children}</>;
   }
 
