@@ -12,7 +12,7 @@ import { PaginationResult } from '~/interfaces';
  * @returns mutate データの更新関数
  */
 export const useStories = ({ userId, page, limit }: { userId?: string; page: number; limit: 10 }): SWRResponse<PaginationResult<Story>, Error> => {
-  const key = userId ? `/stories/list/${userId}?page=${page}&limit=${limit}` : null;
+  const key = userId ? `/stories?userId=${userId}&page=${page}&limit=${limit}` : null;
   return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
