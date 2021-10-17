@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { styled } from '@mui/material/styles';
 import { Stack } from '@mui/material';
+import { Box } from '@mui/system';
 import { Button, Typography } from '~/components/parts/commons/atoms';
 
 import { IMAGE_PATH } from '~/constants';
@@ -18,7 +19,10 @@ export const Component: VFC<Props> = ({ message = 'ページが見つかりま�
   return (
     <StyledStack spacing="20px" alignItems="center">
       <Typography variant="h3">{message}</Typography>
-      <Image src={ErrorImagePath} alt="NotFound" width={500} height={315} />
+      {/* Imageのstyleでmargin-topが上書きされるので、Boxを追加 */}
+      <Box>
+        <Image src={ErrorImagePath} alt="NotFound" width={500} height={315} />
+      </Box>
       <Button variant="contained" bold onClick={onClickReturnTopButton}>
         Topページに戻る
       </Button>
