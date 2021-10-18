@@ -6,17 +6,23 @@ import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHe
 import { styled } from '@mui/system';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Typography } from '~/components/parts/commons/atoms';
-import { TEXT_LIGHT_COLOR } from '~/constants/colors';
+import { COLORS } from '~/constants/colors';
 import { useStories } from '~/stores/story/useStories';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { DeleteStoryModal } from '~/components/domains/story/organisms/DeleteStoryModal';
 
-const page = 1;
-const limit = 10;
+type Props = {
+  page: number;
+  limit: 10;
+};
 
-export const StoryListTable: VFC = () => {
+export const StoryListTable: VFC<Props> = ({ page, limit }) => {
   const { data: currentUser } = useCurrentUser();
-  const { data: stories } = useStories({ userId: currentUser?._id, page, limit });
+  const { data: stories } = useStories({
+    userId: currentUser?._id,
+    page,
+    limit,
+  });
   const router = useRouter();
   const [deleteStoryId, setDeleteStoryId] = useState<string | null>(null);
 
@@ -40,26 +46,25 @@ export const StoryListTable: VFC = () => {
           <TableHead>
             <TableRow>
               <StyledHeaderTableCell>
-                <Typography color={TEXT_LIGHT_COLOR} variant="caption">
+                <Typography color={COLORS.TEXT_LIGHT} variant="caption">
                   ストーリー名
                 </Typography>
               </StyledHeaderTableCell>
               <StyledHeaderTableCell align="right">
-                <Typography color={TEXT_LIGHT_COLOR} variant="caption">
+                <Typography color={COLORS.TEXT_LIGHT} variant="caption">
                   ステータス
                 </Typography>
               </StyledHeaderTableCell>
               <StyledHeaderTableCell align="right">
-                <Typography color={TEXT_LIGHT_COLOR} variant="caption">
+                <Typography color={COLORS.TEXT_LIGHT} variant="caption">
                   応援者
                 </Typography>
               </StyledHeaderTableCell>
               <StyledHeaderTableCell align="right">
-                <Typography color={TEXT_LIGHT_COLOR} variant="caption">
+                <Typography color={COLORS.TEXT_LIGHT} variant="caption">
                   最終更新日
                 </Typography>
               </StyledHeaderTableCell>
-              <StyledHeaderTableCell />
             </TableRow>
           </TableHead>
           <TableBody>
