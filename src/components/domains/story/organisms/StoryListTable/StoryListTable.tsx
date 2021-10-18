@@ -10,6 +10,7 @@ import { COLORS } from '~/constants/colors';
 import { useStories } from '~/stores/story/useStories';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { DeleteStoryModal } from '~/components/domains/story/organisms/DeleteStoryModal';
+import type { Story } from '~/domains';
 
 type Props = {
   page: number;
@@ -24,19 +25,19 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
     limit,
   });
   const router = useRouter();
-  const [deleteStoryId, setDeleteStoryId] = useState<string | null>(null);
+  const [storyToDelete, setStoryToDelete] = useState<Story | null>(null);
 
   const handleClickRow = (storyId: string) => {
     router.push(`/story/${storyId}`);
   };
 
-  const handleDeleteStoryConfirm = (e: MouseEvent, storyId: string) => {
+  const handleDeleteStoryConfirm = (e: MouseEvent, story: Story) => {
     e.stopPropagation();
-    setDeleteStoryId(storyId);
+    setStoryToDelete(story);
   };
 
   const handleDeleteStory = () => {
-    console.log(deleteStoryId);
+    console.log(storyToDelete);
   };
 
   return (
@@ -70,6 +71,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
           <TableBody>
             {stories &&
               stories.docs.map((doc) => {
+                console.log(doc);
                 return (
                   <StyledTableRow key={doc._id} hover onClick={() => handleClickRow(doc._id)}>
                     <StyledBodyTableCell component="th" scope="row">
@@ -79,7 +81,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
                     <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
                     <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</StyledBodyTableCell>
                     <TableCell align="right">
-                      <IconButton onClick={(e) => handleDeleteStoryConfirm(e, doc._id)}>
+                      <IconButton onClick={(e) => handleDeleteStoryConfirm(e, doc)}>
                         <MoreVertIcon />
                       </IconButton>
                     </TableCell>
@@ -89,7 +91,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <DeleteStoryModal isOpen={!!deleteStoryId} onClose={() => setDeleteStoryId(null)} onDeleteStory={handleDeleteStory} />
+      <DeleteStoryModal onClose={() => setStoryToDelete(null)} onDeleteStory={handleDeleteStory} storyToDelete={storyToDelete} />
     </>
   );
 };

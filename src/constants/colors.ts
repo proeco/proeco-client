@@ -2,6 +2,7 @@ export const COLORS = {
   PRIMARY: '#6684F7',
   PRIMARY_LIGHT: '#2CA8FA',
   SECONDARY: '#f59033',
+  ERROR: '#ff6868',
   GREEN: '#11BAB0',
   BLACK: '#000000',
   TEXT: '#333333',
