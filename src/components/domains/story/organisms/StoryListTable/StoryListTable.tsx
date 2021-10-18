@@ -78,6 +78,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
                   最終更新日
                 </Typography>
               </StyledHeaderTableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
