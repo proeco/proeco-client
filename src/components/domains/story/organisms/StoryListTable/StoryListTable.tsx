@@ -22,7 +22,7 @@ type Props = {
 
 export const StoryListTable: VFC<Props> = ({ page, limit }) => {
   const { data: currentUser } = useCurrentUser();
-  const { data: stories } = useStories({
+  const { data: stories, mutate: mutateStories } = useStories({
     userId: currentUser?._id,
     page,
     limit,
@@ -45,6 +45,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
     try {
       await restClient.apiDelete(`/stories/${storyToDelete?._id}`);
       setStoryToDelete(null);
+      mutateStories();
       notifySuccessMessage('ストーリーを削除しました!');
     } catch (error) {
       notifyErrorMessage('ストーリーの削除に失敗しました!');
