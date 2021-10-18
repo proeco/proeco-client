@@ -64,7 +64,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
                   </StyledBodyTableCell>
                   <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
                   <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:mm')}</StyledBodyTableCell>
                 </StyledTableRow>
               );
             })}
