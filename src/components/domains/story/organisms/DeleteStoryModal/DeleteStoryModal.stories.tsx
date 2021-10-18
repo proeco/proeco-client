@@ -8,7 +8,6 @@ export default {
   title: 'domains/story/organisms/DeleteStoryModal',
   component: DeleteStoryModal,
   argTypes: {
-    // storyToDelete: Story;
     onClose: { action: 'onClose' },
     onDeleteStory: { action: 'onDeleteStory' },
   },
