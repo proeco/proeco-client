@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Box, styled } from '@mui/system';
-import { Emoji } from 'emoji-mart';
 import type { Story } from '~/domains';
 import { Modal } from '~/components/parts/commons/organisms/Modal';
 import { Button } from '~/components/parts/commons/atoms/Button';
@@ -17,34 +16,32 @@ type DeleteModalContentsProps = {
   onDeleteStory: () => void;
 };
 
-const DeleteModalContents: FC<DeleteModalContentsProps> = ({ storyToDelete, onDeleteStory }) => {
-  return (
-    <>
-      {storyToDelete && (
-        <>
-          <Box>
-            <Typography>ストーリー名</Typography>
-            <Typography variant="h2" bold>
-              {storyToDelete.title}
-            </Typography>
-          </Box>
+const DeleteModalContents: FC<DeleteModalContentsProps> = ({ storyToDelete, onDeleteStory }) => (
+  <>
+    {storyToDelete && (
+      <>
+        <Box>
+          <Typography>ストーリー名</Typography>
+          <Typography variant="h2" bold>
+            {storyToDelete.title}
+          </Typography>
+        </Box>
 
-          <Box mt={3}>
-            <Typography>概要</Typography>
-            <ScrollableDescriptionSection>
-              <Typography variant="h4">{storyToDelete.description}</Typography>
-            </ScrollableDescriptionSection>
-          </Box>
-          <Box mt={3} width="100%" textAlign="center">
-            <Button color="error" variant="contained" onClick={onDeleteStory}>
-              削除
-            </Button>
-          </Box>
-        </>
-      )}
-    </>
-  );
-};
+        <Box mt={3}>
+          <Typography>概要</Typography>
+          <ScrollableDescriptionBox>
+            <Typography variant="h4">{storyToDelete.description}</Typography>
+          </ScrollableDescriptionBox>
+        </Box>
+        <Box mt={3} width="100%" textAlign="center">
+          <Button color="error" variant="contained" onClick={onDeleteStory}>
+            削除
+          </Button>
+        </Box>
+      </>
+    )}
+  </>
+);
 
 export const DeleteStoryModal: FC<DeleteStoryModalProps> = ({ onClose, storyToDelete, onDeleteStory }) => {
   return (
@@ -57,7 +54,7 @@ export const DeleteStoryModal: FC<DeleteStoryModalProps> = ({ onClose, storyToDe
   );
 };
 
-const ScrollableDescriptionSection = styled(Box)`
+const ScrollableDescriptionBox = styled(Box)`
   &.MuiBox-root {
     height: 6rem;
     overflow: scroll;
