@@ -1,4 +1,4 @@
-import React, { FC, VFC } from 'react';
+import React, { FC } from 'react';
 import { Box, styled } from '@mui/system';
 import { Emoji } from 'emoji-mart';
 import type { Story } from '~/domains';
