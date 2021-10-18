@@ -6,6 +6,7 @@ interface CustomPalette {
   black: SimplePaletteColorOptions;
   textColor: SimplePaletteColorOptions;
   borderColor: SimplePaletteColorOptions;
+  backgroundColor: SimplePaletteColorOptions;
 }
 declare module '@mui/material/styles/createPalette' {
   // eslint-disable-next-line
