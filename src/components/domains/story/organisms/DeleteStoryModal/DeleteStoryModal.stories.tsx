@@ -5,10 +5,10 @@ import { Box } from '@mui/system';
 import { DeleteStoryModal } from './DeleteStoryModal';
 
 export default {
-  title: 'domains/story/organisms/CreateNewStoryModal',
+  title: 'domains/story/organisms/DeleteStoryModal',
   component: DeleteStoryModal,
   argTypes: {
-    storyToDelete: Story;
+    // storyToDelete: Story;
     onClose: { action: 'onClose' },
     onDeleteStory: { action: 'onDeleteStory' },
   },
@@ -25,6 +25,13 @@ const Template: ComponentStory<typeof DeleteStoryModal> = (args) => {
 export const OpenModal = Template.bind({});
 OpenModal.args = {
   storyToDelete: {
-    title: '🔧 Webevのコメント機能を開発する',
+    title: 'Webevのコメント機能を開発する',
+    description: 'Webev のコメント機能を開発して、リリースまで行う！',
+    _id: 'mongoId',
+    emojiId: 'wrench',
+    isPrivate: false,
+    createdUserId: 'test',
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 };
