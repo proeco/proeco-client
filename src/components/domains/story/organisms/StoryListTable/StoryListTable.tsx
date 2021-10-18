@@ -4,10 +4,11 @@ import { VFC } from 'react';
 import { format } from 'date-fns';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { styled } from '@mui/system';
-import { Typography } from '~/components/parts/commons/atoms';
-import { COLORS } from '~/constants/colors';
+
 import { useStories } from '~/stores/story/useStories';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { Typography } from '~/components/parts/commons/atoms';
+import { COLORS, DATE_FORMAT } from '~/constants';
 
 type Props = {
   page: number;
@@ -64,7 +65,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
                   </StyledBodyTableCell>
                   <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
                   <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
                 </StyledTableRow>
               );
             })}
