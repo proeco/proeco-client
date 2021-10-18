@@ -24,6 +24,9 @@ export const theme = createTheme({
     borderColor: {
       main: COLORS.BORDER,
     },
+    backgroundColor: {
+      main: COLORS.BACKGROUND,
+    },
   },
   typography: {
     h1: {

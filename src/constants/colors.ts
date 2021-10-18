@@ -7,4 +7,5 @@ export const COLORS = {
   TEXT: '#333333',
   TEXT_LIGHT: '#757575',
   BORDER: '#eaecf1',
+  BACKGROUND: '#e5e5e5',
 };
