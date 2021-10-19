@@ -11,7 +11,7 @@ import { Button, Typography } from '~/components/parts/commons/atoms';
 import { COLORS, DATE_FORMAT } from '~/constants';
 import { Story } from '~/domains';
 import { useStoryForUpdate } from '~/stores/story';
-import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
+import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 
 type Props = {
   page: number;
@@ -27,7 +27,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
   });
   // const router = useRouter();
 
-  const { mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
+  const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
 
   // const handleClickRow = (storyId: string) => {
@@ -35,8 +35,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
   // };
 
   const handleClickMenu = (story: Story) => {
-    // 後でupdateのを使う
-    mutateIsOpenCreateNewStoryModal(true);
+    mutateIsOpenUpdateStoryModal(true);
     mutateStoryForUpdate(story);
   };
 

@@ -12,7 +12,7 @@ import { Story } from '~/domains';
 import { Modal } from '~/components/parts/commons/organisms/Modal';
 import { SelectableEmoji } from '~/components/parts/commons/organisms/SelectableEmoji';
 import { Button, Typography, TextField } from '~/components/parts/commons/atoms';
-import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
+import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useStoryForUpdate } from '~/stores/story';
@@ -67,7 +67,7 @@ export const Component: VFC<Props> = ({
     </>
   );
 
-  return <Modal content={content} title="♻️ ストーリーを更新する" open={isOpen} onClose={onCloseModal} />;
+  return <Modal content={content} title="💫 ストーリーを更新する" open={isOpen} onClose={onCloseModal} />;
 };
 
 const StyledTextField = styled(TextField)`
@@ -79,7 +79,7 @@ export const UpdateStoryModal: VFC = () => {
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
-  const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
+  const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
   console.log(storyForUpdate);
 
@@ -119,14 +119,14 @@ export const UpdateStoryModal: VFC = () => {
   };
 
   const handleCloseModal = () => {
-    mutateIsOpenCreateNewStoryModal(false);
+    mutateIsOpenUpdateStoryModal(false);
   };
 
   const handleSelectEmoji = (emojiId: string) => setEmojiId(emojiId);
 
   return (
     <Component
-      isOpen={!!isOpenCreateNewStoryModal}
+      isOpen={!!isOpenUpdateStoryModal}
       title={title}
       description={description}
       emojiId={emojiId}
