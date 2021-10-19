@@ -15,6 +15,7 @@ import { Button, Typography, TextField } from '~/components/parts/commons/atoms'
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { useStoryForUpdate } from '~/stores/story';
 
 type Props = {
   isOpen: boolean;
@@ -79,6 +80,9 @@ export const UpdateStoryModal: VFC = () => {
   const { notifyErrorMessage } = useErrorNotification();
 
   const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
+  const { data: storyForUpdate } = useStoryForUpdate();
+  console.log(storyForUpdate);
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [emojiId, setEmojiId] = useState<string>('open_file_folder');

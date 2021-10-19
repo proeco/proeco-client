@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { VFC } from 'react';
 
 import { format } from 'date-fns';
@@ -7,8 +7,11 @@ import { styled } from '@mui/system';
 
 import { useStories } from '~/stores/story/useStories';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { Typography } from '~/components/parts/commons/atoms';
+import { Button, Typography } from '~/components/parts/commons/atoms';
 import { COLORS, DATE_FORMAT } from '~/constants';
+import { Story } from '~/domains';
+import { useStoryForUpdate } from '~/stores/story';
+import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 
 type Props = {
   page: number;
@@ -22,10 +25,19 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
     page,
     limit,
   });
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleClickRow = (storyId: string) => {
-    router.push(`/story/${storyId}`);
+  const { mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
+  const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
+
+  // const handleClickRow = (storyId: string) => {
+  //   router.push(`/story/${storyId}`);
+  // };
+
+  const handleClickMenu = (story: Story) => {
+    // 後でupdateのを使う
+    mutateIsOpenCreateNewStoryModal(true);
+    mutateStoryForUpdate(story);
   };
 
   return (
@@ -53,19 +65,28 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
                 最終更新日
               </Typography>
             </StyledHeaderTableCell>
+            <StyledHeaderTableCell align="right">
+              <Typography color={COLORS.TEXT_LIGHT} variant="caption">
+                ここに 3点ドット
+              </Typography>
+            </StyledHeaderTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {stories &&
-            stories.docs.map((doc) => {
+            stories.docs.map((story) => {
               return (
-                <StyledTableRow key={doc._id} hover onClick={() => handleClickRow(doc._id)}>
+                <StyledTableRow key={story._id} hover>
+                  {/* // <StyledTableRow key={doc._id} hover onClick={() => handleClickRow(doc._id)}> */}
                   <StyledBodyTableCell component="th" scope="row">
-                    {doc.title}
+                    {story.title}
                   </StyledBodyTableCell>
                   <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
                   <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">{format(new Date(story.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">
+                    <Button onClick={() => handleClickMenu(story)}>ここにmenuを開く3点ドット</Button>
+                  </StyledBodyTableCell>
                 </StyledTableRow>
               );
             })}
