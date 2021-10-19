@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn, signOut } from 'next-auth/client';
-import { memo, VFC, useState, MouseEvent } from 'react';
+import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
 import { AppBar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -37,7 +37,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
     setAnchorEl(null);
   };
 
-  const Contents = () => {
+  const Contents = useMemo(() => {
     if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
 
     if (currentUser) {
@@ -54,7 +54,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
         Login Button
       </StyledButton>
     );
-  };
+  }, [isValidating, currentUser, anchorEl, open, menuItems]);
 
   return (
     <StyledAppBar position="static">
@@ -63,7 +63,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
           <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
         </a>
       </Link>
-      {Contents()}
+      {Contents}
     </StyledAppBar>
   );
 });
