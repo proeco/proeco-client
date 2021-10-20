@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import Image from 'next/image';
-import { signIn } from 'next-auth/client';
 import { Box, styled } from '@mui/system';
 import { Link } from '@mui/material';
 import { Modal } from '~/components/parts/commons/organisms/Modal';
@@ -10,9 +9,10 @@ import { URLS, IMAGE_PATH } from '~/constants';
 type LoginModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  onClickSignInButton: () => void;
 };
 
-export const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
+export const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose, onClickSignInButton }) => {
   const content = (
     <>
       <Box px={1}>
@@ -25,7 +25,7 @@ export const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
           <Typography color="textColor.light">あなたの素敵なアイデアを実現しましょう</Typography>
         </Box>
 
-        <StyledLoginButtonWrapper my="20px" display="flex" justifyContent="center" role="button" onClick={() => signIn('google')}>
+        <StyledLoginButtonWrapper my="20px" display="flex" justifyContent="center" role="button" onClick={onClickSignInButton}>
           <Image src={IMAGE_PATH.SIGN_IN_GOOGLE} height={46} width={191} />
         </StyledLoginButtonWrapper>
 
@@ -36,7 +36,7 @@ export const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose }) => {
     </>
   );
 
-  return <Modal open={isOpen} small title="✨ Proecoへようこそ！ ✨" content={content} onClose={onClose} />;
+  return <Modal open={isOpen} size="small" title="✨ Proecoへようこそ！ ✨" content={content} onClose={onClose} />;
 };
 
 const StyledLoginButtonWrapper = styled(Box)`

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { signOut } from 'next-auth/client';
+import { signIn, signOut } from 'next-auth/client';
 import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
 import { AppBar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -20,7 +20,6 @@ import { LoginModal } from '~/components/parts/authentication/LoginModal';
 type Props = {
   currentUser?: User;
   isValidating: boolean;
-  onClickLoginButton: () => void;
   menuItems: {
     icon: JSX.Element;
     text: string;
@@ -29,7 +28,7 @@ type Props = {
   logoImagePath: string;
 };
 
-export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickLoginButton, menuItems, logoImagePath }) => {
+export const Component: VFC<Props> = memo(({ currentUser, isValidating, menuItems, logoImagePath }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -37,6 +36,11 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  const onClickLoginButton = () => {
+    setIsLoginModalOpen(true);
   };
 
   const Contents = useMemo(() => {
@@ -59,14 +63,17 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
   }, [isValidating, currentUser, anchorEl, open, menuItems]);
 
   return (
-    <StyledAppBar position="static">
-      <Link href="/">
-        <a>
-          <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
-        </a>
-      </Link>
-      {Contents}
-    </StyledAppBar>
+    <>
+      <StyledAppBar position="static">
+        <Link href="/">
+          <a>
+            <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
+          </a>
+        </Link>
+        {Contents}
+      </StyledAppBar>
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onClickSignInButton={() => signIn('google')} />
+    </>
   );
 });
 
@@ -107,23 +114,5 @@ export const NavigationBar: VFC = memo(() => {
 
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
 
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
-  const handleClickLoginButton = () => {
-    // signIn('google');
-    setIsLoginModalOpen(true);
-  };
-
-  return (
-    <>
-      <Component
-        currentUser={currentUser}
-        isValidating={isValidatingCurrentUser}
-        onClickLoginButton={handleClickLoginButton}
-        menuItems={menuItems}
-        logoImagePath={IMAGE_PATH.LOGO}
-      />
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
-    </>
-  );
+  return <Component currentUser={currentUser} isValidating={isValidatingCurrentUser} menuItems={menuItems} logoImagePath={IMAGE_PATH.LOGO} />;
 });
