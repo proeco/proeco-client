@@ -13,7 +13,7 @@ type Props = {
   size?: 'small' | 'medium' | 'large';
 };
 
-export const Modal: VFC<Props> = ({ open, title, content, onClose, size }) => {
+export const Modal: VFC<Props> = ({ open, title, content, onClose, size="medium" }) => {
   let width;
   switch (size) {
     case 'small':
