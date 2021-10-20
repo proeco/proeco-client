@@ -10,12 +10,13 @@ type Props = {
   title: string;
   content: JSX.Element;
   onClose: () => void;
+  small?: boolean;
 };
 
-export const Modal: VFC<Props> = ({ open, title, content, onClose }) => {
+export const Modal: VFC<Props> = ({ open, title, content, onClose, small }) => {
   return (
     <MuiModal open={open} onClose={onClose}>
-      <StyledBox width="600px">
+      <StyledBox width={small ? '500px' : '600px'}>
         <Box py="8px">
           <StyledTypography variant="h4">{title}</StyledTypography>
         </Box>
