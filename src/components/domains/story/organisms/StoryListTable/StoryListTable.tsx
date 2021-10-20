@@ -1,10 +1,12 @@
-import { useState, VFC } from 'react';
+import { useState, VFC, MouseEvent } from 'react';
 // import { useRouter } from 'next/router';
 
 import { format } from 'date-fns';
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { styled } from '@mui/system';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import UpdateIcon from '@mui/icons-material/Update';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { restClient } from '~/utils/rest-client';
 import { Typography } from '~/components/parts/commons/atoms';
 import { useStories } from '~/stores/story/useStories';
@@ -17,6 +19,7 @@ import { COLORS, DATE_FORMAT } from '~/constants';
 import { Story } from '~/domains';
 import { useStoryForUpdate } from '~/stores/story';
 import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
+import { Menu } from '~/components/parts/commons/organisms/Menu';
 
 type Props = {
   page: number;
@@ -30,6 +33,26 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
     page,
     limit,
   });
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const menuItems = [
+    {
+      icon: <UpdateIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
+      text: '更新する',
+      onClick: () => console.log('更新モーダルを表示'),
+    },
+    {
+      icon: <DeleteIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
+      text: '削除する',
+      onClick: () => console.log('削除モーダルを表示'),
+    },
+  ];
   // const router = useRouter();
   const [storyToDelete, setStoryToDelete] = useState<Story | null>(null);
   const { notifySuccessMessage } = useSuccessNotification();
@@ -104,10 +127,11 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
                   <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
                   <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
                   <TableCell align="right">
-                    <IconButton onClick={() => handleClickMenu(doc)}>
+                    <IconButton onClick={(e) => handleClick(e)}>
                       <MoreVertIcon />
                     </IconButton>
                   </TableCell>
+                  <Menu anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
                 </StyledTableRow>
               ))}
           </TableBody>
