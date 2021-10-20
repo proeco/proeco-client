@@ -18,8 +18,8 @@ type Props = {
 export const Modal: VFC<Props> = ({ open, title, content, onClose, size = 'medium' }) => {
   const sizeMap: { [key in Size]: string } = {
     small: '500px',
-    medium: '500px',
-    large: '600px',
+    medium: '600px',
+    large: '700px',
   };
 
   return (
