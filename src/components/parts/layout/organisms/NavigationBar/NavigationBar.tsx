@@ -72,7 +72,13 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, menuItem
         </Link>
         {Contents}
       </StyledAppBar>
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onClickSignInButton={() => signIn('google')} />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onClickSignInButton={() => {
+          signIn('google');
+        }}
+      />
     </>
   );
 });
