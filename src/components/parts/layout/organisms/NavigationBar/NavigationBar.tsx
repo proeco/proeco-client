@@ -20,6 +20,7 @@ import { LoginModal } from '~/components/parts/authentication/LoginModal';
 type Props = {
   currentUser?: User;
   isValidating: boolean;
+  onClickLoginButton: () => void;
   menuItems: {
     icon: JSX.Element;
     text: string;
@@ -28,7 +29,7 @@ type Props = {
   logoImagePath: string;
 };
 
-export const Component: VFC<Props> = memo(({ currentUser, isValidating, menuItems, logoImagePath }) => {
+export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickLoginButton, menuItems, logoImagePath }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -38,10 +39,6 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, menuItem
     setAnchorEl(null);
   };
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
-  const onClickLoginButton = () => {
-    setIsLoginModalOpen(true);
-  };
 
   const Contents = useMemo(() => {
     if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
@@ -56,7 +53,12 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, menuItem
     }
 
     return (
-      <StyledButton bold onClick={onClickLoginButton}>
+      <StyledButton
+        bold
+        onClick={() => {
+          setIsLoginModalOpen(true);
+        }}
+      >
         Login Button
       </StyledButton>
     );
@@ -72,13 +74,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, menuItem
         </Link>
         {Contents}
       </StyledAppBar>
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
-        onClickSignInButton={() => {
-          signIn('google');
-        }}
-      />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onClickSignInButton={onClickLoginButton} />
     </>
   );
 });
@@ -120,5 +116,17 @@ export const NavigationBar: VFC = memo(() => {
 
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
 
-  return <Component currentUser={currentUser} isValidating={isValidatingCurrentUser} menuItems={menuItems} logoImagePath={IMAGE_PATH.LOGO} />;
+  const handleClickLoginButton = () => {
+    signIn('google');
+  };
+
+  return (
+    <Component
+      currentUser={currentUser}
+      isValidating={isValidatingCurrentUser}
+      onClickLoginButton={handleClickLoginButton}
+      menuItems={menuItems}
+      logoImagePath={IMAGE_PATH.LOGO}
+    />
+  );
 });
