@@ -6,7 +6,6 @@ import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHe
 import { styled } from '@mui/system';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import type { Story } from '~/domains';
-import { COLORS } from '~/constants/colors';
 import { restClient } from '~/utils/rest-client';
 import { Typography } from '~/components/parts/commons/atoms';
 import { useStories } from '~/stores/story/useStories';
@@ -14,6 +13,8 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { DeleteStoryModal } from '~/components/domains/story/organisms/DeleteStoryModal';
+
+import { COLORS, DATE_FORMAT } from '~/constants';
 
 type Props = {
   page: number;
@@ -90,7 +91,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
                   </StyledBodyTableCell>
                   <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
                   <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), 'yyyy/MM/dd hh:ss')}</StyledBodyTableCell>
+                  <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
                   <TableCell align="right">
                     <IconButton onClick={(e) => handleDeleteStoryConfirm(e, doc)}>
                       <MoreVertIcon />
