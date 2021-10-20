@@ -5,37 +5,26 @@ import { Box } from '@mui/system';
 import { Typography } from '~/components/parts/commons/atoms/Typography';
 import { Divider } from '~/components/parts/commons/atoms/Divider';
 
+type Size = 'small' | 'medium' | 'large';
+
 type Props = {
   open: boolean;
   title: string;
   content: JSX.Element;
   onClose: () => void;
-  size?: 'small' | 'medium' | 'large';
+  size?: Size;
 };
 
-export const Modal: VFC<Props> = ({ open, title, content, onClose, size="medium" }) => {
-  let width;
-  switch (size) {
-    case 'small':
-      width = '500px';
-      break;
-
-    case 'medium':
-      width = '600px';
-      break;
-
-    case 'large':
-      width = '700px';
-      break;
-
-    default:
-      width = '600px';
-      break;
-  }
+export const Modal: VFC<Props> = ({ open, title, content, onClose, size = 'medium' }) => {
+  const sizeMap: { [key in Size]: string } = {
+    small: '500px',
+    medium: '500px',
+    large: '600px',
+  };
 
   return (
     <MuiModal open={open} onClose={onClose}>
-      <StyledBox width={width}>
+      <StyledBox width={sizeMap[size]}>
         <Box py="8px">
           <StyledTypography variant="h4">{title}</StyledTypography>
         </Box>
