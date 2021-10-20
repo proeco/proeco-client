@@ -7,6 +7,9 @@ import { LoginModal } from './LoginModal';
 export default {
   title: 'parts/authentication/LoginModal',
   component: LoginModal,
+  argTypes: {
+    onClose: { action: 'onClose' },
+  },
 } as ComponentMeta<typeof LoginModal>;
 
 const Template: ComponentStory<typeof LoginModal> = (args) => {
