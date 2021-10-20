@@ -15,6 +15,8 @@ import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
 
+import { LoginModal } from '~/components/parts/authentication/LoginModal';
+
 type Props = {
   currentUser?: User;
   isValidating: boolean;
@@ -36,6 +38,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const Contents = useMemo(() => {
     if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
@@ -50,21 +53,29 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
     }
 
     return (
-      <StyledButton bold onClick={onClickLoginButton}>
+      <StyledButton
+        bold
+        onClick={() => {
+          setIsLoginModalOpen(true);
+        }}
+      >
         Login Button
       </StyledButton>
     );
   }, [isValidating, currentUser, anchorEl, open, menuItems]);
 
   return (
-    <StyledAppBar position="static">
-      <Link href="/">
-        <a>
-          <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
-        </a>
-      </Link>
-      {Contents}
-    </StyledAppBar>
+    <>
+      <StyledAppBar position="static">
+        <Link href="/">
+          <a>
+            <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
+          </a>
+        </Link>
+        {Contents}
+      </StyledAppBar>
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onClickSignInButton={onClickLoginButton} />
+    </>
   );
 });
 

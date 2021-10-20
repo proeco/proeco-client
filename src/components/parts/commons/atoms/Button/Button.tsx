@@ -15,6 +15,7 @@ export const Button: VFC<Props> = ({ bold, ...rest }) => {
 const StyledButton = styled(MuiButton)<{ bold: number }>`
   &.MuiButton-containedSecondary,
   &.MuiButton-containedPrimary,
+  &.MuiButton-containedError,
   &.MuiButton-containedGreen {
     color: white;
   }
