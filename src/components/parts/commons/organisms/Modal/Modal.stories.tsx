@@ -27,6 +27,7 @@ const Template: ComponentStory<typeof Modal> = (args) => {
 
 export const OpenModal = Template.bind({});
 OpenModal.args = {
+  size: 'medium',
   open: true,
   content: Content,
   title: 'ここにタイトルが入る',

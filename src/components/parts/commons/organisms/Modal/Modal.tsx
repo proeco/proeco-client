@@ -10,13 +10,32 @@ type Props = {
   title: string;
   content: JSX.Element;
   onClose: () => void;
-  small?: boolean;
+  size?: 'small' | 'medium' | 'large';
 };
 
-export const Modal: VFC<Props> = ({ open, title, content, onClose, small }) => {
+export const Modal: VFC<Props> = ({ open, title, content, onClose, size }) => {
+  let width;
+  switch (size) {
+    case 'small':
+      width = '500px';
+      break;
+
+    case 'medium':
+      width = '600px';
+      break;
+
+    case 'large':
+      width = '700px';
+      break;
+
+    default:
+      width = '600px';
+      break;
+  }
+
   return (
     <MuiModal open={open} onClose={onClose}>
-      <StyledBox width={small ? '500px' : '600px'}>
+      <StyledBox width={width}>
         <Box py="8px">
           <StyledTypography variant="h4">{title}</StyledTypography>
         </Box>
