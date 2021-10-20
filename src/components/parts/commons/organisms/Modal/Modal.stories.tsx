@@ -24,10 +24,33 @@ const Template: ComponentStory<typeof Modal> = (args) => {
     </Box>
   );
 };
-
 export const OpenModal = Template.bind({});
+export const SmallModal = Template.bind({});
+export const MediumModal = Template.bind({});
+export const LargeModal = Template.bind({});
+
 OpenModal.args = {
+  open: true,
+  content: Content,
+  title: 'ここにタイトルが入る',
+};
+
+SmallModal.args = {
+  size: 'small',
+  open: true,
+  content: Content,
+  title: 'ここにタイトルが入る',
+};
+
+MediumModal.args = {
   size: 'medium',
+  open: true,
+  content: Content,
+  title: 'ここにタイトルが入る',
+};
+
+LargeModal.args = {
+  size: 'large',
   open: true,
   content: Content,
   title: 'ここにタイトルが入る',
