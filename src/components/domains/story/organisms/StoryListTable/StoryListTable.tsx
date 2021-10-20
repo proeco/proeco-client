@@ -33,24 +33,35 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
     page,
     limit,
   });
+  const [selectStory, setSelectStory] = useState<Story | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: MouseEvent<HTMLElement>) => {
+
+  const handleClickMenu = (event: MouseEvent<HTMLElement>, story: Story) => {
+    setSelectStory(story);
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleClickUpdate = () => {
+    if (!selectStory) return;
+    mutateIsOpenUpdateStoryModal(true);
+    mutateStoryForUpdate(selectStory);
+  };
+
   const menuItems = [
     {
       icon: <UpdateIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
       text: '更新する',
-      onClick: () => console.log('更新モーダルを表示'),
+      onClick: handleClickUpdate,
     },
     {
       icon: <DeleteIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
       text: '削除する',
-      onClick: () => console.log('削除モーダルを表示'),
+      onClick: () => console.log(selectStory),
     },
   ];
   // const router = useRouter();
@@ -64,11 +75,6 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
   // const handleClickRow = (storyId: string) => {
   //   router.push(`/story/${storyId}`);
   // };
-
-  const handleClickMenu = (story: Story) => {
-    mutateIsOpenUpdateStoryModal(true);
-    mutateStoryForUpdate(story);
-  };
 
   // const handleDeleteStoryConfirm = (e: MouseEvent, story: Story) => {
   //   e.stopPropagation();
@@ -127,7 +133,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
                   <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
                   <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
                   <TableCell align="right">
-                    <IconButton onClick={(e) => handleClick(e)}>
+                    <IconButton onClick={(e) => handleClickMenu(e, doc)}>
                       <MoreVertIcon />
                     </IconButton>
                   </TableCell>
