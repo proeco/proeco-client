@@ -1,4 +1,4 @@
-import React, { VFC, useState } from 'react';
+import React, { VFC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import 'emoji-mart/css/emoji-mart.css';
@@ -61,7 +61,7 @@ export const Component: VFC<Props> = ({
       </Box>
       <Box width="100%" textAlign="center">
         <Button variant="contained" onClick={onClickCreateNewStoryButton}>
-          ストーリーを作る！
+          更新する！
         </Button>
       </Box>
     </>
@@ -86,6 +86,16 @@ export const UpdateStoryModal: VFC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [emojiId, setEmojiId] = useState<string>('open_file_folder');
+
+  useEffect(() => {
+    if (!storyForUpdate) {
+      return;
+    }
+
+    setTitle(storyForUpdate.title);
+    setDescription(storyForUpdate.description);
+    setEmojiId(storyForUpdate.emojiId);
+  }, [storyForUpdate]);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
