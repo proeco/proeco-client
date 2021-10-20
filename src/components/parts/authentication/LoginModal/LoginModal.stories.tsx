@@ -19,5 +19,5 @@ const Template: ComponentStory<typeof LoginModal> = (args) => {
 
 export const OpenModal = Template.bind({});
 OpenModal.args = {
-  isOpen: true;
+  isOpen: true,
 };
