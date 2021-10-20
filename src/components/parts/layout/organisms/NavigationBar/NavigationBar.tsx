@@ -15,6 +15,8 @@ import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
 
+import { LoginModal } from '~/components/parts/authentication/LoginModal';
+
 type Props = {
   currentUser?: User;
   isValidating: boolean;
@@ -105,17 +107,23 @@ export const NavigationBar: VFC = memo(() => {
 
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
 
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   const handleClickLoginButton = () => {
-    signIn('google');
+    // signIn('google');
+    setIsLoginModalOpen(true);
   };
 
   return (
-    <Component
-      currentUser={currentUser}
-      isValidating={isValidatingCurrentUser}
-      onClickLoginButton={handleClickLoginButton}
-      menuItems={menuItems}
-      logoImagePath={IMAGE_PATH.LOGO}
-    />
+    <>
+      <Component
+        currentUser={currentUser}
+        isValidating={isValidatingCurrentUser}
+        onClickLoginButton={handleClickLoginButton}
+        menuItems={menuItems}
+        logoImagePath={IMAGE_PATH.LOGO}
+      />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+    </>
   );
 });
