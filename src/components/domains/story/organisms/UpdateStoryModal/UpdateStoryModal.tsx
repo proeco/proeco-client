@@ -107,9 +107,11 @@ export const UpdateStoryModal: VFC = () => {
 
   const handleClickCreateNewStoryButton = async () => {
     try {
-      const { data } = await restClient.apiPost<Story>('/stories', {
-        story: { title, description, emojiId },
+      const { data } = await restClient.apiPut<Story>(`/stories/${storyForUpdate?._id}`, {
+        newObject: { title, description, emojiId },
       });
+
+      console.log(data);
 
       // successのSnackbarを表示する
       notifySuccessMessage('ストーリーの作成に成功しました!');
