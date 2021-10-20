@@ -1,5 +1,4 @@
 import React, { VFC, useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 import 'emoji-mart/css/emoji-mart.css';
 
@@ -15,7 +14,8 @@ import { Button, Typography, TextField } from '~/components/parts/commons/atoms'
 import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { useStoryForUpdate } from '~/stores/story';
+import { useStories, useStoryForUpdate } from '~/stores/story';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type Props = {
   isOpen: boolean;
@@ -75,13 +75,18 @@ const StyledTextField = styled(TextField)`
 `;
 
 export const UpdateStoryModal: VFC = () => {
-  const router = useRouter();
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
-  console.log(storyForUpdate);
+  const { data: currentUser } = useCurrentUser();
+  // TODO pageをpathから取得する
+  const { mutate: mutateStories } = useStories({
+    userId: currentUser?._id,
+    page: 1,
+    limit: 10,
+  });
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -107,22 +112,15 @@ export const UpdateStoryModal: VFC = () => {
 
   const handleClickCreateNewStoryButton = async () => {
     try {
-      const { data } = await restClient.apiPut<Story>(`/stories/${storyForUpdate?._id}`, {
+      await restClient.apiPut<Story>(`/stories/${storyForUpdate?._id}`, {
         newObject: { title, description, emojiId },
       });
 
-      console.log(data);
+      mutateStories();
 
       // successのSnackbarを表示する
       notifySuccessMessage('ストーリーの作成に成功しました!');
 
-      // stateの初期化
-      setTitle('');
-      setDescription('');
-      setEmojiId('open_file_folder');
-
-      // 作成後に作成したstoryの詳細ページに遷移する
-      router.push(`/story/${data._id}`);
       handleCloseModal();
     } catch (error) {
       // errorのSnackbarを表示する
