@@ -1,12 +1,8 @@
-import { useState, VFC, MouseEvent } from 'react';
+import { useState, VFC } from 'react';
 // import { useRouter } from 'next/router';
 
-import { format } from 'date-fns';
-import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { styled } from '@mui/system';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import UpdateIcon from '@mui/icons-material/Update';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { restClient } from '~/utils/rest-client';
 import { Typography } from '~/components/parts/commons/atoms';
 import { useStories } from '~/stores/story/useStories';
@@ -14,12 +10,10 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { DeleteStoryModal } from '~/components/domains/story/organisms/DeleteStoryModal';
+import { StoryTableRow } from '~/components/domains/story/organisms/StoryTableRow';
 
-import { COLORS, DATE_FORMAT } from '~/constants';
+import { COLORS } from '~/constants';
 import { Story } from '~/domains';
-import { useStoryForUpdate } from '~/stores/story';
-import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
-import { Menu } from '~/components/parts/commons/organisms/Menu';
 
 type Props = {
   page: number;
@@ -33,53 +27,11 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
     page,
     limit,
   });
-  const [selectStory, setSelectStory] = useState<Story | null>(null);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
-  const handleClickMenu = (event: MouseEvent<HTMLElement>, story: Story) => {
-    setSelectStory(story);
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleClickUpdate = () => {
-    if (!selectStory) return;
-    mutateIsOpenUpdateStoryModal(true);
-    mutateStoryForUpdate(selectStory);
-  };
-
-  const menuItems = [
-    {
-      icon: <UpdateIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
-      text: '更新する',
-      onClick: handleClickUpdate,
-    },
-    {
-      icon: <DeleteIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
-      text: '削除する',
-      onClick: () => console.log(selectStory),
-    },
-  ];
   // const router = useRouter();
   const [storyToDelete, setStoryToDelete] = useState<Story | null>(null);
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
-
-  const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
-  const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
-
-  // const handleClickRow = (storyId: string) => {
-  //   router.push(`/story/${storyId}`);
-  // };
-
-  // const handleDeleteStoryConfirm = (e: MouseEvent, story: Story) => {
-  //   e.stopPropagation();
-  //   setStoryToDelete(story);
-  // };
 
   const handleDeleteStory = async () => {
     try {
@@ -121,26 +73,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
               <TableCell />
             </TableRow>
           </TableHead>
-          <TableBody>
-            {stories &&
-              stories.docs.map((doc) => (
-                <StyledTableRow key={doc._id} hover>
-                  {/* <StyledTableRow key={doc._id} hover onClick={() => handleClickRow(doc._id)}> */}
-                  <StyledBodyTableCell component="th" scope="row">
-                    {doc.title}
-                  </StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
-                  <StyledBodyTableCell align="right">{format(new Date(doc.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
-                  <TableCell align="right">
-                    <IconButton onClick={(e) => handleClickMenu(e, doc)}>
-                      <MoreVertIcon />
-                    </IconButton>
-                  </TableCell>
-                  <Menu anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
-                </StyledTableRow>
-              ))}
-          </TableBody>
+          <TableBody>{stories && stories.docs.map((doc) => <StoryTableRow story={doc} key={doc._id} />)}</TableBody>
         </Table>
       </TableContainer>
       <DeleteStoryModal onClose={() => setStoryToDelete(null)} onDeleteStory={handleDeleteStory} storyToDelete={storyToDelete} />
@@ -151,18 +84,5 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
 const StyledHeaderTableCell = styled(TableCell)`
   &.MuiTableCell-root {
     padding: 6px 16px;
-  }
-`;
-
-const StyledBodyTableCell = styled(TableCell)`
-  &.MuiTableCell-root {
-    padding: 20px 16px;
-    font-size: 14px;
-  }
-`;
-
-const StyledTableRow = styled(TableRow)`
-  &.MuiTableRow-root {
-    cursor: pointer;
   }
 `;

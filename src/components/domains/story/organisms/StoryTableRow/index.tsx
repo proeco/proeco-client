@@ -1,0 +1,1 @@
+export { StoryTableRow } from './StoryTableRow';
