@@ -74,22 +74,20 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
   ];
 
   return (
-    <>
-      <StyledTableRow hover onClick={() => handleClickRow(story._id)}>
-        <StyledBodyTableCell component="th" scope="row">
-          {story.title}
-        </StyledBodyTableCell>
-        <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
-        <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
-        <StyledBodyTableCell align="right">{format(new Date(story.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
-        <TableCell align="right">
-          <IconButton onClick={(e) => handleClickMenu(e, story)}>
-            <MoreVertIcon />
-          </IconButton>
-        </TableCell>
-        <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
-      </StyledTableRow>
-    </>
+    <StyledTableRow hover onClick={() => handleClickRow(story._id)}>
+      <StyledBodyTableCell component="th" scope="row">
+        {story.title}
+      </StyledBodyTableCell>
+      <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
+      <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
+      <StyledBodyTableCell align="right">{format(new Date(story.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
+      <TableCell align="right">
+        <IconButton onClick={(e) => handleClickMenu(e, story)}>
+          <MoreVertIcon />
+        </IconButton>
+      </TableCell>
+      <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
+    </StyledTableRow>
   );
 };
 
