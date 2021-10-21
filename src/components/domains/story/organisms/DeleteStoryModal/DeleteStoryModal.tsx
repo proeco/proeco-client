@@ -18,11 +18,9 @@ export const DeleteStoryModal: FC<DeleteStoryModalProps> = ({ onClose, onDeleteS
       <Box>
         <Typography>ストーリー名</Typography>
         <Box display="flex" alignItems="center">
-          {story?.emojiId && (
-            <Box mr="8px">
-              <Emoji emoji={story?.emojiId} size={40} />
-            </Box>
-          )}
+          <Box mr="8px">
+            <Emoji emoji={story?.emojiId || ''} size={40} />
+          </Box>
           <Typography variant="h2" bold>
             {story?.title}
           </Typography>
