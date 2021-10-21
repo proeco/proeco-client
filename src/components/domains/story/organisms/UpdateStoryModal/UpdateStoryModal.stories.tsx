@@ -10,7 +10,7 @@ export default {
   argTypes: {
     onChangeTitle: { action: 'onChangeTitle' },
     onChangeDescription: { action: 'onChangeDescription' },
-    onClickCreateNewStoryButton: { action: 'onClickCreateNewStoryButton' },
+    onClickUpdateStoryButton: { action: 'onClickUpdateStoryButton' },
     onSelectEmoji: { action: 'onSelectEmoji' },
     onCloseModal: { action: 'onCloseModal' },
   },

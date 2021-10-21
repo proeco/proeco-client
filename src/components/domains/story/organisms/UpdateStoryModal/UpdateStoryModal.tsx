@@ -24,7 +24,7 @@ type Props = {
   emojiId: string;
   onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeDescription: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClickCreateNewStoryButton: () => void;
+  onClickUpdateStoryButton: () => void;
   onSelectEmoji: (emojiId: string) => void;
   onCloseModal: () => void;
 };
@@ -36,7 +36,7 @@ export const Component: VFC<Props> = ({
   emojiId,
   onChangeTitle,
   onChangeDescription,
-  onClickCreateNewStoryButton,
+  onClickUpdateStoryButton,
   onSelectEmoji,
   onCloseModal,
 }) => {
@@ -60,7 +60,7 @@ export const Component: VFC<Props> = ({
         <TextField fullWidth multiline rows={4} value={description} onChange={onChangeDescription} />
       </Box>
       <Box width="100%" textAlign="center">
-        <Button variant="contained" onClick={onClickCreateNewStoryButton}>
+        <Button variant="contained" onClick={onClickUpdateStoryButton}>
           更新する！
         </Button>
       </Box>
@@ -110,7 +110,7 @@ export const UpdateStoryModal: VFC = () => {
     setDescription(e.target.value);
   };
 
-  const handleClickCreateNewStoryButton = async () => {
+  const handleClickUpdateStoryButton = async () => {
     try {
       await restClient.apiPut<Story>(`/stories/${storyForUpdate?._id}`, {
         newObject: { title, description, emojiId },
@@ -142,7 +142,7 @@ export const UpdateStoryModal: VFC = () => {
       emojiId={emojiId}
       onChangeTitle={handleChangeTitle}
       onChangeDescription={handleChangeDescription}
-      onClickCreateNewStoryButton={handleClickCreateNewStoryButton}
+      onClickUpdateStoryButton={handleClickUpdateStoryButton}
       onCloseModal={handleCloseModal}
       onSelectEmoji={handleSelectEmoji}
     />
