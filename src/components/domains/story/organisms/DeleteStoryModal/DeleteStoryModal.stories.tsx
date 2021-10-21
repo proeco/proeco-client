@@ -2,35 +2,29 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { DeleteStoryModal } from './DeleteStoryModal';
+import { Component } from './DeleteStoryModal';
 
 export default {
   title: 'domains/story/organisms/DeleteStoryModal',
-  component: DeleteStoryModal,
+  component: Component,
   argTypes: {
-    onClose: { action: 'onClose' },
-    onDeleteStory: { action: 'onDeleteStory' },
+    onCloseModal: { action: 'onCloseModal' },
+    onClickDeleteStoryButton: { action: 'onClickDeleteStoryButton' },
   },
-} as ComponentMeta<typeof DeleteStoryModal>;
+} as ComponentMeta<typeof Component>;
 
-const Template: ComponentStory<typeof DeleteStoryModal> = (args) => {
+const Template: ComponentStory<typeof Component> = (args) => {
   return (
     <Box>
-      <DeleteStoryModal {...args} />
+      <Component {...args} />
     </Box>
   );
 };
 
 export const OpenModal = Template.bind({});
 OpenModal.args = {
-  storyToDelete: {
-    title: 'Webevのコメント機能を開発する',
-    description: 'Webev のコメント機能を開発して、リリースまで行う！',
-    _id: 'mongoId',
-    emojiId: 'wrench',
-    isPrivate: false,
-    createdUserId: 'test',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
+  isOpen: true,
+  title: 'Webevのコメント機能を開発する',
+  description: 'Webev のコメント機能を開発して、リリースまで行う！',
+  emojiId: 'wrench',
 };
