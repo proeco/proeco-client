@@ -15,6 +15,7 @@ import { Story } from '~/domains';
 import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useStoryForUpdate, useStories } from '~/stores/story';
+// DeleteStoryModal.tsxを修正した後、こちらを使用する
 // import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
@@ -65,6 +66,7 @@ export const StoryTableRow: VFC<Props> = ({ story, page, limit }) => {
     }
   };
 
+  // DeleteStoryModal.tsxを修正した後、こちらを使用する
   // const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   // const { mutate: mutateStoryForDelete } = useStoryForDelete();
 
@@ -88,6 +90,7 @@ export const StoryTableRow: VFC<Props> = ({ story, page, limit }) => {
   const handleClickDelete = () => {
     setStoryToDelete(selectStory);
     handleClose();
+    // DeleteStoryModal.tsxを修正した後、こちらを使用する
     // if (!selectStory) return;
     // mutateIsOpenDeleteStoryModal(true);
     // mutateStoryForDelete(selectStory);
