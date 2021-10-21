@@ -17,8 +17,8 @@ type Props = {
 export const Component: VFC<Props> = ({ isOpen, onClose, onClickSignInButton, logoImagePath, signInGoogleImagePath }) => {
   const content = (
     <Box>
-      <Box width="400px" height="60px" mx="auto" position="relative">
-        <Image src={logoImagePath} layout="fill" objectFit="contain" />
+      <Box width="400px" height="80px" mx="auto" position="relative">
+        <Image src={logoImagePath} width="400px" height="80px" />
       </Box>
 
       <Box my="20px">
