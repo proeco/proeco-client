@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { VFC } from 'react';
 import Image from 'next/image';
 import { Box, styled } from '@mui/system';
 import { Link } from '@mui/material';
@@ -6,17 +6,19 @@ import { Modal } from '~/components/parts/commons/organisms/Modal';
 import { Typography } from '~/components/parts/commons/atoms';
 import { URLS, IMAGE_PATH } from '~/constants';
 
-type LoginModalProps = {
+type Props = {
   isOpen: boolean;
   onClose: () => void;
   onClickSignInButton: () => void;
+  logoImagePath: string;
+  signInGoogleImagePath: string;
 };
 
-export const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose, onClickSignInButton }) => {
+export const Component: VFC<Props> = ({ isOpen, onClose, onClickSignInButton, logoImagePath, signInGoogleImagePath }) => {
   const content = (
     <Box>
       <Box width="400px" height="60px" mx="auto" position="relative">
-        <Image src={IMAGE_PATH.LOGO} layout="fill" objectFit="contain" />
+        <Image src={logoImagePath} layout="fill" objectFit="contain" />
       </Box>
 
       <Box my="20px">
@@ -25,7 +27,7 @@ export const LoginModal: FC<LoginModalProps> = ({ isOpen, onClose, onClickSignIn
       </Box>
 
       <StyledLoginButtonWrapper my="20px" display="flex" justifyContent="center" role="button" onClick={onClickSignInButton}>
-        <Image src={IMAGE_PATH.SIGN_IN_GOOGLE} height={50} width={190} />
+        <Image src={signInGoogleImagePath} height={50} width={190} />
       </StyledLoginButtonWrapper>
 
       <Typography my="20px" color="textColor.light">
@@ -42,3 +44,15 @@ const StyledLoginButtonWrapper = styled(Box)`
     opacity: 0.8;
   }
 `;
+
+export const LoginModal: VFC<Omit<Props, 'logoImagePath' | 'signInGoogleImagePath'>> = ({ isOpen, onClose, onClickSignInButton }) => {
+  return (
+    <Component
+      isOpen={isOpen}
+      onClose={onClose}
+      onClickSignInButton={onClickSignInButton}
+      logoImagePath={IMAGE_PATH.LOGO}
+      signInGoogleImagePath={IMAGE_PATH.SIGN_IN_GOOGLE}
+    />
+  );
+};
