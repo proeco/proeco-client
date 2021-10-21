@@ -7,8 +7,8 @@
   "schedule": ["every weekend"],
   "packageRules": [
     {
-      matchPackageNames: ['mongodb'],
-      allowedVersions: '<4'
+      "matchPackageNames": ['mongodb'],
+      "allowedVersions": '<4'
     }
   ]
 }
