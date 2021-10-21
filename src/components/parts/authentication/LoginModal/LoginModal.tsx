@@ -40,6 +40,7 @@ export const Component: VFC<Props> = ({ isOpen, onClose, onClickSignInButton, lo
 };
 
 const StyledLoginButtonWrapper = styled(Box)`
+  cursor: pointer;
   :hover {
     opacity: 0.8;
   }
