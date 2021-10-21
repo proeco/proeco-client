@@ -47,6 +47,6 @@ export const DeleteStoryModal: FC<DeleteStoryModalProps> = ({ onClose, onDeleteS
 const StyledDescriptionBox = styled(Box)`
   &.MuiBox-root {
     height: 6rem;
-    overflow: scroll;
+    overflow-y: scroll;
   }
 `;
