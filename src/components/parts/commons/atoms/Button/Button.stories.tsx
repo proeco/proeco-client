@@ -28,7 +28,7 @@ const Template: ComponentStory<typeof Button> = (args) => (
         </Button>
       </Box>
     </Box>
-    <Box display="flex" alignItems="start" gap="20px">
+    <Box display="flex" alignItems="start" gap="20px" mb="30px">
       <Box>
         <Button size="small" color="secondary" {...args}>
           Button!
@@ -41,6 +41,40 @@ const Template: ComponentStory<typeof Button> = (args) => (
       </Box>
       <Box>
         <Button size="large" color="secondary" {...args}>
+          Button!
+        </Button>
+      </Box>
+    </Box>
+    <Box display="flex" alignItems="start" gap="20px" mb="30px">
+      <Box>
+        <Button size="small" color="green" {...args}>
+          Button!
+        </Button>
+      </Box>
+      <Box>
+        <Button size="medium" color="green" {...args}>
+          Button!
+        </Button>
+      </Box>
+      <Box>
+        <Button size="large" color="green" {...args}>
+          Button!
+        </Button>
+      </Box>
+    </Box>
+    <Box display="flex" alignItems="start" gap="20px">
+      <Box>
+        <Button size="small" color="error" {...args}>
+          Button!
+        </Button>
+      </Box>
+      <Box>
+        <Button size="medium" color="error" {...args}>
+          Button!
+        </Button>
+      </Box>
+      <Box>
+        <Button size="large" color="error" {...args}>
           Button!
         </Button>
       </Box>

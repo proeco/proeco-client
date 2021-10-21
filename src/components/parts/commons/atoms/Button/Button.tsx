@@ -14,7 +14,9 @@ export const Button: VFC<Props> = ({ bold, ...rest }) => {
 
 const StyledButton = styled(MuiButton)<{ bold: number }>`
   &.MuiButton-containedSecondary,
-  &.MuiButton-containedPrimary {
+  &.MuiButton-containedPrimary,
+  &.MuiButton-containedError,
+  &.MuiButton-containedGreen {
     color: white;
   }
   font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};

@@ -1,28 +1,34 @@
 import { createTheme } from '@mui/material/styles';
 
-import { PRIMARY_COLOR, PRIMARY_LIGHT_COLOR, SECONDARY_COLOR, GREEN_COLOR, TEXT_COLOR, TEXT_LIGHT_COLOR, BORDER_COLOR, BLACK_COLOR } from '~/constants/colors';
+import { COLORS } from '~/constants';
 
 export const theme = createTheme({
   palette: {
     primary: {
-      main: PRIMARY_COLOR,
-      light: PRIMARY_LIGHT_COLOR,
+      main: COLORS.PRIMARY,
+      light: COLORS.PRIMARY_LIGHT,
     },
     secondary: {
-      main: SECONDARY_COLOR,
+      main: COLORS.SECONDARY,
+    },
+    error: {
+      main: COLORS.ERROR,
     },
     green: {
-      main: GREEN_COLOR,
+      main: COLORS.GREEN,
     },
     black: {
-      main: BLACK_COLOR,
+      main: COLORS.BLACK,
     },
     textColor: {
-      main: TEXT_COLOR,
-      light: TEXT_LIGHT_COLOR,
+      main: COLORS.TEXT,
+      light: COLORS.TEXT_LIGHT,
     },
     borderColor: {
-      main: BORDER_COLOR,
+      main: COLORS.BORDER,
+    },
+    backgroundColor: {
+      main: COLORS.BACKGROUND,
     },
   },
   typography: {

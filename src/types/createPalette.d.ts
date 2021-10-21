@@ -6,6 +6,7 @@ interface CustomPalette {
   black: SimplePaletteColorOptions;
   textColor: SimplePaletteColorOptions;
   borderColor: SimplePaletteColorOptions;
+  backgroundColor: SimplePaletteColorOptions;
 }
 declare module '@mui/material/styles/createPalette' {
   // eslint-disable-next-line
@@ -13,4 +14,10 @@ declare module '@mui/material/styles/createPalette' {
 
   // eslint-disable-next-line
   interface Palette extends CustomPalette {}
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    green: true;
+  }
 }
