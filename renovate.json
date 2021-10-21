@@ -1,14 +1,14 @@
 {
   "extends": [
+    "config:base",
     "group:allNonMajor",
-    "schedule:earlyMondays"
+    "group:definitelyTyped"
   ],
+  "schedule": ["every weekend"],
   "packageRules": [
     {
-      "groupName": "definitelyTyped",
-      "matchPackagePrefixes": [
-        "@types/"
-      ]
+      matchPackageNames: ['mongodb'],
+      allowedVersions: '<4'
     }
   ]
 }
