@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn, signOut } from 'next-auth/client';
-import { memo, VFC, useState, MouseEvent } from 'react';
-import { AppBar } from '@mui/material';
+import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
+import { AppBar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { Logout } from '@mui/icons-material';
@@ -15,8 +15,11 @@ import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
 
+import { LoginModal } from '~/components/parts/authentication/LoginModal';
+
 type Props = {
   currentUser?: User;
+  isValidating: boolean;
   onClickLoginButton: () => void;
   menuItems: {
     icon: JSX.Element;
@@ -26,7 +29,7 @@ type Props = {
   logoImagePath: string;
 };
 
-export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton, menuItems, logoImagePath }) => {
+export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickLoginButton, menuItems, logoImagePath }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -35,25 +38,44 @@ export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton, me
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  return (
-    <StyledAppBar position="static">
-      <Link href="/">
-        <a>
-          <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
-        </a>
-      </Link>
-      {currentUser ? (
+  const Contents = useMemo(() => {
+    if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
+
+    if (currentUser) {
+      return (
         <>
           <StyledUserIcon size="small" imagePath={currentUser.image} userId={currentUser._id} onClick={handleClick} />
           <Menu anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </>
-      ) : (
-        <StyledButton bold onClick={onClickLoginButton}>
-          Login Button
-        </StyledButton>
-      )}
-    </StyledAppBar>
+      );
+    }
+
+    return (
+      <StyledButton
+        bold
+        onClick={() => {
+          setIsLoginModalOpen(true);
+        }}
+      >
+        Login Button
+      </StyledButton>
+    );
+  }, [isValidating, currentUser, anchorEl, open, menuItems]);
+
+  return (
+    <>
+      <StyledAppBar position="static">
+        <Link href="/">
+          <a>
+            <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
+          </a>
+        </Link>
+        {Contents}
+      </StyledAppBar>
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onClickSignInButton={onClickLoginButton} />
+    </>
   );
 });
 
@@ -92,11 +114,19 @@ export const NavigationBar: VFC = memo(() => {
     },
   ];
 
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
 
   const handleClickLoginButton = () => {
     signIn('google');
   };
 
-  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} menuItems={menuItems} logoImagePath={IMAGE_PATH.LOGO} />;
+  return (
+    <Component
+      currentUser={currentUser}
+      isValidating={isValidatingCurrentUser}
+      onClickLoginButton={handleClickLoginButton}
+      menuItems={menuItems}
+      logoImagePath={IMAGE_PATH.LOGO}
+    />
+  );
 });

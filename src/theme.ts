@@ -11,6 +11,9 @@ export const theme = createTheme({
     secondary: {
       main: COLORS.SECONDARY,
     },
+    error: {
+      main: COLORS.ERROR,
+    },
     green: {
       main: COLORS.GREEN,
     },
@@ -23,6 +26,9 @@ export const theme = createTheme({
     },
     borderColor: {
       main: COLORS.BORDER,
+    },
+    backgroundColor: {
+      main: COLORS.BACKGROUND,
     },
   },
   typography: {
