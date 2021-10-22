@@ -1,6 +1,7 @@
 export { Button } from './Button';
 export { Card } from './Card';
 export { Divider } from './Divider';
+export { Emoji } from './Emoji';
 export { Icon } from './Icon';
 export { Pagination } from './Pagination';
 export { Paper } from './Paper';

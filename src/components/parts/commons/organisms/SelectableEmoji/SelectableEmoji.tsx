@@ -1,8 +1,9 @@
 import React, { VFC, useState, useRef, useEffect } from 'react';
 
-import { Emoji, EmojiData, Picker, emojiIndex } from 'emoji-mart';
+import { EmojiData, Picker, emojiIndex } from 'emoji-mart';
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
+import { Emoji } from '~/components/parts/commons/atoms';
 
 import 'emoji-mart/css/emoji-mart.css';
 
@@ -44,8 +45,7 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, size, onSelectEmoji }) =>
   return (
     <>
       <StyledBox height={size} width={size} p="4px" ref={emojiRef} isEmojiSettingMode={isEmojiSettingMode}>
-        {/* Paddingとborderの分サイズをひく */}
-        {emoji && <Emoji emoji={emoji} size={size - 12} onClick={handleClickEmoji} />}
+        {emoji && <Emoji emojiId={emoji} size="md" onClick={handleClickEmoji} />}
       </StyledBox>
       {isEmojiSettingMode && (
         <>

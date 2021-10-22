@@ -2,31 +2,35 @@ import React, { VFC } from 'react';
 import { styled } from '@mui/material/styles';
 import { Modal as MuiModal } from '@mui/material';
 import { Box } from '@mui/system';
-import { Typography } from '~/components/parts/commons/atoms/Typography';
+import { Emoji, Typography } from '~/components/parts/commons/atoms';
 import { Divider } from '~/components/parts/commons/atoms/Divider';
 
 type Size = 'small' | 'medium' | 'large';
 
 type Props = {
   open: boolean;
+  emojiId?: string;
   title: string;
   content: JSX.Element;
   onClose: () => void;
   size?: Size;
 };
 
-export const Modal: VFC<Props> = ({ open, title, content, onClose, size = 'medium' }) => {
-  const sizeMap: { [key in Size]: string } = {
-    small: '500px',
-    medium: '600px',
-    large: '700px',
-  };
+const sizeMap: { [key in Size]: string } = {
+  small: '500px',
+  medium: '600px',
+  large: '700px',
+};
 
+export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size = 'medium' }) => {
   return (
     <MuiModal open={open} onClose={onClose}>
       <StyledBox width={sizeMap[size]}>
-        <Box py="8px">
-          <StyledTypography variant="h4">{title}</StyledTypography>
+        <Box py="8px" display="flex" alignItems="center" justifyContent="center" alignContent="center" gap="8px">
+          {emojiId && <Emoji emojiId={emojiId} size="sm" />}
+          <Typography display="block" variant="h4">
+            {title}
+          </Typography>
         </Box>
         <Divider />
         <Box p="20px">{content}</Box>
@@ -42,8 +46,4 @@ const StyledBox = styled(Box)`
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 4px;
-`;
-
-const StyledTypography = styled(Typography)`
-  text-align: center;
 `;
