@@ -15,13 +15,13 @@ type Props = {
   size?: Size;
 };
 
-export const Modal: VFC<Props> = ({ open, title, content, onClose, size = 'medium' }) => {
-  const sizeMap: { [key in Size]: string } = {
-    small: '500px',
-    medium: '600px',
-    large: '700px',
-  };
+const sizeMap: { [key in Size]: string } = {
+  small: '500px',
+  medium: '600px',
+  large: '700px',
+};
 
+export const Modal: VFC<Props> = ({ open, title, content, onClose, size = 'medium' }) => {
   return (
     <MuiModal open={open} onClose={onClose}>
       <StyledBox width={sizeMap[size]}>
