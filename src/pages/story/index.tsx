@@ -2,12 +2,12 @@ import { NextPage } from 'next';
 
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
-import { CreateOutlined as CreateOutlinedIcon } from '@mui/icons-material';
 
 import { ChangeEvent, useState } from 'react';
 import { StoryListTable } from '~/components/domains/story/organisms/StoryListTable';
-import { Button, Pagination, Typography } from '~/components/parts/commons/atoms';
+import { Button, Pagination, Typography, Icon } from '~/components/parts/commons/atoms';
 import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
+
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useStories } from '~/stores/story';
@@ -43,7 +43,7 @@ const StoryList: NextPage = () => {
           <Typography variant="h3" bold>
             ストーリーリスト
           </Typography>
-          <Button variant="contained" bold onClick={handleClickCreateStoryButton} startIcon={<CreateOutlinedIcon />}>
+          <Button variant="contained" bold onClick={handleClickCreateStoryButton} startIcon={<Icon icon="CreateOutlined" width="20px" />}>
             ストーリーを追加する
           </Button>
         </Box>

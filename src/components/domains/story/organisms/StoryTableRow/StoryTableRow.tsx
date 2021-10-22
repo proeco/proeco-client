@@ -3,9 +3,9 @@ import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { IconButton, TableCell, TableRow } from '@mui/material';
 import { styled } from '@mui/system';
-import { MoreVert as MoreVertIcon, Update as UpdateIcon, Delete as DeleteIcon } from '@mui/icons-material';
 
 import { Menu } from '~/components/parts/commons/organisms/Menu';
+import { Icon } from '~/components/parts/commons/atoms/Icon';
 
 import { DATE_FORMAT } from '~/constants';
 
@@ -62,12 +62,12 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
 
   const menuItems = [
     {
-      icon: <UpdateIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
+      icon: <Icon icon="Update" width="20px" color="textColor.main" />,
       text: '更新する',
       onClick: handleClickUpdate,
     },
     {
-      icon: <DeleteIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
+      icon: <Icon icon="Delete" width="20px" color="textColor.main" />,
       text: '削除する',
       onClick: handleClickDelete,
     },
@@ -83,7 +83,7 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
       <StyledBodyTableCell align="right">{format(new Date(story.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
       <TableCell align="right">
         <IconButton onClick={(e) => handleClickMenu(e, story)}>
-          <MoreVertIcon />
+          <Icon icon="MoreVert" width="24px" />
         </IconButton>
       </TableCell>
       <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />

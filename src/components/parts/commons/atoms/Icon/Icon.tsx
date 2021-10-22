@@ -1,12 +1,17 @@
 import React, { VFC, ComponentProps } from 'react';
-import { MoreVert, Update, Delete, Logout } from '@mui/icons-material';
-import { Box } from '@mui/system';
+import { MoreVert, Update, Delete, Logout, PersonOutline, DashboardOutlined, Settings, Add, CreateOutlined } from '@mui/icons-material';
+import { Box, styled } from '@mui/system';
 
 const IconMap = {
-  MoreVert: <MoreVert color="inherit" sx={{ width: '100%', height: 'auto', display: 'block' }} />,
-  Update: <Update color="inherit" sx={{ width: '100%', height: 'auto', display: 'block' }} />,
-  Delete: <Delete color="inherit" sx={{ width: '100%', height: 'auto', display: 'block' }} />,
-  Logout: <Logout color="inherit" sx={{ width: '100%', height: 'auto', display: 'block' }} />,
+  MoreVert: <MoreVert />,
+  Update: <Update />,
+  Delete: <Delete />,
+  Logout: <Logout />,
+  PersonOutline: <PersonOutline />,
+  DashboardOutlined: <DashboardOutlined />,
+  Settings: <Settings />,
+  Add: <Add />,
+  CreateOutlined: <CreateOutlined />,
 };
 
 type IconType = {
@@ -16,5 +21,14 @@ type IconType = {
 type Props = ComponentProps<typeof Box> & IconType;
 
 export const Icon: VFC<Props> = ({ icon, ...rest }) => {
-  return <Box {...rest}>{IconMap[icon]}</Box>;
+  return <StyledBox {...rest}>{IconMap[icon]}</StyledBox>;
 };
+
+const StyledBox = styled(Box)`
+  .MuiSvgIcon-root {
+    width: 100%;
+    height: auto;
+    display: block;
+    color: inherit;
+  }
+`;
