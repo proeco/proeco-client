@@ -1,9 +1,8 @@
 import React, { VFC, useState, useEffect } from 'react';
 import { Box, styled } from '@mui/system';
-import { Emoji } from 'emoji-mart';
 import { Modal } from '~/components/parts/commons/organisms/Modal';
 import { Button } from '~/components/parts/commons/atoms/Button';
-import { Typography } from '~/components/parts/commons/atoms';
+import { Emoji, Typography } from '~/components/parts/commons/atoms';
 
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 
@@ -31,7 +30,7 @@ export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, onC
         <Typography>ストーリー名</Typography>
         <Box display="flex" alignItems="center">
           <Box mr="8px">
-            <Emoji emoji={emojiId} size={40} />
+            <Emoji emojiId={emojiId} size="medium" />
           </Box>
           <Typography variant="h2" bold>
             {title}
