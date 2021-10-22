@@ -2,15 +2,23 @@ import { VFC } from 'react';
 import { Emoji as EmojiOrigin } from 'emoji-mart';
 import { Box, styled } from '@mui/system';
 
+type Size = 'small' | 'medium' | 'large';
+
 type Props = {
   emojiId: string;
-  size: number;
+  size: Size;
 };
 
-export const Emoji: VFC<Props> = ({ emojiId, size }) => {
+const sizeMap: { [key in Size]: number } = {
+  small: 24,
+  medium: 40,
+  large: 60,
+};
+
+export const Emoji: VFC<Props> = ({ emojiId, size = 'medium' }) => {
   return (
     <StyledEmojiWrapper>
-      <EmojiOrigin emoji={emojiId} size={size} />
+      <EmojiOrigin emoji={emojiId} size={sizeMap[size]} />
     </StyledEmojiWrapper>
   );
 };
