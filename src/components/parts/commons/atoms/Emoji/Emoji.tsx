@@ -11,7 +11,7 @@ type Props = {
 };
 
 const sizeMap: { [key in Size]: number } = {
-  sm: 16,
+  sm: 24,
   md: 28,
   lg: 40,
 };

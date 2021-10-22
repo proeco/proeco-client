@@ -52,7 +52,7 @@ export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, onC
     </>
   );
 
-  return <Modal open={isOpen} title="🗑 ストーリーを削除する" content={content} onClose={onCloseModal} />;
+  return <Modal open={isOpen} emojiId="wastebasket" title="ストーリーを削除する" content={content} onClose={onCloseModal} />;
 };
 
 const StyledDescriptionBox = styled(Box)`

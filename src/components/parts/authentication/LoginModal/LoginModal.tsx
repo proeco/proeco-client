@@ -36,7 +36,7 @@ export const Component: VFC<Props> = ({ isOpen, onClose, onClickSignInButton, lo
     </Box>
   );
 
-  return <Modal open={isOpen} size="small" title="✨ Proecoへようこそ ✨" content={content} onClose={onClose} />;
+  return <Modal open={isOpen} size="small" emojiId="tada" title="Proecoへようこそ" content={content} onClose={onClose} />;
 };
 
 const StyledLoginButtonWrapper = styled(Box)`

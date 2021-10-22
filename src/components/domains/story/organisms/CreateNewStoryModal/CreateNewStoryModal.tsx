@@ -66,7 +66,7 @@ export const Component: VFC<Props> = ({
     </>
   );
 
-  return <Modal content={content} title="✨ ストーリーを作成する" open={isOpen} onClose={onCloseModal} />;
+  return <Modal content={content} emojiId="sparkles" title="ストーリーを作成する" open={isOpen} onClose={onCloseModal} />;
 };
 
 const StyledTextField = styled(TextField)`
