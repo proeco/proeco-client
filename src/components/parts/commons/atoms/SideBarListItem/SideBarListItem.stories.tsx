@@ -2,10 +2,8 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { styled } from '@mui/system';
 import { List } from '@mui/material';
-import { DashboardOutlined as DashboardOutlinedIcon } from '@mui/icons-material';
 
-import { SideBarListItem } from '~/components/parts/commons/atoms/SideBarListItem';
-import { Typography } from '~/components/parts/commons/atoms';
+import { Typography, Icon, SideBarListItem } from '~/components/parts/commons/atoms';
 
 export default {
   title: 'parts/commons/atoms/SideBarListItem',
@@ -28,12 +26,12 @@ const StyledList = styled(List)`
 
 export const Default = Template.bind({});
 Default.args = {
-  icon: <DashboardOutlinedIcon fontSize="small" sx={{ color: 'textColor.main' }} />,
+  icon: <Icon icon="DashboardOutlined" width="20px" color="textColor.main" />,
   selected: false,
 };
 
 export const Selected = Template.bind({});
 Selected.args = {
-  icon: <DashboardOutlinedIcon fontSize="small" sx={{ color: '#fff' }} />,
+  icon: <Icon icon="DashboardOutlined" width="20px" color="#fff" />,
   selected: true,
 };

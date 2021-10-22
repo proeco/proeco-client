@@ -5,17 +5,16 @@ import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
 import { AppBar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { Logout } from '@mui/icons-material';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { UserIcon } from '~/components/domains/user/atoms/UserIcon';
-import { Button } from '~/components/parts/commons/atoms';
+import { UserIcon } from '~/components/domains/user/atoms';
+import { Button, Icon } from '~/components/parts/commons/atoms';
 import { Menu } from '~/components/parts/commons/organisms/Menu';
+import { LoginModal } from '~/components/parts/authentication/LoginModal';
+
 import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
-
-import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 type Props = {
   currentUser?: User;
@@ -108,7 +107,7 @@ const StyledUserIcon = styled(UserIcon)`
 export const NavigationBar: VFC = memo(() => {
   const menuItems = [
     {
-      icon: <Logout fontSize="small" sx={{ color: 'textColor.main' }} />,
+      icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
       text: 'Logout',
       onClick: () => signOut(),
     },

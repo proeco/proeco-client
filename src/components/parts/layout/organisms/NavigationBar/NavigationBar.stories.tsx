@@ -1,9 +1,10 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-
-import { Logout } from '@mui/icons-material';
 import { action } from '@storybook/addon-actions';
+
 import { Component } from '~/components/parts/layout/organisms/NavigationBar';
+import { Icon } from '~/components/parts/commons/atoms';
+
 import { createMockUser } from '~/mock';
 
 export default {
@@ -46,7 +47,7 @@ LoginUser.args = {
   isValidating: false,
   menuItems: [
     {
-      icon: <Logout fontSize="small" sx={{ color: 'textColor.main' }} />,
+      icon: <Icon icon="Logout" width="20px" color="textColor.main" />,
       text: 'Logout',
       onClick: action('signOut'),
     },
