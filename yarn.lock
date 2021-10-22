@@ -3334,10 +3334,10 @@
   resolved "https://registry.yarnpkg.com/@types/component-emitter/-/component-emitter-1.2.10.tgz#ef5b1589b9f16544642e473db5ea5639107ef3ea"
   integrity sha512-bsjleuRKWmGqajMerkzox19aGbscQX5rmmvvXl3wlIp5gMG1HgkiwPxsN5p070fBDKTNSPgojVbuY1+HWMbFhg==
 
-"@types/emoji-mart@3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@types/emoji-mart/-/emoji-mart-3.0.6.tgz#06dc3c883bc2a48e8fdc37f0a3ebb5e15a145365"
-  integrity sha512-TbFLFkWvhZUeYkII94fB8bplhtRTUxekBjZehcKu7leq9gvg8IG7F9NBh0YJdH3XRiu+uk0Drviy+GzfcMkMCw==
+"@types/emoji-mart@3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@types/emoji-mart/-/emoji-mart-3.0.8.tgz#b0de7aabf39b5c4b6e378432bb3b99dbf903bc04"
+  integrity sha512-jmNew3D9XAVchIpyXHEZjR3Sa0uP8qD5TILk9U6Ev/Fcp43V6K1UFZ07KWtVVLjzyCMXaFB9UD3/3Y/2vVdGmQ==
   dependencies:
     "@types/react" "*"
 
@@ -3560,10 +3560,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-copy-to-clipboard@5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@types/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.1.tgz#7d9c2c0af52e2e8106ebe2b9fde4f02859af7a3d"
-  integrity sha512-CDuRrJWEIdfKFC4vbwpXT3vk0O4gA/I/Kxu/1npUvGc2Yey5swPvsgO3JEnQkIUwdnYUbwUYDE/fTFQVgqr4oA==
+"@types/react-copy-to-clipboard@5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@types/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.2.tgz#c29690b472a54edff35916f0d1c6c797ad0fd34b"
+  integrity sha512-O29AThfxrkUFRsZXjfSWR2yaWo0ppB1yLEnHA+Oh24oNetjBAwTDu1PmolIqdJKzsZiO4J1jn6R6TmO96uBvGg==
   dependencies:
     "@types/react" "*"
 
@@ -3604,10 +3604,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@17.0.29":
-  version "17.0.29"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.29.tgz#9535f3fc01a4981ce9cadcf0daa2593c0c2f2251"
-  integrity sha512-HSenIfBEBZ70BLrrVhtEtHpqaP79waauPtA8XKlczTxL3hXrW/ElGNLTpD1TmqkykgGlOAK55+D3SmUHEirpFw==
+"@types/react@17.0.31":
+  version "17.0.31"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.31.tgz#fe05ebf91ff3ae35bb6b13f6c1b461db8089dff8"
+  integrity sha512-MQSR5EL4JZtdWRvqDgz9kXhSDDoy2zMTYyg7UhP+FZ5ttUOocWyxiqFJiI57sUG0BtaEX7WDXYQlkCYkb3X9vQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
