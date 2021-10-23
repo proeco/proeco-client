@@ -6,8 +6,10 @@
   "homepage": "https://github.com/proeco/proeco#readme",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "run-p dev:*",
+    "dev:next": "next dev",
+    "dev:aspida": "aspida --watch",
+    "build": "aspida && next build",
     "start": "next start",
     "lint": "eslint \"./**/*.{js,jsx,ts,tsx}\"",
     "test": "jest",
@@ -16,6 +18,7 @@
     "chromatic": "npx chromatic --project-token=09b693341c4e"
   },
   "dependencies": {
+    "@aspida/axios": "^1.7.1",
     "@emotion/react": "11.4.1",
     "@emotion/styled": "11.3.0",
     "@mui/icons-material": "5.0.3",
