@@ -13,7 +13,7 @@ type Props = {
 const sizeMap: { [key in Size]: number } = {
   sm: 24,
   md: 28,
-  lg: 40,
+  lg: 32,
 };
 
 export const Emoji: VFC<Props> = ({ emojiId, size = 'md', onClick }) => {
