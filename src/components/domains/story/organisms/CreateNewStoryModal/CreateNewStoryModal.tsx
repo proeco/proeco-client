@@ -88,7 +88,7 @@ export const CreateNewStoryModal: VFC = () => {
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-    if (e.target.value.length === 0 || description.length === 0) {
+    if (e.target.value.length === 0) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
@@ -97,11 +97,6 @@ export const CreateNewStoryModal: VFC = () => {
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
-    if (title.length === 0 || e.target.value.length === 0) {
-      setIsDisabled(true);
-    } else {
-      setIsDisabled(false);
-    }
   };
 
   const handleClickCreateNewStoryButton = async () => {
