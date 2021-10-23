@@ -1,6 +1,7 @@
-import useSWR, { SWRResponse } from 'swr';
+import { SWRResponse } from 'swr';
+import useAspidaSWR from '@aspida/swr';
 
-import { restClient } from '~/utils/rest-client';
+import { apiClient } from '~/utils/rest-client';
 import { Story } from '~/domains';
 
 /**
@@ -11,7 +12,7 @@ import { Story } from '~/domains';
  * @returns mutate データの更新関数
  */
 export const useStory = (id: string, fallbackData?: Story): SWRResponse<Story, Error> => {
-  return useSWR(`/stories/${id}`, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
+  return useAspidaSWR(apiClient.stories._storyId(id), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
     fallbackData,

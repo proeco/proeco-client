@@ -1,6 +1,9 @@
 import axiosBase, { AxiosInstance, AxiosResponse } from 'axios';
 import { Session } from 'next-auth';
 import { getSession } from 'next-auth/client';
+
+import aspida from '@aspida/axios';
+import api from '../../api/$api';
 import { apiErrorHandler } from './apiErrorHandler';
 
 class RestClient {
@@ -70,3 +73,14 @@ class RestClient {
 }
 
 export const restClient = new RestClient();
+
+export const apiClient = api(
+  aspida(axiosBase, {
+    baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL_FROM_CLIENT}/api/v1/` || 'http://localhost:8000/api/v1/',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    responseType: 'json',
+  }),
+);
