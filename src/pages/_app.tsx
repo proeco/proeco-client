@@ -10,7 +10,20 @@ import { theme } from '../theme';
 import { NavigationBar } from '~/components/parts/layout/organisms/NavigationBar/NavigationBar';
 import { DashboardModals } from '~/components/parts/layout/organisms/DashboardModals';
 
-const inputGlobalStyles = <GlobalStyles styles={{ body: { backgroundColor: `${theme.palette.backgroundColor.main}` } }} />;
+const inputGlobalStyles = (
+  <GlobalStyles
+    styles={{
+      '*': {
+        MsOverflowStyle: 'none',
+        scrollbarWidth: 'none',
+      },
+      '*::-webkit-scrollbar': { display: 'none' },
+      body: {
+        backgroundColor: `${theme.palette.backgroundColor.main}`,
+      },
+    }}
+  />
+);
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
