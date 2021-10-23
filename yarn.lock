@@ -33,6 +33,13 @@
   dependencies:
     aspida "^1.7.1"
 
+"@aspida/swr@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@aspida/swr/-/swr-1.7.1.tgz#521efdd72ca239fb9cfa5fd0bd4645856774b66d"
+  integrity sha512-428RNW88CPr/qXxq5S8fhE5jx77eUwOIdWbeHdY5SWnPCdz3ijBZCNor9OhWnMb3E/IqJKfZCbEqyqTly3VBuw==
+  dependencies:
+    aspida "^1.7.1"
+
 "@babel/code-frame@7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.10.4.tgz#168da1a36e90da68ae8d49c0f1b48c7c6249213a"
