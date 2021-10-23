@@ -22,6 +22,7 @@ type Props = {
   title: string;
   description: string;
   emojiId: string;
+  isDisabled: boolean;
   onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeDescription: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClickUpdateStoryButton: () => void;
@@ -34,6 +35,7 @@ export const Component: VFC<Props> = ({
   title,
   description,
   emojiId,
+  isDisabled,
   onChangeTitle,
   onChangeDescription,
   onClickUpdateStoryButton,
@@ -60,7 +62,7 @@ export const Component: VFC<Props> = ({
         <TextField fullWidth multiline rows={4} value={description} onChange={onChangeDescription} />
       </Box>
       <Box width="100%" textAlign="center">
-        <Button variant="contained" onClick={onClickUpdateStoryButton}>
+        <Button variant="contained" onClick={onClickUpdateStoryButton} disabled={isDisabled}>
           更新する！
         </Button>
       </Box>
@@ -91,6 +93,7 @@ export const UpdateStoryModal: VFC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [emojiId, setEmojiId] = useState<string>('open_file_folder');
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     if (!storyForUpdate) {
@@ -104,6 +107,7 @@ export const UpdateStoryModal: VFC = () => {
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
+    setIsDisabled(e.target.value.trim().length === 0);
   };
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,6 +144,7 @@ export const UpdateStoryModal: VFC = () => {
       title={title}
       description={description}
       emojiId={emojiId}
+      isDisabled={isDisabled}
       onChangeTitle={handleChangeTitle}
       onChangeDescription={handleChangeDescription}
       onClickUpdateStoryButton={handleClickUpdateStoryButton}

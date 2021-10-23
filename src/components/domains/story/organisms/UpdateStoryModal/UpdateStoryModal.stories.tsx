@@ -30,4 +30,5 @@ OpenModal.args = {
   title: 'ここにタイトル',
   description: 'ここに説明',
   emojiId: 'tada',
+  isDisabled: false,
 };
