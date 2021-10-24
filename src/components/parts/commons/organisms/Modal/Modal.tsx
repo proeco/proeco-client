@@ -27,7 +27,7 @@ export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size
     <MuiModal open={open} onClose={onClose}>
       <StyledBox width={sizeMap[size]}>
         <Box py="8px" display="flex" alignItems="center" justifyContent="center" alignContent="center" gap="8px">
-          {emojiId && <Emoji emojiId={emojiId} size="sm" />}
+          {emojiId && <Emoji emojiId={emojiId} size={24} />}
           <Typography display="block" variant="h4">
             {title}
           </Typography>
