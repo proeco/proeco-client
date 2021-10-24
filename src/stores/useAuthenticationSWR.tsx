@@ -13,7 +13,7 @@ export const useAuthenticationSWR = <Data, Error>(_key: Key, fetcher: Fetcher<Da
 export const newUseAuthenticationSWR = <Data, Error>(
   aspida: Record<string, unknown> & { get: unknown; $get: (option?: { [key: string]: unknown }) => Promise<Data>; $path: () => string },
   option: Partial<PublicConfiguration<Data, Error, Fetcher<Data>>> & { enabled?: boolean | undefined } & { headers?: { Authorization: string } } & {
-    query: { [key: string]: string | number | undefined };
+    query?: { [key: string]: string | number | undefined };
   },
 ): SWRResponse<Data, Error> => {
   const [session] = useSession();

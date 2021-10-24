@@ -1,8 +1,8 @@
 import { SWRResponse } from 'swr';
 
-import { restClient } from '~/utils/rest-client';
+import { apiClient } from '~/utils/rest-client';
 import { User } from '~/domains/user';
-import { useAuthenticationSWR } from '~/stores/useAuthenticationSWR';
+import { newUseAuthenticationSWR } from '~/stores/useAuthenticationSWR';
 
 /**
  * 現在ログイン中のユーザーを取得するSWR
@@ -12,7 +12,7 @@ import { useAuthenticationSWR } from '~/stores/useAuthenticationSWR';
  * @returns mutate データの更新関数
  */
 export const useCurrentUser = (): SWRResponse<User, Error> => {
-  return useAuthenticationSWR('/users/me', (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
+  return newUseAuthenticationSWR(apiClient.users.me, {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
   });
