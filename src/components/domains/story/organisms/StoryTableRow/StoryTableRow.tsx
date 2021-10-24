@@ -2,10 +2,10 @@ import React, { useState, MouseEvent, VFC } from 'react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { IconButton, TableCell, TableRow } from '@mui/material';
-import { styled } from '@mui/system';
+import { Box, styled } from '@mui/system';
 
 import { Menu } from '~/components/parts/commons/organisms/Menu';
-import { Icon } from '~/components/parts/commons/atoms/Icon';
+import { Icon, Emoji } from '~/components/parts/commons/atoms';
 
 import { DATE_FORMAT } from '~/constants';
 
@@ -76,7 +76,10 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
   return (
     <StyledTableRow hover onClick={() => handleClickRow(story._id)}>
       <StyledBodyTableCell component="th" scope="row">
-        {story.title}
+        <Box display="flex" alignItems="center" gap="8px">
+          <Emoji emojiId={story.emojiId} size="sm" />
+          {story.title}
+        </Box>
       </StyledBodyTableCell>
       <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
       <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
