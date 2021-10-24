@@ -2,24 +2,16 @@ import { VFC } from 'react';
 import { EmojiData, Emoji as EmojiOrigin } from 'emoji-mart';
 import { Box, styled } from '@mui/system';
 
-type Size = 'sm' | 'md' | 'lg';
-
 type Props = {
   emojiId: EmojiData | string;
-  size?: Size;
+  size: number;
   onClick?: () => void;
 };
 
-const sizeMap: { [key in Size]: number } = {
-  sm: 24,
-  md: 28,
-  lg: 32,
-};
-
-export const Emoji: VFC<Props> = ({ emojiId, size = 'md', onClick }) => {
+export const Emoji: VFC<Props> = ({ emojiId, size, onClick }) => {
   return (
     <StyledEmojiWrapper onClick={onClick}>
-      <EmojiOrigin emoji={emojiId} size={sizeMap[size]} />
+      <EmojiOrigin emoji={emojiId} size={size} />
     </StyledEmojiWrapper>
   );
 };
