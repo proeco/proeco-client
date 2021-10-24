@@ -4,14 +4,15 @@ import { Icon } from '~/components/parts/commons/atoms';
 
 type IconButtonType = {
   icon: ComponentProps<typeof Icon>['icon'];
+  width: number;
 };
 
 type Props = ComponentProps<typeof MuiIconButton> & IconButtonType;
 
-export const IconButton: VFC<Props> = ({ icon, ...rest }) => {
+export const IconButton: VFC<Props> = ({ icon, width, ...rest }) => {
   return (
     <MuiIconButton {...rest}>
-      <Icon icon={icon} />
+      <Icon icon={icon} width={width} />
     </MuiIconButton>
   );
 };

@@ -7,6 +7,7 @@ import { IconButton } from './IconButton';
 export default {
   title: 'parts/commons/organisms/IconButton',
   component: IconButton,
+  argTypes: { onClick: { action: 'onClick' } },
 } as ComponentMeta<typeof IconButton>;
 
 const Template: ComponentStory<typeof IconButton> = ({ ...rest }) => {
@@ -20,4 +21,5 @@ const Template: ComponentStory<typeof IconButton> = ({ ...rest }) => {
 export const Default = Template.bind({});
 Default.args = {
   icon: 'Update',
+  width: 24,
 };
