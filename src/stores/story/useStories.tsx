@@ -18,6 +18,7 @@ export const useStories = ({ userId, page, limit }: { userId?: string; page: num
 
   return useAspidaSWR(apiClient.stories, {
     query: { page, userId, limit },
+    headers: { Authorization: `Bearer ${session?.accessToken}` },
     enabled: !!session?.accessToken,
     revalidateOnFocus: false,
     revalidateOnReconnect: true,

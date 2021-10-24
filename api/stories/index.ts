@@ -8,7 +8,9 @@ export type Methods = {
       page: number;
       limit: number;
     };
-    headers: { token?: string };
+    reqHeaders: {
+      Authorization: string;
+    };
     resBody: PaginationResult<Story>;
   };
 };
