@@ -25,7 +25,7 @@
     "date-fns": "2.25.0",
     "emoji-mart": "3.0.1",
     "modern-css-reset": "1.4.0",
-    "mongodb": "3.7.2",
+    "mongodb": "3.7.3",
     "next": "11.1.2",
     "next-auth": "3.29.0",
     "notistack": "2.0.2",
