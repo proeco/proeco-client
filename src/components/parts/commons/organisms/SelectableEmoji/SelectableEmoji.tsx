@@ -45,7 +45,7 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, size, onSelectEmoji }) =>
   return (
     <>
       <StyledBox height={size} width={size} p="4px" ref={emojiRef} isEmojiSettingMode={isEmojiSettingMode}>
-        {emoji && <Emoji emojiId={emoji} size="md" onClick={handleClickEmoji} />}
+        {emoji && <Emoji emojiId={emoji} size={28} onClick={handleClickEmoji} />}
       </StyledBox>
       {isEmojiSettingMode && (
         <>

@@ -30,7 +30,7 @@ export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, onC
         <Typography>ストーリー名</Typography>
         <Box display="flex" alignItems="center">
           <Box mr="8px">
-            <Emoji emojiId={emojiId} size="lg" />
+            <Emoji emojiId={emojiId} size={32} />
           </Box>
           <Typography variant="h2" bold>
             {title}

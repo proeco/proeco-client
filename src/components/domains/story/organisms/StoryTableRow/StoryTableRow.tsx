@@ -77,7 +77,7 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
     <StyledTableRow hover onClick={() => handleClickRow(story._id)}>
       <StyledBodyTableCell component="th" scope="row">
         <Box display="flex" alignItems="center" gap="8px">
-          <Emoji emojiId={story.emojiId} size="sm" />
+          <Emoji emojiId={story.emojiId} size={20} />
           {story.title}
         </Box>
       </StyledBodyTableCell>
