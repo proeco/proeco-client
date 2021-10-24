@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Box } from '@mui/system';
 
-import { restClient } from '~/utils/rest-client';
+import { apiClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
 import { Typography } from '~/components/parts/commons/atoms';
@@ -43,7 +43,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
 
   try {
-    const { data: story } = await restClient.apiGet(`/stories/${id}`);
+    const story = await apiClient.stories._storyId(id as string).$get();
+
     return { props: { storyFromServerSide: story } };
   } catch (error) {
     return { props: {} };
