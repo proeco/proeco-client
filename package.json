@@ -56,7 +56,7 @@
     "@types/toastr": "2.1.39",
     "@typescript-eslint/eslint-plugin": "rc-v5",
     "@typescript-eslint/parser": "4.33.0",
-    "babel-loader": "8.2.2",
+    "babel-loader": "8.2.3",
     "babel-plugin-styled-components": "1.13.3",
     "babel-preset-react-app": "10.0.0",
     "chromatic": "5.10.2",
