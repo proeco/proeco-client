@@ -1,10 +1,11 @@
 import React, { useState, MouseEvent, VFC } from 'react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
-import { IconButton, TableCell, TableRow } from '@mui/material';
+import { TableCell, TableRow } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
 import { Menu } from '~/components/parts/commons/organisms/Menu';
+import { IconButton } from '~/components/parts/commons/organisms/IconButton';
 import { Icon, Emoji } from '~/components/parts/commons/atoms';
 
 import { DATE_FORMAT } from '~/constants';
@@ -85,9 +86,7 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
       <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
       <StyledBodyTableCell align="right">{format(new Date(story.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
       <TableCell align="right">
-        <IconButton onClick={(e) => handleClickMenu(e, story)}>
-          <Icon icon="MoreVert" width="24px" />
-        </IconButton>
+        <IconButton icon="MoreVert" width={24} onClick={(e) => handleClickMenu(e, story)} />
       </TableCell>
       <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
     </StyledTableRow>
