@@ -13,6 +13,8 @@ import { Modal } from '~/components/parts/commons/organisms/Modal';
 import { SelectableEmoji } from '~/components/parts/commons/organisms/SelectableEmoji';
 import { Button, Typography, TextField } from '~/components/parts/commons/atoms';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useStories } from '~/stores/story';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
@@ -77,6 +79,15 @@ const StyledTextField = styled(TextField)`
 
 export const CreateNewStoryModal: VFC = () => {
   const router = useRouter();
+  const page = router.query.page ? Number(router.query.page) : 1;
+
+  const { data: currentUser } = useCurrentUser();
+  const { mutate: mutateStories } = useStories({
+    userId: currentUser?._id,
+    page: page,
+    limit: 10,
+  });
+
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
@@ -100,6 +111,8 @@ export const CreateNewStoryModal: VFC = () => {
       const { data } = await restClient.apiPost<Story>('/stories', {
         story: { title, description, emojiId },
       });
+
+      mutateStories();
 
       // successのSnackbarを表示する
       notifySuccessMessage('ストーリーの作成に成功しました!');

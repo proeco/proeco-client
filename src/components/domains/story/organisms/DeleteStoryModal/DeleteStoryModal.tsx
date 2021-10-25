@@ -1,4 +1,5 @@
 import React, { VFC, useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Box, styled } from '@mui/system';
 import { Modal } from '~/components/parts/commons/organisms/Modal';
 import { Button } from '~/components/parts/commons/atoms/Button';
@@ -63,6 +64,9 @@ const StyledDescriptionBox = styled(Box)`
 `;
 
 export const DeleteStoryModal: VFC = () => {
+  const router = useRouter();
+  const page = router.query.page ? Number(router.query.page) : 1;
+
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
@@ -70,10 +74,9 @@ export const DeleteStoryModal: VFC = () => {
   const { data: storyForDelete } = useStoryForDelete();
   const { data: currentUser } = useCurrentUser();
 
-  // TODO pageをpathから取得する
   const { mutate: mutateStories } = useStories({
     userId: currentUser?._id,
-    page: 1,
+    page: page,
     limit: 10,
   });
 
