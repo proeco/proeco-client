@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
@@ -15,6 +16,8 @@ import { useStories } from '~/stores/story';
 const limit = 10;
 
 const StoryList: NextPage = () => {
+  const router = useRouter();
+
   const [page, setPage] = useState(1);
   const { data: currentUser } = useCurrentUser();
   const { data: stories } = useStories({
@@ -29,6 +32,7 @@ const StoryList: NextPage = () => {
   const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
     if (!value) return;
     setPage(value);
+    router.push(`/story?page=${value}`);
   };
 
   const handleClickCreateStoryButton = () => {
