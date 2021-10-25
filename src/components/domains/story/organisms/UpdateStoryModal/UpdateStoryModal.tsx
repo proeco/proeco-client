@@ -1,5 +1,7 @@
 import React, { VFC, useState, useEffect } from 'react';
 
+import { useRouter } from 'next/router';
+
 import 'emoji-mart/css/emoji-mart.css';
 
 import { Box } from '@mui/system';
@@ -77,16 +79,18 @@ const StyledTextField = styled(TextField)`
 `;
 
 export const UpdateStoryModal: VFC = () => {
+  const router = useRouter();
+  const page = router.query.page ? Number(router.query.page) : 1;
+
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
   const { data: currentUser } = useCurrentUser();
-  // TODO pageをpathから取得する
   const { mutate: mutateStories } = useStories({
     userId: currentUser?._id,
-    page: 1,
+    page: page,
     limit: 10,
   });
 
