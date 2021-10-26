@@ -1,12 +1,12 @@
-import React, { ComponentProps, VFC } from 'react';
+import React, { forwardRef, ComponentProps, VFC } from 'react';
 import { TextField as MuiTextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 type Props = ComponentProps<typeof MuiTextField>;
 
-export const TextField: VFC<Props> = ({ variant = 'outlined', hiddenLabel = false, ref, ...rest }) => {
+export const TextField: VFC<Props> = forwardRef(({ variant = 'outlined', hiddenLabel = false, ...rest }, ref) => {
   return <StyledMuiTextField variant={variant} hiddenLabel={hiddenLabel} inputRef={ref} {...rest} />;
-};
+});
 
 const StyledMuiTextField = styled(MuiTextField)`
   .MuiOutlinedInput-input {

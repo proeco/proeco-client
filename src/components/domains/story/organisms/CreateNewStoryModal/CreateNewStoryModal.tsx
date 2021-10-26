@@ -1,4 +1,4 @@
-import React, { VFC } from 'react';
+import React, { VFC, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm, Controller, SubmitHandler, Control } from 'react-hook-form';
 
@@ -29,7 +29,7 @@ type Props = {
   isOpen: boolean;
   isDisabled: boolean;
   emojiId: string;
-  onSelectEmoji: () => void;
+  onSelectEmoji: (emojiId: string) => void;
   onClickCreateNewStoryButton: () => void;
   onCloseModal: () => void;
 };
@@ -45,20 +45,14 @@ export const Component: VFC<Props> = ({ control, isOpen, isDisabled, emojiId, on
           <Box mr="8px">
             <SelectableEmoji emojiId={emojiId} size={40} onSelectEmoji={onSelectEmoji} />
           </Box>
-          <Controller
-            name="title"
-            control={control}
-            rules={{ required: true }}
-            defaultValue=""
-            render={({ field }) => <StyledTextField fullWidth {...field} />}
-          />
+          <Controller name="title" control={control} rules={{ required: true }} render={({ field }) => <StyledTextField fullWidth {...field} />} />
         </Box>
       </Box>
       <Box mb="16px">
         <Typography mb="4px" variant="body1" color="textColor.light">
           説明(任意)
         </Typography>
-        <Controller name="description" control={control} defaultValue="" render={({ field }) => <TextField fullWidth multiline rows={4} {...field} />} />
+        <Controller name="description" control={control} render={({ field }) => <TextField fullWidth multiline rows={4} {...field} />} />
       </Box>
       <Box width="100%" textAlign="center">
         <Button variant="contained" disabled={isDisabled} type="submit">
@@ -91,6 +85,8 @@ export const CreateNewStoryModal: VFC = () => {
 
   const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
 
+  const [emojiId, setEmojiId] = useState<string>('open_file_folder');
+
   const handleClickCreateNewStoryButton: SubmitHandler<IFormInputs> = async (formData) => {
     const { title, description = '' } = formData;
 
@@ -104,8 +100,9 @@ export const CreateNewStoryModal: VFC = () => {
       // successのSnackbarを表示する
       notifySuccessMessage('ストーリーの作成に成功しました!');
 
-      // formの初期化
+      // stateの初期化
       reset();
+      setEmojiId('open_file_folder');
 
       // 作成後に作成したstoryの詳細ページに遷移する
       router.push(`/story/${data._id}`);
@@ -120,6 +117,7 @@ export const CreateNewStoryModal: VFC = () => {
     mutateIsOpenCreateNewStoryModal(false);
   };
 
+  const handleSelectEmoji = (emojiId: string) => setEmojiId(emojiId);
   const { handleSubmit, control, watch, reset } = useForm<IFormInputs>();
 
   return (
@@ -128,7 +126,7 @@ export const CreateNewStoryModal: VFC = () => {
       isOpen={!!isOpenCreateNewStoryModal}
       isDisabled={!watch('title')}
       emojiId={emojiId}
-      onSelectEmoji={onSelectEmoji}
+      onSelectEmoji={handleSelectEmoji}
       onClickCreateNewStoryButton={handleSubmit(handleClickCreateNewStoryButton)}
       onCloseModal={handleCloseModal}
     />
