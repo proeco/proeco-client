@@ -16,7 +16,7 @@ import { Button, Typography, TextField } from '~/components/parts/commons/atoms'
 import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { useStories, useStoryForUpdate } from '~/stores/story';
+import { useStory, useStories, useStoryForUpdate } from '~/stores/story';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type Props = {
@@ -88,6 +88,7 @@ export const UpdateStoryModal: VFC = () => {
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
   const { data: currentUser } = useCurrentUser();
+  const { mutate: mutateStory } = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
     userId: currentUser?._id,
     page: page,
@@ -124,10 +125,14 @@ export const UpdateStoryModal: VFC = () => {
         newObject: { title, description, emojiId },
       });
 
+      if (storyForUpdate) {
+        mutateStory();
+      }
+
       mutateStories();
 
       // successのSnackbarを表示する
-      notifySuccessMessage('ストーリーの作成に成功しました!');
+      notifySuccessMessage('ストーリーの更新に成功しました!');
 
       handleCloseModal();
     } catch (error) {

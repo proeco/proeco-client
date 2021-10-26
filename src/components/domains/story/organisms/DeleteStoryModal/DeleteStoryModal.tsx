@@ -100,6 +100,9 @@ export const DeleteStoryModal: VFC = () => {
       mutateStories();
       notifySuccessMessage('ストーリーを削除しました!');
       handleCloseModal();
+      if (router.pathname !== '/story') {
+        router.push('/story');
+      }
     } catch (error) {
       notifyErrorMessage('ストーリーの削除に失敗しました!');
     }
