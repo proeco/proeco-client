@@ -5,7 +5,7 @@ import { Link } from '@mui/material';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { Typography, SideBarListItem, Icon, Emoji } from '~/components/parts/commons/atoms';
+import { Typography, SideBarListItem, Icon, Emoji, Button } from '~/components/parts/commons/atoms';
 import { IconButton } from '~/components/parts/commons/organisms/IconButton';
 import { UserIcon } from '~/components/domains/user/atoms';
 
@@ -22,7 +22,7 @@ type Props = {
 
 export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, docs }) => {
   return (
-    <StyledSideBarWrapper width="280px" height="100vh" p="16px">
+    <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px">
       <StyledUserIconWrapper pb="16px">
         <UserIcon size="large" imagePath={currentUser?.image} userId={currentUser?._id} isLink />
         <Typography variant="h3">{currentUser?.name}</Typography>
@@ -34,11 +34,11 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
           </SideBarListItem>
         </Link>
       </Box>
-      <Box display="flex" width="100%" pb="12px" alignItems="center" justifyContent="space-between">
+      <Box display="flex" width="100%" pb="8px" alignItems="center" justifyContent="space-between">
         <StyledTypography variant="body1">ストーリー</StyledTypography>
         <StyledIconButton icon="Add" width={18} aria-label="open" size="small" onClick={openCreateStoryModal} />
       </Box>
-      <Box>
+      <Box pb="12px">
         {docs.map((story) => (
           <Link key={story._id} href={'/story/' + story._id} underline="none">
             <SideBarListItem icon={<Emoji emojiId={story.emojiId} size={20} />}>
@@ -47,6 +47,9 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
           </Link>
         ))}
       </Box>
+      <Link href="/story" underline="none">
+        <StyledButton variant="contained">もっと見る</StyledButton>
+      </Link>
     </StyledSideBarWrapper>
   );
 });
@@ -64,6 +67,11 @@ const StyledTypography = styled(Typography)`
 const StyledIconButton = styled(IconButton)`
   color: ${(props) => props.theme.palette.textColor.light};
   margin-right: 8px;
+`;
+
+const StyledButton = styled(Button)`
+  margin: 0 auto;
+  display: block;
 `;
 
 const StyledUserIconWrapper = styled(Box)`
