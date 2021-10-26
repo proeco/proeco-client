@@ -4,8 +4,8 @@ import { styled } from '@mui/material/styles';
 
 type Props = ComponentProps<typeof MuiTextField>;
 
-export const TextField: VFC<Props> = ({ variant = 'outlined', hiddenLabel = false, ...rest }) => {
-  return <StyledMuiTextField variant={variant} hiddenLabel={hiddenLabel} {...rest} />;
+export const TextField: VFC<Props> = ({ variant = 'outlined', hiddenLabel = false, ref, ...rest }) => {
+  return <StyledMuiTextField variant={variant} hiddenLabel={hiddenLabel} inputRef={ref} {...rest} />;
 };
 
 const StyledMuiTextField = styled(MuiTextField)`

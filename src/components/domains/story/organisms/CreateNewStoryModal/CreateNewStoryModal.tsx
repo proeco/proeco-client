@@ -1,5 +1,6 @@
-import React, { VFC, useState } from 'react';
+import React, { VFC } from 'react';
 import { useRouter } from 'next/router';
+import { useForm, Controller, SubmitHandler, Control } from 'react-hook-form';
 
 import 'emoji-mart/css/emoji-mart.css';
 
@@ -18,33 +19,24 @@ import { useStories } from '~/stores/story';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
-type Props = {
-  isOpen: boolean;
+interface IFormInputs {
   title: string;
   description: string;
-  emojiId: string;
+}
+
+type Props = {
+  control: Control<IFormInputs, object>;
+  isOpen: boolean;
   isDisabled: boolean;
-  onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeDescription: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  emojiId: string;
+  onSelectEmoji: () => void;
   onClickCreateNewStoryButton: () => void;
-  onSelectEmoji: (emojiId: string) => void;
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({
-  isOpen,
-  title,
-  description,
-  emojiId,
-  isDisabled,
-  onChangeTitle,
-  onChangeDescription,
-  onClickCreateNewStoryButton,
-  onSelectEmoji,
-  onCloseModal,
-}) => {
+export const Component: VFC<Props> = ({ control, isOpen, isDisabled, emojiId, onSelectEmoji, onClickCreateNewStoryButton, onCloseModal }) => {
   const content = (
-    <>
+    <form onSubmit={onClickCreateNewStoryButton}>
       <Box mb="16px">
         <Typography mb="4px" variant="body1" color="textColor.light">
           ストーリー名
@@ -53,21 +45,27 @@ export const Component: VFC<Props> = ({
           <Box mr="8px">
             <SelectableEmoji emojiId={emojiId} size={40} onSelectEmoji={onSelectEmoji} />
           </Box>
-          <StyledTextField fullWidth value={title} onChange={onChangeTitle} />
+          <Controller
+            name="title"
+            control={control}
+            rules={{ required: true }}
+            defaultValue=""
+            render={({ field }) => <StyledTextField fullWidth {...field} />}
+          />
         </Box>
       </Box>
       <Box mb="16px">
         <Typography mb="4px" variant="body1" color="textColor.light">
           説明(任意)
         </Typography>
-        <TextField fullWidth multiline rows={4} value={description} onChange={onChangeDescription} />
+        <Controller name="description" control={control} defaultValue="" render={({ field }) => <TextField fullWidth multiline rows={4} {...field} />} />
       </Box>
       <Box width="100%" textAlign="center">
-        <Button variant="contained" onClick={onClickCreateNewStoryButton} disabled={isDisabled}>
+        <Button variant="contained" disabled={isDisabled} type="submit">
           ストーリーを作る！
         </Button>
       </Box>
-    </>
+    </form>
   );
 
   return <Modal content={content} emojiId="sparkles" title="ストーリーを作成する" open={isOpen} onClose={onCloseModal} />;
@@ -92,21 +90,10 @@ export const CreateNewStoryModal: VFC = () => {
   const { notifyErrorMessage } = useErrorNotification();
 
   const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [emojiId, setEmojiId] = useState<string>('open_file_folder');
-  const [isDisabled, setIsDisabled] = useState(true);
 
-  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-    setIsDisabled(e.target.value.trim().length === 0);
-  };
+  const handleClickCreateNewStoryButton: SubmitHandler<IFormInputs> = async (formData) => {
+    const { title, description = '' } = formData;
 
-  const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
-  };
-
-  const handleClickCreateNewStoryButton = async () => {
     try {
       const { data } = await restClient.apiPost<Story>('/stories', {
         story: { title, description, emojiId },
@@ -117,10 +104,8 @@ export const CreateNewStoryModal: VFC = () => {
       // successのSnackbarを表示する
       notifySuccessMessage('ストーリーの作成に成功しました!');
 
-      // stateの初期化
-      setTitle('');
-      setDescription('');
-      setEmojiId('open_file_folder');
+      // formの初期化
+      reset();
 
       // 作成後に作成したstoryの詳細ページに遷移する
       router.push(`/story/${data._id}`);
@@ -135,20 +120,17 @@ export const CreateNewStoryModal: VFC = () => {
     mutateIsOpenCreateNewStoryModal(false);
   };
 
-  const handleSelectEmoji = (emojiId: string) => setEmojiId(emojiId);
+  const { handleSubmit, control, watch, reset } = useForm<IFormInputs>();
 
   return (
     <Component
+      control={control}
       isOpen={!!isOpenCreateNewStoryModal}
-      title={title}
-      description={description}
+      isDisabled={!watch('title')}
       emojiId={emojiId}
-      isDisabled={isDisabled}
-      onChangeTitle={handleChangeTitle}
-      onChangeDescription={handleChangeDescription}
-      onClickCreateNewStoryButton={handleClickCreateNewStoryButton}
+      onSelectEmoji={onSelectEmoji}
+      onClickCreateNewStoryButton={handleSubmit(handleClickCreateNewStoryButton)}
       onCloseModal={handleCloseModal}
-      onSelectEmoji={handleSelectEmoji}
     />
   );
 };
