@@ -1,6 +1,7 @@
 import { memo, VFC } from 'react';
-import { Box, styled } from '@mui/system';
+import { useRouter } from 'next/router';
 
+import { Box, styled } from '@mui/system';
 import { Link } from '@mui/material';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -18,9 +19,10 @@ type Props = {
   currentUser?: User;
   openCreateStoryModal: () => void;
   docs: Story[];
+  pathname: string;
 };
 
-export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, docs }) => {
+export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, docs, pathname }) => {
   return (
     <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px">
       <StyledUserIconWrapper pb="16px">
@@ -29,7 +31,7 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
       </StyledUserIconWrapper>
       <Box p="12px 0 24px">
         <Link href={URLS.DASHBOARD} underline="none">
-          <SideBarListItem icon={<Icon icon="DashboardOutlined" width="20px" color="textColor.main" />}>
+          <SideBarListItem icon={<Icon icon="DashboardOutlined" width="20px" color="textColor.main" />} selected={URLS.DASHBOARD === pathname}>
             <Typography variant="body1">ダッシュボード</Typography>
           </SideBarListItem>
         </Link>
@@ -40,8 +42,8 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
       </Box>
       <Box pb="12px">
         {docs.map((story) => (
-          <Link key={story._id} href={'/story/' + story._id} underline="none">
-            <SideBarListItem icon={<Emoji emojiId={story.emojiId} size={20} />}>
+          <Link key={story._id} href={`/story/${story._id}`} underline="none">
+            <SideBarListItem icon={<Emoji emojiId={story.emojiId} size={20} />} selected={`/story/${story._id}` === pathname}>
               <Typography variant="body1">{story.title}</Typography>
             </SideBarListItem>
           </Link>
@@ -82,6 +84,7 @@ const StyledUserIconWrapper = styled(Box)`
 `;
 
 export const SideBar: VFC = memo(() => {
+  const router = useRouter();
   const { data: currentUser } = useCurrentUser();
 
   const { data: stories } = useStoriesForSideBar({
@@ -96,5 +99,6 @@ export const SideBar: VFC = memo(() => {
   const openCreateStoryModal = () => {
     mutateIsOpenCreateNewStoryModal(true);
   };
-  return <Component currentUser={currentUser} openCreateStoryModal={openCreateStoryModal} docs={docs} />;
+
+  return <Component currentUser={currentUser} openCreateStoryModal={openCreateStoryModal} docs={docs} pathname={router.pathname} />;
 });

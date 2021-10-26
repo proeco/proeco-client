@@ -5,6 +5,8 @@ import { Component } from './SideBar';
 
 import { createMockStory, createMockUser } from '~/mock';
 
+import { URLS } from '~/constants/urls';
+
 export default {
   title: 'parts/layout/organisms/SideBar',
   component: Component,
@@ -35,4 +37,5 @@ Default.args = {
       emojiId: 'movie_camera',
     }),
   ],
+  pathname: URLS.DASHBOARD,
 };
