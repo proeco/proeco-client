@@ -1,6 +1,7 @@
 import React, { VFC, useState, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
+import { SWRResponse } from 'swr';
 
 import 'emoji-mart/css/emoji-mart.css';
 
@@ -88,7 +89,7 @@ export const UpdateStoryModal: VFC = () => {
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
   const { data: currentUser } = useCurrentUser();
-  const { mutate: mutateStory } = useStory(storyForUpdate?._id);
+  const useStorySWRResponse: SWRResponse<Story, Error> | undefined = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
     userId: currentUser?._id,
     page: page,
@@ -125,8 +126,8 @@ export const UpdateStoryModal: VFC = () => {
         newObject: { title, description, emojiId },
       });
 
-      if (router.pathname === '/story/[id]') {
-        mutateStory();
+      if (router.pathname === '/story/[id]' && useStorySWRResponse) {
+        useStorySWRResponse.mutate();
       } else {
         mutateStories();
       }
