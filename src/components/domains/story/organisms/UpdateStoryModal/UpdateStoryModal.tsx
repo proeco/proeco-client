@@ -89,7 +89,7 @@ export const UpdateStoryModal: VFC = () => {
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
   const { data: currentUser } = useCurrentUser();
-  const { mutate: mutateStory} = useStory(storyForUpdate?._id);
+  const { mutate: mutateStory } = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
     userId: currentUser?._id,
     page: page,
@@ -126,8 +126,8 @@ export const UpdateStoryModal: VFC = () => {
         newObject: { title, description, emojiId },
       });
 
-      if (router.pathname === '/story/[id]' && useStorySWRResponse) {
-        useStorySWRResponse.mutate();
+      if (storyForUpdate) {
+        mutateStory();
       } else {
         mutateStories();
       }
