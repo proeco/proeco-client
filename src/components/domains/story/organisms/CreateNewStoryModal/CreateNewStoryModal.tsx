@@ -45,14 +45,20 @@ export const Component: VFC<Props> = ({ control, isOpen, isDisabled, emojiId, on
           <Box mr="8px">
             <SelectableEmoji emojiId={emojiId} size={40} onSelectEmoji={onSelectEmoji} />
           </Box>
-          <Controller name="title" control={control} rules={{ required: true }} render={({ field }) => <StyledTextField fullWidth {...field} />} />
+          <Controller
+            name="title"
+            control={control}
+            rules={{ required: true }}
+            defaultValue=""
+            render={({ field }) => <StyledTextField fullWidth {...field} />}
+          />
         </Box>
       </Box>
       <Box mb="16px">
         <Typography mb="4px" variant="body1" color="textColor.light">
           説明(任意)
         </Typography>
-        <Controller name="description" control={control} render={({ field }) => <TextField fullWidth multiline rows={4} {...field} />} />
+        <Controller name="description" control={control} defaultValue="" render={({ field }) => <TextField fullWidth multiline rows={4} {...field} />} />
       </Box>
       <Box width="100%" textAlign="center">
         <Button variant="contained" disabled={isDisabled} type="submit">
