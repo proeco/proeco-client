@@ -24,7 +24,15 @@ Default.args = {
   docs: [
     createMockStory({
       title: '️Proecoを開発する',
-      emojiId: 'tada',
+      emojiId: 'hammer',
+    }),
+    createMockStory({
+      title: '️️毎日記事を書く',
+      emojiId: 'pencil2',
+    }),
+    createMockStory({
+      title: '️YouTube動画制作',
+      emojiId: 'movie_camera',
     }),
   ],
 };

@@ -12,7 +12,7 @@ import { UserIcon } from '~/components/domains/user/atoms';
 import { Story, User } from '~/domains';
 
 import { URLS } from '~/constants/urls';
-import { useStories } from '~/stores/story';
+import { useStoriesForSideBar } from '~/stores/story';
 
 type Props = {
   currentUser?: User;
@@ -76,10 +76,10 @@ const StyledUserIconWrapper = styled(Box)`
 export const SideBar: VFC = memo(() => {
   const { data: currentUser } = useCurrentUser();
 
-  const { data: stories } = useStories({
+  const { data: stories } = useStoriesForSideBar({
     userId: currentUser?._id,
     page: 1,
-    limit: 10,
+    limit: 3,
   });
 
   const docs = stories ? stories.docs : [];
