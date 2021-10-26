@@ -89,7 +89,7 @@ export const UpdateStoryModal: VFC = () => {
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
   const { data: currentUser } = useCurrentUser();
-  const useStorySWRResponse: SWRResponse<Story, Error> | undefined = useStory(storyForUpdate?._id);
+  const { mutate: mutateStory} = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
     userId: currentUser?._id,
     page: page,
