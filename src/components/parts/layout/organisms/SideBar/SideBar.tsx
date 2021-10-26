@@ -4,7 +4,7 @@ import { Box, styled } from '@mui/system';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { Typography } from '~/components/parts/commons/atoms';
+import { Typography, SideBarListItem, Icon } from '~/components/parts/commons/atoms';
 import { IconButton } from '~/components/parts/commons/organisms/IconButton';
 import { UserIcon } from '~/components/domains/user/atoms';
 
@@ -22,6 +22,9 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal }
         <UserIcon size="large" imagePath={currentUser?.image} userId={currentUser?._id} isLink />
         <Typography variant="h3">{currentUser?.name}</Typography>
       </StyledUserIconWrapper>
+      <SideBarListItem icon={<Icon icon="DashboardOutlined" width="20px" color="textColor.main" />}>
+        <Typography variant="body1">ダッシュボード</Typography>
+      </SideBarListItem>
       <Box display="flex" width="100%" alignItems="center" justifyContent="space-between">
         <StyledTypography variant="body1">ストーリー</StyledTypography>
         <StyledIconButton icon="Add" width={18} aria-label="open" size="small" onClick={openCreateStoryModal} />
