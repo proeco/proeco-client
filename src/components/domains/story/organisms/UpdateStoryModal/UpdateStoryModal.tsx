@@ -127,9 +127,9 @@ export const UpdateStoryModal: VFC = () => {
 
       if (storyForUpdate) {
         mutateStory();
-      } else {
-        mutateStories();
       }
+
+      mutateStories();
 
       // successのSnackbarを表示する
       notifySuccessMessage('ストーリーの更新に成功しました!');
