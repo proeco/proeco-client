@@ -1,7 +1,6 @@
 import React, { VFC, useState, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
-import { SWRResponse } from 'swr';
 
 import 'emoji-mart/css/emoji-mart.css';
 
