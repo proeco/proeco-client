@@ -2,7 +2,7 @@ import { memo, VFC } from 'react';
 import { useRouter } from 'next/router';
 
 import { Box, styled } from '@mui/system';
-import { Link } from '@mui/material';
+import Link from 'next/link';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
@@ -30,10 +30,12 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
         <Typography variant="h3">{currentUser?.name}</Typography>
       </StyledUserIconWrapper>
       <Box p="12px 0 24px">
-        <Link href={URLS.DASHBOARD} underline="none">
-          <SideBarListItem icon={<Icon icon="DashboardOutlined" width="20px" color="textColor.main" />} selected={URLS.DASHBOARD === pathname}>
-            <Typography variant="body1">ダッシュボード</Typography>
-          </SideBarListItem>
+        <Link href={URLS.DASHBOARD}>
+          <a>
+            <SideBarListItem icon={<Icon icon="DashboardOutlined" width="20px" color="textColor.main" />} selected={URLS.DASHBOARD === pathname}>
+              <Typography variant="body1">ダッシュボード</Typography>
+            </SideBarListItem>
+          </a>
         </Link>
       </Box>
       <Box display="flex" width="100%" pb="8px" alignItems="center" justifyContent="space-between">
@@ -42,15 +44,19 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
       </Box>
       <Box pb="12px">
         {docs.map((story) => (
-          <Link key={story._id} href={`/story/${story._id}`} underline="none">
-            <SideBarListItem icon={<Emoji emojiId={story.emojiId} size={20} />} selected={`/story/${story._id}` === pathname}>
-              <Typography variant="body1">{story.title}</Typography>
-            </SideBarListItem>
+          <Link key={story._id} href={`/story/${story._id}`}>
+            <a>
+              <SideBarListItem icon={<Emoji emojiId={story.emojiId} size={20} />} selected={`/story/${story._id}` === pathname}>
+                <Typography variant="body1">{story.title}</Typography>
+              </SideBarListItem>
+            </a>
           </Link>
         ))}
       </Box>
-      <Link href="/story" underline="none">
-        <StyledButton variant="contained">もっと見る</StyledButton>
+      <Link href="/story">
+        <a>
+          <StyledButton variant="contained">もっと見る</StyledButton>
+        </a>
       </Link>
     </StyledSideBarWrapper>
   );
@@ -60,6 +66,9 @@ const StyledSideBarWrapper = styled(Box)`
   box-sizing: border-box;
   background-color: #fff;
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
+  a {
+    text-decoration: none;
+  }
 `;
 
 const StyledTypography = styled(Typography)`
