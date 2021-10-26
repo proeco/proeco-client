@@ -19,20 +19,20 @@ import { useStories } from '~/stores/story';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
+type Props = {
+  control: Control<IFormInputs, object>;
+  isOpen: boolean;
+  emojiId: string;
+  isDisabled: boolean;
+  onClickCreateNewStoryButton: () => void;
+  onSelectEmoji: (emojiId: string) => void;
+  onCloseModal: () => void;
+};
+
 interface IFormInputs {
   title: string;
   description: string;
 }
-
-type Props = {
-  control: Control<IFormInputs, object>;
-  isOpen: boolean;
-  isDisabled: boolean;
-  emojiId: string;
-  onSelectEmoji: (emojiId: string) => void;
-  onClickCreateNewStoryButton: () => void;
-  onCloseModal: () => void;
-};
 
 export const Component: VFC<Props> = ({ control, isOpen, isDisabled, emojiId, onSelectEmoji, onClickCreateNewStoryButton, onCloseModal }) => {
   const content = (
@@ -90,8 +90,10 @@ export const CreateNewStoryModal: VFC = () => {
   const { notifyErrorMessage } = useErrorNotification();
 
   const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
-
   const [emojiId, setEmojiId] = useState<string>('open_file_folder');
+
+  const handleSelectEmoji = (emojiId: string) => setEmojiId(emojiId);
+  const { handleSubmit, control, watch, reset } = useForm<IFormInputs>();
 
   const handleClickCreateNewStoryButton: SubmitHandler<IFormInputs> = async (formData) => {
     const { title, description = '' } = formData;
@@ -123,18 +125,15 @@ export const CreateNewStoryModal: VFC = () => {
     mutateIsOpenCreateNewStoryModal(false);
   };
 
-  const handleSelectEmoji = (emojiId: string) => setEmojiId(emojiId);
-  const { handleSubmit, control, watch, reset } = useForm<IFormInputs>();
-
   return (
     <Component
       control={control}
       isOpen={!!isOpenCreateNewStoryModal}
-      isDisabled={!watch('title')}
       emojiId={emojiId}
-      onSelectEmoji={handleSelectEmoji}
+      isDisabled={!watch('title')}
       onClickCreateNewStoryButton={handleSubmit(handleClickCreateNewStoryButton)}
       onCloseModal={handleCloseModal}
+      onSelectEmoji={handleSelectEmoji}
     />
   );
 };
