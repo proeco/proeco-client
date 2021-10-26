@@ -25,7 +25,7 @@ const StoryPage: NextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
 
   const { id } = router.query;
-  const { data: story } = useStory(id as string, storyFromServerSide);
+  const { data: story, mutate: mutateStoryFromServerSide } = useStory(id as string, storyFromServerSide);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -52,7 +52,8 @@ const StoryPage: NextPage<Props> = ({ storyFromServerSide }) => {
   const handleClickUpdate = () => {
     if (!story) return;
     mutateIsOpenUpdateStoryModal(true);
-    mutateStoryForUpdate(story);
+    mutateStoryForUpdate();
+    mutateStoryFromServerSide();
     handleClose();
   };
 

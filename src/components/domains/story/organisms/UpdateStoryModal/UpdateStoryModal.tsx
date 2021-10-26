@@ -7,6 +7,7 @@ import 'emoji-mart/css/emoji-mart.css';
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 
+import { KeyedMutator } from 'swr';
 import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
@@ -16,7 +17,7 @@ import { Button, Typography, TextField } from '~/components/parts/commons/atoms'
 import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { useStories, useStoryForUpdate } from '~/stores/story';
+import { useStory, useStories, useStoryForUpdate } from '~/stores/story';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type Props = {
@@ -98,12 +99,14 @@ export const UpdateStoryModal: VFC = () => {
   const [description, setDescription] = useState('');
   const [emojiId, setEmojiId] = useState<string>('open_file_folder');
   const [isDisabled, setIsDisabled] = useState(true);
+  let mutateStory: KeyedMutator<Story>;
 
   useEffect(() => {
     if (!storyForUpdate) {
       return;
     }
-
+    const { mutate } = useStory(storyForUpdate?._id);
+    mutateStory = mutate;
     setTitle(storyForUpdate.title);
     setDescription(storyForUpdate.description);
     setEmojiId(storyForUpdate.emojiId);
@@ -124,10 +127,14 @@ export const UpdateStoryModal: VFC = () => {
         newObject: { title, description, emojiId },
       });
 
-      mutateStories();
+      if (router.pathname === '/story/[id]') {
+        mutateStory();
+      } else {
+        mutateStories();
+      }
 
       // successのSnackbarを表示する
-      notifySuccessMessage('ストーリーの作成に成功しました!');
+      notifySuccessMessage('ストーリーの更新に成功しました!');
 
       handleCloseModal();
     } catch (error) {
