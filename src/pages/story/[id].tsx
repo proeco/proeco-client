@@ -40,7 +40,7 @@ const StoryPage: NextPage<Props> = ({ storyFromServerSide }) => {
   const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { mutate: mutateStoryForDelete } = useStoryForDelete();
 
-  const handleClickMenu = (event: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClickMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
@@ -60,7 +60,6 @@ const StoryPage: NextPage<Props> = ({ storyFromServerSide }) => {
     if (!story) return;
     mutateIsOpenDeleteStoryModal(true);
     mutateStoryForDelete(story);
-    handleClose();
   };
 
   const menuItems = [
@@ -84,9 +83,7 @@ const StoryPage: NextPage<Props> = ({ storyFromServerSide }) => {
           <Typography variant="h2" bold>
             {story.title}
           </Typography>
-
           <IconButton icon="MoreVert" width={24} onClick={(e) => handleClickMenu(e)} />
-
           <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </Box>
         <Typography variant="h4">{story.description}</Typography>
