@@ -52,8 +52,7 @@ const StoryPage: NextPage<Props> = ({ storyFromServerSide }) => {
   const handleClickUpdate = () => {
     if (!story) return;
     mutateIsOpenUpdateStoryModal(true);
-    mutateStoryForUpdate();
-    mutateStoryFromServerSide();
+    mutateStoryForUpdate(story);
     handleClose();
   };
 

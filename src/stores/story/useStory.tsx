@@ -10,7 +10,7 @@ import { Story } from '~/domains';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useStory = (id: string, fallbackData?: Story): SWRResponse<Story, Error> => {
+export const useStory = (id?: string, fallbackData?: Story): SWRResponse<Story, Error> => {
   return useSWR(`/stories/${id}`, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,

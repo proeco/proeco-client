@@ -7,7 +7,6 @@ import 'emoji-mart/css/emoji-mart.css';
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 
-import { KeyedMutator } from 'swr';
 import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
@@ -89,6 +88,7 @@ export const UpdateStoryModal: VFC = () => {
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
   const { data: currentUser } = useCurrentUser();
+  const { mutate: mutateStory } = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
     userId: currentUser?._id,
     page: page,
@@ -99,14 +99,12 @@ export const UpdateStoryModal: VFC = () => {
   const [description, setDescription] = useState('');
   const [emojiId, setEmojiId] = useState<string>('open_file_folder');
   const [isDisabled, setIsDisabled] = useState(true);
-  let mutateStory: KeyedMutator<Story>;
 
   useEffect(() => {
     if (!storyForUpdate) {
       return;
     }
-    const { mutate } = useStory(storyForUpdate?._id);
-    mutateStory = mutate;
+
     setTitle(storyForUpdate.title);
     setDescription(storyForUpdate.description);
     setEmojiId(storyForUpdate.emojiId);
