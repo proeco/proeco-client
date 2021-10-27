@@ -10,10 +10,25 @@ import { Story } from '~/domains';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useStoriesForSideBar = ({ userId, page, limit }: { userId?: string; page: number; limit: 3 }): SWRResponse<Story[], Error> => {
+export const useStoriesForSideBar = ({
+  userId,
+  page,
+  limit,
+}: {
+  userId?: string;
+  page: number;
+  limit: 3;
+}): SWRResponse<{ totalDocs: number; stories: Story[] }, Error> => {
   const key = userId ? `/stories?userId=${userId}&page=${page}&limit=${limit}` : null;
-  return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.docs), {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-  });
+  return useSWR(
+    key,
+    (endpoint: string) =>
+      restClient.apiGet(endpoint).then((result) => {
+        return { totalDocs: result.data.totalDocs, stories: result.data.docs };
+      }),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+    },
+  );
 };

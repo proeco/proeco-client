@@ -19,11 +19,13 @@ import { useStoriesForSideBar } from '~/stores/story';
 type Props = {
   currentUser?: User;
   openCreateStoryModal: () => void;
-  docs: Story[];
+  storiesData: { totalDocs: number; stories: Story[] };
   asPath: string;
 };
 
-export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, docs, asPath }) => {
+const DISPLAY_STORY_COUNT = 3;
+
+export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, storiesData, asPath }) => {
   return (
     <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px">
       <StyledUserIconWrapper pb="16px">
@@ -47,7 +49,7 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
         <StyledIconButton icon="Add" width={18} aria-label="open" size="small" onClick={openCreateStoryModal} />
       </Box>
       <Box pb="12px">
-        {docs.map((story) => (
+        {storiesData.stories.map((story) => (
           <NextLink key={story._id} href={`/story/${story._id}`} passHref>
             <MuiLink underline="none">
               <SideBarListItem icon={<Emoji emojiId={story.emojiId} size={20} />} selected={`/story/${story._id}` === asPath}>
@@ -57,11 +59,13 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
           </NextLink>
         ))}
       </Box>
-      <NextLink href="/story" passHref>
-        <MuiLink underline="none">
-          <StyledButton variant="contained">もっと見る</StyledButton>
-        </MuiLink>
-      </NextLink>
+      {storiesData.totalDocs > DISPLAY_STORY_COUNT && (
+        <NextLink href="/story" passHref>
+          <MuiLink underline="none">
+            <StyledButton variant="contained">もっと見る</StyledButton>
+          </MuiLink>
+        </NextLink>
+      )}
     </StyledSideBarWrapper>
   );
 });
@@ -97,7 +101,7 @@ export const SideBar: VFC = memo(() => {
   const router = useRouter();
   const { data: currentUser } = useCurrentUser();
 
-  const { data: docs } = useStoriesForSideBar({
+  const { data: storiesData } = useStoriesForSideBar({
     userId: currentUser?._id,
     page: 1,
     limit: 3,
@@ -108,5 +112,12 @@ export const SideBar: VFC = memo(() => {
     mutateIsOpenCreateNewStoryModal(true);
   };
 
-  return <Component currentUser={currentUser} openCreateStoryModal={openCreateStoryModal} docs={docs ? docs : []} asPath={router.asPath} />;
+  return (
+    <Component
+      currentUser={currentUser}
+      openCreateStoryModal={openCreateStoryModal}
+      storiesData={storiesData ? storiesData : { totalDocs: 0, stories: [] }}
+      asPath={router.asPath}
+    />
+  );
 });
