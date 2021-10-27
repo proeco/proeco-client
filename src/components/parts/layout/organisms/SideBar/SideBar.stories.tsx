@@ -37,5 +37,5 @@ Default.args = {
       emojiId: 'movie_camera',
     }),
   ],
-  pathname: URLS.DASHBOARD,
+  asPath: URLS.DASHBOARD,
 };
