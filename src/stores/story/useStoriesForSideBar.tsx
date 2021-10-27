@@ -2,7 +2,6 @@ import useSWR, { SWRResponse } from 'swr';
 
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains';
-import { PaginationResult } from '~/interfaces';
 
 /**
  * SideBarで使用する複数ストーリーを取得するSWR
@@ -11,9 +10,9 @@ import { PaginationResult } from '~/interfaces';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useStoriesForSideBar = ({ userId, page, limit }: { userId?: string; page: number; limit: 3 }): SWRResponse<PaginationResult<Story>, Error> => {
+export const useStoriesForSideBar = ({ userId, page, limit }: { userId?: string; page: number; limit: 3 }): SWRResponse<Story[], Error> => {
   const key = userId ? `/stories?userId=${userId}&page=${page}&limit=${limit}` : null;
-  return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
+  return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.docs), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
   });
