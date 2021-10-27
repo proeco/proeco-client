@@ -8,10 +8,8 @@ export default {
   title: 'domains/story/organisms/UpdateStoryModal',
   component: Component,
   argTypes: {
-    onChangeTitle: { action: 'onChangeTitle' },
-    onChangeDescription: { action: 'onChangeDescription' },
-    onClickUpdateStoryButton: { action: 'onClickUpdateStoryButton' },
-    onSelectEmoji: { action: 'onSelectEmoji' },
+    onChangeStoryForm: { action: 'onChangeStoryForm' },
+    onClickCreateNewStoryButton: { action: 'onClickCreateNewStoryButton' },
     onCloseModal: { action: 'onCloseModal' },
   },
 } as ComponentMeta<typeof Component>;
