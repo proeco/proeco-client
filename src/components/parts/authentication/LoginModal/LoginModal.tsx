@@ -1,9 +1,8 @@
 import React, { VFC } from 'react';
 import Image from 'next/image';
 import { Box, styled } from '@mui/system';
-import { Link } from '@mui/material';
 import { Modal } from '~/components/parts/commons/organisms/Modal';
-import { Typography } from '~/components/parts/commons/atoms';
+import { Typography, Link } from '~/components/parts/commons/atoms';
 import { URLS, IMAGE_PATH } from '~/constants';
 
 type Props = {
@@ -31,7 +30,14 @@ export const Component: VFC<Props> = ({ isOpen, onClose, onClickSignInButton, lo
       </StyledLoginButtonWrapper>
 
       <Typography my="20px" color="textColor.light">
-        <Link href={URLS.TERMS}>利用規約</Link>、<Link href={URLS.PRIVACY_POLICY}>プライバシーポリシー</Link>に同意したうえでログインしてください
+        <Link href={URLS.TERMS} underline="always">
+          利用規約
+        </Link>
+        、
+        <Link href={URLS.PRIVACY_POLICY} underline="always">
+          プライバシーポリシー
+        </Link>
+        に同意したうえでログインしてください
       </Typography>
     </Box>
   );

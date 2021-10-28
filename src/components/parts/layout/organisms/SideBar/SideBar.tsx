@@ -2,12 +2,10 @@ import { memo, VFC } from 'react';
 import { useRouter } from 'next/router';
 
 import { Box, styled } from '@mui/system';
-import NextLink from 'next/link';
-import { Link as MuiLink } from '@mui/material';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { Typography, SideBarListItem, Icon, Emoji, Button } from '~/components/parts/commons/atoms';
+import { Typography, SideBarListItem, Icon, Emoji, Button, Link } from '~/components/parts/commons/atoms';
 import { IconButton } from '~/components/parts/commons/organisms/IconButton';
 import { UserIcon } from '~/components/domains/user/atoms';
 
@@ -33,16 +31,14 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
         <Typography variant="h3">{currentUser?.name}</Typography>
       </StyledUserIconWrapper>
       <Box p="12px 0 24px">
-        <NextLink href={URLS.DASHBOARD} passHref>
-          <MuiLink underline="none">
-            <SideBarListItem
-              icon={<Icon icon="DashboardOutlined" width="20px" color={URLS.DASHBOARD === asPath ? '#fff' : 'textColor.main'} />}
-              selected={URLS.DASHBOARD === asPath}
-            >
-              <Typography variant="body1">ダッシュボード</Typography>
-            </SideBarListItem>
-          </MuiLink>
-        </NextLink>
+        <Link href={URLS.DASHBOARD}>
+          <SideBarListItem
+            icon={<Icon icon="DashboardOutlined" width="20px" color={URLS.DASHBOARD === asPath ? '#fff' : 'textColor.main'} />}
+            selected={URLS.DASHBOARD === asPath}
+          >
+            <Typography variant="body1">ダッシュボード</Typography>
+          </SideBarListItem>
+        </Link>
       </Box>
       <Box display="flex" width="100%" pb="8px" alignItems="center" justifyContent="space-between">
         <StyledTypography variant="body1">ストーリー</StyledTypography>
@@ -50,21 +46,17 @@ export const Component: VFC<Props> = memo(({ currentUser, openCreateStoryModal, 
       </Box>
       <Box pb="12px">
         {storiesData.stories.map((story) => (
-          <NextLink key={story._id} href={`/story/${story._id}`} passHref>
-            <MuiLink underline="none">
-              <SideBarListItem icon={<Emoji emojiId={story.emojiId} size={20} />} selected={`/story/${story._id}` === asPath}>
-                <Typography variant="body1">{story.title}</Typography>
-              </SideBarListItem>
-            </MuiLink>
-          </NextLink>
+          <Link key={story._id} href={`/story/${story._id}`}>
+            <SideBarListItem icon={<Emoji emojiId={story.emojiId} size={20} />} selected={`/story/${story._id}` === asPath}>
+              <Typography variant="body1">{story.title}</Typography>
+            </SideBarListItem>
+          </Link>
         ))}
       </Box>
       {storiesData.totalDocs > DISPLAY_STORY_COUNT && (
-        <NextLink href="/story" passHref>
-          <MuiLink underline="none">
-            <StyledButton variant="contained">もっと見る</StyledButton>
-          </MuiLink>
-        </NextLink>
+        <Link href="/story">
+          <StyledButton variant="contained">もっと見る</StyledButton>
+        </Link>
       )}
     </StyledSideBarWrapper>
   );
