@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { signIn, signOut } from 'next-auth/client';
 import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
 import { AppBar, Skeleton } from '@mui/material';
@@ -8,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { UserIcon } from '~/components/domains/user/atoms';
-import { Button, Icon } from '~/components/parts/commons/atoms';
+import { Button, Icon, Link } from '~/components/parts/commons/atoms';
 import { Menu } from '~/components/parts/commons/organisms/Menu';
 import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
@@ -67,9 +66,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
     <>
       <StyledAppBar position="static">
         <Link href="/">
-          <a>
-            <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
-          </a>
+          <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
         </Link>
         {Contents}
       </StyledAppBar>
