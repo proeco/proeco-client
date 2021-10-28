@@ -4,7 +4,9 @@ const webpack = require('webpack');
 module.exports = {
   "stories": [
     "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)"
+    '../src/**/*.stories.{js,jsx,ts,tsx,mdx}',
+    "../src/**/*.stories.@(js|jsx|ts|tsx)",
+    "../src/**/*.stories.internal.{js,jsx,ts,tsx,mdx}"
   ],
   "addons": [
     "@storybook/addon-links",
@@ -33,6 +35,10 @@ module.exports = {
       }),
     }));
     return config
+  },
+  typescript: { reactDocgen: false },
+  core: {
+    builder: 'webpack5',
   }
 }
 
