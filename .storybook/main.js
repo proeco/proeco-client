@@ -36,7 +36,9 @@ module.exports = {
     }));
     return config
   },
-  typescript: { reactDocgen: false },
+  typescript: { 
+    reactDocgen: false,
+  },
   core: {
     builder: 'webpack5',
   }
