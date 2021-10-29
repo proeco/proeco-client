@@ -18,9 +18,9 @@
   "dependencies": {
     "@emotion/react": "11.5.0",
     "@emotion/styled": "11.3.0",
-    "@mui/icons-material": "5.0.4",
-    "@mui/material": "5.0.4",
-    "@mui/styled-engine-sc": "5.0.3",
+    "@mui/icons-material": "5.0.5",
+    "@mui/material": "5.0.6",
+    "@mui/styled-engine-sc": "5.0.4",
     "@mui/types": "7.0.0",
     "date-fns": "2.25.0",
     "emoji-mart": "3.0.1",
