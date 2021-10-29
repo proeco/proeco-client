@@ -88,7 +88,21 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
       <TableCell align="right">
         <IconButton icon="MoreVert" width={24} onClick={(e) => handleClickMenu(e, story)} />
       </TableCell>
-      <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
+      <Menu
+        onClick={(e) => e.stopPropagation()}
+        anchorEl={anchorEl}
+        open={open}
+        menuItems={menuItems}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      />
     </StyledTableRow>
   );
 };
