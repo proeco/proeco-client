@@ -1,5 +1,5 @@
-import Head from 'next/head';
 import { VFC } from 'react';
+import NextHeadSeo from 'next-head-seo';
 import { IMAGE_PATH } from '~/constants/imagePath';
 
 type Props = {
@@ -18,22 +18,26 @@ export const ProecoOgpHead: VFC<Props> = (props) => {
   const { siteName, title, url, image, description, keywords = [] } = props;
 
   return (
-    <>
-      <Head>
-        <title>{title || 'Proeco'}</title>
-        <meta name="description" content={description || DESCRIPTION} />
-        <meta name="keywords" content={keywords.length > 0 ? keywords?.join(',') : KEYWORDS} />
-        <meta property="og:site_name" content={siteName || 'Proeco'} />
-        <meta property="og:title" content={title || 'Proeco'} />
-        <meta property="og:url" content={url || 'https://www.proeco.app'} />
-        {/* TODO: create eye catch for all ogp */}
-        <meta property="og:image" content={image || `https://www.proeco.app/${IMAGE_PATH.TWITTER_OGP}`} />
-        <meta property="og:description" content={description || DESCRIPTION} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title || 'Proeco'} />
-        <meta name="twitter:image" content={image || `https://www.proeco.app/${IMAGE_PATH.TWITTER_OGP}`} />
-        <meta name="twitter:description" content={description || DESCRIPTION} />
-      </Head>
-    </>
+    <NextHeadSeo
+      title={title || 'Proeco'}
+      description={description || DESCRIPTION}
+      og={{
+        title: title || 'Proeco',
+        description: description || DESCRIPTION,
+        url: url || 'https://www.proeco.app',
+        type: 'website',
+        image: image || `https://www.proeco.app/${IMAGE_PATH.TWITTER_OGP}`,
+        siteName: siteName || 'Proeco',
+      }}
+      twitter={{
+        card: 'summary_large_image',
+      }}
+      customMetaTags={[
+        {
+          name: 'keywords',
+          content: keywords.length > 0 ? keywords?.join(',') : KEYWORDS,
+        },
+      ]}
+    />
   );
 };

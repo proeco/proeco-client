@@ -13,9 +13,9 @@ export default {
 const Template: ComponentStory<typeof Emoji> = (args) => {
   return (
     <Box p="32px" display="flex" gap="16px">
-      <Emoji emojiId={args.emojiId} size="sm" />
-      <Emoji emojiId={args.emojiId} size="md" />
-      <Emoji emojiId={args.emojiId} size="lg" />
+      <Emoji emojiId={args.emojiId} size={24} />
+      <Emoji emojiId={args.emojiId} size={32} />
+      <Emoji emojiId={args.emojiId} size={40} />
     </Box>
   );
 };

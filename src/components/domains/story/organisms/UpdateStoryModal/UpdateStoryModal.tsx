@@ -1,5 +1,7 @@
 import React, { VFC, useState, useEffect } from 'react';
 
+import { useRouter } from 'next/router';
+
 import 'emoji-mart/css/emoji-mart.css';
 
 import { Box } from '@mui/system';
@@ -14,7 +16,7 @@ import { Button, Typography, TextField } from '~/components/parts/commons/atoms'
 import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { useStories, useStoryForUpdate } from '~/stores/story';
+import { useStory, useStories, useStoryForUpdate } from '~/stores/story';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type Props = {
@@ -23,25 +25,12 @@ type Props = {
   description: string;
   emojiId: string;
   isDisabled: boolean;
-  onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeDescription: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeStoryForm: (newObject: Partial<Story>) => void;
   onClickUpdateStoryButton: () => void;
-  onSelectEmoji: (emojiId: string) => void;
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({
-  isOpen,
-  title,
-  description,
-  emojiId,
-  isDisabled,
-  onChangeTitle,
-  onChangeDescription,
-  onClickUpdateStoryButton,
-  onSelectEmoji,
-  onCloseModal,
-}) => {
+export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, isDisabled, onChangeStoryForm, onClickUpdateStoryButton, onCloseModal }) => {
   const content = (
     <>
       <Box mb="16px">
@@ -50,16 +39,16 @@ export const Component: VFC<Props> = ({
         </Typography>
         <Box display="flex" alignItems="center">
           <Box mr="8px">
-            <SelectableEmoji emojiId={emojiId} size={40} onSelectEmoji={onSelectEmoji} />
+            <SelectableEmoji emojiId={emojiId} size={40} onSelectEmoji={(emojiId) => onChangeStoryForm({ emojiId })} />
           </Box>
-          <StyledTextField fullWidth value={title} onChange={onChangeTitle} />
+          <StyledTextField fullWidth value={title} onChange={(e) => onChangeStoryForm({ title: e.target.value })} />
         </Box>
       </Box>
       <Box mb="16px">
         <Typography mb="4px" variant="body1" color="textColor.light">
           説明(任意)
         </Typography>
-        <TextField fullWidth multiline rows={4} value={description} onChange={onChangeDescription} />
+        <TextField fullWidth multiline rows={4} value={description} onChange={(e) => onChangeStoryForm({ description: e.target.value })} />
       </Box>
       <Box width="100%" textAlign="center">
         <Button variant="contained" onClick={onClickUpdateStoryButton} disabled={isDisabled}>
@@ -77,53 +66,55 @@ const StyledTextField = styled(TextField)`
 `;
 
 export const UpdateStoryModal: VFC = () => {
+  const router = useRouter();
+  const page = router.query.page ? Number(router.query.page) : 1;
+
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
   const { data: currentUser } = useCurrentUser();
-  // TODO pageをpathから取得する
+  const { mutate: mutateStory } = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
     userId: currentUser?._id,
-    page: 1,
+    page: page,
     limit: 10,
   });
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [emojiId, setEmojiId] = useState<string>('open_file_folder');
   const [isDisabled, setIsDisabled] = useState(true);
+  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'description'>>({
+    emojiId: 'open_file_folder',
+    title: '',
+    description: '',
+  });
+
+  useEffect(() => {
+    setIsDisabled(newStory.title.length === 0);
+  }, [newStory]);
 
   useEffect(() => {
     if (!storyForUpdate) {
       return;
     }
 
-    setTitle(storyForUpdate.title);
-    setDescription(storyForUpdate.description);
-    setEmojiId(storyForUpdate.emojiId);
+    setNewStory({ emojiId: storyForUpdate.emojiId, title: storyForUpdate.title, description: storyForUpdate.description });
   }, [storyForUpdate]);
-
-  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-    setIsDisabled(e.target.value.trim().length === 0);
-  };
-
-  const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
-  };
 
   const handleClickUpdateStoryButton = async () => {
     try {
       await restClient.apiPut<Story>(`/stories/${storyForUpdate?._id}`, {
-        newObject: { title, description, emojiId },
+        newObject: newStory,
       });
+
+      if (storyForUpdate) {
+        mutateStory();
+      }
 
       mutateStories();
 
       // successのSnackbarを表示する
-      notifySuccessMessage('ストーリーの作成に成功しました!');
+      notifySuccessMessage('ストーリーの更新に成功しました!');
 
       handleCloseModal();
     } catch (error) {
@@ -132,24 +123,29 @@ export const UpdateStoryModal: VFC = () => {
     }
   };
 
+  const updateStoryForm = (newObject: Partial<Story>) => {
+    setNewStory((prevState) => {
+      return {
+        ...prevState,
+        ...newObject,
+      };
+    });
+  };
+
   const handleCloseModal = () => {
     mutateIsOpenUpdateStoryModal(false);
   };
 
-  const handleSelectEmoji = (emojiId: string) => setEmojiId(emojiId);
-
   return (
     <Component
       isOpen={!!isOpenUpdateStoryModal}
-      title={title}
-      description={description}
-      emojiId={emojiId}
+      title={newStory.title}
+      description={newStory.description}
+      emojiId={newStory.emojiId}
       isDisabled={isDisabled}
-      onChangeTitle={handleChangeTitle}
-      onChangeDescription={handleChangeDescription}
       onClickUpdateStoryButton={handleClickUpdateStoryButton}
       onCloseModal={handleCloseModal}
-      onSelectEmoji={handleSelectEmoji}
+      onChangeStoryForm={updateStoryForm}
     />
   );
 };

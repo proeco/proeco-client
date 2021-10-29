@@ -11,10 +11,12 @@ import { Story } from '~/domains';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useStory = (id: string, fallbackData?: Story): SWRResponse<Story, Error> => {
-  return useAspidaSWR(apiClient.stories._storyId(id), {
+export const useStory = (id?: string, fallbackData?: Story): SWRResponse<Story, Error> => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return useAspidaSWR(apiClient.stories._storyId(id!), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
     fallbackData,
+    enabled: !!id,
   });
 };
