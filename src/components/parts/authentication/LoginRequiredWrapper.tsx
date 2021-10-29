@@ -1,11 +1,11 @@
 import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
-import Loader from 'react-loader-spinner';
 
 import { Box } from '@mui/system';
-import { COLORS, URLS } from '~/constants';
+import { URLS } from '~/constants';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { CircularProgress } from '~/components/parts/commons/atoms';
 
 export const LoginRequiredWrapper: FC = ({ children }) => {
   const [session, loading] = useSession();
@@ -22,7 +22,7 @@ export const LoginRequiredWrapper: FC = ({ children }) => {
   if (typeof window !== 'undefined' && loading)
     return (
       <Box textAlign="center" pt="40px">
-        <Loader type="Oval" color={COLORS.PRIMARY} height={100} width={100} />
+        <CircularProgress />
       </Box>
     );
 
@@ -32,7 +32,7 @@ export const LoginRequiredWrapper: FC = ({ children }) => {
 
   return (
     <Box textAlign="center" pt="40px">
-      <Loader type="Oval" color={COLORS.PRIMARY} height={100} width={100} />
+      <CircularProgress />
     </Box>
   );
 };
