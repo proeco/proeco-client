@@ -1,9 +1,9 @@
-import React, { VFC } from 'react';
+import React, { ComponentProps, VFC } from 'react';
 import MuiCircularProgress from '@mui/material/CircularProgress';
 
-type CircularProgressProps = {};
-type Props = CircularProgressProps & Partial<typeof MuiCircularProgress>;
+type CircularProgress = {};
+type Props = ComponentProps<typeof MuiCircularProgress> & CircularProgress;
 
-export const CircularProgress: VFC<Props> = ({ ...props }) => {
+export const CircularProgress: VFC<Props> = (props) => {
   return <MuiCircularProgress {...props} />;
 };

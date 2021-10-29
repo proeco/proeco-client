@@ -9,10 +9,15 @@ export default {
   component: CircularProgress,
 } as ComponentMeta<typeof CircularProgress>;
 
-export const Template: ComponentStory<typeof CircularProgress> = () => {
+export const Template: ComponentStory<typeof CircularProgress> = ({ color }) => {
   return (
     <Box>
-      <CircularProgress />
+      <CircularProgress color={color} />
     </Box>
   );
+};
+
+export const Default = Template.bind({});
+Default.args = {
+  color: 'primary',
 };
