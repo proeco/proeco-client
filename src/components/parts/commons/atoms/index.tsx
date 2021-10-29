@@ -1,5 +1,6 @@
 export { Button } from './Button';
 export { Card } from './Card';
+export { CircularProgress } from './CircularProgress';
 export { Divider } from './Divider';
 export { Emoji } from './Emoji';
 export { Icon } from './Icon';
