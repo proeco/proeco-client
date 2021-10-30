@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { LoginRequiredWrapper } from '~/components/parts/authentication/LoginRequiredWrapper';
-import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
+import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 const Dashboard: NextPage = () => {
   return (

@@ -5,7 +5,7 @@ import { FC, useEffect } from 'react';
 import { Box } from '@mui/system';
 import { URLS } from '~/constants';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { CircularProgress } from '~/components/parts/commons/atoms';
+import { CircularProgress } from '~/components/parts/commons/CircularProgress';
 
 export const LoginRequiredWrapper: FC = ({ children }) => {
   const [session, loading] = useSession();
