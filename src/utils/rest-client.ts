@@ -20,7 +20,9 @@ class RestClient {
 
   async getAccessToken() {
     if (this.accessToken == null) {
-      const session: Session | null = await getSession({});
+      const session: Session | null = await getSession();
+      console.log(session);
+
       if (session != null) {
         this.accessToken = session.accessToken as string;
       }
