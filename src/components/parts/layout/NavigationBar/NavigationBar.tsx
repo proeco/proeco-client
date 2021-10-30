@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { signIn, signOut } from 'next-auth/client';
+import { signIn, signOut } from 'next-auth/react';
 import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
 import { AppBar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';

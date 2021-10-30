@@ -1,5 +1,5 @@
 import { AppProps } from 'next/app';
-import { Provider } from 'next-auth/client';
+import { SessionProvider } from 'next-auth/react';
 import { SnackbarProvider } from 'notistack';
 import { GlobalStyles } from '@mui/material';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
@@ -29,13 +29,13 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <MaterialThemeProvider theme={theme}>
       <SnackbarProvider>
-        <Provider options={{ clientMaxAge: 0, keepAlive: 0 }} session={pageProps.session}>
+        <SessionProvider session={pageProps.session}>
           {inputGlobalStyles}
           <NavigationBar />
           <Component {...pageProps} />
           {/* TODO: Dashboard レイアウトができたら移動する */}
           <DashboardModals />
-        </Provider>
+        </SessionProvider>
       </SnackbarProvider>
     </MaterialThemeProvider>
   );

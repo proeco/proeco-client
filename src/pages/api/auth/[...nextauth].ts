@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
+import GoogleProvider from 'next-auth/providers/google';
 
 const options = {
   site: process.env.NEXTAUTH_URL || 'http://localhost:3000',
   providers: [
-    Providers.Google({
+    GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
