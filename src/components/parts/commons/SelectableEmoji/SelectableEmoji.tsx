@@ -3,7 +3,7 @@ import React, { VFC, useState, useRef, useEffect } from 'react';
 import { EmojiData, Picker, emojiIndex } from 'emoji-mart';
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
-import { Emoji } from '~/components/parts/commons/atoms';
+import { Emoji } from '~/components/parts/commons/Emoji';
 
 import 'emoji-mart/css/emoji-mart.css';
 

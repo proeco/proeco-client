@@ -1,5 +1,5 @@
 import React, { ComponentProps, VFC } from 'react';
-import { Stepper } from '~/components/parts/commons/organisms/Stepper';
+import { Stepper } from '~/components/parts/commons/Stepper';
 
 type Props = Omit<ComponentProps<typeof Stepper>, 'steps'>;
 

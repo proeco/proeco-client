@@ -1,9 +1,10 @@
 import React, { VFC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Box, styled } from '@mui/system';
-import { Modal } from '~/components/parts/commons/organisms/Modal';
-import { Button } from '~/components/parts/commons/atoms/Button';
-import { Emoji, Typography } from '~/components/parts/commons/atoms';
+import { Modal } from '~/components/parts/commons/Modal';
+import { Button } from '~/components/parts/commons/Button';
+import { Emoji } from '~/components/parts/commons/Emoji';
+import { Typography } from '~/components/parts/commons/Typography';
 
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 

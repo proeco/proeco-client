@@ -2,8 +2,9 @@ import React, { VFC } from 'react';
 import { styled } from '@mui/material/styles';
 import { Modal as MuiModal } from '@mui/material';
 import { Box } from '@mui/system';
-import { Emoji, Typography } from '~/components/parts/commons/atoms';
-import { Divider } from '~/components/parts/commons/atoms/Divider';
+import { Emoji } from '~/components/parts/commons/Emoji';
+import { Typography } from '~/components/parts/commons/Typography';
+import { Divider } from '~/components/parts/commons/Divider';
 
 type Size = 'small' | 'medium' | 'large';
 

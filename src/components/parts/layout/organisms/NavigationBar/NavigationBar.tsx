@@ -8,7 +8,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { UserIcon } from '~/components/domains/user/atoms';
 import { Button, Icon, Link } from '~/components/parts/commons/atoms';
-import { Menu } from '~/components/parts/commons/organisms/Menu';
+import { Menu } from '~/components/parts/commons/Menu';
 import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 import { User } from '~/domains';

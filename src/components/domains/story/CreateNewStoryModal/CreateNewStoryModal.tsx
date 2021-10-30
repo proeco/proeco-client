@@ -9,8 +9,8 @@ import { styled } from '@mui/material/styles';
 import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
-import { Modal } from '~/components/parts/commons/organisms/Modal';
-import { SelectableEmoji } from '~/components/parts/commons/organisms/SelectableEmoji';
+import { Modal } from '~/components/parts/commons/Modal';
+import { SelectableEmoji } from '~/components/parts/commons/SelectableEmoji';
 import { Button, Typography, TextField } from '~/components/parts/commons/atoms';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';

@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { TableCell, TableRow } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
-import { Menu } from '~/components/parts/commons/organisms/Menu';
-import { IconButton } from '~/components/parts/commons/organisms/IconButton';
+import { Menu } from '~/components/parts/commons/Menu';
+import { IconButton } from '~/components/parts/commons/IconButton';
 import { Icon, Emoji } from '~/components/parts/commons/atoms';
 
 import { DATE_FORMAT } from '~/constants';

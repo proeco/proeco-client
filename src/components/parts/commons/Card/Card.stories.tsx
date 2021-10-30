@@ -2,8 +2,8 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { Typography } from '~/components/parts/commons/atoms';
-import { Card } from '~/components/parts/commons/atoms/Card';
+import { Typography } from '~/components/parts/commons/Typography';
+import { Card } from '~/components/parts/commons/Card';
 
 export default {
   title: 'parts/commons/atoms/Card',

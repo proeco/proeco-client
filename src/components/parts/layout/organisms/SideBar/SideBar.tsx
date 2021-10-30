@@ -6,7 +6,7 @@ import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewS
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { Typography, SideBarListItem, Icon, Emoji, Button, Link } from '~/components/parts/commons/atoms';
-import { IconButton } from '~/components/parts/commons/organisms/IconButton';
+import { IconButton } from '~/components/parts/commons/IconButton';
 import { UserIcon } from '~/components/domains/user/atoms';
 
 import { Story, User } from '~/domains';

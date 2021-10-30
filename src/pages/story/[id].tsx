@@ -14,8 +14,8 @@ import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
 import { Icon, Typography } from '~/components/parts/commons/atoms';
 import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
-import { Menu } from '~/components/parts/commons/organisms/Menu';
-import { IconButton } from '~/components/parts/commons/organisms/IconButton';
+import { Menu } from '~/components/parts/commons/Menu';
+import { IconButton } from '~/components/parts/commons/IconButton';
 
 type Props = {
   storyFromServerSide?: Story;
