@@ -1,12 +1,12 @@
 import { VFC } from 'react';
-import { CreateNewStoryModal } from '~/components/domains/story/organisms';
-import { UpdateStoryModal } from '~/components/domains/story/organisms/UpdateStoryModal';
+import { CreateNewStoryModal, DeleteStoryModal, UpdateStoryModal } from '~/components/domains/story/organisms';
 
 export const DashboardModals: VFC = () => {
   return (
     <>
       <CreateNewStoryModal />
       <UpdateStoryModal />
+      <DeleteStoryModal />
     </>
   );
 };

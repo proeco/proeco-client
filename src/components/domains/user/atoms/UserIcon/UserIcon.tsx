@@ -1,7 +1,7 @@
 import { memo, VFC, ComponentProps } from 'react';
-import { Avatar, Link } from '@mui/material';
+import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { PersonOutline as PersonOutlineIcon } from '@mui/icons-material';
+import { Icon, Link } from '~/components/parts/commons/atoms';
 
 type IconSizes = 'small' | 'medium' | 'large';
 
@@ -18,7 +18,7 @@ export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = fal
   if (!imagePath) {
     return (
       <StyledAvatar size={size} {...rest}>
-        <StyledPersonOutlineIcon />
+        <Icon icon="PersonOutline" color="#ccc" width="100%" />
       </StyledAvatar>
     );
   }
@@ -26,7 +26,7 @@ export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = fal
   if (!isLink) return <StyledAvatar size={size} alt={userId} src={imagePath} {...rest} />;
 
   return (
-    <Link underline="none" href={'/user/' + userId}>
+    <Link href={'/user/' + userId}>
       <StyledAvatar size={size} alt={userId} src={imagePath} {...rest} />
     </Link>
   );
@@ -37,12 +37,6 @@ const sizeMap: { [key in IconSizes]: number } = {
   medium: 60,
   large: 80,
 };
-
-const StyledPersonOutlineIcon = styled(PersonOutlineIcon)`
-  color: #ccc;
-  width: 100%;
-  height: auto;
-`;
 
 const StyledAvatar = styled(Avatar)<{ size: IconSizes }>`
   background-color: white;

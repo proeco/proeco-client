@@ -13,9 +13,17 @@ type Menu = {
 
 type Props = ComponentProps<typeof MuiMenu> & Menu;
 
-export const Menu: VFC<Props> = ({ menuItems, ...rest }) => {
+export const Menu: VFC<Props> = ({
+  menuItems,
+  anchorOrigin = { vertical: 'bottom', horizontal: 'right' },
+  transformOrigin = {
+    vertical: 'top',
+    horizontal: 'right',
+  },
+  ...rest
+}) => {
   return (
-    <MuiMenu {...rest}>
+    <MuiMenu anchorOrigin={anchorOrigin} transformOrigin={transformOrigin} {...rest}>
       {menuItems.map((menuItem, i) => (
         <MenuItem key={i} onClick={menuItem.onClick}>
           <ListItemIcon>{menuItem.icon}</ListItemIcon>

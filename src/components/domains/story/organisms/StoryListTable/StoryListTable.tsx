@@ -53,7 +53,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit }) => {
               <TableCell />
             </TableRow>
           </TableHead>
-          <TableBody>{stories && stories.docs.map((doc) => <StoryTableRow story={doc} key={doc._id} page={page} limit={limit} />)}</TableBody>
+          <TableBody>{stories && stories.docs.map((doc) => <StoryTableRow story={doc} key={doc._id} />)}</TableBody>
         </Table>
       </TableContainer>
     </>
