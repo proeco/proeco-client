@@ -3,7 +3,7 @@ import { VFC } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { styled } from '@mui/system';
 
-import { Typography } from '~/components/parts/commons/atoms';
+import { Typography } from '~/components/parts/commons';
 import { StoryTableRow } from '~/components/domains/story/StoryTableRow';
 
 import { useStories } from '~/stores/story/useStories';

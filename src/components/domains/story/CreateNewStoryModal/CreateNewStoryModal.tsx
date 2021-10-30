@@ -9,9 +9,7 @@ import { styled } from '@mui/material/styles';
 import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
-import { Modal } from '~/components/parts/commons/Modal';
-import { SelectableEmoji } from '~/components/parts/commons/SelectableEmoji';
-import { Button, Typography, TextField } from '~/components/parts/commons/atoms';
+import { Modal, SelectableEmoji, Button, Typography, TextField } from '~/components/parts/commons';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useStories } from '~/stores/story';

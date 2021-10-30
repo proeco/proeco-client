@@ -1,7 +1,7 @@
 import { memo, VFC, ComponentProps } from 'react';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Icon, Link } from '~/components/parts/commons/atoms';
+import { Icon, Link } from '~/components/parts/commons';
 
 type IconSizes = 'small' | 'medium' | 'large';
 
