@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { CircularProgress } from '~/components/parts/commons/atoms';
+import { CircularProgress } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/atoms/CircularProgress',

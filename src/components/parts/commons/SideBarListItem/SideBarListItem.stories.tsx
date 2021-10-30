@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { styled } from '@mui/system';
 import { List } from '@mui/material';
 
-import { Typography, Icon, SideBarListItem } from '~/components/parts/commons/atoms';
+import { Typography, Icon, SideBarListItem } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/atoms/SideBarListItem',

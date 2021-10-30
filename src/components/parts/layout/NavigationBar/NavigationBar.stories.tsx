@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { Component } from '~/components/parts/layout/NavigationBar';
-import { Icon } from '~/components/parts/commons/atoms';
+import { Icon } from '~/components/parts/commons';
 
 import { createMockUser } from '~/mock';
 

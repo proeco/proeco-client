@@ -2,8 +2,8 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { Typography } from '~/components/parts/commons/Typography';
-import { Paper } from '~/components/parts/commons/Paper';
+
+import { Typography, Paper } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/atoms/Paper',

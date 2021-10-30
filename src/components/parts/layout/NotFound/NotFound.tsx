@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { styled } from '@mui/material/styles';
 import { Stack } from '@mui/material';
 import { Box } from '@mui/system';
-import { Button, Typography } from '~/components/parts/commons/atoms';
+import { Button, Typography } from '~/components/parts/commons';
 
 import { IMAGE_PATH } from '~/constants';
 

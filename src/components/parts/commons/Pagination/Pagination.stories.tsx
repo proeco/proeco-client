@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Stack } from '@mui/material';
-import { Pagination, Typography } from '~/components/parts/commons/atoms';
+import { Pagination, Typography } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/atoms/Pagination',

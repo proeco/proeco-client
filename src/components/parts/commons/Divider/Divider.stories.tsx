@@ -2,9 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
-import { Divider } from '~/components/parts/commons/Divider';
-import { Typography } from '~/components/parts/commons/Typography';
-import { Card } from '~/components/parts/commons/Card';
+import { Divider, Typography, Card } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/atoms/Divider',

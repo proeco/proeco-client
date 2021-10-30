@@ -2,7 +2,7 @@ import React, { ComponentProps, VFC } from 'react';
 import { styled } from '@mui/material/styles';
 import { Step, StepLabel, Stepper as MuiStepper } from '@mui/material';
 
-import { Typography } from '~/components/parts/commons/atoms';
+import { Typography } from '~/components/parts/commons';
 
 type StepsType = {
   steps: string[];

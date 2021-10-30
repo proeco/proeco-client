@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { Box } from '@mui/system';
 import { Menu } from './Menu';
 
-import { Icon } from '~/components/parts/commons/atoms';
+import { Icon } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/organisms/Menu',

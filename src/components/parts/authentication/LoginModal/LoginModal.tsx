@@ -1,8 +1,7 @@
 import React, { VFC } from 'react';
 import Image from 'next/image';
 import { Box, styled } from '@mui/system';
-import { Modal } from '~/components/parts/commons/Modal';
-import { Typography, Link } from '~/components/parts/commons';
+import { Modal, Typography, Link } from '~/components/parts/commons';
 import { URLS, IMAGE_PATH } from '~/constants';
 
 type Props = {
