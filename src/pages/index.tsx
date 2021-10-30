@@ -4,7 +4,7 @@ import { signIn, signOut } from 'next-auth/client';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { Button, Typography } from '~/components/parts/commons/atoms';
+import { Button, Typography } from '~/components/parts/commons';
 
 const Home: NextPage = () => {
   const { data: currentUser } = useCurrentUser();
