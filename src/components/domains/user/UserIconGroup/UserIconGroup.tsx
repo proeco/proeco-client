@@ -3,7 +3,7 @@ import { VFC } from 'react';
 import { AvatarGroup } from '@mui/material';
 import { User } from '~/domains';
 
-import { UserIcon } from '~/components/domains/user/atoms';
+import { UserIcon } from '~/components/domains/user/UserIcon';
 
 type Props = {
   users: User[];
