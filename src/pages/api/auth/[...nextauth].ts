@@ -11,7 +11,7 @@ const options = {
     }),
   ],
 
-  database: process.env.MONGO_URI || 'mongodb://localhost:27017/webev',
+  database: process.env.MONGO_URI || 'mongodb://localhost:27017/proeco',
 
   sessionMaxAge: 30 * 24 * 60 * 60 * 1000,
   sessionUpdateAge: 24 * 60 * 60 * 1000,
