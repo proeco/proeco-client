@@ -6,8 +6,10 @@ import { styled } from '@mui/material/styles';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { UserIcon } from '~/components/domains/user/atoms';
-import { Button, Icon, Link } from '~/components/parts/commons/atoms';
+import { UserIcon } from '~/components/domains/user/UserIcon';
+import { Button } from '~/components/parts/commons/Button';
+import { Icon } from '~/components/parts/commons/Icon';
+import { Link } from '~/components/parts/commons/Link';
 import { Menu } from '~/components/parts/commons/Menu';
 import { LoginModal } from '~/components/parts/authentication/LoginModal';
 

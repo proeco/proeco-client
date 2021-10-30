@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import { ChangeEvent, useState } from 'react';
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { Button, Pagination, Typography, Icon } from '~/components/parts/commons/atoms';
-import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
+import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';

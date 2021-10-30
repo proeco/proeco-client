@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { Component } from '~/components/parts/layout/organisms/NavigationBar';
+import { Component } from '~/components/parts/layout/NavigationBar';
 import { Icon } from '~/components/parts/commons/atoms';
 
 import { createMockUser } from '~/mock';

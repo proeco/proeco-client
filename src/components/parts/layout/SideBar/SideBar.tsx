@@ -5,9 +5,14 @@ import { Box, styled } from '@mui/system';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { Typography, SideBarListItem, Icon, Emoji, Button, Link } from '~/components/parts/commons/atoms';
+import { Typography } from '~/components/parts/commons/Typography';
+import { SideBarListItem } from '~/components/parts/commons/SideBarListItem';
+import { Icon } from '~/components/parts/commons/Icon';
+import { Emoji } from '~/components/parts/commons/Emoji';
+import { Button } from '~/components/parts/commons/Button';
+import { Link } from '~/components/parts/commons/Link';
 import { IconButton } from '~/components/parts/commons/IconButton';
-import { UserIcon } from '~/components/domains/user/atoms';
+import { UserIcon } from '~/components/domains/user/UserIcon';
 
 import { Story, User } from '~/domains';
 
