@@ -4,7 +4,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { styled } from '@mui/system';
 
 import { Typography } from '~/components/parts/commons/atoms';
-import { StoryTableRow } from '~/components/domains/story/organisms/StoryTableRow';
+import { StoryTableRow } from '~/components/domains/story/StoryTableRow';
 
 import { useStories } from '~/stores/story/useStories';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';

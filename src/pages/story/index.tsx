@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 
 import { ChangeEvent, useState } from 'react';
-import { StoryListTable } from '~/components/domains/story/organisms/StoryListTable';
+import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { Button, Pagination, Typography, Icon } from '~/components/parts/commons/atoms';
 import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
 
