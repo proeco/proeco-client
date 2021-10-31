@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { SelectableEmoji } from './SelectableEmoji';
 
 export default {
-  title: 'parts/commons/organisms/SelectableEmoji',
+  title: 'parts/commons/SelectableEmoji',
   component: SelectableEmoji,
   argTypes: { onSelectEmoji: { action: 'select' } },
 } as ComponentMeta<typeof SelectableEmoji>;

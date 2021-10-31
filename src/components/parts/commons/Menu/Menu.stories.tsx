@@ -8,7 +8,7 @@ import { Menu } from './Menu';
 import { Icon } from '~/components/parts/commons';
 
 export default {
-  title: 'parts/commons/organisms/Menu',
+  title: 'parts/commons/Menu',
   component: Menu,
 } as ComponentMeta<typeof Menu>;
 

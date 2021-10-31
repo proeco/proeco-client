@@ -6,7 +6,7 @@ import { Link } from './Link';
 import { Typography } from '~/components/parts/commons/Typography';
 
 export default {
-  title: 'parts/commons/atoms/Link',
+  title: 'parts/commons/Link',
   component: Link,
 } as ComponentMeta<typeof Link>;
 

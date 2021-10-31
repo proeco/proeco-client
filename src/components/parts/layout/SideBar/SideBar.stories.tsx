@@ -8,7 +8,7 @@ import { createMockStory, createMockUser } from '~/mock';
 import { URLS } from '~/constants/urls';
 
 export default {
-  title: 'parts/layout/organisms/SideBar',
+  title: 'parts/layout/SideBar',
   component: Component,
   argTypes: {
     openCreateStoryModal: { action: 'openCreateStoryModal' },

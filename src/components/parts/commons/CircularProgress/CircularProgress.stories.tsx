@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { CircularProgress } from '~/components/parts/commons';
 
 export default {
-  title: 'parts/commons/atoms/CircularProgress',
+  title: 'parts/commons/CircularProgress',
   component: CircularProgress,
 } as ComponentMeta<typeof CircularProgress>;
 

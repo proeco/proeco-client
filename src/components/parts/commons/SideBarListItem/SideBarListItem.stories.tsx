@@ -6,7 +6,7 @@ import { List } from '@mui/material';
 import { Typography, Icon, SideBarListItem } from '~/components/parts/commons';
 
 export default {
-  title: 'parts/commons/atoms/SideBarListItem',
+  title: 'parts/commons/SideBarListItem',
   component: SideBarListItem,
 } as ComponentMeta<typeof SideBarListItem>;
 
