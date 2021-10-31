@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import { ReactNode } from 'react';
 import { Provider } from 'next-auth/client';
 import { SnackbarProvider } from 'notistack';
@@ -11,6 +10,7 @@ import 'modern-css-reset/dist/reset.min.css';
 import { theme } from '../theme';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 import { DashboardModals } from '~/components/parts/layout/DashboardModals';
+import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const inputGlobalStyles = (
   <GlobalStyles
@@ -27,13 +27,7 @@ const inputGlobalStyles = (
   />
 );
 
-function MyApp({
-  Component,
-  pageProps,
-}: {
-  Component: NextPage & { getLayout: (page: ReactNode) => JSX.Element };
-  pageProps: { children?: ReactNode; session?: Session };
-}): JSX.Element {
+function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode; session?: Session } }): JSX.Element {
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
