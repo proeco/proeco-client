@@ -40,7 +40,7 @@ const sidebarItems: {
 
 export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
   return (
-    <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px">
+    <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px" bgcolor="whitesmoke">
       <StyledUserIconWrapper pb="16px">
         <UserIcon size="large" imagePath={currentUser?.image} userId={currentUser?._id} isLink />
         <Typography variant="h3">{currentUser?.name}</Typography>
@@ -65,7 +65,6 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
 
 const StyledSideBarWrapper = styled(Box)`
   box-sizing: border-box;
-  background-color: #fff;
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
 `;
 
