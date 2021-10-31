@@ -2,6 +2,8 @@ import { createTheme } from '@mui/material/styles';
 
 import { COLORS } from '~/constants';
 
+import type {} from '@mui/lab/themeAugmentation';
+
 export const theme = createTheme({
   palette: {
     primary: {
