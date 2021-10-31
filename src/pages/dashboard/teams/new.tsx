@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Team } from '~/domains';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
-import { TextField, Card, Typography, Button, Icon } from '~/components/parts/commons';
+import { TextField, Typography, Button, Icon, Paper } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { restClient } from '~/utils/rest-client';
@@ -53,7 +53,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
             新規チームを作成する
           </Typography>
         </Box>
-        <Card square>
+        <Paper square>
           <Typography mb="4px" variant="body1" color="textColor.light">
             名前
           </Typography>
@@ -73,7 +73,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
               新規チームを作成する
             </Button>
           </Box>
-        </Card>
+        </Paper>
       </Box>
     </>
   );

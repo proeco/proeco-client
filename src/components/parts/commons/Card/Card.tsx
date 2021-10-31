@@ -14,6 +14,7 @@ export const Card: VFC<Props> = ({ padding = 20, square = false, ...rest }) => {
 };
 
 const StyledMuiCard = styled(MuiCard)<{ square: boolean; padding: number }>`
+  width: fit-content;
   padding: ${(props) => props.padding}px;
   border-radius: ${(props) => (props.square ? '0px' : '4px')};
 `;
