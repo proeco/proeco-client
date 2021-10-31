@@ -12,7 +12,7 @@ export default {
 
 const Template: ComponentStory<typeof Paper> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="gray">
+    <Box p="40px" width="300px" bgcolor="gray">
       <Paper {...rest}>
         <Typography variant="body1">Paperのコンテンツ</Typography>
       </Paper>
