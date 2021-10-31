@@ -96,7 +96,6 @@ export const CreateNewStoryModal: VFC = () => {
 
       mutateStories();
 
-      // successのSnackbarを表示する
       notifySuccessMessage('ストーリーの作成に成功しました!');
 
       // stateの初期化
@@ -110,7 +109,6 @@ export const CreateNewStoryModal: VFC = () => {
       router.push(`/story/${data._id}`);
       handleCloseModal();
     } catch (error) {
-      // errorのSnackbarを表示する
       notifyErrorMessage('ストーリーの作成に失敗しました!');
     }
   };

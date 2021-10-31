@@ -1,4 +1,4 @@
-import { memo, VFC } from 'react';
+import { ComponentProps, memo, VFC } from 'react';
 import { useRouter } from 'next/router';
 
 import { Box, styled } from '@mui/system';
@@ -16,38 +16,48 @@ type Props = {
   asPath: string;
 };
 
+const sidebarItems: {
+  icon: ComponentProps<typeof Icon>['icon'];
+  url: string;
+  text: string;
+}[] = [
+  {
+    icon: 'DashboardOutlined',
+    url: URLS.DASHBOARD,
+    text: 'ダッシュボード',
+  },
+  {
+    icon: 'Group',
+    url: URLS.DASHBOARD_TEAMS,
+    text: 'チーム',
+  },
+  {
+    icon: 'Settings',
+    url: URLS.DASHBOARD_SETTINGS,
+    text: '設定',
+  },
+];
+
 export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
   return (
-    <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px">
+    <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px" bgcolor="whitesmoke">
       <StyledUserIconWrapper pb="16px">
         <UserIcon size="large" imagePath={currentUser?.image} userId={currentUser?._id} isLink />
         <Typography variant="h3">{currentUser?.name}</Typography>
       </StyledUserIconWrapper>
       <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
-        <Link href={URLS.DASHBOARD}>
-          <SideBarListItem
-            icon={<Icon icon="DashboardOutlined" width="20px" color={URLS.DASHBOARD === asPath ? '#fff' : 'textColor.main'} />}
-            selected={URLS.DASHBOARD === asPath}
-          >
-            <Typography variant="body1">ダッシュボード</Typography>
-          </SideBarListItem>
-        </Link>
-        <Link href={URLS.DASHBOARD_TEAMS}>
-          <SideBarListItem
-            icon={<Icon icon="Group" width="20px" color={URLS.DASHBOARD_TEAMS === asPath ? '#fff' : 'textColor.main'} />}
-            selected={URLS.DASHBOARD_TEAMS === asPath}
-          >
-            <Typography variant="body1">チーム</Typography>
-          </SideBarListItem>
-        </Link>
-        <Link href={URLS.DASHBOARD_SETTINGS}>
-          <SideBarListItem
-            icon={<Icon icon="Settings" width="20px" color={URLS.DASHBOARD_SETTINGS === asPath ? '#fff' : 'textColor.main'} />}
-            selected={URLS.DASHBOARD_SETTINGS === asPath}
-          >
-            <Typography variant="body1">設定</Typography>
-          </SideBarListItem>
-        </Link>
+        {sidebarItems.map((sidebarItem, index) => {
+          return (
+            <Link href={sidebarItem.url} key={index}>
+              <SideBarListItem
+                icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
+                selected={sidebarItem.url === asPath}
+              >
+                <Typography variant="body1">{sidebarItem.text}</Typography>
+              </SideBarListItem>
+            </Link>
+          );
+        })}
       </Box>
     </StyledSideBarWrapper>
   );
@@ -55,7 +65,6 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
 
 const StyledSideBarWrapper = styled(Box)`
   box-sizing: border-box;
-  background-color: #fff;
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
 `;
 
