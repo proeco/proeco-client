@@ -3,15 +3,15 @@ import { MoreVert, Update, Delete, Logout, PersonOutline, DashboardOutlined, Set
 import { Box, styled } from '@mui/system';
 
 const IconMap = {
-  MoreVert: <MoreVert />,
-  Update: <Update />,
+  Add: <Add />,
+  DashboardOutlined: <DashboardOutlined />,
   Delete: <Delete />,
   Group: <Group />,
   Logout: <Logout />,
+  MoreVert: <MoreVert />,
   PersonOutline: <PersonOutline />,
-  DashboardOutlined: <DashboardOutlined />,
   Settings: <Settings />,
-  Add: <Add />,
+  Update: <Update />,
   CreateOutlined: <CreateOutlined />,
 };
 
