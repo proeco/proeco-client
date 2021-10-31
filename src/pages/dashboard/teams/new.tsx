@@ -17,16 +17,19 @@ const DashboardTeamPage: ProecoNextPage = () => {
   const { notifyErrorMessage } = useErrorNotification();
   const router = useRouter();
 
+  const [isCreating, setIsCreating] = useState(false);
   const [team, setTeam] = useState<Pick<Team, 'name' | 'description'>>({
     name: '',
     description: '',
   });
 
   const handleClickCreateNewTeam = async () => {
+    setIsCreating(true);
     try {
       await restClient.apiPost('/teams', { team: team });
       notifySuccessMessage('チームを作成しました');
       router.push('/dashboard/teams');
+      setIsCreating(false);
     } catch (error) {
       notifyErrorMessage('チームの作成に失敗しました');
     }
@@ -60,7 +63,13 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Typography>
           <TextField fullWidth multiline value={team.description} rows={4} onChange={(e) => updateStoryForm({ description: e.target.value })} />
           <Box mt={4} textAlign="center">
-            <Button color="primary" variant="contained" startIcon={<Icon icon="CreateOutlined" width="20px" />} onClick={handleClickCreateNewTeam}>
+            <Button
+              disabled={isCreating}
+              color="primary"
+              variant="contained"
+              startIcon={<Icon icon="CreateOutlined" width="20px" />}
+              onClick={handleClickCreateNewTeam}
+            >
               新規チームを作成する
             </Button>
           </Box>
