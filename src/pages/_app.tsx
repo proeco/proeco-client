@@ -9,7 +9,6 @@ import 'modern-css-reset/dist/reset.min.css';
 
 import { theme } from '../theme';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
-import { DashboardModals } from '~/components/parts/layout/DashboardModals';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const inputGlobalStyles = (
@@ -37,7 +36,6 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
           {inputGlobalStyles}
           <NavigationBar />
           {getLayout(<Component {...pageProps} />)}
-          <DashboardModals />
         </Provider>
       </SnackbarProvider>
     </MaterialThemeProvider>
