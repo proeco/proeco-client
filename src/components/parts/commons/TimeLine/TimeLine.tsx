@@ -1,54 +1,21 @@
 import React, { VFC, ComponentProps } from 'react';
-import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@mui/lab';
-import { Typography } from '@mui/material';
-import { UserIcon } from '~/components/domains/user/UserIcon';
+import { Timeline } from '@mui/lab';
+import { TimeLineItem } from '~/components/parts/commons';
 
 type TimeLineType = {
-  title: string;
-  imagePath: string;
+  timeLineItems: { title: string; imagePath: string; children: React.ReactNode }[];
 };
 
 type Props = ComponentProps<typeof Timeline> & TimeLineType;
 
-export const TimeLine: VFC<Props> = ({ title, imagePath, children, ...rest }) => {
+export const TimeLine: VFC<Props> = ({ timeLineItems, ...rest }) => {
   return (
     <Timeline {...rest}>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot sx={{ padding: '0', border: 'none' }}>
-            <UserIcon size="small" imagePath={imagePath} />
-          </TimelineDot>
-          <TimelineConnector sx={{ bgcolor: 'primary.main' }} />
-        </TimelineSeparator>
-        <TimelineContent>
-          <Typography variant="h4">{title}</Typography>
-          {children}
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot sx={{ padding: '0', border: 'none' }}>
-            <UserIcon size="small" imagePath={imagePath} />
-          </TimelineDot>
-          <TimelineConnector sx={{ bgcolor: 'primary.main' }} />
-        </TimelineSeparator>
-        <TimelineContent>
-          <Typography variant="h4">{title}</Typography>
-          {children}
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot sx={{ padding: '0', border: 'none' }}>
-            <UserIcon size="small" imagePath={imagePath} />
-          </TimelineDot>
-          <TimelineConnector sx={{ bgcolor: 'primary.main' }} />
-        </TimelineSeparator>
-        <TimelineContent>
-          <Typography variant="h4">{title}</Typography>
-          {children}
-        </TimelineContent>
-      </TimelineItem>
+      {timeLineItems.map((item, i) => (
+        <TimeLineItem key={i} title={item.title} imagePath={item.imagePath}>
+          {item.children}
+        </TimeLineItem>
+      ))}
     </Timeline>
   );
 };

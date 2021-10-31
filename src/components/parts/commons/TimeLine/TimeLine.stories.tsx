@@ -13,15 +13,28 @@ export default {
 const Template: ComponentStory<typeof TimeLine> = ({ ...rest }) => {
   return (
     <Box>
-      <TimeLine {...rest}>
-        <Box width="500px" height="250px" border="1px solid #000"></Box>
-      </TimeLine>
+      <TimeLine {...rest}></TimeLine>
     </Box>
   );
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  title: 'TimeLineのtitle',
-  imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
+  timeLineItems: [
+    {
+      title: 'TimeLineItem１',
+      imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
+      children: <Box width="500px" height="250px" border="1px solid #000"></Box>,
+    },
+    {
+      title: 'TimeLineItem２',
+      imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
+      children: <Box width="500px" height="250px" border="1px solid #000"></Box>,
+    },
+    {
+      title: 'TimeLineItem３',
+      imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
+      children: <Box width="500px" height="250px" border="1px solid #000"></Box>,
+    },
+  ],
 };

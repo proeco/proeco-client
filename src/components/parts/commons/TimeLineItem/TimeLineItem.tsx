@@ -7,6 +7,7 @@ import { Typography } from '~/components/parts/commons';
 type TimeLineItemType = {
   title: string;
   imagePath: string;
+  children: React.ReactNode;
 };
 
 type Props = ComponentProps<typeof TimelineItem> & TimeLineItemType;
