@@ -15,11 +15,10 @@ export const TimeLine: VFC<Props> = ({ title, imagePath, children, ...rest }) =>
     <Timeline {...rest}>
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot>
+          <TimelineDot sx={{ padding: '0', border: 'none' }}>
             <UserIcon size="small" imagePath={imagePath} />
           </TimelineDot>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'primary.main' }} />
         </TimelineSeparator>
         <TimelineContent>
           <Typography variant="h4">{title}</Typography>
@@ -28,11 +27,10 @@ export const TimeLine: VFC<Props> = ({ title, imagePath, children, ...rest }) =>
       </TimelineItem>
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot>
+          <TimelineDot sx={{ padding: '0', border: 'none' }}>
             <UserIcon size="small" imagePath={imagePath} />
           </TimelineDot>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'primary.main' }} />
         </TimelineSeparator>
         <TimelineContent>
           <Typography variant="h4">{title}</Typography>
@@ -41,11 +39,10 @@ export const TimeLine: VFC<Props> = ({ title, imagePath, children, ...rest }) =>
       </TimelineItem>
       <TimelineItem>
         <TimelineSeparator>
-          <TimelineConnector />
-          <TimelineDot>
+          <TimelineDot sx={{ padding: '0', border: 'none' }}>
             <UserIcon size="small" imagePath={imagePath} />
           </TimelineDot>
-          <TimelineConnector />
+          <TimelineConnector sx={{ bgcolor: 'primary.main' }} />
         </TimelineSeparator>
         <TimelineContent>
           <Typography variant="h4">{title}</Typography>

@@ -13,7 +13,9 @@ export default {
 const Template: ComponentStory<typeof TimeLine> = ({ ...rest }) => {
   return (
     <Box>
-      <TimeLine {...rest}></TimeLine>
+      <TimeLine {...rest}>
+        <Box width="500px" height="250px" border="1px solid #000"></Box>
+      </TimeLine>
     </Box>
   );
 };
