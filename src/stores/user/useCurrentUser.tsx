@@ -1,6 +1,6 @@
 import { SWRResponse } from 'swr';
 
-import { restClient } from '~/utils/rest-client';
+import { useSession } from 'next-auth/client';
 import { User } from '~/domains/user';
 import { useAuthenticationSWR } from '~/stores/useAuthenticationSWR';
 
@@ -12,7 +12,9 @@ import { useAuthenticationSWR } from '~/stores/useAuthenticationSWR';
  * @returns mutate データの更新関数
  */
 export const useCurrentUser = (): SWRResponse<User, Error> => {
-  return useAuthenticationSWR('/users/me', (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
+  const [session] = useSession();
+
+  return useAuthenticationSWR('/users/me', () => session?.user as User, {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
   });
