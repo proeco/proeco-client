@@ -5,14 +5,14 @@ import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
-const Dashboard: ProecoNextPage = () => {
+const DashboardSettingsPage: ProecoNextPage = () => {
   return (
     <>
       <ProecoOgpHead />
       <Box p={5} mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h3" bold>
-            ダッシュボード
+            設定
           </Typography>
         </Box>
       </Box>
@@ -22,5 +22,5 @@ const Dashboard: ProecoNextPage = () => {
 
 const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>;
 
-Dashboard.getLayout = getLayout;
-export default Dashboard;
+DashboardSettingsPage.getLayout = getLayout;
+export default DashboardSettingsPage;

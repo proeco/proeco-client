@@ -1,10 +1,9 @@
-import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ReactNode, useState } from 'react';
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { Button, Pagination, Typography, Icon } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -12,10 +11,12 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useStories } from '~/stores/story';
+import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
+import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const limit = 10;
 
-const StoryList: NextPage = () => {
+const StoryList: ProecoNextPage = () => {
   const router = useRouter();
 
   const [page, setPage] = useState(1);
@@ -64,5 +65,8 @@ const StyledPagination = styled(Pagination)`
   align-items: center;
   justify-content: center;
 `;
+
+const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>;
+StoryList.getLayout = getLayout;
 
 export default StoryList;
