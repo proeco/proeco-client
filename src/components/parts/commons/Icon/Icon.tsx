@@ -1,11 +1,12 @@
 import React, { VFC, ComponentProps } from 'react';
-import { MoreVert, Update, Delete, Logout, PersonOutline, DashboardOutlined, Settings, Add, CreateOutlined } from '@mui/icons-material';
+import { MoreVert, Update, Delete, Logout, PersonOutline, DashboardOutlined, Settings, Add, CreateOutlined, Group } from '@mui/icons-material';
 import { Box, styled } from '@mui/system';
 
 const IconMap = {
   MoreVert: <MoreVert />,
   Update: <Update />,
   Delete: <Delete />,
+  Group: <Group />,
   Logout: <Logout />,
   PersonOutline: <PersonOutline />,
   DashboardOutlined: <DashboardOutlined />,
