@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { Component } from './CreateNewStoryModal';
 
 export default {
-  title: 'domains/story/organisms/CreateNewStoryModal',
+  title: 'domains/story/CreateNewStoryModal',
   component: Component,
   argTypes: {
     onChangeStoryForm: { action: 'onChangeStoryForm' },

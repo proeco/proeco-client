@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { Icon } from './Icon';
 
 export default {
-  title: 'parts/commons/atoms/Icon',
+  title: 'parts/commons/Icon',
   component: Icon,
 } as ComponentMeta<typeof Icon>;
 

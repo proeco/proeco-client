@@ -4,7 +4,7 @@ import { Stack } from '@mui/material';
 import { Pagination, Typography } from '~/components/parts/commons';
 
 export default {
-  title: 'parts/commons/atoms/Pagination',
+  title: 'parts/commons/Pagination',
   component: Pagination,
 } as ComponentMeta<typeof Pagination>;
 

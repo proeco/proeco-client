@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { StoryStepper } from './StoryStepper';
 
 export default {
-  title: 'domains/story/organisms/StoryStepper',
+  title: 'domains/story/StoryStepper',
   component: StoryStepper,
 } as ComponentMeta<typeof StoryStepper>;
 

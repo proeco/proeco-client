@@ -6,7 +6,7 @@ import { Modal } from './Modal';
 import { Typography } from '~/components/parts/commons';
 
 export default {
-  title: 'parts/commons/organisms/Modal',
+  title: 'parts/commons/Modal',
   component: Modal,
   argTypes: { onClose: { action: 'closed' } },
 } as ComponentMeta<typeof Modal>;

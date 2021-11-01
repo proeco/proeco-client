@@ -6,7 +6,7 @@ import { UserIconGroup } from './UserIconGroup';
 import { createMockUser } from '~/mock/createMockUser';
 
 export default {
-  title: 'domains/user/organisms/UserIconGroup',
+  title: 'domains/user/UserIconGroup',
   component: UserIconGroup,
 } as ComponentMeta<typeof UserIconGroup>;
 

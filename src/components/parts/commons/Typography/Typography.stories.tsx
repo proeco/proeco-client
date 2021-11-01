@@ -4,7 +4,7 @@ import { Box } from '@mui/system';
 import { Typography } from './Typography';
 
 export default {
-  title: 'parts/commons/atoms/Typography',
+  title: 'parts/commons/Typography',
 };
 
 const Template = () => (

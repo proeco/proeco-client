@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { IconButton } from './IconButton';
 
 export default {
-  title: 'parts/commons/organisms/IconButton',
+  title: 'parts/commons/IconButton',
   component: IconButton,
   argTypes: { onClick: { action: 'onClick' } },
 } as ComponentMeta<typeof IconButton>;

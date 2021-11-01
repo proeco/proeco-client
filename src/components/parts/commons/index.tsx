@@ -13,5 +13,7 @@ export { Paper } from './Paper';
 export { SelectableEmoji } from './SelectableEmoji';
 export { SideBarListItem } from './SideBarListItem';
 export { Stepper } from './Stepper';
+export { TimeLineItem } from './TimeLineItem';
+export { TimeLine } from './TimeLine';
 export { TextField } from './TextField';
 export { Typography } from './Typography';
