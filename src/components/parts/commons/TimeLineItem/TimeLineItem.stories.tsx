@@ -12,9 +12,9 @@ export default {
 
 const Template: ComponentStory<typeof TimeLineItem> = ({ ...rest }) => {
   return (
-    <Box>
+    <Box p="20px" bgcolor="#E5E5E5">
       <TimeLineItem {...rest}>
-        <Box width="500px" height="250px" border="1px solid #000"></Box>
+        <Box width="500px" height="250px"></Box>
       </TimeLineItem>
     </Box>
   );

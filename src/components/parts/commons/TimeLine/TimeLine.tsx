@@ -1,16 +1,14 @@
-import React, { VFC, ComponentProps } from 'react';
+import React, { VFC } from 'react';
 import { Timeline } from '@mui/lab';
 import { TimeLineItem } from '~/components/parts/commons';
 
-type TimeLineType = {
+type Props = {
   timeLineItems: { title: string; imagePath: string; children: React.ReactNode }[];
 };
 
-type Props = ComponentProps<typeof Timeline> & TimeLineType;
-
-export const TimeLine: VFC<Props> = ({ timeLineItems, ...rest }) => {
+export const TimeLine: VFC<Props> = ({ timeLineItems }) => {
   return (
-    <Timeline {...rest}>
+    <Timeline>
       {timeLineItems.map((item, i) => (
         <TimeLineItem key={i} title={item.title} imagePath={item.imagePath}>
           {item.children}

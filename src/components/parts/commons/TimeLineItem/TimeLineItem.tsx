@@ -3,7 +3,7 @@ import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, Timeline
 import { Box, styled } from '@mui/system';
 import { SpeedDial, SpeedDialIcon } from '@mui/material';
 import { UserIcon } from '~/components/domains/user/UserIcon';
-import { Typography } from '~/components/parts/commons';
+import { Paper, Typography } from '~/components/parts/commons';
 
 type TimeLineItemType = {
   title: string;
@@ -24,13 +24,13 @@ export const TimeLineItem: VFC<Props> = ({ title, imagePath, children, ...rest }
           <StyledTimeLineConnector />
         </TimelineSeparator>
         <StyledTimeLineContent>
-          <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" mb="4px">
+          <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" height="40px">
             <Typography variant="h4" bold>
               {title}
             </Typography>
             <StyledSpeedDial ariaLabel="SpeedDial" icon={<SpeedDialIcon />}></StyledSpeedDial>
           </Box>
-          {children}
+          <Paper>{children}</Paper>
         </StyledTimeLineContent>
       </TimelineItem>
     </StyledDiv>
@@ -48,10 +48,13 @@ const StyledDiv = styled('div')`
 
 const StyledTimeLineContent = styled(TimelineContent)`
   max-width: fit-content;
+  padding: 8px;
+  padding-top: 0;
 `;
 
 const StyledTimeLineDot = styled(TimelineDot)`
   padding: 0;
+  margin: 0;
   border: none;
 `;
 
