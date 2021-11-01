@@ -12,7 +12,7 @@ export default {
 
 const Template: ComponentStory<typeof TimeLine> = ({ ...rest }) => {
   return (
-    <Box>
+    <Box p="20px" bgcolor="#E5E5E5">
       <TimeLine {...rest}></TimeLine>
     </Box>
   );
@@ -24,17 +24,17 @@ Default.args = {
     {
       title: 'TimeLineItem１',
       imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
-      children: <Box width="500px" height="250px" border="1px solid #000"></Box>,
+      children: <Box width="500px" height="250px"></Box>,
     },
     {
       title: 'TimeLineItem２',
       imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
-      children: <Box width="500px" height="250px" border="1px solid #000"></Box>,
+      children: <Box width="500px" height="250px"></Box>,
     },
     {
       title: 'TimeLineItem３',
       imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
-      children: <Box width="500px" height="250px" border="1px solid #000"></Box>,
+      children: <Box width="500px" height="250px"></Box>,
     },
   ],
 };
