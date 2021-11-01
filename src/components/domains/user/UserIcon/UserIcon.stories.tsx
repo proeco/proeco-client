@@ -6,7 +6,7 @@ import { UserIcon } from './UserIcon';
 import { createMockUser } from '~/mock/createMockUser';
 
 export default {
-  title: 'domains/user/atoms/UserIcon',
+  title: 'domains/user/UserIcon',
   component: UserIcon,
 } as ComponentMeta<typeof UserIcon>;
 

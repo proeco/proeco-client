@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { Emoji } from './Emoji';
 
 export default {
-  title: 'parts/commons/atoms/Emoji',
+  title: 'parts/commons/Emoji',
   component: Emoji,
   argTypes: { onClose: { action: 'closed' } },
 } as ComponentMeta<typeof Emoji>;

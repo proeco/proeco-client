@@ -8,7 +8,7 @@ import { Icon } from '~/components/parts/commons';
 import { createMockUser } from '~/mock';
 
 export default {
-  title: 'parts/layout/organisms/NavigationBar',
+  title: 'parts/layout/NavigationBar',
   component: Component,
   argTypes: { onClose: { action: 'onClickLoginButton' } },
 } as ComponentMeta<typeof Component>;

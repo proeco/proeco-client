@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { Button } from './Button';
 
 export default {
-  title: 'parts/commons/atoms/Button',
+  title: 'parts/commons/Button',
   component: Button,
 } as ComponentMeta<typeof Button>;
 

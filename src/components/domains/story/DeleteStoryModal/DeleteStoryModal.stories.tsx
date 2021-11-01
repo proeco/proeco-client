@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { Component } from './DeleteStoryModal';
 
 export default {
-  title: 'domains/story/organisms/DeleteStoryModal',
+  title: 'domains/story/DeleteStoryModal',
   component: Component,
   argTypes: {
     onCloseModal: { action: 'onCloseModal' },
