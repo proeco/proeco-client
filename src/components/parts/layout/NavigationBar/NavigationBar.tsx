@@ -75,6 +75,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
 });
 
 const StyledAppBar = styled(AppBar)`
+  position: relative;
   background-color: ${(props) => props.theme.palette.primary.main};
   padding: 12px 20px;
   align-items: center;
