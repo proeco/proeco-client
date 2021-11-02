@@ -1,5 +1,6 @@
 import { SWRResponse } from 'swr';
 
+import { restClient } from '~/utils/rest-client';
 import { useSession } from 'next-auth/client';
 import { User } from '~/domains/user';
 import { useAuthenticationSWR } from '~/stores/useAuthenticationSWR';
