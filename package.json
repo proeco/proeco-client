@@ -37,8 +37,9 @@
     "swr": "1.0.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.15.8",
     "@babel/core": "7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@storybook/addon-storyshots": "^6.3.12",
     "@storybook/addon-actions": "^6.3.12",
     "@storybook/addon-essentials": "6.3.12",
     "@storybook/addon-links": "6.3.12",
