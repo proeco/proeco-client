@@ -31,8 +31,8 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </Box>
+        <Box>{teams && teams.map((team) => <Card key={team._id}>{team.name}</Card>)}</Box>
       </Box>
-      <Box>{teams && teams.docs.map((doc) => <Card key={doc._id}>{doc.name}</Card>)}</Box>
     </>
   );
 };
