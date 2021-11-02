@@ -2,7 +2,7 @@ import React, { VFC, ComponentProps } from 'react';
 import { MoreVert, Update, Delete, Logout, PersonOutline, DashboardOutlined, Settings, Add, CreateOutlined, Group } from '@mui/icons-material';
 import { Box, styled } from '@mui/system';
 
-const IconMap = {
+export const IconMap = {
   Add: <Add />,
   DashboardOutlined: <DashboardOutlined />,
   Delete: <Delete />,
