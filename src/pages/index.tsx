@@ -3,8 +3,9 @@ import { signIn, signOut } from 'next-auth/client';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
-import { Button, Typography } from '~/components/parts/commons/atoms';
+import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
+import { Button, Link, Typography } from '~/components/parts/commons';
+import { URLS } from '~/constants';
 
 const Home: NextPage = () => {
   const { data: currentUser } = useCurrentUser();
@@ -15,6 +16,11 @@ const Home: NextPage = () => {
       <Typography variant="h1" bold>
         Top Page
       </Typography>
+      <Link href={URLS.DASHBOARD}>
+        <Button color="primary" variant="contained">
+          ダッシュボードへ
+        </Button>
+      </Link>
       {currentUser ? (
         <>
           <Typography variant="h3">Hello {currentUser.name}!</Typography>

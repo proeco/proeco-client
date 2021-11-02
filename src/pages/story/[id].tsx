@@ -1,5 +1,5 @@
-import React, { useState, MouseEvent } from 'react';
-import { GetServerSideProps, NextPage } from 'next';
+import React, { useState, MouseEvent, ReactNode } from 'react';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { Box } from '@mui/system';
@@ -11,17 +11,19 @@ import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryMo
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
 
-import { Icon, Typography } from '~/components/parts/commons/atoms';
-import { ProecoOgpHead } from '~/components/parts/layout/organisms/ProecoOgpHead';
+import { Icon, Typography } from '~/components/parts/commons';
+import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
-import { Menu } from '~/components/parts/commons/organisms/Menu';
-import { IconButton } from '~/components/parts/commons/organisms/IconButton';
+import { Menu } from '~/components/parts/commons/Menu';
+import { IconButton } from '~/components/parts/commons/IconButton';
+import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
+import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 type Props = {
   storyFromServerSide?: Story;
 };
 
-const StoryPage: NextPage<Props> = ({ storyFromServerSide }) => {
+const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
 
   const { id } = router.query;
@@ -103,5 +105,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { props: {} };
   }
 };
+
+const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>;
+StoryPage.getLayout = getLayout;
 
 export default StoryPage;
