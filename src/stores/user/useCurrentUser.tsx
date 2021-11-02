@@ -12,9 +12,7 @@ import { useAuthenticationSWR } from '~/stores/useAuthenticationSWR';
  * @returns mutate データの更新関数
  */
 export const useCurrentUser = (): SWRResponse<User, Error> => {
-  const [session] = useSession();
-
-  return useAuthenticationSWR('/users/me', () => session?.user as User, {
+return useAuthenticationSWR('/users/me', (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
   });
