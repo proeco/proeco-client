@@ -11,7 +11,7 @@ import { PaginationResult } from '~/interfaces';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useTeams = ({ userId }: { userId?: string; page: number; limit: 10 }): SWRResponse<PaginationResult<Team>, Error> => {
+export const useTeams = ({ userId }: { userId?: string }): SWRResponse<PaginationResult<Team>, Error> => {
   const key = userId ? `/teams?userId=${userId}` : null;
   return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
     revalidateOnFocus: false,
