@@ -11,9 +11,9 @@ type Props = {
 
 export const EmojiRadioGroup: VFC<Props> = ({ emojiIds, onClick, selectedEmojiId }) => {
   return (
-    <Box display="flex" alignItems="center">
+    <Box display="flex" alignItems="center" gap="12px">
       {emojiIds.map((emojiId, i) => (
-        <StyledBox key={i} isLast={i === emojiIds.length - 1} selected={selectedEmojiId === emojiId}>
+        <StyledBox key={i} selected={selectedEmojiId === emojiId}>
           <Emoji emojiId={emojiId} size={24} onClick={() => onClick(emojiId)} />
         </StyledBox>
       ))}
@@ -21,9 +21,8 @@ export const EmojiRadioGroup: VFC<Props> = ({ emojiIds, onClick, selectedEmojiId
   );
 };
 
-const StyledBox = styled(Box)<{ isLast: boolean; selected: boolean }>`
+const StyledBox = styled(Box)<{ selected: boolean }>`
   cursor: pointer;
-  margin-right: ${(props) => (props.isLast ? '0px' : '12px')};
   padding: 8px;
   filter: ${(props) => (props.selected ? 'grayscale(0%)' : 'grayscale(100%)')};
   -webkit-filter: ${(props) => (props.selected ? 'grayscale(0%)' : 'grayscale(100%)')};
