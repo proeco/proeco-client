@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
@@ -8,13 +8,18 @@ import { EmojiRadioGroup } from './EmojiRadioGroup';
 export default {
   title: 'parts/commons/EmojiRadioGroup',
   component: EmojiRadioGroup,
-  argTypes: { onClick: { action: 'click' } },
 } as ComponentMeta<typeof EmojiRadioGroup>;
 
-const Template: ComponentStory<typeof EmojiRadioGroup> = ({ ...rest }) => {
+const Template: ComponentStory<typeof EmojiRadioGroup> = ({ selectedEmojiId, ...rest }) => {
+  const [newSelectedEmojiId, setNewSelectedEmojiId] = useState(selectedEmojiId);
+
+  const handleClickEmoji = (id: string) => {
+    setNewSelectedEmojiId(id);
+  };
+
   return (
     <Box p="20px">
-      <EmojiRadioGroup {...rest} />
+      <EmojiRadioGroup selectedEmojiId={newSelectedEmojiId} {...rest} onClick={handleClickEmoji} />
     </Box>
   );
 };
