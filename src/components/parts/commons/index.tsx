@@ -3,6 +3,7 @@ export { Card } from './Card';
 export { CircularProgress } from './CircularProgress';
 export { Divider } from './Divider';
 export { Emoji } from './Emoji';
+export { EmojiRadioGroup } from './EmojiRadioGroup';
 export { Icon } from './Icon';
 export { IconButton } from './IconButton';
 export { Link } from './Link';
