@@ -16,7 +16,6 @@
   "[scss]": {
     "editor.formatOnSave": true
   },
-  "stylelint.autoFixOnSave": true,
 
   // for vscode-eslint
   "[javascript]": {

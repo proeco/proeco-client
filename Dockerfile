@@ -1,4 +1,4 @@
-FROM node:16.11.1
+FROM node:17.0.1
 
 RUN mkdir /client
 
