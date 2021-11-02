@@ -1,12 +1,22 @@
 import { Box } from '@mui/system';
 import { ReactNode } from 'react';
-import { Button, Icon, Link, Typography } from '~/components/parts/commons';
+import { Button, Icon, Link, Typography, Card } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
+
 import { URLS } from '~/constants';
+
+import { useTeams } from '~/stores/team';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const DashboardTeamPage: ProecoNextPage = () => {
+  const { data: currentUser } = useCurrentUser();
+  const { data: teams } = useTeams({
+    userId: currentUser?._id,
+  });
+
   return (
     <>
       <ProecoOgpHead />
@@ -22,6 +32,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Link>
         </Box>
       </Box>
+      <Box>{teams && teams.docs.map((doc) => <Card key={doc._id}>{doc.name}</Card>)}</Box>
     </>
   );
 };
