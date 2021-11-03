@@ -10,9 +10,11 @@ type Props = {
 
 export const TeamMenu: VFC<Props> = ({ currentTeam }) => {
   return (
-    <Box>
-      <UserIcon size="small" imagePath={currentTeam.iconImage} />
-      <Typography>{currentTeam.name}</Typography>
+    <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box display="flex" alignItems="center" gap="8px">
+        <UserIcon size="small" imagePath={currentTeam.iconImage} />
+        <Typography variant="h3">{currentTeam.name}</Typography>
+      </Box>
       <IconButton width={24} icon="KeyboardArrowDown" />
     </Box>
   );
