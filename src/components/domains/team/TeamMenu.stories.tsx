@@ -4,19 +4,19 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
 import { action } from '@storybook/addon-actions';
-import { TeamMenu } from './TeamMenu';
+import { Component } from './TeamMenu';
 import { createMockTeam } from '~/mock';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 
 export default {
   title: 'domains/team/TeamMenu',
-  component: TeamMenu,
-} as ComponentMeta<typeof TeamMenu>;
+  component: Component,
+} as ComponentMeta<typeof Component>;
 
-const Template: ComponentStory<typeof TeamMenu> = ({ ...rest }) => {
+const Template: ComponentStory<typeof Component> = ({ ...rest }) => {
   return (
     <Box width="280px" p="16px">
-      <TeamMenu {...rest} />
+      <Component {...rest} />
     </Box>
   );
 };
