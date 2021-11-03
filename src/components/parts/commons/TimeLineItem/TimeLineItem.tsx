@@ -19,7 +19,7 @@ export const TimeLineItem: VFC<Props> = ({ title, imagePath, children, ...rest }
       <TimelineItem {...rest}>
         <TimelineSeparator>
           <StyledTimeLineDot>
-            <UserIcon size="small" imagePath={imagePath} />
+            <UserIcon size={40} imagePath={imagePath} />
           </StyledTimeLineDot>
           <StyledTimeLineConnector />
         </TimelineSeparator>
