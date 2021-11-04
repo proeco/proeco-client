@@ -6,7 +6,7 @@ import { Box, styled } from '@mui/system';
 
 import { Icon, Emoji, IconButton, Menu } from '~/components/parts/commons';
 
-import { DATE_FORMAT } from '~/constants';
+import { DATE_FORMAT, COLORS } from '~/constants';
 
 import { Story } from '~/domains';
 
@@ -66,7 +66,7 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
       onClick: handleClickUpdate,
     },
     {
-      icon: <Icon icon="Delete" width="20px" color="textColor.error" />,
+      icon: <Icon icon="Delete" width="20px" color={COLORS.ERROR} />,
       text: '削除する',
       onClick: handleClickDelete,
     },
