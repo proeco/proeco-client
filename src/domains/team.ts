@@ -3,7 +3,7 @@ export class Team {
   name: string;
   description: string;
   adminUserId: string;
-  iconImage: string;
+  iconImage?: string;
   createdAt: Date;
   updatedAt: Date;
   constructor(init: Team) {
