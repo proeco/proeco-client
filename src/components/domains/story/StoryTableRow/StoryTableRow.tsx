@@ -66,7 +66,7 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
       onClick: handleClickUpdate,
     },
     {
-      icon: <Icon icon="Delete" width="20px" color="textColor.main" />,
+      icon: <Icon icon="Delete" width="20px" color="textColor.error" />,
       text: '削除する',
       onClick: handleClickDelete,
     },
