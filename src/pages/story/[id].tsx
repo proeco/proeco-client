@@ -18,6 +18,7 @@ import { Menu } from '~/components/parts/commons/Menu';
 import { IconButton } from '~/components/parts/commons/IconButton';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { COLORS } from '~/constants';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -71,7 +72,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
       onClick: handleClickUpdate,
     },
     {
-      icon: <Icon icon="Delete" width="20px" color="textColor.main" />,
+      icon: <Icon icon="Delete" width="20px" color={COLORS.ERROR} />,
       text: '削除する',
       onClick: handleClickDelete,
     },

@@ -20,6 +20,7 @@ export const Menu: VFC<Props> = ({
     vertical: 'top',
     horizontal: 'right',
   },
+  children,
   ...rest
 }) => {
   return (
@@ -30,6 +31,7 @@ export const Menu: VFC<Props> = ({
           {menuItem.text}
         </MenuItem>
       ))}
+      {children}
     </MuiMenu>
   );
 };
