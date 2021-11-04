@@ -7,6 +7,7 @@ import { action } from '@storybook/addon-actions';
 import { Component } from './TeamMenu';
 import { createMockTeam } from '~/mock';
 import { UserIcon } from '~/components/domains/user/UserIcon';
+import { Icon } from '~/components/parts/commons';
 
 export default {
   title: 'domains/team/TeamMenu',
@@ -33,38 +34,29 @@ DefaultTeam.args = {
       text: 'AnotherTeam',
       onClick: action('clickMenuItem'),
     },
+    {
+      icon: <Icon icon="CreateOutlined" width={24} />,
+      text: '新規チームを作成する',
+      onClick: action('clickCreateTeamButton'),
+    },
   ],
   isValidating: false,
 };
 
 export const TeamWithoutImage = Template.bind({});
 TeamWithoutImage.args = {
+  ...DefaultTeam.args,
   currentTeam: mockTeamWithoutImage,
-  menuItems: [
-    {
-      icon: <UserIcon size={24} />,
-      text: 'AnotherTeam',
-      onClick: action('clickMenuItem'),
-    },
-  ],
-  isValidating: false,
 };
 
 export const LoadingTeam = Template.bind({});
 LoadingTeam.args = {
-  currentTeam: mockTeam,
-  menuItems: [
-    {
-      icon: <UserIcon size={24} />,
-      text: 'AnotherTeam',
-      onClick: action('clickMenuItem'),
-    },
-  ],
+  ...DefaultTeam.args,
   isValidating: true,
 };
 
 export const UndefinedTeam = Template.bind({});
 UndefinedTeam.args = {
-  menuItems: [],
-  isValidating: false,
+  ...DefaultTeam.args,
+  currentTeam: undefined,
 };
