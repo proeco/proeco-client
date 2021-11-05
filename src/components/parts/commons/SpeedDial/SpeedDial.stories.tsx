@@ -4,27 +4,23 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
 import { action } from '@storybook/addon-actions';
-import { TimeLineItem } from './TimeLineItem';
+import { SpeedDial } from './SpeedDial';
 
 export default {
-  title: 'parts/commons/TimeLineItem',
-  component: TimeLineItem,
-} as ComponentMeta<typeof TimeLineItem>;
+  title: 'parts/commons/SpeedDial',
+  component: SpeedDial,
+} as ComponentMeta<typeof SpeedDial>;
 
-const Template: ComponentStory<typeof TimeLineItem> = ({ ...rest }) => {
+const Template: ComponentStory<typeof SpeedDial> = ({ ...rest }) => {
   return (
-    <Box p="20px" bgcolor="#E5E5E5">
-      <TimeLineItem {...rest}>
-        <Box width="500px" height="250px"></Box>
-      </TimeLineItem>
+    <Box p="20px">
+      <SpeedDial {...rest} />
     </Box>
   );
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  title: 'TimeLineItemのtitle',
-  imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
   actions: [
     {
       icon: 'Delete',

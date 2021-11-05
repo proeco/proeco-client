@@ -1,19 +1,23 @@
 import React, { VFC, ComponentProps } from 'react';
 import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@mui/lab';
 import { Box, styled } from '@mui/system';
-import { SpeedDial, SpeedDialIcon } from '@mui/material';
 import { UserIcon } from '~/components/domains/user/UserIcon';
-import { Paper, Typography } from '~/components/parts/commons';
+import { Paper, Typography, SpeedDial, Icon } from '~/components/parts/commons';
 
 type TimeLineItemType = {
   title: string;
   imagePath: string;
   children: React.ReactNode;
+  actions: {
+    icon: ComponentProps<typeof Icon>['icon'];
+    name: string;
+    onClick: () => void;
+  }[];
 };
 
 type Props = ComponentProps<typeof TimelineItem> & TimeLineItemType;
 
-export const TimeLineItem: VFC<Props> = ({ title, imagePath, children, ...rest }) => {
+export const TimeLineItem: VFC<Props> = ({ title, imagePath, children, actions, ...rest }) => {
   return (
     <StyledDiv>
       <TimelineItem {...rest}>
@@ -28,7 +32,7 @@ export const TimeLineItem: VFC<Props> = ({ title, imagePath, children, ...rest }
             <Typography variant="h4" bold>
               {title}
             </Typography>
-            <StyledSpeedDial ariaLabel="SpeedDial" icon={<SpeedDialIcon />}></StyledSpeedDial>
+            <SpeedDial actions={actions} />
           </Box>
           <Paper>{children}</Paper>
         </StyledTimeLineContent>
@@ -60,25 +64,4 @@ const StyledTimeLineDot = styled(TimelineDot)`
 
 const StyledTimeLineConnector = styled(TimelineConnector)`
   background-color: ${(props) => props.theme.palette.primary.main};
-`;
-
-const StyledSpeedDial = styled(SpeedDial)`
-  .MuiSpeedDial-fab {
-    width: 20px;
-    height: 20px;
-    min-height: unset;
-    padding: 2px;
-  }
-  .MuiSpeedDialIcon-root {
-    height: 100%;
-  }
-  .MuiSpeedDialIcon-icon {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-  .MuiSpeedDial-actions {
-    margin: 0;
-    padding: 0;
-  }
 `;
