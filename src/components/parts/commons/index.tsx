@@ -13,6 +13,7 @@ export { Pagination } from './Pagination';
 export { Paper } from './Paper';
 export { SelectableEmoji } from './SelectableEmoji';
 export { SideBarListItem } from './SideBarListItem';
+export { SpeedDial } from './SpeedDial';
 export { Stepper } from './Stepper';
 export { TimeLineItem } from './TimeLineItem';
 export { TimeLine } from './TimeLine';
