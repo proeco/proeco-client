@@ -25,7 +25,12 @@ Default.args = {
     {
       icon: 'Delete',
       name: '削除',
-      onClick: action('clickAction'),
+      onClick: action('clickDeleteButton'),
+    },
+    {
+      icon: 'Update',
+      name: '更新',
+      onClick: action('clickUpdateButton'),
     },
   ],
 };

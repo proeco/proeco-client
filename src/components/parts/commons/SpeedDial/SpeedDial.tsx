@@ -17,9 +17,9 @@ export const SpeedDial: VFC<Props> = ({ actions }) => {
   const handleClose = () => setOpen(false);
 
   return (
-    <StyledSpeedDial ariaLabel="SpeedDial" icon={<SpeedDialIcon />} open={open} onClose={handleClose} onOpen={handleOpen}>
+    <StyledSpeedDial direction="left" ariaLabel="SpeedDial" icon={<SpeedDialIcon />} open={open} onClose={handleClose} onOpen={handleOpen}>
       {actions.map((action) => (
-        <SpeedDialAction key={action.name} icon={<Icon icon={action.icon} />} tooltipTitle={action.name} tooltipOpen onClick={action.onClick} />
+        <SpeedDialAction key={action.name} icon={<Icon icon={action.icon} />} tooltipTitle={action.name} onClick={action.onClick} />
       ))}
     </StyledSpeedDial>
   );
@@ -27,10 +27,9 @@ export const SpeedDial: VFC<Props> = ({ actions }) => {
 
 const StyledSpeedDial = styled(MuiSpeedDial)`
   .MuiSpeedDial-fab {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     min-height: unset;
-    padding: 2px;
   }
   .MuiSpeedDialIcon-root {
     height: 100%;
@@ -40,8 +39,9 @@ const StyledSpeedDial = styled(MuiSpeedDial)`
     height: 100%;
     display: block;
   }
-  .MuiSpeedDial-actions {
-    margin: 0;
-    padding: 0;
+  .MuiSpeedDialAction-fab {
+    width: 24px;
+    height: 24px;
+    min-height: unset;
   }
 `;
