@@ -73,7 +73,7 @@ export const DeleteStoryModal: VFC = () => {
   const { data: storyForDelete } = useStoryForDelete();
 
   const { mutate: mutateStories } = useStories({
-    userId: currentUser._id,
+    userId: currentUser?._id,
     page: page,
     limit: 10,
   });

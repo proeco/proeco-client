@@ -85,7 +85,7 @@ export const TeamMenu: VFC = () => {
 
   const { currentUser } = useCurrentUser();
   const { data: teams, isValidating: isValidatingTeams } = useTeams({
-    userId: currentUser._id,
+    userId: currentUser?._id,
   });
 
   const currentTeam = teams?.find((team) => team._id === router.query.id);
