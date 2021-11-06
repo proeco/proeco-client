@@ -22,7 +22,7 @@ const StoryList: ProecoNextPage = () => {
   const [page, setPage] = useState(1);
   const { currentUser } = useCurrentUser();
   const { data: stories } = useStories({
-    userId: currentUser?._id,
+    userId: currentUser._id,
     page,
     limit,
   });

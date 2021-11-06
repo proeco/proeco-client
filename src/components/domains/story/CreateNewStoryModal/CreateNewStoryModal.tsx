@@ -68,7 +68,7 @@ export const CreateNewStoryModal: VFC = () => {
 
   const { currentUser } = useCurrentUser();
   const { mutate: mutateStories } = useStories({
-    userId: currentUser?._id,
+    userId: currentUser._id,
     page: page,
     limit: 10,
   });
