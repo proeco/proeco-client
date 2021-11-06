@@ -10,6 +10,7 @@ import 'modern-css-reset/dist/reset.min.css';
 import { theme } from '../theme';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { CurrentUserProvider } from '~/components/parts/authentication/CurrentUserProvider';
 
 const inputGlobalStyles = (
   <GlobalStyles
@@ -33,9 +34,11 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
     <MaterialThemeProvider theme={theme}>
       <SnackbarProvider>
         <Provider options={{ clientMaxAge: 0, keepAlive: 0 }} session={pageProps.session}>
-          {inputGlobalStyles}
-          <NavigationBar />
-          {getLayout(<Component {...pageProps} />)}
+          <CurrentUserProvider>
+            {inputGlobalStyles}
+            <NavigationBar />
+            {getLayout(<Component {...pageProps} />)}
+          </CurrentUserProvider>
         </Provider>
       </SnackbarProvider>
     </MaterialThemeProvider>
