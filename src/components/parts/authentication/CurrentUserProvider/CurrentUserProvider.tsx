@@ -13,12 +13,12 @@ export const CurrentUserContext = createContext<{
 export const CurrentUserProvider: VFC<{
   children: ReactNode;
 }> = ({ children }) => {
-  const { data: currentUser, isValidating } = useAuthenticationSWR('/users/me', (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
+  const { data: currentUser } = useAuthenticationSWR('/users/me', (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
   });
 
-  if (isValidating) return null;
+  if (!currentUser) return null;
 
   return <CurrentUserContext.Provider value={{ currentUser }}>{children}</CurrentUserContext.Provider>;
 };

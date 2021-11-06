@@ -12,9 +12,9 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const DashboardTeamPage: ProecoNextPage = () => {
-  const { currentUser } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
   const { data: teams } = useTeams({
-    userId: currentUser._id,
+    userId: currentUser?._id,
   });
 
   return (

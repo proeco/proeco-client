@@ -63,7 +63,6 @@ const StyledDescriptionBox = styled(Box)`
 
 export const DeleteStoryModal: VFC = () => {
   const router = useRouter();
-  const { currentUser } = useCurrentUser();
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { notifySuccessMessage } = useSuccessNotification();
@@ -71,9 +70,10 @@ export const DeleteStoryModal: VFC = () => {
 
   const { data: isOpenDeleteStoryModal, mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { data: storyForDelete } = useStoryForDelete();
+  const { data: currentUser } = useCurrentUser();
 
   const { mutate: mutateStories } = useStories({
-    userId: currentUser._id,
+    userId: currentUser?._id,
     page: page,
     limit: 10,
   });

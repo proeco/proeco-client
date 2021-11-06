@@ -7,7 +7,13 @@ import { User } from '~/domains';
  * @returns currentUser ログイン中のユーザー
  */
 export const useCurrentUser = (): {
-  currentUser?: User;
+  currentUser: User;
 } => {
-  return useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
+
+  if (currentUser === undefined) {
+    throw new Error('ログイン情報の取得に失敗しました');
+  }
+
+  return { currentUser };
 };
