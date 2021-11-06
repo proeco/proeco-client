@@ -17,9 +17,9 @@ type Props = {
 };
 
 export const StoryListTable: VFC<Props> = ({ page, limit }) => {
-  const { data: currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   const { data: stories } = useStories({
-    userId: currentUser?._id,
+    userId: currentUser._id,
     page,
     limit,
   });

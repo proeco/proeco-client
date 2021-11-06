@@ -67,6 +67,7 @@ const StyledTextField = styled(TextField)`
 
 export const UpdateStoryModal: VFC = () => {
   const router = useRouter();
+  const { currentUser } = useCurrentUser();
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { notifySuccessMessage } = useSuccessNotification();
@@ -74,7 +75,6 @@ export const UpdateStoryModal: VFC = () => {
 
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
-  const { data: currentUser } = useCurrentUser();
   const { mutate: mutateStory } = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
     userId: currentUser?._id,

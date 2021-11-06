@@ -66,9 +66,9 @@ export const CreateNewStoryModal: VFC = () => {
   const router = useRouter();
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { data: currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   const { mutate: mutateStories } = useStories({
-    userId: currentUser?._id,
+    userId: currentUser._id,
     page: page,
     limit: 10,
   });

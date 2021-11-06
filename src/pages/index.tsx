@@ -8,7 +8,7 @@ import { Button, Link, Typography } from '~/components/parts/commons';
 import { URLS } from '~/constants';
 
 const Home: NextPage = () => {
-  const { data: currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
 
   return (
     <>

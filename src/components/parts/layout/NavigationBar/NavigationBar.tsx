@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { signIn, signOut } from 'next-auth/client';
 import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
-import { AppBar, Skeleton } from '@mui/material';
+import { AppBar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -16,7 +16,6 @@ import { IMAGE_PATH } from '~/constants';
 
 type Props = {
   currentUser?: User;
-  isValidating: boolean;
   onClickLoginButton: () => void;
   menuItems: {
     icon: JSX.Element;
@@ -26,7 +25,7 @@ type Props = {
   logoImagePath: string;
 };
 
-export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickLoginButton, menuItems, logoImagePath }) => {
+export const Component: VFC<Props> = memo(({ currentUser, onClickLoginButton, menuItems, logoImagePath }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -38,8 +37,6 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const Contents = useMemo(() => {
-    if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
-
     if (currentUser) {
       return (
         <>
@@ -59,7 +56,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
         Login Button
       </StyledButton>
     );
-  }, [isValidating, currentUser, anchorEl, open, menuItems]);
+  }, [currentUser, anchorEl, open, menuItems]);
 
   return (
     <>
@@ -110,19 +107,11 @@ export const NavigationBar: VFC = memo(() => {
     },
   ];
 
-  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
 
   const handleClickLoginButton = () => {
     signIn('google');
   };
 
-  return (
-    <Component
-      currentUser={currentUser}
-      isValidating={isValidatingCurrentUser}
-      onClickLoginButton={handleClickLoginButton}
-      menuItems={menuItems}
-      logoImagePath={IMAGE_PATH.LOGO}
-    />
-  );
+  return <Component currentUser={currentUser} onClickLoginButton={handleClickLoginButton} menuItems={menuItems} logoImagePath={IMAGE_PATH.LOGO} />;
 });

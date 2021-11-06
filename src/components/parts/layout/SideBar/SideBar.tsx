@@ -12,7 +12,7 @@ import { User } from '~/domains';
 import { URLS } from '~/constants/urls';
 
 type Props = {
-  currentUser?: User;
+  currentUser: User;
   asPath: string;
 };
 
@@ -42,8 +42,8 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
   return (
     <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px" bgcolor="whitesmoke">
       <StyledUserIconWrapper pb="16px">
-        <UserIcon size={80} imagePath={currentUser?.image} userId={currentUser?._id} isLink />
-        <Typography variant="h3">{currentUser?.name}</Typography>
+        <UserIcon size={80} imagePath={currentUser.image} userId={currentUser._id} isLink />
+        <Typography variant="h3">{currentUser.name}</Typography>
       </StyledUserIconWrapper>
       <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
         {sidebarItems.map((sidebarItem, index) => {
@@ -77,7 +77,7 @@ const StyledUserIconWrapper = styled(Box)`
 
 export const SideBar: VFC = memo(() => {
   const router = useRouter();
-  const { data: currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
 
   return <Component currentUser={currentUser} asPath={router.asPath} />;
 });
