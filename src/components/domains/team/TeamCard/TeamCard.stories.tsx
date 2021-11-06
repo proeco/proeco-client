@@ -13,7 +13,7 @@ export default {
 
 const Template: ComponentStory<typeof TeamCard> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="gray">
+    <Box p="40px" bgcolor="#e5e5e5">
       <TeamCard {...rest}></TeamCard>
     </Box>
   );
