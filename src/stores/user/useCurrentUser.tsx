@@ -1,19 +1,19 @@
-import { useContext } from 'react';
-import { CurrentUserContext } from '~/components/parts/authentication/CurrentUserProvider/CurrentUserProvider';
-import { User } from '~/domains';
+import { SWRResponse } from 'swr';
+
+import { restClient } from '~/utils/rest-client';
+import { User } from '~/domains/user';
+import { useAuthenticationSWR } from '~/stores/useAuthenticationSWR';
 
 /**
  * 現在ログイン中のユーザーを取得するSWR
- * @returns currentUser ログイン中のユーザー
+ * @returns data ログイン中のユーザー
+ * @returns isValidating 取得中を表す boolean
+ * @returns error エラー
+ * @returns mutate データの更新関数
  */
-export const useCurrentUser = (): {
-  currentUser: User;
-} => {
-  const { currentUser } = useContext(CurrentUserContext);
-
-  if (currentUser === undefined) {
-    throw new Error('ログイン情報の取得に失敗しました');
-  }
-
-  return { currentUser };
+export const useCurrentUser = (): SWRResponse<User, Error> => {
+  return useAuthenticationSWR('/users/me', (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+  });
 };

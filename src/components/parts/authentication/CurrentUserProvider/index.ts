@@ -1,1 +1,0 @@
-export { CurrentUserProvider } from './CurrentUserProvider';
