@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import { URLS } from '~/constants';
 import { CircularProgress } from '~/components/parts/commons/CircularProgress';
 
-export const LoginRequiredWrapper: FC = ({ children }) => {
+export const LogoutRequiredWrapper: FC = ({ children }) => {
   const [session, loading] = useSession();
   const router = useRouter();
 
