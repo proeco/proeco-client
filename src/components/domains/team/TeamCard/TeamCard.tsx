@@ -57,7 +57,6 @@ export const TeamCard: VFC<Props> = ({ team, isSkeltonMode, onClick }) => {
 const StyledTeamCard = styled(Card)`
   width: 300px;
   height: 130px;
-  padding: 20px;
   box-sizing: border-box;
   position: relative;
   top: 0;
