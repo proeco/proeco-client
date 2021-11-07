@@ -47,7 +47,7 @@ export const Component: VFC<Props> = ({ currentTeam, menuItems, isValidating }) 
         <>
           {/* TODO Avatarをcomponent化する */}
           {currentTeam.iconImage ? <UserIcon size={40} imagePath={currentTeam.iconImage} /> : <Avatar>{currentTeam.name[0]}</Avatar>}
-          <Typography variant="h3" noWrap width="160px">
+          <Typography variant="h3" maximumLines={1}>
             {currentTeam.name}
           </Typography>
         </>
