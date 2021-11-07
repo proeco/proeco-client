@@ -1,6 +1,7 @@
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 import { ReactNode } from 'react';
-import { Button, Icon, Link, Typography, Card } from '~/components/parts/commons';
+import { useRouter } from 'next/router';
+import { Button, Icon, Link, Typography } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
@@ -10,8 +11,10 @@ import { useTeams } from '~/stores/team';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { TeamCard } from '~/components/domains/team/TeamCard';
 
 const DashboardTeamPage: ProecoNextPage = () => {
+  const router = useRouter();
   const { data: currentUser } = useCurrentUser();
   const { data: teams } = useTeams({
     userId: currentUser?._id,
@@ -31,7 +34,9 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </Box>
-        <Box>{teams && teams.map((team) => <Card key={team._id}>{team.name}</Card>)}</Box>
+        <StyledTeamList display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center" gap="40px">
+          {teams && teams.map((team) => <TeamCard key={team._id} team={team} onClick={() => router.push(`/team/${team._id}/dashboard`)} />)}
+        </StyledTeamList>
       </Box>
     </>
   );
@@ -41,3 +46,11 @@ const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>
 
 DashboardTeamPage.getLayout = getLayout;
 export default DashboardTeamPage;
+
+const StyledTeamList = styled(Box)`
+  &::after {
+    content: '';
+    display: block;
+    width: 300px;
+  }
+`;
