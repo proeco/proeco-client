@@ -48,6 +48,7 @@ DashboardTeamPage.getLayout = getLayout;
 export default DashboardTeamPage;
 
 const StyledTeamList = styled(Box)`
+  /* 最後の行が左寄せになるように記述  */
   &::after {
     content: '';
     display: block;
