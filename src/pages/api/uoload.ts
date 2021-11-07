@@ -1,11 +1,12 @@
 import { Storage } from '@google-cloud/storage';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+const storage = new Storage({
+  projectId: process.env.PROJECT_ID,
+  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+});
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const storage = new Storage({
-    projectId: process.env.PROJECT_ID,
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-  });
   const bucketName = 'sample-upload-img';
   const bucket = storage.bucket(bucketName);
   const file = bucket.file(req.query.fileName as string);
