@@ -59,7 +59,12 @@ const DashboardTeamPage: ProecoNextPage = () => {
           <Typography mb="4px" variant="body1" color="textColor.light">
             名前
           </Typography>
-          <TextField fullWidth multiline value={team.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
+          <TextField
+            fullWidth
+            value={team.name}
+            onChange={(e) => updateStoryForm({ name: e.target.value })}
+            onKeyPress={(e) => updateStoryForm({ slug: team.slug + e.key })}
+          />
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             説明
           </Typography>
