@@ -1,4 +1,4 @@
-import React, { useMemo, VFC } from 'react';
+import React, { VFC } from 'react';
 import { Avatar, Skeleton } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { Team } from '~/domains';
@@ -7,49 +7,34 @@ import { Typography, Card } from '~/components/parts/commons';
 
 type Props = {
   team: Team;
-  isSkeltonMode: boolean;
+  isSkeltonMode?: boolean;
   onClick: () => void;
 };
 
-export const TeamCard: VFC<Props> = ({ team, isSkeltonMode, onClick }) => {
-  const IconContent = useMemo(() => {
-    if (isSkeltonMode) return <Skeleton variant="circular" width={40} height={40} />;
-
-    if (team.iconImage) return <UserIcon size={40} imagePath={team.iconImage} />;
-    //TODO Avatarをcomponent化する
-    return <Avatar>{team.name[0]}</Avatar>;
-  }, [isSkeltonMode, team]);
-
-  const NameContent = useMemo(() => {
-    if (isSkeltonMode) return <Skeleton variant="text" width="100px" />;
-
+export const TeamCard: VFC<Props> = ({ team, isSkeltonMode = false, onClick }) => {
+  if (isSkeltonMode) {
     return (
-      <Typography variant="h3" noWrap width="220px">
-        {team.name}
-      </Typography>
+      <StyledTeamCard onClick={onClick}>
+        <Box display="flex" alignItems="center" mb="8px">
+          <Box mr="8px">
+            <Skeleton variant="circular" width={40} height={40} />
+          </Box>
+          <Skeleton variant="text" width="100px" />
+        </Box>
+        <Skeleton variant="text" width="260px" />
+        <Skeleton variant="text" width="260px" />
+      </StyledTeamCard>
     );
-  }, [isSkeltonMode, team]);
-
-  const DescriptionContent = useMemo(() => {
-    if (isSkeltonMode) {
-      return (
-        <>
-          <Skeleton variant="text" width="260px" />
-          <Skeleton variant="text" width="260px" />
-        </>
-      );
-    }
-
-    return <StyledDescription variant="caption">{team.description}</StyledDescription>;
-  }, [isSkeltonMode, team]);
-
+  }
   return (
     <StyledTeamCard onClick={onClick}>
       <Box display="flex" alignItems="center" mb="8px">
-        <Box mr="8px">{IconContent}</Box>
-        {NameContent}
+        <Box mr="8px">{team.iconImage ? <UserIcon size={40} imagePath={team.iconImage} /> : <Avatar>{team.name[0]}</Avatar>}</Box>
+        <Typography variant="h3" noWrap width="220px">
+          {team.name}
+        </Typography>
       </Box>
-      {DescriptionContent}
+      <StyledDescription variant="caption">{team.description}</StyledDescription>
     </StyledTeamCard>
   );
 };
