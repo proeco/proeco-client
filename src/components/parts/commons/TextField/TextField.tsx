@@ -28,4 +28,7 @@ const StyledMuiTextField = styled(MuiTextField)`
   .MuiOutlinedInput-notchedOutline {
     border: none;
   }
+  .MuiInputAdornment-root {
+    margin-right: 12px;
+  }
 `;
