@@ -35,7 +35,10 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Link>
         </Box>
         <StyledTeamList display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center" gap="40px">
-          {teams && teams.map((team) => <TeamCard key={team._id} team={team} onClick={() => router.push(`/team/${team._id}/dashboard`)} />)}
+          {teams &&
+            teams.map((team) => (
+              <TeamCard key={team._id} team={team} onClick={() => router.push(`${team.slug}.${process.env.NEXT_PUBLIC_ROOT_URL}/dashboard`)} />
+            ))}
         </StyledTeamList>
       </Box>
     </>
