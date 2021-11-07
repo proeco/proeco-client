@@ -30,11 +30,11 @@ export const TeamCard: VFC<Props> = ({ team, isSkeltonMode = false, onClick }) =
     <StyledTeamCard onClick={onClick}>
       <Box display="flex" alignItems="center" mb="8px">
         <Box mr="8px">{team.iconImage ? <UserIcon size={40} imagePath={team.iconImage} /> : <Avatar>{team.name[0]}</Avatar>}</Box>
-        <Typography variant="h3" maximumLines={1}>
+        <Typography variant="h3" maximum_lines={1}>
           {team.name}
         </Typography>
       </Box>
-      <StyledDescription variant="caption" maximumLines={2}>
+      <StyledDescription variant="caption" maximum_lines={2}>
         {team.description}
       </StyledDescription>
     </StyledTeamCard>
