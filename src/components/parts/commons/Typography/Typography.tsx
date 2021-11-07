@@ -4,24 +4,24 @@ import { styled } from '@mui/material/styles';
 
 type Bold = {
   bold?: boolean;
-  maximumLines?: number;
+  maximum_lines?: number;
 };
 
 type Props = ComponentProps<typeof MuiTypography> & Bold;
 
-export const Typography: VFC<Props> = ({ bold, maximumLines, color = 'textColor.main', ...rest }) => {
-  return <StyledTypography color={color} bold={bold ? 1 : 0} maximumLines={maximumLines} {...rest} />;
+export const Typography: VFC<Props> = ({ bold, maximum_lines, color = 'textColor.main', ...rest }) => {
+  return <StyledTypography color={color} bold={bold ? 1 : 0} maximum_lines={maximum_lines} {...rest} />;
 };
 
-const StyledTypography = styled(MuiTypography)<{ bold: number; maximumLines: number | undefined }>`
+const StyledTypography = styled(MuiTypography)<{ bold: number; maximum_lines: number | undefined }>`
   text-transform: none;
   font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
   ${(props) =>
-    props.maximumLines &&
+    props.maximum_lines &&
     `
   display: -webkit-box;
   overflow: hidden;
-  -webkit-line-clamp: ${props.maximumLines};
+  -webkit-line-clamp: ${props.maximum_lines};
   -webkit-box-orient: vertical;
   `}
 `;
