@@ -4,6 +4,7 @@ export class Team {
   description: string;
   adminUserId: string;
   iconImage?: string;
+  slug: string;
   createdAt: Date;
   updatedAt: Date;
   constructor(init: Team) {
@@ -12,6 +13,7 @@ export class Team {
     this.description = init.description;
     this.adminUserId = init.adminUserId;
     this.iconImage = init.iconImage;
+    this.slug = init.slug;
     this.createdAt = init.createdAt;
     this.updatedAt = init.updatedAt;
   }

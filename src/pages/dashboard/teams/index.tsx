@@ -12,6 +12,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { TeamCard } from '~/components/domains/team/TeamCard';
+import { generateSubdomainUrl } from '~/utils/generateSubdomainUrl';
 
 const DashboardTeamPage: ProecoNextPage = () => {
   const router = useRouter();
@@ -35,7 +36,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Link>
         </Box>
         <StyledTeamList display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center" gap="40px">
-          {teams && teams.map((team) => <TeamCard key={team._id} team={team} onClick={() => router.push(`/team/${team._id}/dashboard`)} />)}
+          {teams && teams.map((team) => <TeamCard key={team._id} team={team} onClick={() => router.push(generateSubdomainUrl(team.slug, '/dashboard'))} />)}
         </StyledTeamList>
       </Box>
     </>
