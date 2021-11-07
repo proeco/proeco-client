@@ -30,11 +30,13 @@ export const TeamCard: VFC<Props> = ({ team, isSkeltonMode = false, onClick }) =
     <StyledTeamCard onClick={onClick}>
       <Box display="flex" alignItems="center" mb="8px">
         <Box mr="8px">{team.iconImage ? <UserIcon size={40} imagePath={team.iconImage} /> : <Avatar>{team.name[0]}</Avatar>}</Box>
-        <Typography variant="h3" noWrap width="220px">
+        <Typography variant="h3" maximumLines={1}>
           {team.name}
         </Typography>
       </Box>
-      <StyledDescription variant="caption">{team.description}</StyledDescription>
+      <StyledDescription variant="caption" maximumLines={2}>
+        {team.description}
+      </StyledDescription>
     </StyledTeamCard>
   );
 };
@@ -56,8 +58,4 @@ const StyledTeamCard = styled(Card)`
 const StyledDescription = styled(Typography)`
   line-height: 1.5;
   letter-spacing: 0;
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 `;
