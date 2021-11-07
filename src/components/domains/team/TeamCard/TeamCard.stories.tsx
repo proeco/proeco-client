@@ -3,6 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 
+import { action } from '@storybook/addon-actions';
 import { TeamCard } from './TeamCard';
 import { createMockTeam } from '~/mock';
 
@@ -21,27 +22,32 @@ const Template: ComponentStory<typeof TeamCard> = ({ ...rest }) => {
 
 const mockTeam = createMockTeam({ name: 'Proeco', iconImage: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' });
 const mockTeamWithoutImage = createMockTeam({ name: 'Proeco' });
+const mockLongTextTeam = createMockTeam({
+  ...mockTeam,
+  description: 'Proeco は頑張る人を応援するプラットフォームです。プロジェクトを作って Story を作ることで',
+});
 
 export const DefaultTeamCard = Template.bind({});
 DefaultTeamCard.args = {
   team: mockTeam,
-  isValidating: false,
+  onClick: action('clickTeamCard'),
+  isSkeltonMode: false,
+};
+
+export const LongTextTeamCard = Template.bind({});
+LongTextTeamCard.args = {
+  ...DefaultTeamCard.args,
+  team: mockLongTextTeam,
 };
 
 export const TeamCardWithoutImage = Template.bind({});
 TeamCardWithoutImage.args = {
+  ...DefaultTeamCard.args,
   team: mockTeamWithoutImage,
-  isValidating: false,
 };
 
 export const LoadingTeamCard = Template.bind({});
 LoadingTeamCard.args = {
-  team: mockTeam,
-  isValidating: true,
-};
-
-export const UndefinedTeamCard = Template.bind({});
-UndefinedTeamCard.args = {
-  team: undefined,
-  isValidating: false,
+  ...DefaultTeamCard.args,
+  isSkeltonMode: true,
 };

@@ -1,44 +1,37 @@
 import React, { useMemo, VFC } from 'react';
-import { Avatar, Card as MuiCard, Skeleton } from '@mui/material';
+import { Avatar, Skeleton } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { Team } from '~/domains';
 import { UserIcon } from '~/components/domains/user/UserIcon';
-import { Link, Typography, Icon } from '~/components/parts/commons';
+import { Typography, Card } from '~/components/parts/commons';
 
 type Props = {
-  team?: Team;
-  isValidating: boolean;
+  team: Team;
+  isSkeltonMode: boolean;
+  onClick: () => void;
 };
 
-export const TeamCard: VFC<Props> = ({ team, isValidating }) => {
+export const TeamCard: VFC<Props> = ({ team, isSkeltonMode, onClick }) => {
   const IconContent = useMemo(() => {
-    if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
+    if (isSkeltonMode) return <Skeleton variant="circular" width={40} height={40} />;
 
-    if (team) {
-      if (team.iconImage) return <UserIcon size={40} imagePath={team.iconImage} />;
-      //TODO Avatarをcomponent化する
-      return <Avatar>{team.name[0]}</Avatar>;
-    }
-
-    return <Icon width={40} icon="Group" />;
-  }, [isValidating, team]);
+    if (team.iconImage) return <UserIcon size={40} imagePath={team.iconImage} />;
+    //TODO Avatarをcomponent化する
+    return <Avatar>{team.name[0]}</Avatar>;
+  }, [isSkeltonMode, team]);
 
   const NameContent = useMemo(() => {
-    if (isValidating) return <Skeleton variant="text" width="100px" />;
+    if (isSkeltonMode) return <Skeleton variant="text" width="100px" />;
 
-    if (team) {
-      return (
-        <Typography variant="h3" noWrap width="220px">
-          {team.name}
-        </Typography>
-      );
-    }
-
-    return <Typography variant="h3">undefined</Typography>;
-  }, [isValidating, team]);
+    return (
+      <Typography variant="h3" noWrap width="220px">
+        {team.name}
+      </Typography>
+    );
+  }, [isSkeltonMode, team]);
 
   const DescriptionContent = useMemo(() => {
-    if (isValidating) {
+    if (isSkeltonMode) {
       return (
         <>
           <Skeleton variant="text" width="260px" />
@@ -47,47 +40,33 @@ export const TeamCard: VFC<Props> = ({ team, isValidating }) => {
       );
     }
 
-    if (team) {
-      return <StyledDescription variant="caption">{team.description}</StyledDescription>;
-    }
-
-    return <Typography variant="caption">undefined</Typography>;
-  }, [isValidating, team]);
+    return <StyledDescription variant="caption">{team.description}</StyledDescription>;
+  }, [isSkeltonMode, team]);
 
   return (
-    <StyledBox>
-      <Link href={`/teams/${team?._id}`}>
-        <StyledTeamCard>
-          <Box display="flex" alignItems="center" mb="8px">
-            <Box mr="8px">{IconContent}</Box>
-            {NameContent}
-          </Box>
-          {DescriptionContent}
-        </StyledTeamCard>
-      </Link>
-    </StyledBox>
+    <StyledTeamCard onClick={onClick}>
+      <Box display="flex" alignItems="center" mb="8px">
+        <Box mr="8px">{IconContent}</Box>
+        {NameContent}
+      </Box>
+      {DescriptionContent}
+    </StyledTeamCard>
   );
 };
 
-const StyledBox = styled(Box)`
-  .MuiLink-root {
-    position: relative;
-    top: 0;
-    display: block;
-    width: fit-content;
-    transition: all 0.3s;
-    &:hover {
-      top: -4px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    }
-  }
-`;
-
-const StyledTeamCard = styled(MuiCard)`
+const StyledTeamCard = styled(Card)`
   width: 300px;
   height: 130px;
   padding: 20px;
   box-sizing: border-box;
+  position: relative;
+  top: 0;
+  transition: all 0.3s;
+  cursor: pointer;
+  &:hover {
+    top: -4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 const StyledDescription = styled(Typography)`
