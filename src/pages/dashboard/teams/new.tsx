@@ -2,7 +2,6 @@ import { Box } from '@mui/system';
 import { ReactNode, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { InputAdornment } from '@mui/material';
 import { Team } from '~/domains';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
@@ -19,10 +18,9 @@ const DashboardTeamPage: ProecoNextPage = () => {
   const router = useRouter();
 
   const [isCreating, setIsCreating] = useState(false);
-  const [team, setTeam] = useState<Pick<Team, 'name' | 'description' | 'slug'>>({
+  const [team, setTeam] = useState<Pick<Team, 'name' | 'description'>>({
     name: '',
     description: '',
-    slug: '',
   });
 
   const handleClickCreateNewTeam = async () => {
@@ -59,28 +57,11 @@ const DashboardTeamPage: ProecoNextPage = () => {
           <Typography mb="4px" variant="body1" color="textColor.light">
             名前
           </Typography>
-          <TextField
-            fullWidth
-            value={team.name}
-            onChange={(e) => updateStoryForm({ name: e.target.value })}
-            onKeyPress={(e) => updateStoryForm({ slug: team.slug + e.key })}
-          />
+          <TextField fullWidth multiline value={team.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             説明
           </Typography>
           <TextField fullWidth multiline value={team.description} rows={4} onChange={(e) => updateStoryForm({ description: e.target.value })} />
-          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
-            サブドメイン (チームページで使用されます)
-          </Typography>
-          <TextField
-            fullWidth
-            value={team.slug}
-            onChange={(e) => updateStoryForm({ slug: e.target.value })}
-            placeholder="example"
-            InputProps={{
-              endAdornment: <InputAdornment position="end">.{process.env.NEXT_PUBLIC_ROOT_URL}</InputAdornment>,
-            }}
-          />
           <Box mt={4} textAlign="center">
             <Button
               disabled={isCreating}
