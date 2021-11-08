@@ -20,8 +20,14 @@ const Template: ComponentStory<typeof TeamIcon> = ({ ...rest }) => {
 };
 
 const mockTeam = createMockTeam({ name: 'Proeco', iconImage: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' });
+const mockTeamWithoutImage = createMockTeam({ name: 'Proeco' });
 
-export const Default = Template.bind({});
-Default.args = {
+export const DefaultTeamIcon = Template.bind({});
+DefaultTeamIcon.args = {
   team: mockTeam,
+};
+
+export const TeamIconWithoutImage = Template.bind({});
+TeamIconWithoutImage.args = {
+  team: mockTeamWithoutImage,
 };
