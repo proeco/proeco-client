@@ -1,15 +1,23 @@
-import React, { VFC, ComponentProps } from 'react';
+import React, { VFC } from 'react';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/system';
 
-type FirstLetterIconType = {
+import { Link } from '~/components/parts/commons/Link';
+
+type Props = {
   name: string;
   size?: number;
+  isLink?: boolean;
+  linkUrl?: string;
 };
-
-type Props = ComponentProps<typeof Avatar> & FirstLetterIconType;
-
-export const FirstLetterIcon: VFC<Props> = ({ name, size = 40 }) => {
+export const FirstLetterIcon: VFC<Props> = ({ name, size = 40, isLink = false, linkUrl = '' }) => {
+  if (isLink) {
+    return (
+      <Link href={linkUrl}>
+        <StyledAvatar size={size}>{name[0]}</StyledAvatar>
+      </Link>
+    );
+  }
   return <StyledAvatar size={size}>{name[0]}</StyledAvatar>;
 };
 
