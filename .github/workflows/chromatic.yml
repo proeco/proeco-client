@@ -9,8 +9,7 @@ on:
     paths:
       - '**.stories.tsx'
   pull_request:
-    branches:
-      - main
+    types: opened
 
 # List of jobs
 jobs:
