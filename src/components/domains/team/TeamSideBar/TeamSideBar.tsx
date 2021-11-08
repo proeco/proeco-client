@@ -1,4 +1,4 @@
-import { ComponentProps, memo, VFC } from 'react';
+import { ComponentProps, memo, VFC, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Box, styled } from '@mui/system';
@@ -15,29 +15,35 @@ type Props = {
   asPath: string;
 };
 
-const sidebarItems: {
-  icon: ComponentProps<typeof Icon>['icon'];
-  url: string;
-  text: string;
-}[] = [
-  {
-    icon: 'DashboardOutlined',
-    url: URLS.DASHBOARD,
-    text: 'ダッシュボード',
-  },
-  {
-    icon: 'HistoryEdu',
-    url: URLS.DASHBOARD_TEAMS,
-    text: 'ストーリー',
-  },
-  {
-    icon: 'Settings',
-    url: URLS.DASHBOARD_SETTINGS,
-    text: '設定',
-  },
-];
-
 export const Component: VFC<Props> = memo(({ asPath }) => {
+  const router = useRouter();
+  const { teamId } = router.query;
+
+  const sidebarItems: {
+    icon: ComponentProps<typeof Icon>['icon'];
+    url: string;
+    text: string;
+  }[] = useMemo(
+    () => [
+      {
+        icon: 'DashboardOutlined',
+        url: URLS.DASHBOARD,
+        text: 'ダッシュボード',
+      },
+      {
+        icon: 'HistoryEdu',
+        url: URLS.TEAMS_DASHBOARD_STORY(teamId as string),
+        text: 'ストーリー',
+      },
+      {
+        icon: 'Settings',
+        url: URLS.DASHBOARD_SETTINGS,
+        text: '設定',
+      },
+    ],
+    [teamId],
+  );
+
   return (
     <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px" bgcolor="whitesmoke">
       <TeamMenu />
