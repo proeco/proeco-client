@@ -17,7 +17,6 @@ import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryMo
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useStory, useStories, useStoryForUpdate } from '~/stores/story';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type Props = {
   isOpen: boolean;
@@ -74,10 +73,9 @@ export const UpdateStoryModal: VFC = () => {
 
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
-  const { data: currentUser } = useCurrentUser();
   const { mutate: mutateStory } = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
-    userId: currentUser?._id,
+    teamId: router.query.id as string,
     page: page,
     limit: 10,
   });
