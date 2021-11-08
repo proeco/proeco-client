@@ -1,0 +1,1 @@
+export { TeamIcon } from './TeamIcon';
