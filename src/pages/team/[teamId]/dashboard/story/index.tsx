@@ -17,7 +17,7 @@ const limit = 10;
 
 const StoryList: ProecoNextPage = () => {
   const router = useRouter();
-  const { id: teamId } = router.query;
+  const { teamId } = router.query;
 
   const [page, setPage] = useState(1);
   const { data: stories } = useStories({

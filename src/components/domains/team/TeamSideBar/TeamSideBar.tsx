@@ -17,7 +17,7 @@ type Props = {
 
 export const Component: VFC<Props> = memo(({ asPath }) => {
   const router = useRouter();
-  const { id: teamId } = router.query;
+  const { teamId } = router.query;
 
   const sidebarItems: {
     icon: ComponentProps<typeof Icon>['icon'];

@@ -27,8 +27,8 @@ type Props = {
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
 
-  const { id } = router.query;
-  const { data: story } = useStory(id as string, storyFromServerSide);
+  const { storyId } = router.query;
+  const { data: story } = useStory(storyId as string, storyFromServerSide);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

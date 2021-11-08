@@ -63,11 +63,11 @@ const StyledTextField = styled(TextField)`
 
 export const CreateNewStoryModal: VFC = () => {
   const router = useRouter();
-  const { id: teamId } = router.query;
+  const { teamId } = router.query;
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { mutate: mutateStories } = useStories({
-    teamId: teamId as string,
+    teamteamId as string,
     page: page,
     limit: 10,
   });
@@ -81,7 +81,7 @@ export const CreateNewStoryModal: VFC = () => {
     emojiId: 'open_file_folder',
     title: '',
     description: '',
-    teamId: teamId as string,
+    teamteamId as string,
   });
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export const CreateNewStoryModal: VFC = () => {
         emojiId: 'open_file_folder',
         title: '',
         description: '',
-        teamId: teamId as string,
+        teamteamId as string,
       });
 
       // 作成後に作成したstoryの詳細ページに遷移する
