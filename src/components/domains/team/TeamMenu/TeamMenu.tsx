@@ -1,8 +1,8 @@
 import React, { MouseEvent, useMemo, useState, VFC } from 'react';
 import { Box, styled } from '@mui/system';
 import { useRouter } from 'next/router';
-import { Avatar, Skeleton } from '@mui/material';
-import { UserIcon } from '~/components/domains/user/UserIcon';
+import { Skeleton } from '@mui/material';
+import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { IconButton, Menu, Typography, Icon } from '~/components/parts/commons';
 import { Team } from '~/domains';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -45,9 +45,8 @@ export const Component: VFC<Props> = ({ currentTeam, menuItems, isValidating }) 
     if (currentTeam) {
       return (
         <>
-          {/* TODO Avatarをcomponent化する */}
-          {currentTeam.iconImage ? <UserIcon size={40} imagePath={currentTeam.iconImage} /> : <Avatar>{currentTeam.name[0]}</Avatar>}
-          <Typography variant="h3" maximumLines={1}>
+          <TeamIcon team={currentTeam} />
+          <Typography variant="h3" maximum_lines={1}>
             {currentTeam.name}
           </Typography>
         </>
@@ -103,7 +102,7 @@ export const TeamMenu: VFC = () => {
         .filter((team) => team._id !== router.query.id)
         .map((team) => {
           return {
-            icon: <UserIcon imagePath={team.iconImage} size={24} />,
+            icon: <TeamIcon team={team} size={24} />,
             text: team.name,
             onClick: () => handleClickItem(team._id),
           };

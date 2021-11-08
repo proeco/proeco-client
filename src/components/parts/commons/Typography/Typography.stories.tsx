@@ -53,5 +53,5 @@ export const DefaultTypography = Template.bind({});
 
 export const LongTextTypography = LongTextTemplate.bind({});
 LongTextTypography.args = {
-  maximumLines: 2,
+  maximum_lines: 2,
 };

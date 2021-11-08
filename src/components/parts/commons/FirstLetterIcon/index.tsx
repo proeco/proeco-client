@@ -1,0 +1,1 @@
+export { FirstLetterIcon } from './FirstLetterIcon';
