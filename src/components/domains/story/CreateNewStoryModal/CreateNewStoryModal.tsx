@@ -67,7 +67,7 @@ export const CreateNewStoryModal: VFC = () => {
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { mutate: mutateStories } = useStories({
-    teamteamId as string,
+    teamId: teamId as string,
     page: page,
     limit: 10,
   });
@@ -81,7 +81,7 @@ export const CreateNewStoryModal: VFC = () => {
     emojiId: 'open_file_folder',
     title: '',
     description: '',
-    teamteamId as string,
+    teamId: teamId as string,
   });
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export const CreateNewStoryModal: VFC = () => {
         emojiId: 'open_file_folder',
         title: '',
         description: '',
-        teamteamId as string,
+        teamId: teamId as string,
       });
 
       // 作成後に作成したstoryの詳細ページに遷移する
