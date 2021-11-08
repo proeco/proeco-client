@@ -16,9 +16,9 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
 import { Menu } from '~/components/parts/commons/Menu';
 import { IconButton } from '~/components/parts/commons/IconButton';
-import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
+import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -106,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>;
+const getLayout = (page: ReactNode) => <TeamDashboardLayout>{page}</TeamDashboardLayout>;
 StoryPage.getLayout = getLayout;
 
 export default StoryPage;
