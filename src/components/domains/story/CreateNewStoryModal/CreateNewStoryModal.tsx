@@ -11,7 +11,6 @@ import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains';
 import { Modal, SelectableEmoji, Button, Typography, TextField } from '~/components/parts/commons';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useStories } from '~/stores/story';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -66,9 +65,8 @@ export const CreateNewStoryModal: VFC = () => {
   const router = useRouter();
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { data: currentUser } = useCurrentUser();
   const { mutate: mutateStories } = useStories({
-    userId: currentUser?._id,
+    teamId: router.query.id as string,
     page: page,
     limit: 10,
   });
