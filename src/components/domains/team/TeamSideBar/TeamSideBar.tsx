@@ -6,18 +6,20 @@ import { Box, styled } from '@mui/system';
 import { Skeleton } from '@mui/material';
 import { Typography, SideBarListItem, Icon, Link } from '~/components/parts/commons';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
+import { UserIconGroup } from '~/components/domains/user/UserIconGroup';
 
 import { Team, User } from '~/domains';
 
 import { URLS } from '~/constants/urls';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { useTeams } from '~/stores/team';
+import { useTeams, useTeamUsers } from '~/stores/team';
 
 type Props = {
   currentUser?: User;
   currentTeam?: Team;
   asPath: string;
   isValidating: boolean;
+  teamUsers: User[];
 };
 
 const sidebarItems: {
@@ -42,39 +44,44 @@ const sidebarItems: {
   },
 ];
 
-export const Component: VFC<Props> = memo(({ asPath, currentTeam, isValidating }) => {
+export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating }) => {
   const TeamContent = useMemo(() => {
     if (isValidating) {
       return (
-        <Box>
+        <>
           <Skeleton variant="circular" width={80} height={80} />
           <Skeleton variant="text" width="100px" />
-        </Box>
+        </>
       );
     }
 
     if (currentTeam) {
       return (
-        <Box>
+        <>
           <TeamIcon team={currentTeam} size={80} />
           <Typography variant="h3" maximum_lines={1}>
             {currentTeam.name}
           </Typography>
-        </Box>
+        </>
       );
     }
 
     return (
-      <Box>
+      <>
         <Icon width={40} icon="Group" />
         <Typography variant="h3">undefined</Typography>
-      </Box>
+      </>
     );
   }, [isValidating, currentTeam]);
 
   return (
     <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px" bgcolor="whitesmoke">
-      {TeamContent}
+      <Box display="flex" flexDirection="column" alignItems="center" pt="4px">
+        {TeamContent}
+      </Box>
+      <Box py="8px" borderBottom="1px solid #eaecf1">
+        {<UserIconGroup users={teamUsers} isLink />}
+      </Box>
       <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
         {sidebarItems.map((sidebarItem, index) => {
           return (
@@ -106,6 +113,11 @@ export const TeamSideBar: VFC = memo(() => {
   });
 
   const currentTeam = teams?.find((team) => team._id === router.query.id);
+  const { data: teamUsers } = useTeamUsers({
+    teamId: currentTeam?._id,
+  });
 
-  return <Component asPath={router.asPath} currentTeam={currentTeam} isValidating={isValidatingTeams} />;
+  const currentTeamUsers = teamUsers ? teamUsers : [];
+
+  return <Component asPath={router.asPath} currentTeam={currentTeam} isValidating={isValidatingTeams} teamUsers={currentTeamUsers} />;
 });
