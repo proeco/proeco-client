@@ -11,10 +11,12 @@ export default {
   component: TeamIcon,
 } as ComponentMeta<typeof TeamIcon>;
 
-const Template: ComponentStory<typeof TeamIcon> = ({ ...rest }) => {
+const Template: ComponentStory<typeof TeamIcon> = ({ team }) => {
   return (
-    <Box p="20px">
-      <TeamIcon {...rest} />
+    <Box p="20px" display="flex" alignItems="center" gap="20px">
+      <TeamIcon team={team} size={24} />
+      <TeamIcon team={team} />
+      <TeamIcon team={team} size={80} />
     </Box>
   );
 };

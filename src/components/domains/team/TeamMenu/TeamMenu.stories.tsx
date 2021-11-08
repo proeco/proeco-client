@@ -6,8 +6,8 @@ import { Box } from '@mui/system';
 import { action } from '@storybook/addon-actions';
 import { Component } from './TeamMenu';
 import { createMockTeam } from '~/mock';
-import { UserIcon } from '~/components/domains/user/UserIcon';
 import { Icon } from '~/components/parts/commons';
+import { TeamIcon } from '~/components/domains/team/TeamIcon';
 
 export default {
   title: 'domains/team/TeamMenu',
@@ -25,12 +25,14 @@ const Template: ComponentStory<typeof Component> = ({ ...rest }) => {
 const mockTeam = createMockTeam({ name: 'Proeco', iconImage: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' });
 const mockTeamWithoutImage = createMockTeam({ name: 'Proeco' });
 
+const mockAnotherTeam = createMockTeam({ name: 'AnotherTeam' });
+
 export const DefaultTeam = Template.bind({});
 DefaultTeam.args = {
   currentTeam: mockTeam,
   menuItems: [
     {
-      icon: <UserIcon size={24} />,
+      icon: <TeamIcon team={mockAnotherTeam} size={24} />,
       text: 'AnotherTeam',
       onClick: action('clickMenuItem'),
     },

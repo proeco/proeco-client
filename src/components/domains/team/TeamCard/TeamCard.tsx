@@ -1,8 +1,8 @@
 import React, { VFC } from 'react';
-import { Avatar, Skeleton } from '@mui/material';
+import { Skeleton } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { Team } from '~/domains';
-import { UserIcon } from '~/components/domains/user/UserIcon';
+import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { Typography, Card } from '~/components/parts/commons';
 
 type Props = {
@@ -29,7 +29,9 @@ export const TeamCard: VFC<Props> = ({ team, isSkeltonMode = false, onClick }) =
   return (
     <StyledTeamCard onClick={onClick}>
       <Box display="flex" alignItems="center" mb="8px">
-        <Box mr="8px">{team.iconImage ? <UserIcon size={40} imagePath={team.iconImage} /> : <Avatar>{team.name[0]}</Avatar>}</Box>
+        <Box mr="8px">
+          <TeamIcon team={team} />
+        </Box>
         <Typography variant="h3" maximum_lines={1}>
           {team.name}
         </Typography>
