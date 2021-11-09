@@ -33,10 +33,6 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  if (!story) {
-    return null;
-  }
-
   const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
 
@@ -77,6 +73,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
       onClick: handleClickDelete,
     },
   ];
+
+  if (!story) {
+    return null;
+  }
 
   return (
     <>
