@@ -9,7 +9,6 @@ import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
 import { useStories, useStoryForDelete } from '~/stores/story';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { restClient } from '~/utils/rest-client';
 
@@ -70,10 +69,9 @@ export const DeleteStoryModal: VFC = () => {
 
   const { data: isOpenDeleteStoryModal, mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { data: storyForDelete } = useStoryForDelete();
-  const { data: currentUser } = useCurrentUser();
 
   const { mutate: mutateStories } = useStories({
-    userId: currentUser?._id,
+    teamId: router.query.id as string,
     page: page,
     limit: 10,
   });

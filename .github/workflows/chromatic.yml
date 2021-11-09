@@ -4,7 +4,12 @@
 name: 'Chromatic'
 
 # Event for the workflow
-on: push
+on: 
+  push:
+    paths:
+      - '**.stories.tsx'
+  pull_request:
+    types: opened
 
 # List of jobs
 jobs:
