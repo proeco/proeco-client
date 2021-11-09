@@ -68,7 +68,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
             <Typography variant="h3">{currentUser?.name}</Typography>
           </StyledUserIconWrapper>
         ) : (
-          <StyledUserIconWrapper width="fit-content" pb="16px" pt={!open && '46px'}>
+          <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
             <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} isLink />
           </StyledUserIconWrapper>
         )}
@@ -88,8 +88,8 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
             }
             return (
               <Link href={sidebarItem.url} key={index}>
-                <Box width="fit-content" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
-                  <Icon icon={sidebarItem.icon} width="40px" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'} />
+                <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
+                  <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'} />
                   <Typography variant="overline" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'}>
                     {sidebarItem.text}
                   </Typography>
