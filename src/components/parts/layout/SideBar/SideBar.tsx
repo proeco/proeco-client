@@ -54,7 +54,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
 
   return (
     <StyledDrawer variant="permanent" open={open}>
-      <Box width="100%" bgcolor="whitesmoke" display="flex" alignItems="center" justifyContent={open ? 'flex-end' : 'center'}>
+      <Box position="absolute" width="100%" bgcolor="whitesmoke" display="flex" alignItems="center" justifyContent={open ? 'flex-end' : 'center'}>
         {open ? (
           <IconButton icon="ChevronLeft" width={30} onClick={handleDrawerClose} />
         ) : (
@@ -68,7 +68,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
             <Typography variant="h3">{currentUser?.name}</Typography>
           </StyledUserIconWrapper>
         ) : (
-          <StyledUserIconWrapper width="fit-content" pb="16px">
+          <StyledUserIconWrapper width="fit-content" pb="16px" pt={!open && '46px'}>
             <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} isLink />
           </StyledUserIconWrapper>
         )}
