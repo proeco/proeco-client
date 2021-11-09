@@ -12,7 +12,7 @@ import { Team } from '~/domains';
  */
 export const useTeam = ({ teamId }: { teamId?: string }): SWRResponse<Team, Error> => {
   const key = teamId ? `/teams/${teamId}` : null;
-  return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.docs), {
+  return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
   });

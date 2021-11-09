@@ -11,7 +11,6 @@ import { restClient } from '~/utils/rest-client';
  */
 export const useTeamUsers = ({ teamId }: { teamId?: string }): SWRResponse<User[], Error> => {
   const key = teamId ? `/teams/${teamId}/users` : null;
-  //mockの部分は、teamに所属するユーザーを取得するapiに書き換える
   return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.docs), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,

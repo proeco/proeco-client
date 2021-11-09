@@ -11,7 +11,6 @@ import { UserIconGroup } from '~/components/domains/user/UserIconGroup';
 import { Team, User } from '~/domains';
 
 import { URLS } from '~/constants/urls';
-// import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeam, useTeamUsers } from '~/stores/team';
 
 type Props = {
@@ -20,12 +19,10 @@ type Props = {
   asPath: string;
   isValidating: boolean;
   teamUsers: User[];
+  teamId?: string | string[];
 };
 
-export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating }) => {
-  const router = useRouter();
-  const { teamId } = router.query;
-
+export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating, teamId }) => {
   const sidebarItems: {
     icon: ComponentProps<typeof Icon>['icon'];
     url: string;
@@ -118,11 +115,9 @@ export const TeamSideBar: VFC = memo(() => {
     teamId: router.query.teamId as string,
   });
 
-  const { data: teamUsers } = useTeamUsers({
+  const { data: teamUser = [] } = useTeamUsers({
     teamId: currentTeam?._id,
   });
 
-  const currentTeamUsers = teamUsers ? teamUsers : [];
-
-  return <Component asPath={router.asPath} currentTeam={currentTeam} isValidating={isValidatingTeam} teamUsers={currentTeamUsers} />;
+  return <Component asPath={router.asPath} currentTeam={currentTeam} isValidating={isValidatingTeam} teamUsers={teamUser} teamId={router.query.teamId} />;
 });
