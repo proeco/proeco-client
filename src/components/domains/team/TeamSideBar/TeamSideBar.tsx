@@ -11,8 +11,8 @@ import { UserIconGroup } from '~/components/domains/user/UserIconGroup';
 import { Team, User } from '~/domains';
 
 import { URLS } from '~/constants/urls';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { useTeams, useTeamUsers } from '~/stores/team';
+// import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useTeam, useTeamUsers } from '~/stores/team';
 
 type Props = {
   currentUser?: User;
@@ -86,7 +86,7 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
         {TeamContent}
       </Box>
       <Box py="8px" borderBottom="1px solid #eaecf1">
-        {<UserIconGroup users={teamUsers} isLink />}
+        <UserIconGroup users={teamUsers} isLink />
       </Box>
       <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
         {sidebarItems.map((sidebarItem, index) => {
@@ -113,17 +113,16 @@ const StyledSideBarWrapper = styled(Box)`
 
 export const TeamSideBar: VFC = memo(() => {
   const router = useRouter();
-  const { data: currentUser } = useCurrentUser();
-  const { data: teams, isValidating: isValidatingTeams } = useTeams({
-    userId: currentUser?._id,
+
+  const { data: currentTeam, isValidating: isValidatingTeam } = useTeam({
+    teamId: router.query.teamId as string,
   });
 
-  const currentTeam = teams?.find((team) => team._id === router.query.id);
   const { data: teamUsers } = useTeamUsers({
     teamId: currentTeam?._id,
   });
 
   const currentTeamUsers = teamUsers ? teamUsers : [];
 
-  return <Component asPath={router.asPath} currentTeam={currentTeam} isValidating={isValidatingTeams} teamUsers={currentTeamUsers} />;
+  return <Component asPath={router.asPath} currentTeam={currentTeam} isValidating={isValidatingTeam} teamUsers={currentTeamUsers} />;
 });
