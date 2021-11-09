@@ -25,23 +25,23 @@ type Props = {
 export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating, teamId }) => {
   const sidebarItems: {
     icon: ComponentProps<typeof Icon>['icon'];
-    url: string;
+    url: () => string;
     text: string;
   }[] = useMemo(
     () => [
       {
         icon: 'DashboardOutlined',
-        url: URLS.DASHBOARD,
+        url: () => URLS.TEAMS_DASHBOARD(teamId as string),
         text: 'ダッシュボード',
       },
       {
         icon: 'HistoryEdu',
-        url: URLS.TEAMS_DASHBOARD_STORY(teamId as string),
+        url: () => URLS.TEAMS_DASHBOARD_STORIES(teamId as string),
         text: 'ストーリー',
       },
       {
         icon: 'Settings',
-        url: URLS.DASHBOARD_SETTINGS,
+        url: () => URLS.TEAMS_DASHBOARD_SETTING(teamId as string),
         text: '設定',
       },
     ],
@@ -88,10 +88,10 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
       <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
         {sidebarItems.map((sidebarItem, index) => {
           return (
-            <Link href={sidebarItem.url} key={index}>
+            <Link href={sidebarItem.url()} key={index}>
               <SideBarListItem
-                icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
-                selected={sidebarItem.url === asPath}
+                icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url() === asPath ? '#fff' : 'textColor.main'} />}
+                selected={sidebarItem.url() === asPath}
               >
                 <Typography variant="body1">{sidebarItem.text}</Typography>
               </SideBarListItem>
