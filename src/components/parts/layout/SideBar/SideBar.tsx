@@ -26,7 +26,7 @@ const sidebarItems: {
   {
     icon: 'DashboardOutlined',
     url: URLS.DASHBOARD,
-    text: 'ダッシュボード',
+    text: 'ホーム',
   },
   {
     icon: 'Group',
@@ -61,7 +61,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
           <IconButton icon="ChevronRight" width={30} onClick={handleDrawerOpen} />
         )}
       </Box>
-      <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px" bgcolor="whitesmoke">
+      <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke">
         {open ? (
           <StyledUserIconWrapper pb="16px">
             <UserIcon size={80} imagePath={currentUser?.image} userId={currentUser?._id} isLink />
@@ -74,14 +74,26 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
         )}
         <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
           {sidebarItems.map((sidebarItem, index) => {
+            if (open) {
+              return (
+                <Link href={sidebarItem.url} key={index}>
+                  <SideBarListItem
+                    icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
+                    selected={sidebarItem.url === asPath}
+                  >
+                    <Typography variant="body1">{sidebarItem.text}</Typography>
+                  </SideBarListItem>
+                </Link>
+              );
+            }
             return (
               <Link href={sidebarItem.url} key={index}>
-                <SideBarListItem
-                  icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
-                  selected={sidebarItem.url === asPath}
-                >
-                  <Typography variant="body1">{sidebarItem.text}</Typography>
-                </SideBarListItem>
+                <Box width="fit-content" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
+                  <Icon icon={sidebarItem.icon} width="40px" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'} />
+                  <Typography variant="overline" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'}>
+                    {sidebarItem.text}
+                  </Typography>
+                </Box>
               </Link>
             );
           })}
@@ -117,6 +129,10 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
   flex-shrink: 0;
   white-space: nowrap;
   box-sizing: border-box;
+  .MuiDrawer-paper {
+    background-color: whitesmoke;
+    top: 64px;
+  }
   ${(props) =>
     props.open && {
       ...openedMixin(props.theme),
