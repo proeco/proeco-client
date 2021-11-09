@@ -19,7 +19,7 @@ type Props = {
   asPath: string;
   isValidating: boolean;
   teamUsers: User[];
-  teamId?: string | string[];
+  teamId?: string;
 };
 
 export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating, teamId }) => {
@@ -119,5 +119,7 @@ export const TeamSideBar: VFC = memo(() => {
     teamId: currentTeam?._id,
   });
 
-  return <Component asPath={router.asPath} currentTeam={currentTeam} isValidating={isValidatingTeam} teamUsers={teamUser} teamId={router.query.teamId} />;
+  return (
+    <Component asPath={router.asPath} currentTeam={currentTeam} isValidating={isValidatingTeam} teamUsers={teamUser} teamId={router.query.teamId as string} />
+  );
 });
