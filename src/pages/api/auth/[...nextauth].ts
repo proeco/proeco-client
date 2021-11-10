@@ -1,20 +1,41 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import clientPromise from '~/libs/mongodb';
 
-const options = {
-  site: process.env.NEXTAUTH_URL || 'http://localhost:3000',
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
+  NextAuth(req, res, {
+    providers: [
+      GoogleProvider({
+        clientId: process.env.GOOGLE_CLIENT_ID || '',
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      }),
+    ],
+    adapter: MongoDBAdapter({
+      db: (await clientPromise).db('proeco'),
     }),
-  ],
 
-  database: process.env.MONGO_URI || 'mongodb://localhost:27017/proeco',
+    callbacks: {
+      async jwt({ token, user, account, profile, isNewUser }) {
+        console.log(18, token, user, account, profile, isNewUser);
 
-  sessionMaxAge: 30 * 24 * 60 * 60 * 1000,
-  sessionUpdateAge: 24 * 60 * 60 * 1000,
-};
+        if (account?.accessToken) {
+          token.accessToken = account.accessToken;
+        }
+        return token;
+      },
+      async session({ session, token }) {
+        console.log(26, token, session);
 
-export default (req: NextApiRequest, res: NextApiResponse): void | Promise<void> => NextAuth(req, res, options);
+        session.accessToken = token.accessToken;
+        return session;
+      },
+    },
+
+    session: {
+      jwt: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      updateAge: 24 * 60 * 60 * 1000,
+    },
+  });
