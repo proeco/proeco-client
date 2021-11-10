@@ -1,3 +1,4 @@
+import { setCookie } from 'nookies';
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
@@ -17,11 +18,12 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     }),
 
     callbacks: {
-      async jwt({ token, user, account, profile, isNewUser }) {
-        console.log(18, token, user, account, profile, isNewUser);
-
-        if (account?.accessToken) {
-          token.accessToken = account.accessToken;
+      async jwt({ token, account }) {
+        if (account?.access_token) {
+          setCookie({ res }, 'next-auth-access-token', account.access_token as string, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: '/',
+          });
         }
         return token;
       },
