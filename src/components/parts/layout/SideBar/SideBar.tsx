@@ -12,7 +12,7 @@ type Props = {
   closeContent: JSX.Element;
   sidebarItems: {
     icon: ComponentProps<typeof Icon>['icon'];
-    url: string | (() => string);
+    url: string;
     text: string;
   }[];
 };
@@ -43,16 +43,10 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
           {sidebarItems.map((sidebarItem, index) => {
             if (open) {
               return (
-                <Link href={typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url()} key={index}>
+                <Link href={sidebarItem.url} key={index}>
                   <SideBarListItem
-                    icon={
-                      <Icon
-                        icon={sidebarItem.icon}
-                        width="20px"
-                        color={(typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url()) === asPath ? '#fff' : 'textColor.main'}
-                      />
-                    }
-                    selected={(typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url()) === asPath}
+                    icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
+                    selected={sidebarItem.url === asPath}
                   >
                     <Typography variant="body1">{sidebarItem.text}</Typography>
                   </SideBarListItem>
@@ -60,17 +54,10 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
               );
             }
             return (
-              <Link href={typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url()} key={index}>
+              <Link href={sidebarItem.url} key={index}>
                 <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
-                  <Icon
-                    icon={sidebarItem.icon}
-                    width="32px"
-                    color={(typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url()) === asPath ? 'primary.main' : 'textColor.main'}
-                  />
-                  <Typography
-                    variant="overline"
-                    color={(typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url()) === asPath ? 'primary.main' : 'textColor.main'}
-                  >
+                  <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'} />
+                  <Typography variant="overline" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'}>
                     {sidebarItem.text}
                   </Typography>
                 </Box>

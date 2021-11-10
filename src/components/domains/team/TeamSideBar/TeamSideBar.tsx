@@ -25,23 +25,23 @@ type Props = {
 export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating, teamId }) => {
   const sidebarItems: {
     icon: ComponentProps<typeof Icon>['icon'];
-    url: () => string;
+    url: string;
     text: string;
   }[] = useMemo(
     () => [
       {
         icon: 'DashboardOutlined',
-        url: () => URLS.TEAMS_DASHBOARD(teamId as string),
+        url: URLS.TEAMS_DASHBOARD(teamId as string),
         text: 'ホーム',
       },
       {
         icon: 'HistoryEdu',
-        url: () => URLS.TEAMS_DASHBOARD_STORIES(teamId as string),
+        url: URLS.TEAMS_DASHBOARD_STORIES(teamId as string),
         text: 'ストーリー',
       },
       {
         icon: 'Settings',
-        url: () => URLS.TEAMS_DASHBOARD_SETTING(teamId as string),
+        url: URLS.TEAMS_DASHBOARD_SETTING(teamId as string),
         text: '設定',
       },
     ],
