@@ -65,11 +65,11 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
                   <Icon
                     icon={sidebarItem.icon}
                     width="32px"
-                    color={typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url() === asPath ? 'primary.main' : 'textColor.main'}
+                    color={(typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url()) === asPath ? 'primary.main' : 'textColor.main'}
                   />
                   <Typography
                     variant="overline"
-                    color={typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url() === asPath ? 'primary.main' : 'textColor.main'}
+                    color={(typeof sidebarItem.url === 'string' ? sidebarItem.url : sidebarItem.url()) === asPath ? 'primary.main' : 'textColor.main'}
                   >
                     {sidebarItem.text}
                   </Typography>

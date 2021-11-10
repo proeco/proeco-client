@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Box, styled } from '@mui/system';
 
 import { Skeleton } from '@mui/material';
-import { Typography, SideBarListItem, Icon, Link } from '~/components/parts/commons';
+import { Typography, Icon } from '~/components/parts/commons';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { UserIconGroup } from '~/components/domains/user/UserIconGroup';
 
@@ -12,6 +12,7 @@ import { Team, User } from '~/domains';
 
 import { URLS } from '~/constants/urls';
 import { useTeam, useTeamUsers } from '~/stores/team';
+import { SideBar } from '~/components/parts/layout/SideBar';
 
 type Props = {
   currentTeam?: Team;
@@ -31,7 +32,7 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
       {
         icon: 'DashboardOutlined',
         url: () => URLS.TEAMS_DASHBOARD(teamId as string),
-        text: 'ダッシュボード',
+        text: 'ホーム',
       },
       {
         icon: 'HistoryEdu',
@@ -76,35 +77,51 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
     );
   }, [isValidating, currentTeam]);
 
-  return (
-    <StyledSideBarWrapper width="280px" minHeight="100vh" p="16px" bgcolor="whitesmoke">
-      <Box display="flex" flexDirection="column" alignItems="center" pt="4px">
-        {TeamContent}
-      </Box>
-      <Box py="8px" borderBottom="1px solid #eaecf1">
-        <UserIconGroup users={teamUsers} isLink />
-      </Box>
-      <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
-        {sidebarItems.map((sidebarItem, index) => {
-          return (
-            <Link href={sidebarItem.url()} key={index}>
-              <SideBarListItem
-                icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url() === asPath ? '#fff' : 'textColor.main'} />}
-                selected={sidebarItem.url() === asPath}
-              >
-                <Typography variant="body1">{sidebarItem.text}</Typography>
-              </SideBarListItem>
-            </Link>
-          );
-        })}
-      </Box>
-    </StyledSideBarWrapper>
-  );
+  const openContent = useMemo(() => {
+    return (
+      <>
+        <Box display="flex" flexDirection="column" alignItems="center" pt="4px">
+          {TeamContent}
+        </Box>
+        <Box py="8px" borderBottom="1px solid #eaecf1">
+          <UserIconGroup users={teamUsers} isLink />
+        </Box>
+      </>
+    );
+  }, [TeamContent, teamUsers]);
+
+  const closeContent = useMemo(() => {
+    if (isValidating) {
+      return (
+        <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
+          <Skeleton variant="circular" width={40} height={40} />
+        </StyledUserIconWrapper>
+      );
+    }
+
+    if (currentTeam) {
+      return (
+        <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
+          <TeamIcon size={40} team={currentTeam} />
+        </StyledUserIconWrapper>
+      );
+    }
+
+    return (
+      <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
+        <Icon width={40} icon="Group" />
+      </StyledUserIconWrapper>
+    );
+  }, [isValidating, currentTeam]);
+
+  return <SideBar asPath={asPath} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
 });
 
-const StyledSideBarWrapper = styled(Box)`
-  box-sizing: border-box;
-  border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
+const StyledUserIconWrapper = styled(Box)`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-bottom: 1px solid ${(props) => props.theme.palette.borderColor.main};
 `;
 
 export const TeamSideBar: VFC = memo(() => {
