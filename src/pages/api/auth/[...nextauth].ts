@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import clientPromise from '~/libs/mongodb';
+import { clientPromise } from '~/libs/mongodb';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
   NextAuth(req, res, {
@@ -24,12 +24,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
           token.accessToken = account.accessToken;
         }
         return token;
-      },
-      async session({ session, token }) {
-        console.log(26, token, session);
-
-        session.accessToken = token.accessToken;
-        return session;
       },
     },
 
