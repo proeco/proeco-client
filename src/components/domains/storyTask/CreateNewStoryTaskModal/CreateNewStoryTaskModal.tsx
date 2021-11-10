@@ -71,8 +71,7 @@ export const CreateNewStoryTaskModal: VFC = () => {
   const handleClickCreateNewStoryTaskButton = async () => {
     try {
       await restClient.apiPost<StoryTask>('/story-tasks', {
-        title,
-        storyId,
+        storyTask: { title, storyId },
       });
 
       mutateStoryTasks();

@@ -11,7 +11,7 @@ import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryMo
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
 
-import { Icon, Typography } from '~/components/parts/commons';
+import { Button, Icon, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
 import { Menu } from '~/components/parts/commons/Menu';
@@ -19,6 +19,7 @@ import { IconButton } from '~/components/parts/commons/IconButton';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
+import { useIsOpenCreateNewStoryTaskModal } from '~/stores/modal/useIsOpenCreateNewStoryTaskModal';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -38,6 +39,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { mutate: mutateStoryForDelete } = useStoryForDelete();
+
+  const { mutate: mutateIsOpenCreateNewStoryTaskModal } = useIsOpenCreateNewStoryTaskModal();
 
   const handleClickMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -59,6 +62,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     if (!story) return;
     mutateIsOpenDeleteStoryModal(true);
     mutateStoryForDelete(story);
+  };
+
+  const handleClickCreateStoryTaskButton = () => {
+    mutateIsOpenCreateNewStoryTaskModal(true);
   };
 
   const menuItems = [
@@ -90,6 +97,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </Box>
         <Typography variant="h4">{story.description}</Typography>
+        <Button variant="contained" onClick={handleClickCreateStoryTaskButton}>
+          タスクを作成する
+        </Button>
       </Box>
     </>
   );
