@@ -1,48 +1,25 @@
 import { ComponentProps, memo, VFC, useState } from 'react';
-import { useRouter } from 'next/router';
 
 import { Box } from '@mui/system';
 import { Drawer as MuiDrawer } from '@mui/material';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { Typography, SideBarListItem, Icon, Link, IconButton } from '~/components/parts/commons';
-import { UserIcon } from '~/components/domains/user/UserIcon';
-
-import { User } from '~/domains';
-
-import { URLS } from '~/constants/urls';
 
 type Props = {
-  currentUser?: User;
   asPath: string;
+  openContent: JSX.Element;
+  closeContent: JSX.Element;
+  sidebarItems: {
+    icon: ComponentProps<typeof Icon>['icon'];
+    url: string;
+    text: string;
+  }[];
 };
-
-const sidebarItems: {
-  icon: ComponentProps<typeof Icon>['icon'];
-  url: string;
-  text: string;
-}[] = [
-  {
-    icon: 'DashboardOutlined',
-    url: URLS.DASHBOARD,
-    text: 'ホーム',
-  },
-  {
-    icon: 'Group',
-    url: URLS.DASHBOARD_TEAMS,
-    text: 'チーム',
-  },
-  {
-    icon: 'Settings',
-    url: URLS.DASHBOARD_SETTINGS,
-    text: '設定',
-  },
-];
 
 const drawerWidth = 280;
 
-export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
+export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent }) => {
   const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -51,7 +28,6 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
   return (
     <StyledDrawer variant="permanent" open={open}>
       <Box position="absolute" width="100%" bgcolor="whitesmoke" display="flex" alignItems="center" justifyContent={open ? 'flex-end' : 'center'}>
@@ -62,16 +38,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath }) => {
         )}
       </Box>
       <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke">
-        {open ? (
-          <StyledUserIconWrapper pb="16px">
-            <UserIcon size={80} imagePath={currentUser?.image} userId={currentUser?._id} isLink />
-            <Typography variant="h3">{currentUser?.name}</Typography>
-          </StyledUserIconWrapper>
-        ) : (
-          <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-            <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} isLink />
-          </StyledUserIconWrapper>
-        )}
+        {open ? openContent : closeContent}
         <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
           {sidebarItems.map((sidebarItem, index) => {
             if (open) {
@@ -149,17 +116,3 @@ const StyledSideBarWrapper = styled(Box)`
   box-sizing: border-box;
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
 `;
-
-const StyledUserIconWrapper = styled(Box)`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border-bottom: 1px solid ${(props) => props.theme.palette.borderColor.main};
-`;
-
-export const SideBar: VFC = memo(() => {
-  const router = useRouter();
-  const { data: currentUser } = useCurrentUser();
-
-  return <Component currentUser={currentUser} asPath={router.asPath} />;
-});
