@@ -27,13 +27,13 @@ export const Component: VFC<Props> = ({ isOpen, title, isDisabled, onChangeTitle
       </Box>
     </>
   );
-  return <Modal title="タスクを作成する" content={content} open={isOpen} onClose={onCloseModal} size="small" />;
+  return <Modal emojiId="pencil2" title="タスクを作成する" content={content} open={isOpen} onClose={onCloseModal} size="small" />;
 };
 
 const StyledTextField = styled(TextField)`
   height: 40px;
 `;
 
-// export const CreateNewStoryTaskModal: VFC = () => {
-//   return <Component />;
-// };
+export const CreateNewStoryTaskModal: VFC = () => {
+  return <Component />;
+};
