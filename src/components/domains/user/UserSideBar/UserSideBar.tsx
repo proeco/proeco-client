@@ -157,7 +157,7 @@ const StyledUserIconWrapper = styled(Box)`
   border-bottom: 1px solid ${(props) => props.theme.palette.borderColor.main};
 `;
 
-export const SideBar: VFC = memo(() => {
+export const UserSideBar: VFC = memo(() => {
   const router = useRouter();
   const { data: currentUser } = useCurrentUser();
 

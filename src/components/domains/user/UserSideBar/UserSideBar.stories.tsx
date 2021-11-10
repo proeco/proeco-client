@@ -1,14 +1,14 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Component } from './SideBar';
+import { Component } from './UserSideBar';
 
 import { createMockUser } from '~/mock';
 
 import { URLS } from '~/constants/urls';
 
 export default {
-  title: 'parts/layout/SideBar',
+  title: 'domains/user/UserSideBar',
   component: Component,
   argTypes: {
     openCreateStoryModal: { action: 'openCreateStoryModal' },
