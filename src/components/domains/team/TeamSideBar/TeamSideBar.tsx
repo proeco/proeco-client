@@ -14,7 +14,6 @@ import { URLS } from '~/constants/urls';
 import { useTeam, useTeamUsers } from '~/stores/team';
 
 type Props = {
-  currentUser?: User;
   currentTeam?: Team;
   asPath: string;
   isValidating: boolean;
