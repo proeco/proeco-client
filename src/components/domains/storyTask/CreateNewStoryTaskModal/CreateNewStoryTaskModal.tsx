@@ -1,6 +1,13 @@
-import React, { VFC } from 'react';
+import React, { VFC, useState, useEffect } from 'react';
 import { Box, styled } from '@mui/system';
+import { useRouter } from 'next/router';
 import { Button, Modal, TextField, Typography } from '~/components/parts/commons';
+import { useSuccessNotification } from '~/hooks/useSuccessNotification';
+import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { useIsOpenCreateNewStoryTaskModal } from '~/stores/modal/useIsOpenCreateNewStoryTaskModal';
+import { restClient } from '~/utils/rest-client';
+import { StoryTask } from '~/domains';
+import { useStoryTasks } from '~/stores/storyTask';
 
 type Props = {
   isOpen: boolean;
@@ -35,5 +42,59 @@ const StyledTextField = styled(TextField)`
 `;
 
 export const CreateNewStoryTaskModal: VFC = () => {
-  return <Component />;
+  const router = useRouter();
+  const { storyId } = router.query;
+  const page = router.query.page ? Number(router.query.page) : 1;
+
+  const { mutate: mutateStoryTasks } = useStoryTasks({
+    storyId: storyId as string,
+    page: page,
+    limit: 10,
+  });
+
+  const { notifySuccessMessage } = useSuccessNotification();
+  const { notifyErrorMessage } = useErrorNotification();
+
+  const { data: isOpenCreateNewStoryTaskModal, mutate: mutateIsOpenCreateNewStoryTaskModal } = useIsOpenCreateNewStoryTaskModal();
+
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    setIsDisabled(title.length === 0);
+  }, [title]);
+
+  const handleCloseModal = () => {
+    mutateIsOpenCreateNewStoryTaskModal(false);
+  };
+
+  const handleClickCreateNewStoryTaskButton = async () => {
+    try {
+      await restClient.apiPost<StoryTask>('/story-tasks', {
+        title,
+        storyId,
+      });
+
+      mutateStoryTasks();
+
+      notifySuccessMessage('タスクの作成に成功しました!');
+
+      setTitle('');
+
+      handleCloseModal();
+    } catch (error) {
+      notifyErrorMessage('タスクの作成に失敗しました!');
+    }
+  };
+
+  return (
+    <Component
+      isOpen={!!isOpenCreateNewStoryTaskModal}
+      title={title}
+      onClickCreateNewStoryTaskButton={handleClickCreateNewStoryTaskButton}
+      isDisabled={isDisabled}
+      onChangeTitle={setTitle}
+      onCloseModal={handleCloseModal}
+    />
+  );
 };
