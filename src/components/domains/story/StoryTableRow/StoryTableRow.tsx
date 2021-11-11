@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent, VFC } from 'react';
+import React, { useState, MouseEvent, VFC, useCallback } from 'react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { TableCell, TableRow } from '@mui/material';
@@ -6,7 +6,7 @@ import { Box, styled } from '@mui/system';
 
 import { Icon, Emoji, IconButton, Menu } from '~/components/parts/commons';
 
-import { DATE_FORMAT } from '~/constants';
+import { DATE_FORMAT, COLORS, URLS } from '~/constants';
 
 import { Story } from '~/domains';
 
@@ -31,9 +31,9 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
   const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { mutate: mutateStoryForDelete } = useStoryForDelete();
 
-  const handleClickRow = (storyId: string) => {
-    router.push(`/story/${storyId}`);
-  };
+  const handleClickRow = useCallback(() => {
+    router.push(URLS.TEAMS_DASHBOARD_STORY(story.teamId, story._id));
+  }, []);
 
   const handleClickMenu = (event: MouseEvent<HTMLElement>, story: Story) => {
     event.stopPropagation();
@@ -66,14 +66,14 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
       onClick: handleClickUpdate,
     },
     {
-      icon: <Icon icon="Delete" width="20px" color="textColor.main" />,
+      icon: <Icon icon="Delete" width="20px" color={COLORS.ERROR} />,
       text: '削除する',
       onClick: handleClickDelete,
     },
   ];
 
   return (
-    <StyledTableRow hover onClick={() => handleClickRow(story._id)}>
+    <StyledTableRow hover onClick={handleClickRow}>
       <StyledBodyTableCell component="th" scope="row">
         <Box display="flex" alignItems="center" gap="8px">
           <Emoji emojiId={story.emojiId} size={20} />

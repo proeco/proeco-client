@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { Component } from './NotFound';
 
 export default {
-  title: 'parts/layout/organisms/NotFound',
+  title: 'parts/layout/NotFound',
   component: Component,
 } as ComponentMeta<typeof Component>;
 

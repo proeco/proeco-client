@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { Stepper } from './Stepper';
 
 export default {
-  title: 'parts/commons/organisms/Stepper',
+  title: 'parts/commons/Stepper',
   component: Stepper,
 } as ComponentMeta<typeof Stepper>;
 

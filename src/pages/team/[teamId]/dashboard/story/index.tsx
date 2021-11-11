@@ -1,27 +1,27 @@
-import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ReactNode, useState } from 'react';
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { Button, Pagination, Typography, Icon } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useStories } from '~/stores/story';
+import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
 
 const limit = 10;
 
-const StoryList: NextPage = () => {
+const StoryList: ProecoNextPage = () => {
   const router = useRouter();
+  const { teamId } = router.query;
 
   const [page, setPage] = useState(1);
-  const { data: currentUser } = useCurrentUser();
   const { data: stories } = useStories({
-    userId: currentUser?._id,
+    teamId: teamId as string,
     page,
     limit,
   });
@@ -51,7 +51,7 @@ const StoryList: NextPage = () => {
             ストーリーを追加する
           </Button>
         </Box>
-        <StoryListTable page={page} limit={limit} />
+        <StoryListTable page={page} limit={limit} teamId={teamId as string} />
         <StyledPagination count={count} page={page} onChange={handleChangePage} />
       </Box>
     </>
@@ -64,5 +64,8 @@ const StyledPagination = styled(Pagination)`
   align-items: center;
   justify-content: center;
 `;
+
+const getLayout = (page: ReactNode) => <TeamDashboardLayout>{page}</TeamDashboardLayout>;
+StoryList.getLayout = getLayout;
 
 export default StoryList;

@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { Divider, Typography, Card } from '~/components/parts/commons';
 
 export default {
-  title: 'parts/commons/atoms/Divider',
+  title: 'parts/commons/Divider',
   component: Divider,
 } as ComponentMeta<typeof Divider>;
 

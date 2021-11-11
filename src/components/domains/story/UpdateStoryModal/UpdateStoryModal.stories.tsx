@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 import { Component } from './UpdateStoryModal';
 
 export default {
-  title: 'domains/story/organisms/UpdateStoryModal',
+  title: 'domains/story/UpdateStoryModal',
   component: Component,
   argTypes: {
     onChangeStoryForm: { action: 'onChangeStoryForm' },

@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import { Typography, Card } from '~/components/parts/commons';
 
 export default {
-  title: 'parts/commons/atoms/Card',
+  title: 'parts/commons/Card',
   component: Card,
 } as ComponentMeta<typeof Card>;
 

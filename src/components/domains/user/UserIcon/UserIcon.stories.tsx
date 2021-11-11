@@ -6,15 +6,15 @@ import { UserIcon } from './UserIcon';
 import { createMockUser } from '~/mock/createMockUser';
 
 export default {
-  title: 'domains/user/atoms/UserIcon',
+  title: 'domains/user/UserIcon',
   component: UserIcon,
 } as ComponentMeta<typeof UserIcon>;
 
 const Template: ComponentStory<typeof UserIcon> = ({ ...rest }) => (
   <Box width="300px" bgcolor="gray" p={4} display="flex" alignItems="center" justifyContent="space-around">
-    <UserIcon {...rest} size="small" />
-    <UserIcon {...rest} size="medium" />
-    <UserIcon {...rest} size="large" />
+    <UserIcon {...rest} size={40} />
+    <UserIcon {...rest} size={60} />
+    <UserIcon {...rest} size={80} />
   </Box>
 );
 
