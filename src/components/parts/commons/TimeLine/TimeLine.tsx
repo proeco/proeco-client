@@ -5,7 +5,7 @@ import { TimeLineItem, Icon } from '~/components/parts/commons';
 type Props = {
   timeLineItems: {
     title: string;
-    imagePath: string;
+    imagePath?: string;
     children: React.ReactNode;
     actions: {
       icon: ComponentProps<typeof Icon>['icon'];

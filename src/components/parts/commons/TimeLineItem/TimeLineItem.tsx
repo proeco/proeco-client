@@ -6,7 +6,7 @@ import { Paper, Typography, SpeedDial, Icon } from '~/components/parts/commons';
 
 type TimeLineItemType = {
   title: string;
-  imagePath: string;
+  imagePath?: string;
   children: React.ReactNode;
   actions: {
     icon: ComponentProps<typeof Icon>['icon'];
