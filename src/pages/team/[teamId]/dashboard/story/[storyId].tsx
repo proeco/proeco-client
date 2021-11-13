@@ -58,7 +58,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           title: storyTask.title,
           imagePath: currentTeam?.iconImage,
           name: currentTeam?.name,
+          // TODO: Childrenの中身を作成する
           children: <Box width="500px" height="250px"></Box>,
+          // TODO: DeleteStoryTaskModalを作成する
           actions: [
             {
               icon: 'Delete',
@@ -139,9 +141,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         <Button variant="contained" onClick={handleClickCreateStoryTaskButton}>
           タスクを作成する
         </Button>
-        <Box>
-          <TimeLine timeLineItems={timeLineItems} />
-        </Box>
+        <TimeLine timeLineItems={timeLineItems} />
       </Box>
     </>
   );
