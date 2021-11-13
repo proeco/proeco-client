@@ -21,8 +21,8 @@ const Template: ComponentStory<typeof TimeLineItem> = ({ ...rest }) => {
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
+export const DefaultTimeLineItem = Template.bind({});
+DefaultTimeLineItem.args = {
   title: 'TimeLineItemのtitle',
   imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
   actions: [
@@ -37,4 +37,11 @@ Default.args = {
       onClick: action('clickUpdateButton'),
     },
   ],
+};
+
+export const TimeLineItemWithoutImage = Template.bind({});
+TimeLineItemWithoutImage.args = {
+  ...DefaultTimeLineItem.args,
+  imagePath: undefined,
+  name: 'Proeco',
 };

@@ -57,17 +57,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         return {
           title: storyTask.title,
           imagePath: currentTeam?.iconImage,
+          name: currentTeam?.name,
           children: <Box width="500px" height="250px"></Box>,
           actions: [
             {
               icon: 'Delete',
               name: '削除',
               onClick: () => console.log('削除'),
-            },
-            {
-              icon: 'Update',
-              name: '更新',
-              onClick: () => console.log('更新'),
             },
           ],
         };
@@ -143,7 +139,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         <Button variant="contained" onClick={handleClickCreateStoryTaskButton}>
           タスクを作成する
         </Button>
-        <Box>{<TimeLine timeLineItems={timeLineItems} />}</Box>
+        <Box>
+          <TimeLine timeLineItems={timeLineItems} />
+        </Box>
       </Box>
     </>
   );

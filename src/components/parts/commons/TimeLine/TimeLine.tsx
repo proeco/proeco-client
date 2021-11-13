@@ -6,6 +6,7 @@ type Props = {
   timeLineItems: {
     title: string;
     imagePath?: string;
+    name?: string;
     children: React.ReactNode;
     actions: {
       icon: ComponentProps<typeof Icon>['icon'];
@@ -19,7 +20,7 @@ export const TimeLine: VFC<Props> = ({ timeLineItems }) => {
   return (
     <Timeline>
       {timeLineItems.map((item, i) => (
-        <TimeLineItem key={i} title={item.title} imagePath={item.imagePath} actions={item.actions}>
+        <TimeLineItem key={i} title={item.title} imagePath={item.imagePath} name={item.name} actions={item.actions}>
           {item.children}
         </TimeLineItem>
       ))}

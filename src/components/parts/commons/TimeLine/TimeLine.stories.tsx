@@ -19,8 +19,8 @@ const Template: ComponentStory<typeof TimeLine> = ({ ...rest }) => {
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
+export const DefaultTimeLine = Template.bind({});
+DefaultTimeLine.args = {
   timeLineItems: [
     {
       title: 'TimeLineItem１',
@@ -59,6 +59,63 @@ Default.args = {
     {
       title: 'TimeLineItem３',
       imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
+      children: <Box width="500px" height="250px"></Box>,
+      actions: [
+        {
+          icon: 'Delete',
+          name: '削除',
+          onClick: action('clickDeleteButton'),
+        },
+        {
+          icon: 'Update',
+          name: '更新',
+          onClick: action('clickUpdateButton'),
+        },
+      ],
+    },
+  ],
+};
+
+export const TimeLineWithoutImage = Template.bind({});
+TimeLineWithoutImage.args = {
+  timeLineItems: [
+    {
+      title: 'TimeLineItem１',
+      name: 'Proeco',
+      children: <Box width="500px" height="250px"></Box>,
+      actions: [
+        {
+          icon: 'Delete',
+          name: '削除',
+          onClick: action('clickDeleteButton'),
+        },
+        {
+          icon: 'Update',
+          name: '更新',
+          onClick: action('clickUpdateButton'),
+        },
+      ],
+    },
+    {
+      title: 'TimeLineItem２',
+      name: 'Proeco',
+      children: <Box width="500px" height="250px"></Box>,
+      actions: [
+        {
+          icon: 'Delete',
+          name: '削除',
+          onClick: action('clickDeleteButton'),
+        },
+        {
+          icon: 'Update',
+          name: '更新',
+          onClick: action('clickUpdateButton'),
+        },
+      ],
+    },
+    {
+      title: 'TimeLineItem３',
+      name: 'Proeco',
       children: <Box width="500px" height="250px"></Box>,
       actions: [
         {
