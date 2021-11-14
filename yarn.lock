@@ -2222,7 +2222,7 @@
   resolved "https://registry.yarnpkg.com/@napi-rs/triples/-/triples-1.0.3.tgz#76d6d0c3f4d16013c61e45dfca5ff1e6c31ae53c"
   integrity sha512-jDJTpta+P4p1NZTFVLHJ/TLFVYVcOqv6l8xwOeBKNPMgY/zDYH/YH7SJbvrr/h1RcS9GzbPcLKGzpuK9cV56UA==
 
-"@next-auth/mongodb-adapter@^0.0.2-next.285":
+"@next-auth/mongodb-adapter@0.0.2-next.285":
   version "0.0.2-next.285"
   resolved "https://registry.yarnpkg.com/@next-auth/mongodb-adapter/-/mongodb-adapter-0.0.2-next.285.tgz#67f123404f9dc794f4d8f8d66211eeae7de8274d"
   integrity sha512-pcPezsPwoRCBpTVhackQJUTqGsCtWZUcdL+KWkHKxbb7LVudEwNiHbJG1iyWrUGxNABMv9xVKDEf3PDsZyF30Q==
@@ -10878,7 +10878,7 @@ mongodb-connection-string-url@^2.1.0:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^9.1.0"
 
-mongodb@*, mongodb@^4.1.4:
+mongodb@*, mongodb@4.1.4:
   version "4.1.4"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.1.4.tgz#ba8062c7c67e7a22db5a059dbac1e3044b48453b"
   integrity sha512-Cv/sk8on/tpvvqbEvR1h03mdyNdyvvO+WhtFlL4jrZ+DSsN/oSQHVqmJQI/sBCqqbOArFcYCAYDfyzqFwV4GSQ==
@@ -11017,7 +11017,7 @@ next-auth@*:
     preact-render-to-string "^5.1.14"
     querystring "^0.2.0"
 
-next-auth@^4.0.0-beta.6:
+next-auth@4.0.0-beta.6:
   version "4.0.0-beta.6"
   resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.0.0-beta.6.tgz#bc9733f8a5981966c2b7ee09245468faee9ce70f"
   integrity sha512-g2X0c2RGPt9xjEiGqR5g0Csth37F9+cVmoNWa0ek6j1OYP2M4P3ZQmJqCQBq+9486pMmMn/awQYr5bhcVOIMgg==
@@ -11224,7 +11224,7 @@ nodemailer@^6.4.16:
   resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.7.0.tgz#86614722c4e0c33d1b5b02aecb90d6d629932b0d"
   integrity sha512-AtiTVUFHLiiDnMQ43zi0YgkzHOEWUkhDgPlBXrsDzJiJvB29Alo4OKxHQ0ugF3gRqRQIneCLtZU3yiUo7pItZw==
 
-nookies@^2.5.2:
+nookies@2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/nookies/-/nookies-2.5.2.tgz#cc55547efa982d013a21475bd0db0c02c1b35b27"
   integrity sha512-x0TRSaosAEonNKyCrShoUaJ5rrT5KHRNZ5DwPCuizjgrnkpE5DRf3VL7AyyQin4htict92X1EQ7ejDbaHDVdYA==
