@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { signIn, signOut } from 'next-auth/client';
+import { signIn, signOut } from 'next-auth/react';
 import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
 import { AppBar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -63,7 +63,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
 
   return (
     <>
-      <StyledAppBar position="static">
+      <StyledAppBar position="sticky">
         <Link href="/">
           <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
         </Link>
@@ -75,7 +75,9 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
 });
 
 const StyledAppBar = styled(AppBar)`
-  position: relative;
+  position: sticky;
+  top: 0px;
+  z-index: 1300;
   background-color: ${(props) => props.theme.palette.primary.main};
   padding: 12px 20px;
   align-items: center;

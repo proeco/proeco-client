@@ -1,6 +1,5 @@
+import { parseCookies } from 'nookies';
 import axiosBase, { AxiosInstance, AxiosResponse } from 'axios';
-import { Session } from 'next-auth';
-import { getSession } from 'next-auth/client';
 import { apiErrorHandler } from './apiErrorHandler';
 
 class RestClient {
@@ -18,18 +17,14 @@ class RestClient {
     });
   }
 
-  async getAccessToken() {
-    if (this.accessToken == null) {
-      const session: Session | null = await getSession({});
-      if (session != null) {
-        this.accessToken = session.accessToken as string;
-      }
-    }
-    return this.accessToken;
+  getAccessToken() {
+    const cookies = parseCookies();
+
+    return cookies['next-auth-access-token'];
   }
 
   async apiGet(url: string, query = {}): Promise<AxiosResponse> {
-    const accessToken = await this.getAccessToken();
+    const accessToken = this.getAccessToken();
     try {
       return await this.axios.get(`/api/v1${url}`, { ...query, headers: { Authorization: `Bearer ${accessToken}` } });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +34,7 @@ class RestClient {
   }
 
   async apiPost<T>(url: string, body = {}): Promise<AxiosResponse<T>> {
-    const accessToken = await this.getAccessToken();
+    const accessToken = this.getAccessToken();
     try {
       return await this.axios.post(`/api/v1${url}`, body, { headers: { Authorization: `Bearer ${accessToken}` } });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,7 +44,7 @@ class RestClient {
   }
 
   async apiPut<T>(url: string, body = {}): Promise<AxiosResponse<T>> {
-    const accessToken = await this.getAccessToken();
+    const accessToken = this.getAccessToken();
     try {
       return await this.axios.put(`/api/v1${url}`, body, { headers: { Authorization: `Bearer ${accessToken}` } });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,7 +54,7 @@ class RestClient {
   }
 
   async apiDelete<T>(url: string, body = {}): Promise<AxiosResponse<T>> {
-    const accessToken = await this.getAccessToken();
+    const accessToken = this.getAccessToken();
     try {
       return await this.axios.delete(`/api/v1${url}`, { headers: { Authorization: `Bearer ${accessToken}` }, data: body });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

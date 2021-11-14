@@ -11,14 +11,15 @@ import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryMo
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
 
-import { Icon, Typography } from '~/components/parts/commons';
+import { Button, Icon, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
 import { Menu } from '~/components/parts/commons/Menu';
 import { IconButton } from '~/components/parts/commons/IconButton';
-import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
+import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
+import { useIsOpenCreateNewStoryTaskModal } from '~/stores/modal/useIsOpenCreateNewStoryTaskModal';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -27,21 +28,19 @@ type Props = {
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
 
-  const { id } = router.query;
-  const { data: story } = useStory(id as string, storyFromServerSide);
+  const { storyId } = router.query;
+  const { data: story } = useStory(storyId as string, storyFromServerSide);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
-  if (!story) {
-    return null;
-  }
 
   const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
 
   const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { mutate: mutateStoryForDelete } = useStoryForDelete();
+
+  const { mutate: mutateIsOpenCreateNewStoryTaskModal } = useIsOpenCreateNewStoryTaskModal();
 
   const handleClickMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -65,6 +64,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     mutateStoryForDelete(story);
   };
 
+  const handleClickCreateStoryTaskButton = () => {
+    mutateIsOpenCreateNewStoryTaskModal(true);
+  };
+
   const menuItems = [
     {
       icon: <Icon icon="Update" width="20px" color="textColor.main" />,
@@ -78,6 +81,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     },
   ];
 
+  if (!story) {
+    return null;
+  }
+
   return (
     <>
       <ProecoOgpHead />
@@ -90,6 +97,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </Box>
         <Typography variant="h4">{story.description}</Typography>
+        <Button variant="contained" onClick={handleClickCreateStoryTaskButton}>
+          タスクを作成する
+        </Button>
       </Box>
     </>
   );
@@ -106,7 +116,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>;
+const getLayout = (page: ReactNode) => <TeamDashboardLayout>{page}</TeamDashboardLayout>;
 StoryPage.getLayout = getLayout;
 
 export default StoryPage;

@@ -54,6 +54,10 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Typography>
         </Box>
         <Paper square>
+          <form action={`${process.env.NEXT_PUBLIC_BACKEND_URL_FROM_CLIENT}/api/v1/files`} method="post" encType="multipart/form-data">
+            <input type="file" name="image" />
+            <input type="submit" value="送信" />
+          </form>
           <Typography mb="4px" variant="body1" color="textColor.light">
             名前
           </Typography>

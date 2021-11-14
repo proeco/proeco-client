@@ -12,6 +12,8 @@ import {
   PersonOutline,
   Settings,
   Update,
+  ChevronLeft,
+  ChevronRight,
 } from '@mui/icons-material';
 import { Box, styled } from '@mui/system';
 
@@ -28,6 +30,8 @@ export const IconMap = {
   PersonOutline: <PersonOutline />,
   Settings: <Settings />,
   Update: <Update />,
+  ChevronLeft: <ChevronLeft />,
+  ChevronRight: <ChevronRight />,
 };
 
 type IconType = {

@@ -2,14 +2,14 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { Component } from './CreateNewStoryModal';
+import { Component } from './CreateNewStoryTaskModal';
 
 export default {
-  title: 'domains/story/CreateNewStoryModal',
+  title: 'domains/storyTask/CreateNewStoryTaskModal',
   component: Component,
   argTypes: {
-    onChangeStoryForm: { action: 'onChangeStoryForm' },
-    onClickCreateNewStoryButton: { action: 'onClickCreateNewStoryButton' },
+    onChangeTitle: { action: 'onChangeStoryTitle' },
+    onClickCreateNewStoryTaskButton: { action: 'onClickCreateNewStoryTaskButton' },
     onCloseModal: { action: 'onCloseModal' },
   },
 } as ComponentMeta<typeof Component>;
@@ -26,7 +26,5 @@ export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
   title: 'ここにタイトル',
-  description: '説明',
-  emojiId: 'tada',
   isDisabled: false,
 };
