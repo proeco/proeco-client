@@ -42,6 +42,8 @@ export const TimeLineItem: VFC<Props> = ({ title, imagePath, name = '', children
 
 const StyledDiv = styled('div')`
   .MuiTimelineItem-root {
+    width: fit-content;
+    margin: 0 auto;
     &::before {
       flex: unset;
       padding: 0;

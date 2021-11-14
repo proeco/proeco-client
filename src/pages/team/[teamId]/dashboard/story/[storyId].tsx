@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent, ReactNode, ComponentProps } from 'react';
+import React, { useState, MouseEvent, ReactNode, ComponentProps, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
@@ -21,7 +21,7 @@ import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
 import { useIsOpenCreateNewStoryTaskModal } from '~/stores/modal/useIsOpenCreateNewStoryTaskModal';
 import { useStoryTasks } from '~/stores/storyTask';
-import { useTeam } from '~/stores/team';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -30,11 +30,9 @@ type Props = {
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
 
-  const { teamId, storyId } = router.query;
+  const { storyId } = router.query;
   const { data: story } = useStory(storyId as string, storyFromServerSide);
-  const { data: currentTeam } = useTeam({
-    teamId: teamId as string,
-  });
+  const { data: currentUser } = useCurrentUser();
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { data: storyTasks } = useStoryTasks({
@@ -46,31 +44,35 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const timeLineItems: {
     title: string;
     imagePath?: string;
+    name?: string;
     children: ReactNode;
     actions: {
       icon: ComponentProps<typeof Icon>['icon'];
       name: string;
       onClick: () => void;
     }[];
-  }[] = storyTasks
-    ? storyTasks.docs.map((storyTask) => {
-        return {
-          title: storyTask.title,
-          imagePath: currentTeam?.iconImage,
-          name: currentTeam?.name,
-          // TODO: Childrenの中身を作成する
-          children: <Box width="500px" height="250px"></Box>,
-          // TODO: DeleteStoryTaskModalを作成する
-          actions: [
-            {
-              icon: 'Delete',
-              name: '削除',
-              onClick: () => console.log('削除'),
-            },
-          ],
-        };
-      })
-    : [];
+  }[] = useMemo(() => {
+    if (!storyTasks) {
+      return [];
+    }
+    return storyTasks.docs.map((storyTask) => {
+      return {
+        title: storyTask.title,
+        imagePath: currentUser?.image,
+        name: currentUser?.name,
+        // TODO: Childrenの中身を作成する
+        children: <Box width="500px" height="250px"></Box>,
+        // TODO: DeleteStoryTaskModalを作成する
+        actions: [
+          {
+            icon: 'Delete',
+            name: '削除',
+            onClick: () => console.log('削除'),
+          },
+        ],
+      };
+    });
+  }, [storyTasks, currentUser]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -138,10 +140,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </Box>
         <Typography variant="h4">{story.description}</Typography>
+        <TimeLine timeLineItems={timeLineItems} />
         <Button variant="contained" onClick={handleClickCreateStoryTaskButton}>
           タスクを作成する
         </Button>
-        <TimeLine timeLineItems={timeLineItems} />
       </Box>
     </>
   );
