@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 
 import { Team } from '~/domains';
@@ -18,6 +18,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
   const router = useRouter();
 
   const [isCreating, setIsCreating] = useState(false);
+  const [image, setImage] = useState<File>();
   const [team, setTeam] = useState<Pick<Team, 'name' | 'description'>>({
     name: '',
     description: '',
@@ -26,6 +27,13 @@ const DashboardTeamPage: ProecoNextPage = () => {
   const handleClickCreateNewTeam = async () => {
     setIsCreating(true);
     try {
+      if (image) {
+        const params = new FormData();
+        params.append('file', image);
+
+        await restClient.apiPost('/files', params, { 'Content-Type': 'multipart/form-data' });
+      }
+
       await restClient.apiPost('/teams', { team: team });
       notifySuccessMessage('チームを作成しました');
       router.push('/dashboard/teams');
@@ -44,6 +52,14 @@ const DashboardTeamPage: ProecoNextPage = () => {
     });
   };
 
+  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    setImage(e.target.files[0]);
+  };
+
   return (
     <>
       <ProecoOgpHead />
@@ -54,10 +70,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Typography>
         </Box>
         <Paper square>
-          <form action={`${process.env.NEXT_PUBLIC_BACKEND_URL_FROM_CLIENT}/api/v1/files`} method="post" encType="multipart/form-data">
-            <input type="file" name="image" />
-            <input type="submit" value="送信" />
-          </form>
+          <input type="file" name="image" onChange={handleChangeFile} accept="image/*" />
           <Typography mb="4px" variant="body1" color="textColor.light">
             名前
           </Typography>
