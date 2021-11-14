@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
-import { Provider } from 'next-auth/client';
+import { SessionProvider } from 'next-auth/react';
 import { SnackbarProvider } from 'notistack';
 import { GlobalStyles } from '@mui/material';
 import { Session } from 'next-auth';
+import { ReactNode } from 'react';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 
 import 'modern-css-reset/dist/reset.min.css';
@@ -32,11 +32,11 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
   return (
     <MaterialThemeProvider theme={theme}>
       <SnackbarProvider>
-        <Provider options={{ clientMaxAge: 0, keepAlive: 0 }} session={pageProps.session}>
+        <SessionProvider session={pageProps.session}>
           {inputGlobalStyles}
           <NavigationBar />
           {getLayout(<Component {...pageProps} />)}
-        </Provider>
+        </SessionProvider>
       </SnackbarProvider>
     </MaterialThemeProvider>
   );

@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots parts/commons/Typography Default Typography 1`] = `
+<div
+  className="MuiBox-root css-1v8my8o"
+>
+  <h1
+    bold={0}
+    className="MuiTypography-root MuiTypography-h1 css-h2n376-MuiTypography-root"
+  >
+    h1: 48px
+  </h1>
+  <h2
+    bold={0}
+    className="MuiTypography-root MuiTypography-h2 css-1c2ajmr-MuiTypography-root"
+  >
+    h2: 32px
+  </h2>
+  <h3
+    bold={0}
+    className="MuiTypography-root MuiTypography-h3 css-131ayj9-MuiTypography-root"
+  >
+    h3: 24px
+  </h3>
+  <h4
+    bold={0}
+    className="MuiTypography-root MuiTypography-h4 css-8gca48-MuiTypography-root"
+  >
+    h4: 20px
+  </h4>
+  <p
+    bold={0}
+    className="MuiTypography-root MuiTypography-body1 css-61ooy4-MuiTypography-root"
+  >
+    body1: 16px
+  </p>
+  <p
+    bold={0}
+    className="MuiTypography-root MuiTypography-body2 css-uziypf-MuiTypography-root"
+  >
+    body2: 14px
+  </p>
+  <span
+    bold={0}
+    className="MuiTypography-root MuiTypography-button css-nt9eod-MuiTypography-root"
+  >
+    button: 14px
+  </span>
+  <span
+    bold={0}
+    className="MuiTypography-root MuiTypography-caption css-1i7dtab-MuiTypography-root"
+  >
+    caption: 12px
+  </span>
+  <span
+    bold={0}
+    className="MuiTypography-root MuiTypography-overline css-ych3qs-MuiTypography-root"
+  >
+    overline: 10px
+  </span>
+</div>
+`;
+
+exports[`Storyshots parts/commons/Typography Long Text Typography 1`] = `
+<div
+  className="MuiBox-root css-1jixria"
+>
+  <h3
+    bold={0}
+    className="MuiTypography-root MuiTypography-h3 css-1no7jgx-MuiTypography-root"
+    maximum_lines={2}
+  >
+    Proeco は、個人開発やチーム開発を応援するWEBアプリケーションです！
+  </h3>
+</div>
+`;

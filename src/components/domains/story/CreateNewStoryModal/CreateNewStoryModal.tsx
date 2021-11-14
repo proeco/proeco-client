@@ -14,6 +14,7 @@ import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewS
 import { useStories } from '~/stores/story';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { URLS } from '~/constants';
 
 type Props = {
   isOpen: boolean;
@@ -108,7 +109,7 @@ export const CreateNewStoryModal: VFC = () => {
       });
 
       // 作成後に作成したstoryの詳細ページに遷移する
-      router.push(`/story/${data._id}`);
+      router.push(URLS.TEAMS_DASHBOARD_STORY(teamId as string, data._id));
       handleCloseModal();
     } catch (error) {
       notifyErrorMessage('ストーリーの作成に失敗しました!');
