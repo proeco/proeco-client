@@ -110,6 +110,14 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
       ...closedMixin(props.theme),
       '& .MuiDrawer-paper': closedMixin(props.theme),
     }}
+
+  /*
+   * モバイルではサイドバーを表示しない
+   * TODO: Mixin を実装する
+   */
+  @media (max-width: 425px) {
+    display: none;
+  }
 `;
 
 const StyledSideBarWrapper = styled(Box)`
