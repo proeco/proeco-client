@@ -146,17 +146,18 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         <Paper>
           <Typography variant="h4">{story.description}</Typography>
         </Paper>
-        <Box my={4} />
-        <TimeLine timeLineItems={timeLineItems} />
-        <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
-          <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} />
-          <StyledBoxWrapper width="100%">
-            <StyledBox p={5}>
-              <Button variant="text" onClick={handleClickCreateStoryTaskButton}>
-                タスクを作成する
-              </Button>
-            </StyledBox>
-          </StyledBoxWrapper>
+        <Box my={4} maxWidth="600px" mx="auto">
+          <TimeLine timeLineItems={timeLineItems} />
+          <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
+            <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} />
+            <StyledBoxWrapper width="100%">
+              <StyledBox p={5}>
+                <Button variant="text" onClick={handleClickCreateStoryTaskButton}>
+                  タスクを作成する
+                </Button>
+              </StyledBox>
+            </StyledBoxWrapper>
+          </Box>
         </Box>
       </Box>
     </>
