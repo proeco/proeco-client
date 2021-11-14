@@ -43,5 +43,5 @@ export const TimeLineItemWithoutImage = Template.bind({});
 TimeLineItemWithoutImage.args = {
   ...DefaultTimeLineItem.args,
   imagePath: undefined,
-  name: 'Proeco',
+  name: 'User',
 };
