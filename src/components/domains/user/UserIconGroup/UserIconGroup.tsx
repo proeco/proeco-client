@@ -15,7 +15,7 @@ export const UserIconGroup: VFC<Props> = ({ users, maxCount = 3, isLink = false 
   return (
     <AvatarGroup max={maxCount}>
       {users.map((user) => {
-        return <UserIcon key={user._id} size={40} userId={user._id} imagePath={user.image} isLink={isLink} />;
+        return <UserIcon key={user._id} size={48} userId={user._id} imagePath={user.image} isLink={isLink} />;
       })}
     </AvatarGroup>
   );
