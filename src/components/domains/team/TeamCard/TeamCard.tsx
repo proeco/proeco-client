@@ -50,11 +50,13 @@ const StyledTeamCard = styled(Card)`
   position: relative;
   top: 0;
   transition: all 0.3s;
-  cursor: pointer;
-  &:hover {
+  ${(props) =>
+    props.onClick &&
+    `cursor: pointer;
+      &:hover {
     top: -4px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
+    }`}
 `;
 
 const StyledDescription = styled(Typography)`
