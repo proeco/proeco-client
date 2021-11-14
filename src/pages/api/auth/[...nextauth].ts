@@ -19,8 +19,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
     callbacks: {
       async jwt({ token, account }) {
-        if (account?.id_token) {
-          setCookie({ res }, 'next-auth-access-token', account.id_token as string, {
+        if (account?.access_token) {
+          setCookie({ res }, 'next-auth-access-token', account.access_token as string, {
             maxAge: 30 * 24 * 60 * 60,
             path: '/',
           });
