@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots parts/commons/Emoji Directory Emoji 1`] = `
+<div
+  className="MuiBox-root css-4e1wul"
+>
+  <div
+    className="MuiBox-root css-186alq0"
+  >
+    <span
+      aria-label="📂, open_file_folder"
+      className="emoji-mart-emoji"
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      title={null}
+    >
+      <span
+        style={
+          Object {
+            "backgroundImage": "url(https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png)",
+            "backgroundPosition": "46.42857142857143% 42.85714285714286%",
+            "backgroundSize": "5700% 5700%",
+            "display": "inline-block",
+            "height": 24,
+            "width": 24,
+          }
+        }
+      />
+    </span>
+  </div>
+  <div
+    className="MuiBox-root css-186alq0"
+  >
+    <span
+      aria-label="📂, open_file_folder"
+      className="emoji-mart-emoji"
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      title={null}
+    >
+      <span
+        style={
+          Object {
+            "backgroundImage": "url(https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png)",
+            "backgroundPosition": "46.42857142857143% 42.85714285714286%",
+            "backgroundSize": "5700% 5700%",
+            "display": "inline-block",
+            "height": 32,
+            "width": 32,
+          }
+        }
+      />
+    </span>
+  </div>
+  <div
+    className="MuiBox-root css-186alq0"
+  >
+    <span
+      aria-label="📂, open_file_folder"
+      className="emoji-mart-emoji"
+      onClick={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      title={null}
+    >
+      <span
+        style={
+          Object {
+            "backgroundImage": "url(https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png)",
+            "backgroundPosition": "46.42857142857143% 42.85714285714286%",
+            "backgroundSize": "5700% 5700%",
+            "display": "inline-block",
+            "height": 40,
+            "width": 40,
+          }
+        }
+      />
+    </span>
+  </div>
+</div>
+`;
