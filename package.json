@@ -53,7 +53,7 @@
     "@types/jest": "27.0.2",
     "@types/mongodb": "4.0.7",
     "@types/next-auth": "3.15.0",
-    "@types/node": "16.11.6",
+    "@types/node": "16.11.7",
     "@types/react": "17.0.34",
     "@types/react-beautiful-dnd": "13.1.2",
     "@types/react-copy-to-clipboard": "5.0.2",
