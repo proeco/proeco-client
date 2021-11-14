@@ -1,7 +1,7 @@
 import { VFC } from 'react';
+import { styled } from '@mui/material/styles';
 
 import { AvatarGroup } from '@mui/material';
-import { styled } from '@mui/system';
 import { User } from '~/domains';
 
 import { UserIcon } from '~/components/domains/user/UserIcon';
@@ -24,5 +24,6 @@ export const UserIconGroup: VFC<Props> = ({ users, maxCount = 3, isLink = false 
 
 const StyledAvatarGroup = styled(AvatarGroup)`
   /* デフォルトで右寄せになっているアイコンを左寄せにするため */
-  flex-direction: row;
+  display: flex;
+  justify-content: start;
 `;
