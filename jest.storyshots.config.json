@@ -1,8 +1,10 @@
-{
+
+
+ {
   "preset":"ts-jest",
-  "testEnvironment":"node",
+  "testEnvironment":"jsdom",
   "roots":[
-    "<rootDir>/src"
+    "<rootDir>"
   ],
   "testPathIgnorePatterns":[
     "<rootDir>/.next/",
@@ -30,5 +32,7 @@
   "moduleNameMapper": {
     "^~/(.*)$": "<rootDir>/src/$1"
   },
-  "testMatch": ["<rootDir>/src/utils/**/**.spec.ts"]
+  "name": "Storyshots",
+  "displayName": "storyshots",
+  "testMatch": ["<rootDir>/**/storyshots.spec.ts"]
 }
