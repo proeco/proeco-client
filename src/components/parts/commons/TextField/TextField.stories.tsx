@@ -18,8 +18,8 @@ Input.args = {
   defaultValue: 'これは、InputのdefaultValueです',
 };
 
-export const Textarea = Template.bind({});
-Textarea.args = {
-  multiline: true,
-  defaultValue: 'これは、TextareaのdefaultValueです',
-};
+// export const Textarea = Template.bind({});
+// Textarea.args = {
+//   multiline: true,
+//   defaultValue: 'これは、TextareaのdefaultValueです',
+// };
