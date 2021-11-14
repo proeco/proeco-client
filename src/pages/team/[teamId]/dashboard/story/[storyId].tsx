@@ -62,7 +62,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         imagePath: currentUser?.image,
         name: currentUser?.name,
         // TODO: Childrenの中身を作成する
-        children: <Box width="500px" height="250px"></Box>,
+        children: <Box minHeight="250px"></Box>,
         // TODO: DeleteStoryTaskModalを作成する
         actions: [
           {
