@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { signIn, signOut } from 'next-auth/client';
+import { signIn, signOut } from 'next-auth/react';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 

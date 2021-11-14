@@ -26,7 +26,7 @@ export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
   title: 'ここにタイトル',
-  description: 'ここに説明',
+  description: '説明',
   emojiId: 'tada',
   isDisabled: false,
 };

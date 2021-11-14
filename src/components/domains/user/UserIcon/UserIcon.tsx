@@ -3,18 +3,16 @@ import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Icon, Link } from '~/components/parts/commons';
 
-type IconSizes = 'small' | 'medium' | 'large';
-
 type UserIconType = {
   imagePath?: string;
   userId?: string;
   isLink?: boolean;
-  size: IconSizes;
+  size: number;
 };
 
 type Props = ComponentProps<typeof Avatar> & UserIconType;
 
-export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size = 'small', ...rest }) => {
+export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size = 40, ...rest }) => {
   if (!imagePath) {
     return (
       <StyledAvatar size={size} {...rest}>
@@ -32,14 +30,10 @@ export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = fal
   );
 });
 
-const sizeMap: { [key in IconSizes]: number } = {
-  small: 40,
-  medium: 60,
-  large: 80,
-};
-
-const StyledAvatar = styled(Avatar)<{ size: IconSizes }>`
+const StyledAvatar = styled(Avatar)<{ size: number }>`
   background-color: white;
-  width: ${(props) => sizeMap[props.size]}px;
-  height: ${(props) => sizeMap[props.size]}px;
+  border: 2px solid ${(props) => props.theme.palette.primary.main};
+  box-sizing: border-box;
+  width: ${(props) => props.size}px;
+  height: ${(props) => props.size}px;
 `;

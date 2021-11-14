@@ -1,29 +1,32 @@
-import { useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 
 import { Box } from '@mui/system';
 import { URLS } from '~/constants';
+import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { CircularProgress } from '~/components/parts/commons/CircularProgress';
 
 export const LoginRequiredWrapper: FC = ({ children }) => {
-  const [session, loading] = useSession();
+  const { status } = useSession();
   const router = useRouter();
+  const { notifyErrorMessage } = useErrorNotification();
 
   useEffect(() => {
-    if (!loading && session != null) {
+    if (status === 'unauthenticated') {
+      notifyErrorMessage('ログインが必要です');
       router.push(URLS.TOP);
     }
-  }, [loading, session]);
+  }, [status]);
 
-  if (typeof window !== 'undefined' && loading)
+  if (typeof window !== 'undefined' && status === 'loading')
     return (
       <Box textAlign="center" pt="40px">
         <CircularProgress />
       </Box>
     );
 
-  if (session == null) {
+  if (status === 'authenticated') {
     return <>{children}</>;
   }
 

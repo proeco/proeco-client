@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots parts/commons/EmojiRadioGroup Default 1`] = `
+<div
+  className="MuiBox-root css-1ruxp1v"
+>
+  <div
+    className="MuiBox-root css-120nera"
+  >
+    <div
+      className="MuiBox-root css-4rgiqd"
+      selected={true}
+    >
+      <div
+        className="MuiBox-root css-186alq0"
+        onClick={[Function]}
+      >
+        <span
+          aria-label="😭, sob"
+          className="emoji-mart-emoji"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          title={null}
+        >
+          <span
+            style={
+              Object {
+                "backgroundImage": "url(https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png)",
+                "backgroundPosition": "55.35714285714286% 41.07142857142858%",
+                "backgroundSize": "5700% 5700%",
+                "display": "inline-block",
+                "height": 24,
+                "width": 24,
+              }
+            }
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      className="MuiBox-root css-51pf4d"
+      selected={false}
+    >
+      <div
+        className="MuiBox-root css-186alq0"
+        onClick={[Function]}
+      >
+        <span
+          aria-label="😕, confused"
+          className="emoji-mart-emoji"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          title={null}
+        >
+          <span
+            style={
+              Object {
+                "backgroundImage": "url(https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png)",
+                "backgroundPosition": "53.57142857142858% 100%",
+                "backgroundSize": "5700% 5700%",
+                "display": "inline-block",
+                "height": 24,
+                "width": 24,
+              }
+            }
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      className="MuiBox-root css-51pf4d"
+      selected={false}
+    >
+      <div
+        className="MuiBox-root css-186alq0"
+        onClick={[Function]}
+      >
+        <span
+          aria-label="😀, grinning"
+          className="emoji-mart-emoji"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          title={null}
+        >
+          <span
+            style={
+              Object {
+                "backgroundImage": "url(https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png)",
+                "backgroundPosition": "53.57142857142858% 62.5%",
+                "backgroundSize": "5700% 5700%",
+                "display": "inline-block",
+                "height": 24,
+                "width": 24,
+              }
+            }
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      className="MuiBox-root css-51pf4d"
+      selected={false}
+    >
+      <div
+        className="MuiBox-root css-186alq0"
+        onClick={[Function]}
+      >
+        <span
+          aria-label="🤩, star-struck, grinning_face_with_star_eyes"
+          className="emoji-mart-emoji"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          title={null}
+        >
+          <span
+            style={
+              Object {
+                "backgroundImage": "url(https://unpkg.com/emoji-datasource-apple@5.0.1/img/apple/sheets-256/64.png)",
+                "backgroundPosition": "67.85714285714286% 76.78571428571429%",
+                "backgroundSize": "5700% 5700%",
+                "display": "inline-block",
+                "height": 24,
+                "width": 24,
+              }
+            }
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
