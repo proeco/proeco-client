@@ -32,9 +32,8 @@ export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = fal
 
 const StyledAvatar = styled(Avatar)<{ size: number }>`
   &.MuiAvatar-root {
-    background-color: ${(props) => props.theme.palette.primary.main};
+    background-color: white;
     border: 2px solid ${(props) => props.theme.palette.primary.main};
-    background-color: ${(props) => !props.src && 'white'};
     box-sizing: border-box;
     width: ${(props) => props.size}px;
     height: ${(props) => props.size}px;
