@@ -32,5 +32,6 @@ export const TimeLine: VFC<Props> = ({ timeLineItems }) => {
 const StyledTimeline = styled(Timeline)`
   &.MuiTimeline-root {
     padding: 0;
+    margin: 0;
   }
 `;
