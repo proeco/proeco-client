@@ -34,5 +34,5 @@
   },
   "name": "Storyshots",
   "displayName": "storyshots",
-  "testMatch": ["<rootDir>/.storybook/storyshots.spec.ts"]
+  "testMatch": ["<rootDir>/**/storyshots.spec.ts"]
 }
