@@ -51,7 +51,7 @@ const StyledDiv = styled('div')`
 `;
 
 const StyledTimeLineContent = styled(TimelineContent)`
-  padding: 0 8px 40px;
+  padding: 0 0px 40px 8px;
 `;
 
 const StyledTimeLineDot = styled(TimelineDot)`
