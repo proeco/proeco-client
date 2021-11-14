@@ -130,7 +130,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   return (
     <>
-      <ProecoOgpHead />
+      <ProecoOgpHead title={story.title} description={story.description} />
       <Box p={5} mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h2" bold>
