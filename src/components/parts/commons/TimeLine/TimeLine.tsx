@@ -1,5 +1,6 @@
 import React, { ComponentProps, VFC } from 'react';
 import { Timeline } from '@mui/lab';
+import { styled } from '@mui/system';
 import { TimeLineItem, Icon } from '~/components/parts/commons';
 
 type Props = {
@@ -18,12 +19,18 @@ type Props = {
 
 export const TimeLine: VFC<Props> = ({ timeLineItems }) => {
   return (
-    <Timeline>
+    <StyledTimeline>
       {timeLineItems.map((item, i) => (
         <TimeLineItem key={i} title={item.title} imagePath={item.imagePath} name={item.name} actions={item.actions}>
           {item.children}
         </TimeLineItem>
       ))}
-    </Timeline>
+    </StyledTimeline>
   );
 };
+
+const StyledTimeline = styled(Timeline)`
+  &.MuiTimeline-root {
+    padding: 0;
+  }
+`;
