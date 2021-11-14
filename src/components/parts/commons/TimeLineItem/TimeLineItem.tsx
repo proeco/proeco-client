@@ -27,7 +27,7 @@ export const TimeLineItem: VFC<Props> = ({ title, imagePath, name = '', children
           <StyledTimeLineConnector />
         </TimelineSeparator>
         <StyledTimeLineContent>
-          <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" height="40px">
+          <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" width="100%" height="40px">
             <Typography variant="h4" bold>
               {title}
             </Typography>
@@ -53,8 +53,7 @@ const StyledDiv = styled('div')`
 
 const StyledTimeLineContent = styled(TimelineContent)`
   max-width: fit-content;
-  padding: 8px;
-  padding-top: 0;
+  padding: 0 8px 40px;
 `;
 
 const StyledTimeLineDot = styled(TimelineDot)`
