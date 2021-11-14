@@ -11,7 +11,7 @@ import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryMo
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
 
-import { Button, Icon, TimeLine, Typography } from '~/components/parts/commons';
+import { Button, Emoji, Icon, Paper, TimeLine, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
 import { Menu } from '~/components/parts/commons/Menu';
@@ -130,16 +130,21 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   return (
     <>
-      <ProecoOgpHead />
+      <ProecoOgpHead title={story.title} description={story.description} />
       <Box p={5} mx="auto" maxWidth="1200px">
-        <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h2" bold>
-            {story.title}
-          </Typography>
+        <Box mb={4} display="flex" alignItems="center" justifyContent="space-between">
+          <Box display="flex" alignItems="center" gap="16px">
+            <Emoji emojiId={story.emojiId} size={40} />
+            <Typography variant="h2" bold>
+              {story.title}
+            </Typography>
+          </Box>
           <IconButton icon="MoreVert" width={24} onClick={(e) => handleClickMenu(e)} />
           <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </Box>
-        <Typography variant="h4">{story.description}</Typography>
+        <Paper>
+          <Typography variant="h4">{story.description}</Typography>
+        </Paper>
         <TimeLine timeLineItems={timeLineItems} />
         <Button variant="contained" onClick={handleClickCreateStoryTaskButton}>
           タスクを作成する
