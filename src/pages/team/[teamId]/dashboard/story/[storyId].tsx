@@ -2,7 +2,7 @@ import React, { useState, MouseEvent, ReactNode, ComponentProps, useMemo } from 
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
@@ -16,6 +16,7 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
 import { Menu } from '~/components/parts/commons/Menu';
 import { IconButton } from '~/components/parts/commons/IconButton';
+import { UserIcon } from '~/components/domains/user/UserIcon';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
@@ -145,14 +146,33 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         <Paper>
           <Typography variant="h4">{story.description}</Typography>
         </Paper>
+        <Box my={4} />
         <TimeLine timeLineItems={timeLineItems} />
-        <Button variant="contained" onClick={handleClickCreateStoryTaskButton}>
-          タスクを作成する
-        </Button>
+        <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
+          <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} />
+          <StyledBoxWrapper width="100%">
+            <StyledBox p={5}>
+              <Button variant="text" onClick={handleClickCreateStoryTaskButton}>
+                タスクを作成する
+              </Button>
+            </StyledBox>
+          </StyledBoxWrapper>
+        </Box>
       </Box>
     </>
   );
 };
+
+const StyledBoxWrapper = styled(Box)`
+  filter: drop-shadow(1px 1px 10px rgb(0 0 0 / 25%));
+`;
+
+const StyledBox = styled(Box)`
+  background: white;
+  clip-path: polygon(5px 15px, 5px 0, 100% 0, 100% 100%, 5px 100%, 5px 25px, 0% 20px);
+  box-shadow: 1px 1px 10px rgb(0 0 0 / 25%);
+  border-radius: 4px;
+`;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
