@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
 import { action } from '@storybook/addon-actions';
-import { TeamCard } from './TeamCard';
+import { SkeltonTeamCard, TeamCard } from './TeamCard';
 import { createMockTeam } from '~/mock';
 
 export default {
@@ -31,7 +31,6 @@ export const DefaultTeamCard = Template.bind({});
 DefaultTeamCard.args = {
   team: mockTeam,
   onClick: action('clickTeamCard'),
-  isSkeltonMode: false,
 };
 
 export const LongTextTeamCard = Template.bind({});
@@ -49,5 +48,14 @@ TeamCardWithoutImage.args = {
 export const LoadingTeamCard = Template.bind({});
 LoadingTeamCard.args = {
   ...DefaultTeamCard.args,
-  isSkeltonMode: true,
 };
+
+const SkeltonTemplate: ComponentStory<typeof SkeltonTeamCard> = ({ ...rest }) => {
+  return (
+    <Box p="40px" bgcolor="#e5e5e5">
+      <SkeltonTeamCard {...rest}></SkeltonTeamCard>
+    </Box>
+  );
+};
+
+export const Skelton = SkeltonTemplate.bind({});

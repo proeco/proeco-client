@@ -32,6 +32,8 @@ export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = fal
 
 const StyledAvatar = styled(Avatar)<{ size: number }>`
   background-color: white;
+  border: 2px solid ${(props) => props.theme.palette.primary.main};
+  box-sizing: border-box;
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;
 `;
