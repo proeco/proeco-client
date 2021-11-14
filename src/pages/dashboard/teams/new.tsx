@@ -11,30 +11,34 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { restClient } from '~/utils/rest-client';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 const DashboardTeamPage: ProecoNextPage = () => {
+  const { data: currentUser } = useCurrentUser();
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
   const router = useRouter();
 
   const [isCreating, setIsCreating] = useState(false);
-  const [image, setImage] = useState<File>();
+  const [iconImage, setIconImage] = useState<File>();
   const [team, setTeam] = useState<Pick<Team, 'name' | 'description'>>({
     name: '',
     description: '',
   });
 
   const handleClickCreateNewTeam = async () => {
+    if (!currentUser) {
+      return;
+    }
+
     setIsCreating(true);
     try {
-      if (image) {
-        const params = new FormData();
-        params.append('file', image);
-
-        await restClient.apiPost('/files', params, { 'Content-Type': 'multipart/form-data' });
+      const params = new FormData();
+      if (iconImage) {
+        params.append('file', iconImage);
       }
-
-      await restClient.apiPost('/teams', { team: team });
+      params.append('team', JSON.stringify(team));
+      await restClient.apiPost('/teams', params, { 'Content-Type': 'multipart/form-data' });
       notifySuccessMessage('チームを作成しました');
       router.push('/dashboard/teams');
       setIsCreating(false);
@@ -57,7 +61,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
       return;
     }
 
-    setImage(e.target.files[0]);
+    setIconImage(e.target.files[0]);
   };
 
   return (
