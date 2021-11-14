@@ -2,7 +2,7 @@ import React, { useState, MouseEvent, ReactNode, ComponentProps, useMemo } from 
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
@@ -16,6 +16,7 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
 import { Menu } from '~/components/parts/commons/Menu';
 import { IconButton } from '~/components/parts/commons/IconButton';
+import { UserIcon } from '~/components/domains/user/UserIcon';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
@@ -61,7 +62,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         imagePath: currentUser?.image,
         name: currentUser?.name,
         // TODO: Childrenの中身を作成する
-        children: <Box width="500px" height="250px"></Box>,
+        children: <Box minHeight="250px"></Box>,
         // TODO: DeleteStoryTaskModalを作成する
         actions: [
           {
@@ -145,14 +146,34 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         <Paper>
           <Typography variant="h4">{story.description}</Typography>
         </Paper>
-        <TimeLine timeLineItems={timeLineItems} />
-        <Button variant="contained" onClick={handleClickCreateStoryTaskButton}>
-          タスクを作成する
-        </Button>
+        <Box my={4} maxWidth="600px" mx="auto">
+          <TimeLine timeLineItems={timeLineItems} />
+          <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
+            <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} />
+            <StyledBoxWrapper width="100%">
+              <StyledBox p={5}>
+                <Button variant="text" onClick={handleClickCreateStoryTaskButton}>
+                  タスクを作成する
+                </Button>
+              </StyledBox>
+            </StyledBoxWrapper>
+          </Box>
+        </Box>
       </Box>
     </>
   );
 };
+
+const StyledBoxWrapper = styled(Box)`
+  filter: drop-shadow(1px 1px 10px rgb(0 0 0 / 25%));
+`;
+
+const StyledBox = styled(Box)`
+  background: white;
+  clip-path: polygon(5px 15px, 5px 0, 100% 0, 100% 100%, 5px 100%, 5px 25px, 0% 20px);
+  box-shadow: 1px 1px 10px rgb(0 0 0 / 25%);
+  border-radius: 4px;
+`;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
