@@ -2,11 +2,12 @@ import React, { VFC, ComponentProps } from 'react';
 import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@mui/lab';
 import { Box, styled } from '@mui/system';
 import { UserIcon } from '~/components/domains/user/UserIcon';
-import { Paper, Typography, SpeedDial, Icon } from '~/components/parts/commons';
+import { Paper, Typography, SpeedDial, Icon, FirstLetterIcon } from '~/components/parts/commons';
 
 type TimeLineItemType = {
   title: string;
-  imagePath: string;
+  imagePath?: string;
+  name?: string;
   children: React.ReactNode;
   actions: {
     icon: ComponentProps<typeof Icon>['icon'];
@@ -17,14 +18,12 @@ type TimeLineItemType = {
 
 type Props = ComponentProps<typeof TimelineItem> & TimeLineItemType;
 
-export const TimeLineItem: VFC<Props> = ({ title, imagePath, children, actions, ...rest }) => {
+export const TimeLineItem: VFC<Props> = ({ title, imagePath, name = '', children, actions, ...rest }) => {
   return (
     <StyledDiv>
       <TimelineItem {...rest}>
         <TimelineSeparator>
-          <StyledTimeLineDot>
-            <UserIcon size={40} imagePath={imagePath} />
-          </StyledTimeLineDot>
+          <StyledTimeLineDot>{imagePath ? <UserIcon size={40} imagePath={imagePath} /> : <FirstLetterIcon name={name} />}</StyledTimeLineDot>
           <StyledTimeLineConnector />
         </TimelineSeparator>
         <StyledTimeLineContent>
@@ -43,6 +42,8 @@ export const TimeLineItem: VFC<Props> = ({ title, imagePath, children, actions, 
 
 const StyledDiv = styled('div')`
   .MuiTimelineItem-root {
+    width: fit-content;
+    margin: 0 auto;
     &::before {
       flex: unset;
       padding: 0;
