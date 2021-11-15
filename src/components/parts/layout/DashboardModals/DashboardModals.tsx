@@ -3,6 +3,7 @@ import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryMo
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { CreateNewStoryTaskModal } from '~/components/domains/storyTask/CreateNewStoryTaskModal';
+import { DeleteStoryTaskModal } from '~/components/domains/storyTask/DeleteStoryTaskModal';
 
 export const DashboardModals: VFC = () => {
   return (
@@ -11,6 +12,7 @@ export const DashboardModals: VFC = () => {
       <UpdateStoryModal />
       <DeleteStoryModal />
       <CreateNewStoryTaskModal />
+      <DeleteStoryTaskModal />
     </>
   );
 };

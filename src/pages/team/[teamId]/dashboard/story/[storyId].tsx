@@ -21,8 +21,10 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
 import { useIsOpenCreateNewStoryTaskModal } from '~/stores/modal/useIsOpenCreateNewStoryTaskModal';
-import { useStoryTasks } from '~/stores/storyTask';
+import { useStoryTask, useStoryTasks } from '~/stores/storyTask';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useIsOpenDeleteStoryTaskModal } from '~/stores/modal/useIsOpenDeleteStoryTaskModal';
+import { useStoryTaskForDelete } from '~/stores/storyTask/useStoryTaskForDelete';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -41,6 +43,16 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     page: page,
     limit: 10,
   });
+
+  const { mutate: mutateIsOpenDeleteStoryTaskModal } = useIsOpenDeleteStoryTaskModal();
+  const { mutate: mutateStoryTaskForDelete } = useStoryTaskForDelete();
+
+  const handleClickDeleteStoryTask = (id: string) => {
+    const { data: storyTask } = useStoryTask(id);
+    if (!storyTask) return;
+    mutateIsOpenDeleteStoryTaskModal(true);
+    mutateStoryTaskForDelete(storyTask);
+  };
 
   const timeLineItems: {
     title: string;
@@ -63,12 +75,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         name: currentUser?.name,
         // TODO: Childrenの中身を作成する
         children: <Box minHeight="250px"></Box>,
-        // TODO: DeleteStoryTaskModalを作成する
         actions: [
           {
             icon: 'Delete',
             name: '削除',
-            onClick: () => console.log('削除'),
+            onClick: () => handleClickDeleteStoryTask(storyTask._id),
           },
         ],
       };

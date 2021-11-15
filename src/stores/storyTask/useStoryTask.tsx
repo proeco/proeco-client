@@ -3,7 +3,7 @@ import { restClient } from '~/utils/rest-client';
 import { StoryTask } from '~/domains';
 
 /**
- * ストーリーを取得するSWR
+ * ストーリータスクを取得するSWR
  * @returns data ストーリー
  * @returns isValidating 取得中を表す boolean
  * @returns error エラー
