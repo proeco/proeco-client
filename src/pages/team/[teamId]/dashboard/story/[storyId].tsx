@@ -21,7 +21,7 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
 import { useIsOpenCreateNewStoryTaskModal } from '~/stores/modal/useIsOpenCreateNewStoryTaskModal';
-import { useStoryTask, useStoryTasks } from '~/stores/storyTask';
+import { useStoryTasks } from '~/stores/storyTask';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useIsOpenDeleteStoryTaskModal } from '~/stores/modal/useIsOpenDeleteStoryTaskModal';
 import { useStoryTaskForDelete } from '~/stores/storyTask/useStoryTaskForDelete';
@@ -48,7 +48,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { mutate: mutateStoryTaskForDelete } = useStoryTaskForDelete();
 
   const handleClickDeleteStoryTask = (id: string) => {
-    const { data: storyTask } = useStoryTask(id);
+    const storyTask = storyTasks?.docs.find((storyTask) => storyTask._id === id);
     if (!storyTask) return;
     mutateIsOpenDeleteStoryTaskModal(true);
     mutateStoryTaskForDelete(storyTask);
