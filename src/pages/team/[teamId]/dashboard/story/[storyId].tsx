@@ -150,7 +150,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           <TimeLine timeLineItems={timeLineItems} />
           <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
             <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} />
-            <StyledBoxWrapper width="100%">
+            <StyledBoxWrapper width="100%" position="relative">
+              <StyledTriangle></StyledTriangle>
               <StyledBox p={5}>
                 <Button variant="text" onClick={handleClickCreateStoryTaskButton}>
                   タスクを作成する
@@ -170,9 +171,20 @@ const StyledBoxWrapper = styled(Box)`
 
 const StyledBox = styled(Box)`
   background: white;
-  clip-path: polygon(5px 15px, 5px 0, 100% 0, 100% 100%, 5px 100%, 5px 25px, 0% 20px);
   box-shadow: 1px 1px 10px rgb(0 0 0 / 25%);
   border-radius: 4px;
+  margin-left: 10px;
+  text-align: center;
+`;
+
+const StyledTriangle = styled('div')`
+  position: absolute;
+  top: 14px;
+  left: 0;
+  z-index: 2;
+  border-top: 6px solid transparent;
+  border-right: 12px solid white;
+  border-bottom: 6px solid transparent;
 `;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
