@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 
 import { Team } from '~/domains';
@@ -11,22 +11,34 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { restClient } from '~/utils/rest-client';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 const DashboardTeamPage: ProecoNextPage = () => {
+  const { data: currentUser } = useCurrentUser();
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
   const router = useRouter();
 
   const [isCreating, setIsCreating] = useState(false);
+  const [iconImage, setIconImage] = useState<File>();
   const [team, setTeam] = useState<Pick<Team, 'name' | 'description'>>({
     name: '',
     description: '',
   });
 
   const handleClickCreateNewTeam = async () => {
+    if (!currentUser) {
+      return;
+    }
+
     setIsCreating(true);
     try {
-      await restClient.apiPost('/teams', { team: team });
+      const params = new FormData();
+      if (iconImage) {
+        params.append('file', iconImage);
+      }
+      params.append('team', JSON.stringify(team));
+      await restClient.apiPost('/teams', params, { 'Content-Type': 'multipart/form-data' });
       notifySuccessMessage('チームを作成しました');
       router.push('/dashboard/teams');
       setIsCreating(false);
@@ -44,6 +56,14 @@ const DashboardTeamPage: ProecoNextPage = () => {
     });
   };
 
+  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    setIconImage(e.target.files[0]);
+  };
+
   return (
     <>
       <ProecoOgpHead />
@@ -54,10 +74,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Typography>
         </Box>
         <Paper square>
-          <form action={`${process.env.NEXT_PUBLIC_BACKEND_URL_FROM_CLIENT}/api/v1/files`} method="post" encType="multipart/form-data">
-            <input type="file" name="image" />
-            <input type="submit" value="送信" />
-          </form>
+          <input type="file" name="image" onChange={handleChangeFile} accept="image/*" />
           <Typography mb="4px" variant="body1" color="textColor.light">
             名前
           </Typography>
