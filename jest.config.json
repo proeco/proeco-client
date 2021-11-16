@@ -1,6 +1,6 @@
 {
   "preset":"ts-jest",
-  "testEnvironment":"jsdom",
+  "testEnvironment":"node",
   "roots":[
     "<rootDir>/src"
   ],
@@ -27,5 +27,5 @@
   "moduleNameMapper": {
     "^~/(.*)$": "<rootDir>/src/$1"
   },
-  "testMatch": ["<rootDir>/src/**.spec.tsx","<rootDir>/src/**.spec.ts"]
+  "testMatch": ["<rootDir>/src/**.spec.ts"]
 }
