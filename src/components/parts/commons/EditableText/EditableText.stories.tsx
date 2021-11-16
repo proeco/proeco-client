@@ -24,12 +24,12 @@ DefaultEditableText.args = {
   value: 'EditableText',
 };
 
-export const multilineEditableText = Template.bind({});
-multilineEditableText.args = {
-  ...DefaultEditableText.args,
-  value: 'これは、複数行のEditableTextです',
-  multiline: true,
-};
+// export const multilineEditableText = Template.bind({});
+// multilineEditableText.args = {
+//   ...DefaultEditableText.args,
+//   value: 'これは、複数行のEditableTextです',
+//   multiline: true,
+// };
 
 export const ErrorEditableText = Template.bind({});
 ErrorEditableText.args = {
