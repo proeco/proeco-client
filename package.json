@@ -10,9 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint \"./**/*.{js,jsx,ts,tsx}\"",
-    "test": "run-p test:*",
-    "test:jest": "jest",
-    "test:storyshots": "jest --config ./jest.storyshots.config.json",
+    "test": "jest",
     "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook",
     "chromatic": "npx chromatic --project-token=09b693341c4e"
@@ -65,7 +63,6 @@
     "@typescript-eslint/eslint-plugin": "rc-v5",
     "@typescript-eslint/parser": "5.3.1",
     "babel-loader": "8.2.3",
-    "babel-plugin-styled-components": "1.13.3",
     "babel-preset-react-app": "10.0.0",
     "chromatic": "5.10.2",
     "enzyme": "3.11.0",
