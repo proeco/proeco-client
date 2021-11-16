@@ -2,11 +2,12 @@ import React, { VFC, ComponentProps } from 'react';
 import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@mui/lab';
 import { Box, styled } from '@mui/system';
 import { UserIcon } from '~/components/domains/user/UserIcon';
-import { Paper, Typography, SpeedDial, Icon } from '~/components/parts/commons';
+import { Paper, Typography, SpeedDial, Icon, FirstLetterIcon } from '~/components/parts/commons';
 
 type TimeLineItemType = {
   title: string;
-  imagePath: string;
+  imagePath?: string;
+  name?: string;
   children: React.ReactNode;
   actions: {
     icon: ComponentProps<typeof Icon>['icon'];
@@ -17,18 +18,16 @@ type TimeLineItemType = {
 
 type Props = ComponentProps<typeof TimelineItem> & TimeLineItemType;
 
-export const TimeLineItem: VFC<Props> = ({ title, imagePath, children, actions, ...rest }) => {
+export const TimeLineItem: VFC<Props> = ({ title, imagePath, name = '', children, actions, ...rest }) => {
   return (
     <StyledDiv>
       <TimelineItem {...rest}>
         <TimelineSeparator>
-          <StyledTimeLineDot>
-            <UserIcon size={40} imagePath={imagePath} />
-          </StyledTimeLineDot>
+          <StyledTimeLineDot>{imagePath ? <UserIcon size={40} imagePath={imagePath} /> : <FirstLetterIcon name={name} />}</StyledTimeLineDot>
           <StyledTimeLineConnector />
         </TimelineSeparator>
         <StyledTimeLineContent>
-          <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" height="40px">
+          <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" width="100%" height="40px">
             <Typography variant="h4" bold>
               {title}
             </Typography>
@@ -43,6 +42,7 @@ export const TimeLineItem: VFC<Props> = ({ title, imagePath, children, actions, 
 
 const StyledDiv = styled('div')`
   .MuiTimelineItem-root {
+    margin: 0 auto;
     &::before {
       flex: unset;
       padding: 0;
@@ -51,9 +51,7 @@ const StyledDiv = styled('div')`
 `;
 
 const StyledTimeLineContent = styled(TimelineContent)`
-  max-width: fit-content;
-  padding: 8px;
-  padding-top: 0;
+  padding: 0 0px 40px 8px;
 `;
 
 const StyledTimeLineDot = styled(TimelineDot)`
