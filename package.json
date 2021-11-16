@@ -10,9 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint \"./**/*.{js,jsx,ts,tsx}\"",
-    "test": "run-p test:*",
-    "test:jest": "jest",
-    "test:storyshots": "jest --config ./jest.storyshots.config.json",
+    "test": "jest",
     "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook",
     "chromatic": "npx chromatic --project-token=09b693341c4e"
@@ -48,6 +46,7 @@
     "@storybook/builder-webpack5": "6.3.12",
     "@storybook/manager-webpack5": "6.3.12",
     "@storybook/react": "6.3.12",
+    "@testing-library/react": "^12.1.2",
     "@types/emoji-mart": "3.0.8",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/jest": "27.0.2",

@@ -1,76 +1,265 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots parts/commons/Typography Default Typography 1`] = `
-<div
-  className="MuiBox-root css-1v8my8o"
->
-  <h1
-    bold={0}
-    className="MuiTypography-root MuiTypography-h1 css-h2n376-MuiTypography-root"
-  >
-    h1: 48px
-  </h1>
-  <h2
-    bold={0}
-    className="MuiTypography-root MuiTypography-h2 css-1c2ajmr-MuiTypography-root"
-  >
-    h2: 32px
-  </h2>
-  <h3
-    bold={0}
-    className="MuiTypography-root MuiTypography-h3 css-131ayj9-MuiTypography-root"
-  >
-    h3: 24px
-  </h3>
-  <h4
-    bold={0}
-    className="MuiTypography-root MuiTypography-h4 css-8gca48-MuiTypography-root"
-  >
-    h4: 20px
-  </h4>
-  <p
-    bold={0}
-    className="MuiTypography-root MuiTypography-body1 css-61ooy4-MuiTypography-root"
-  >
-    body1: 16px
-  </p>
-  <p
-    bold={0}
-    className="MuiTypography-root MuiTypography-body2 css-uziypf-MuiTypography-root"
-  >
-    body2: 14px
-  </p>
-  <span
-    bold={0}
-    className="MuiTypography-root MuiTypography-button css-nt9eod-MuiTypography-root"
-  >
-    button: 14px
-  </span>
-  <span
-    bold={0}
-    className="MuiTypography-root MuiTypography-caption css-1i7dtab-MuiTypography-root"
-  >
-    caption: 12px
-  </span>
-  <span
-    bold={0}
-    className="MuiTypography-root MuiTypography-overline css-ych3qs-MuiTypography-root"
-  >
-    overline: 10px
-  </span>
-</div>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiBox-root css-1v8my8o"
+      >
+        <h1
+          bold="0"
+          class="MuiTypography-root MuiTypography-h1 css-h2n376-MuiTypography-root"
+        >
+          h1: 48px
+        </h1>
+        <h2
+          bold="0"
+          class="MuiTypography-root MuiTypography-h2 css-1c2ajmr-MuiTypography-root"
+        >
+          h2: 32px
+        </h2>
+        <h3
+          bold="0"
+          class="MuiTypography-root MuiTypography-h3 css-131ayj9-MuiTypography-root"
+        >
+          h3: 24px
+        </h3>
+        <h4
+          bold="0"
+          class="MuiTypography-root MuiTypography-h4 css-8gca48-MuiTypography-root"
+        >
+          h4: 20px
+        </h4>
+        <p
+          bold="0"
+          class="MuiTypography-root MuiTypography-body1 css-61ooy4-MuiTypography-root"
+        >
+          body1: 16px
+        </p>
+        <p
+          bold="0"
+          class="MuiTypography-root MuiTypography-body2 css-uziypf-MuiTypography-root"
+        >
+          body2: 14px
+        </p>
+        <span
+          bold="0"
+          class="MuiTypography-root MuiTypography-button css-nt9eod-MuiTypography-root"
+        >
+          button: 14px
+        </span>
+        <span
+          bold="0"
+          class="MuiTypography-root MuiTypography-caption css-1i7dtab-MuiTypography-root"
+        >
+          caption: 12px
+        </span>
+        <span
+          bold="0"
+          class="MuiTypography-root MuiTypography-overline css-ych3qs-MuiTypography-root"
+        >
+          overline: 10px
+        </span>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiBox-root css-1v8my8o"
+    >
+      <h1
+        bold="0"
+        class="MuiTypography-root MuiTypography-h1 css-h2n376-MuiTypography-root"
+      >
+        h1: 48px
+      </h1>
+      <h2
+        bold="0"
+        class="MuiTypography-root MuiTypography-h2 css-1c2ajmr-MuiTypography-root"
+      >
+        h2: 32px
+      </h2>
+      <h3
+        bold="0"
+        class="MuiTypography-root MuiTypography-h3 css-131ayj9-MuiTypography-root"
+      >
+        h3: 24px
+      </h3>
+      <h4
+        bold="0"
+        class="MuiTypography-root MuiTypography-h4 css-8gca48-MuiTypography-root"
+      >
+        h4: 20px
+      </h4>
+      <p
+        bold="0"
+        class="MuiTypography-root MuiTypography-body1 css-61ooy4-MuiTypography-root"
+      >
+        body1: 16px
+      </p>
+      <p
+        bold="0"
+        class="MuiTypography-root MuiTypography-body2 css-uziypf-MuiTypography-root"
+      >
+        body2: 14px
+      </p>
+      <span
+        bold="0"
+        class="MuiTypography-root MuiTypography-button css-nt9eod-MuiTypography-root"
+      >
+        button: 14px
+      </span>
+      <span
+        bold="0"
+        class="MuiTypography-root MuiTypography-caption css-1i7dtab-MuiTypography-root"
+      >
+        caption: 12px
+      </span>
+      <span
+        bold="0"
+        class="MuiTypography-root MuiTypography-overline css-ych3qs-MuiTypography-root"
+      >
+        overline: 10px
+      </span>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`Storyshots parts/commons/Typography Long Text Typography 1`] = `
-<div
-  className="MuiBox-root css-1jixria"
->
-  <h3
-    bold={0}
-    className="MuiTypography-root MuiTypography-h3 css-1no7jgx-MuiTypography-root"
-    maximum_lines={2}
-  >
-    Proeco は、個人開発やチーム開発を応援するWEBアプリケーションです！
-  </h3>
-</div>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiBox-root css-1jixria"
+      >
+        <h3
+          bold="0"
+          class="MuiTypography-root MuiTypography-h3 css-1no7jgx-MuiTypography-root"
+          maximum_lines="2"
+        >
+          Proeco は、個人開発やチーム開発を応援するWEBアプリケーションです！
+        </h3>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiBox-root css-1jixria"
+    >
+      <h3
+        bold="0"
+        class="MuiTypography-root MuiTypography-h3 css-1no7jgx-MuiTypography-root"
+        maximum_lines="2"
+      >
+        Proeco は、個人開発やチーム開発を応援するWEBアプリケーションです！
+      </h3>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
