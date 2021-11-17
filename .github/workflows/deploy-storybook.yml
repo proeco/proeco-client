@@ -13,7 +13,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: deploy storybook
         uses: JamesIves/github-pages-deploy-action@4.1.0
-        run: yarn deploy
         with:
           branch: gh-pages
           folder: storybook-static

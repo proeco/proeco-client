@@ -94,8 +94,8 @@ Outlined.args = {
   bold: true,
 };
 
-export const Text = Template.bind({});
-Text.args = {
-  variant: 'text',
-  bold: true,
-};
+// export const Text = Template.bind({});
+// Text.args = {
+//   variant: 'text',
+//   bold: true,
+// };
