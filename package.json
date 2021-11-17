@@ -25,6 +25,7 @@
     "@mui/styled-engine-sc": "5.1.0",
     "@mui/types": "7.1.0",
     "@next-auth/mongodb-adapter": "0.0.2-next.285",
+    "axios": "^0.24.0",
     "date-fns": "2.25.0",
     "emoji-mart": "3.0.1",
     "modern-css-reset": "1.4.0",
