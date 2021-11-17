@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
+    name: build-and-deploy storybook
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
