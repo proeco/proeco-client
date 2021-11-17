@@ -23,6 +23,8 @@ import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayo
 import { useIsOpenCreateNewStoryTaskModal } from '~/stores/modal/useIsOpenCreateNewStoryTaskModal';
 import { useStoryTasks } from '~/stores/storyTask';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useIsOpenDeleteStoryTaskModal } from '~/stores/modal/useIsOpenDeleteStoryTaskModal';
+import { useStoryTaskForDelete } from '~/stores/storyTask/useStoryTaskForDelete';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -41,6 +43,16 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     page: page,
     limit: 10,
   });
+
+  const { mutate: mutateIsOpenDeleteStoryTaskModal } = useIsOpenDeleteStoryTaskModal();
+  const { mutate: mutateStoryTaskForDelete } = useStoryTaskForDelete();
+
+  const handleClickDeleteStoryTask = (id: string) => {
+    const storyTask = storyTasks?.docs.find((storyTask) => storyTask._id === id);
+    if (!storyTask) return;
+    mutateIsOpenDeleteStoryTaskModal(true);
+    mutateStoryTaskForDelete(storyTask);
+  };
 
   const timeLineItems: {
     title: string;
@@ -63,12 +75,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         name: currentUser?.name,
         // TODO: Childrenの中身を作成する
         children: <Box minHeight="250px"></Box>,
-        // TODO: DeleteStoryTaskModalを作成する
         actions: [
           {
             icon: 'Delete',
             name: '削除',
-            onClick: () => console.log('削除'),
+            onClick: () => handleClickDeleteStoryTask(storyTask._id),
           },
         ],
       };
@@ -150,7 +161,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           <TimeLine timeLineItems={timeLineItems} />
           <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
             <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} />
-            <StyledBoxWrapper width="100%">
+            <StyledBoxWrapper width="100%" position="relative">
+              <StyledTriangle></StyledTriangle>
               <StyledBox p={5}>
                 <Button variant="text" onClick={handleClickCreateStoryTaskButton}>
                   タスクを作成する
@@ -170,9 +182,20 @@ const StyledBoxWrapper = styled(Box)`
 
 const StyledBox = styled(Box)`
   background: white;
-  clip-path: polygon(5px 15px, 5px 0, 100% 0, 100% 100%, 5px 100%, 5px 25px, 0% 20px);
   box-shadow: 1px 1px 10px rgb(0 0 0 / 25%);
   border-radius: 4px;
+  margin-left: 10px;
+  text-align: center;
+`;
+
+const StyledTriangle = styled('div')`
+  position: absolute;
+  top: 14px;
+  left: 0;
+  z-index: 2;
+  border-top: 6px solid transparent;
+  border-right: 12px solid white;
+  border-bottom: 6px solid transparent;
 `;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
