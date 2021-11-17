@@ -115,19 +115,12 @@ export const NavigationBar: VFC = memo(() => {
     },
   ];
 
-  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
+  console.log(currentUser);
 
   const handleClickLoginButton = () => {
     signIn('google');
   };
 
-  return (
-    <Component
-      currentUser={currentUser}
-      isValidating={isValidatingCurrentUser}
-      onClickLoginButton={handleClickLoginButton}
-      menuItems={menuItems}
-      logoImagePath={IMAGE_PATH.LOGO}
-    />
-  );
+  return <Component currentUser={currentUser} isValidating onClickLoginButton={handleClickLoginButton} menuItems={menuItems} logoImagePath={IMAGE_PATH.LOGO} />;
 });

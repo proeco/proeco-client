@@ -5,7 +5,7 @@ type AuthContextProps = {
   currentUser: null | undefined;
 };
 
-const AuthContext = createContext<AuthContextProps>({ currentUser: undefined });
+const CurrentUserContext = createContext<AuthContextProps>({ currentUser: undefined });
 
 const AuthProvider: FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<any>(undefined);
@@ -24,7 +24,7 @@ const AuthProvider: FC = ({ children }) => {
     fetchCurrentUser();
   }, []);
 
-  return <AuthContext.Provider value={{ currentUser }}>{children}</AuthContext.Provider>;
+  return <CurrentUserContext.Provider value={{ currentUser }}>{children}</CurrentUserContext.Provider>;
 };
 
-export { AuthContext, AuthProvider };
+export { CurrentUserContext, AuthProvider };

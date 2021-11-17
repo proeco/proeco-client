@@ -8,7 +8,7 @@ import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import 'modern-css-reset/dist/reset.min.css';
 
 import { theme } from '../theme';
-import { AuthProvider } from '~/contexts/AuthProvider';
+import { AuthProvider } from '~/contexts/CurrentUserProvider';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
