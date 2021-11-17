@@ -8,9 +8,6 @@
     "<rootDir>/.next/",
     "<rootDir>/node_modules/"
   ],
-  "snapshotSerializers":[
-    "enzyme-to-json/serializer"
-  ],
   "transform":{
     "^.+\\.(ts|tsx)$":"ts-jest"
   },
@@ -30,5 +27,5 @@
   "moduleNameMapper": {
     "^~/(.*)$": "<rootDir>/src/$1"
   },
-  "testMatch": ["<rootDir>/src/utils/**/**.spec.ts"]
+  "testMatch": ["<rootDir>/**/**.spec.ts"]
 }
