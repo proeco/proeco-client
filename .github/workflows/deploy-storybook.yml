@@ -20,3 +20,12 @@ jobs:
         with:
           branch: gh-pages
           folder: storybook-static
+      - name: Slack Notification
+        uses: weseek/ghaction-slack-notification@master
+        if: always()
+        with:
+          type: ${{ job.status }}
+          job_name: '*deploy proeco storybook*'
+          channel: '#proeco-ci'
+          isCompactMode: true
+          url: ${{ secrets.SLACK_WEBHOOK_URL }}
