@@ -3,6 +3,8 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
+import { action } from '@storybook/addon-actions';
+import { Icon } from '../../commons';
 import { SideBar } from './SideBar';
 
 import { createMockUser } from '~/mock';
@@ -55,6 +57,14 @@ Default.args = {
       icon: 'Settings',
       url: URLS.DASHBOARD_SETTINGS,
       text: '設定',
+    },
+  ],
+  currentUser: mockUser,
+  menuItems: [
+    {
+      icon: <Icon icon="Logout" width="20px" color="textColor.main" />,
+      text: 'Logout',
+      onClick: action('signOut'),
     },
   ],
 };

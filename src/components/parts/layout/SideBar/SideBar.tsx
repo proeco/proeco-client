@@ -1,10 +1,12 @@
-import { ComponentProps, memo, VFC, useState } from 'react';
+import { ComponentProps, memo, VFC, useState, MouseEvent } from 'react';
 
 import { Box } from '@mui/system';
 import { Drawer as MuiDrawer } from '@mui/material';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 
-import { Typography, SideBarListItem, Icon, Link, IconButton } from '~/components/parts/commons';
+import { Typography, SideBarListItem, Icon, Link, IconButton, Menu } from '~/components/parts/commons';
+import { UserIcon } from '~/components/domains/user/UserIcon';
+import { User } from '~/domains';
 
 type Props = {
   asPath: string;
@@ -15,12 +17,21 @@ type Props = {
     url: string;
     text: string;
   }[];
+  currentUser: User;
+  menuItems: {
+    icon: JSX.Element;
+    text: string;
+    onClick: () => void;
+  }[];
 };
 
 const drawerWidth = 280;
 
-export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent }) => {
+export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent, currentUser, menuItems }) => {
   const [open, setOpen] = useState(true);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const menuOpen = Boolean(anchorEl);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -28,6 +39,14 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <StyledDrawer variant="permanent" open={open}>
       <Box position="absolute" width="100%" bgcolor="whitesmoke" display="flex" alignItems="center" justifyContent={open ? 'flex-end' : 'center'}>
@@ -66,6 +85,19 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
           })}
         </Box>
       </StyledSideBarWrapper>
+      <Box p="0 0 16px 16px">
+        <StyledUserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} onClick={handleClick} />
+        <Menu
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          anchorEl={anchorEl}
+          open={menuOpen}
+          menuItems={menuItems}
+          onClose={handleClose}
+        />
+      </Box>
     </StyledDrawer>
   );
 });
@@ -96,9 +128,12 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
   flex-shrink: 0;
   white-space: nowrap;
   box-sizing: border-box;
+
   .MuiDrawer-paper {
     background-color: whitesmoke;
-    top: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   ${(props) =>
     props.open && {
@@ -123,4 +158,8 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
 const StyledSideBarWrapper = styled(Box)`
   box-sizing: border-box;
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
+`;
+
+const StyledUserIcon = styled(UserIcon)`
+  cursor: pointer;
 `;
