@@ -17,8 +17,8 @@ type Props = {
     url: string;
     text: string;
   }[];
-  currentUser: User;
-  menuItems: {
+  currentUser?: User;
+  menuItems?: {
     icon: JSX.Element;
     text: string;
     onClick: () => void;
@@ -85,19 +85,21 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
           })}
         </Box>
       </StyledSideBarWrapper>
-      <Box p="0 0 16px 16px">
-        <StyledUserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} onClick={handleClick} />
-        <Menu
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          anchorEl={anchorEl}
-          open={menuOpen}
-          menuItems={menuItems}
-          onClose={handleClose}
-        />
-      </Box>
+      {currentUser && menuItems && (
+        <Box p="0 0 16px 16px">
+          <StyledUserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} onClick={handleClick} />
+          <Menu
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            anchorEl={anchorEl}
+            open={menuOpen}
+            menuItems={menuItems}
+            onClose={handleClose}
+          />
+        </Box>
+      )}
     </StyledDrawer>
   );
 });
