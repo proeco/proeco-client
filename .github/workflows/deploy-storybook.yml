@@ -12,4 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: deploy storybook
-        run: yarn deploy
+        run: |
+        yarn install
+        yarn deploy
