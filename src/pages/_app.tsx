@@ -1,4 +1,3 @@
-import { SessionProvider } from 'next-auth/react';
 import { SnackbarProvider } from 'notistack';
 import { GlobalStyles } from '@mui/material';
 import { Session } from 'next-auth';
@@ -34,11 +33,9 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
     <AuthProvider>
       <MaterialThemeProvider theme={theme}>
         <SnackbarProvider>
-          <SessionProvider session={pageProps.session}>
-            {inputGlobalStyles}
-            <NavigationBar />
-            {getLayout(<Component {...pageProps} />)}
-          </SessionProvider>
+          {inputGlobalStyles}
+          <NavigationBar />
+          {getLayout(<Component {...pageProps} />)}
         </SnackbarProvider>
       </MaterialThemeProvider>
     </AuthProvider>
