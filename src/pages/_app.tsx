@@ -8,7 +8,6 @@ import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import 'modern-css-reset/dist/reset.min.css';
 
 import { theme } from '../theme';
-import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const inputGlobalStyles = (
@@ -34,7 +33,6 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
       <SnackbarProvider>
         <SessionProvider session={pageProps.session}>
           {inputGlobalStyles}
-          <NavigationBar />
           {getLayout(<Component {...pageProps} />)}
         </SessionProvider>
       </SnackbarProvider>
