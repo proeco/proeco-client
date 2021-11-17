@@ -1,14 +1,16 @@
 import { NextPage } from 'next';
-import { signIn, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { Button, Link, Typography } from '~/components/parts/commons';
 import { URLS } from '~/constants';
+import { useAuth } from '~/hooks/useAuth/useAuth';
 
 const Home: NextPage = () => {
-  const { data: currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
+  const { login } = useAuth();
 
   return (
     <>
@@ -30,7 +32,7 @@ const Home: NextPage = () => {
           </Button>
         </>
       ) : (
-        <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={() => signIn('google')}>
+        <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={login}>
           Login
         </Button>
       )}
