@@ -8,6 +8,7 @@ import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import 'modern-css-reset/dist/reset.min.css';
 
 import { theme } from '../theme';
+import { AuthProvider } from '~/contexts/AuthProvider';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
@@ -30,15 +31,17 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
-    <MaterialThemeProvider theme={theme}>
-      <SnackbarProvider>
-        <SessionProvider session={pageProps.session}>
-          {inputGlobalStyles}
-          <NavigationBar />
-          {getLayout(<Component {...pageProps} />)}
-        </SessionProvider>
-      </SnackbarProvider>
-    </MaterialThemeProvider>
+    <AuthProvider>
+      <MaterialThemeProvider theme={theme}>
+        <SnackbarProvider>
+          <SessionProvider session={pageProps.session}>
+            {inputGlobalStyles}
+            <NavigationBar />
+            {getLayout(<Component {...pageProps} />)}
+          </SessionProvider>
+        </SnackbarProvider>
+      </MaterialThemeProvider>
+    </AuthProvider>
   );
 }
 
