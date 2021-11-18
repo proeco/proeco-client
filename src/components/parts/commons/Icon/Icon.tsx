@@ -14,6 +14,7 @@ import {
   Update,
   ChevronLeft,
   ChevronRight,
+  Photo,
 } from '@mui/icons-material';
 import { Box, styled } from '@mui/system';
 
@@ -32,6 +33,7 @@ export const IconMap = {
   Update: <Update />,
   ChevronLeft: <ChevronLeft />,
   ChevronRight: <ChevronRight />,
+  Photo: <Photo />,
 };
 
 type IconType = {

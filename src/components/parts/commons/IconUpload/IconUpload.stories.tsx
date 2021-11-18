@@ -19,7 +19,13 @@ const Template: ComponentStory<typeof IconUpload> = ({ ...rest }) => {
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
+export const DefaultIconUpload = Template.bind({});
+DefaultIconUpload.args = {
+  size: 100,
+};
+
+export const IconUploadWithImage = Template.bind({});
+IconUploadWithImage.args = {
+  ...DefaultIconUpload.args,
   currentImage: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
 };
