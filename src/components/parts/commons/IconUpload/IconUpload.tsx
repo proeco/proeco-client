@@ -6,15 +6,15 @@ import { UserIcon } from '~/components/domains/user/UserIcon';
 
 type Props = {
   onSelectImage: (file: ChangeEvent<HTMLInputElement>) => void;
-  currentImage?: string;
+  currentImagePath?: string;
   size?: number;
 };
 
-export const IconUpload: VFC<Props> = ({ onSelectImage, currentImage, size = 100 }) => {
+export const IconUpload: VFC<Props> = ({ onSelectImage, currentImagePath, size = 100 }) => {
   return (
     <StyledLabel htmlFor="image">
-      {currentImage ? (
-        <UserIcon size={size} imagePath={currentImage} />
+      {currentImagePath ? (
+        <UserIcon size={size} imagePath={currentImagePath} />
       ) : (
         <StyledAvatar size={size}>
           <Icon icon="Group" color="#ccc" width="100%" />

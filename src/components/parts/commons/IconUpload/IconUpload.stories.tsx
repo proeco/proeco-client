@@ -27,5 +27,5 @@ DefaultIconUpload.args = {
 export const IconUploadWithImage = Template.bind({});
 IconUploadWithImage.args = {
   ...DefaultIconUpload.args,
-  currentImage: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
+  currentImagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
 };
