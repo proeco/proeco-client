@@ -91,7 +91,7 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
               {open && <Typography variant="body1">{currentUser.name}</Typography>}
             </StyledBox>
             <Menu
-              anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+              anchorOrigin={{ vertical: -8, horizontal: 'left' }}
               transformOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
