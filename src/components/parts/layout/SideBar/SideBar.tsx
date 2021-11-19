@@ -56,46 +56,45 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
           <IconButton icon="ChevronRight" width={30} onClick={handleDrawerOpen} />
         )}
       </Box>
-      <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke">
-        <Box>
-          {open ? openContent : closeContent}
-          <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
-            {sidebarItems.map((sidebarItem, index) => {
-              if (open) {
-                return (
-                  <Link href={sidebarItem.url} key={index}>
-                    <SideBarListItem
-                      icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
-                      selected={sidebarItem.url === asPath}
-                    >
-                      <Typography variant="body1">{sidebarItem.text}</Typography>
-                    </SideBarListItem>
-                  </Link>
-                );
-              }
+      <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke" height="100%" display="flex" flexDirection="column">
+        {open ? openContent : closeContent}
+        <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
+          {sidebarItems.map((sidebarItem, index) => {
+            if (open) {
               return (
                 <Link href={sidebarItem.url} key={index}>
-                  <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
-                    <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'} />
-                    <Typography variant="overline" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'}>
-                      {sidebarItem.text}
-                    </Typography>
-                  </Box>
+                  <SideBarListItem
+                    icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
+                    selected={sidebarItem.url === asPath}
+                  >
+                    <Typography variant="body1">{sidebarItem.text}</Typography>
+                  </SideBarListItem>
                 </Link>
               );
-            })}
-          </Box>
+            }
+            return (
+              <Link href={sidebarItem.url} key={index}>
+                <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
+                  <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'} />
+                  <Typography variant="overline" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'}>
+                    {sidebarItem.text}
+                  </Typography>
+                </Box>
+              </Link>
+            );
+          })}
         </Box>
         {currentUser && menuItems && (
-          <Box width="fit-content">
-            <StyledBox onClick={handleClick}>
+          <Box mt="auto">
+            <StyledBox onClick={handleClick} display="flex" alignItems="center" gap="8px">
               <UserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} />
               {open && <Typography variant="body1">{currentUser.name}</Typography>}
             </StyledBox>
             <Menu
+              anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: 'bottom',
+                horizontal: 'right',
               }}
               anchorEl={anchorEl}
               open={menuOpen}
@@ -162,15 +161,8 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
 const StyledSideBarWrapper = styled(Box)`
   box-sizing: border-box;
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 `;
 
 const StyledBox = styled(Box)`
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 `;
