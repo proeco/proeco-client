@@ -28,23 +28,21 @@ type Props = {
 };
 
 const drawerWidth = 280;
+const isOpenSideBar = 'isOpenSideBar';
 
 export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent, currentUser, menuItems }) => {
   const { fetchData, storeData } = useLocalStorage();
-  const value = fetchData<boolean>('SideBarIsOpenKey');
+  const value = fetchData<boolean>(isOpenSideBar);
   const [open, setOpen] = useState(value ?? true);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-    storeData<boolean>('SideBarIsOpenKey', true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-    storeData<boolean>('SideBarIsOpenKey', false);
+  const handleClickChevronButton = () => {
+    setOpen((prevState) => {
+      storeData<boolean>(isOpenSideBar, !prevState);
+      return !prevState;
+    });
   };
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -57,11 +55,7 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
   return (
     <StyledDrawer variant="permanent" open={open}>
       <Box position="absolute" width="100%" bgcolor="whitesmoke" display="flex" alignItems="center" justifyContent={open ? 'flex-end' : 'center'}>
-        {open ? (
-          <IconButton icon="ChevronLeft" width={30} onClick={handleDrawerClose} />
-        ) : (
-          <IconButton icon="ChevronRight" width={30} onClick={handleDrawerOpen} />
-        )}
+        <IconButton icon={open ? 'ChevronLeft' : 'ChevronRight'} width={30} onClick={handleClickChevronButton} />
       </Box>
       <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke" height="100%" display="flex" flexDirection="column">
         {open ? openContent : closeContent}
