@@ -57,54 +57,54 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
         )}
       </Box>
       <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke">
-        {open ? openContent : closeContent}
-        <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
-          {sidebarItems.map((sidebarItem, index) => {
-            if (open) {
+        <Box>
+          {open ? openContent : closeContent}
+          <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
+            {sidebarItems.map((sidebarItem, index) => {
+              if (open) {
+                return (
+                  <Link href={sidebarItem.url} key={index}>
+                    <SideBarListItem
+                      icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
+                      selected={sidebarItem.url === asPath}
+                    >
+                      <Typography variant="body1">{sidebarItem.text}</Typography>
+                    </SideBarListItem>
+                  </Link>
+                );
+              }
               return (
                 <Link href={sidebarItem.url} key={index}>
-                  <SideBarListItem
-                    icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
-                    selected={sidebarItem.url === asPath}
-                  >
-                    <Typography variant="body1">{sidebarItem.text}</Typography>
-                  </SideBarListItem>
+                  <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
+                    <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'} />
+                    <Typography variant="overline" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'}>
+                      {sidebarItem.text}
+                    </Typography>
+                  </Box>
                 </Link>
               );
-            }
-            return (
-              <Link href={sidebarItem.url} key={index}>
-                <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
-                  <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'} />
-                  <Typography variant="overline" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'}>
-                    {sidebarItem.text}
-                  </Typography>
-                </Box>
-              </Link>
-            );
-          })}
-        </Box>
-      </StyledSideBarWrapper>
-      {currentUser && menuItems && (
-        <Box p="0 0 16px 16px">
-          <Box display="flex" alignItems="center">
-            <StyledUserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} onClick={handleClick} open={open} />
-            <StyledTypography variant="body1" open={open}>
-              {currentUser.name}
-            </StyledTypography>
+            })}
           </Box>
-          <Menu
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            anchorEl={anchorEl}
-            open={menuOpen}
-            menuItems={menuItems}
-            onClose={handleClose}
-          />
         </Box>
-      )}
+        {currentUser && menuItems && (
+          <Box width="fit-content">
+            <StyledBox onClick={handleClick}>
+              <UserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} />
+              {open && <Typography variant="body1">{currentUser.name}</Typography>}
+            </StyledBox>
+            <Menu
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              anchorEl={anchorEl}
+              open={menuOpen}
+              menuItems={menuItems}
+              onClose={handleClose}
+            />
+          </Box>
+        )}
+      </StyledSideBarWrapper>
     </StyledDrawer>
   );
 });
@@ -138,9 +138,6 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
 
   .MuiDrawer-paper {
     background-color: whitesmoke;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
   }
   ${(props) =>
     props.open && {
@@ -165,13 +162,15 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
 const StyledSideBarWrapper = styled(Box)`
   box-sizing: border-box;
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
-const StyledUserIcon = styled(UserIcon)<{ open: boolean }>`
+const StyledBox = styled(Box)`
   cursor: pointer;
-  margin-right: ${(props) => (props.open ? '8px' : '0px')};
-`;
-
-const StyledTypography = styled(Typography)<{ open: boolean }>`
-  display: ${(props) => (props.open ? 'block' : 'none')};
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
