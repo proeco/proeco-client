@@ -8,6 +8,8 @@ import { Typography, SideBarListItem, Icon, Link, IconButton, Menu } from '~/com
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { User } from '~/domains';
 
+import { useLocalStorage } from '~/hooks/useLocalStorage';
+
 type Props = {
   asPath: string;
   openContent: JSX.Element;
@@ -28,16 +30,21 @@ type Props = {
 const drawerWidth = 280;
 
 export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent, currentUser, menuItems }) => {
-  const [open, setOpen] = useState(true);
+  const { fetchData, storeData } = useLocalStorage();
+  const value = fetchData<boolean>('SideBarIsOpenKey');
+  const [open, setOpen] = useState(value ?? true);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    storeData<boolean>('SideBarIsOpenKey', true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    storeData<boolean>('SideBarIsOpenKey', false);
   };
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
