@@ -8,8 +8,8 @@ import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import 'modern-css-reset/dist/reset.min.css';
 
 import { theme } from '../theme';
-import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 
 const inputGlobalStyles = (
   <GlobalStyles
@@ -27,14 +27,20 @@ const inputGlobalStyles = (
 );
 
 function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode; session?: Session } }): JSX.Element {
-  const getLayout = Component.getLayout || ((page) => page);
+  const getLayout =
+    Component.getLayout ||
+    ((page) => (
+      <>
+        <NavigationBar />
+        {page}
+      </>
+    ));
 
   return (
     <MaterialThemeProvider theme={theme}>
       <SnackbarProvider>
         <SessionProvider session={pageProps.session}>
           {inputGlobalStyles}
-          <NavigationBar />
           {getLayout(<Component {...pageProps} />)}
         </SessionProvider>
       </SnackbarProvider>
