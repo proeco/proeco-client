@@ -1,0 +1,31 @@
+name: Storybook Build and Deploy
+
+on:
+  push:
+    branches-ignore:
+      - release/**
+
+jobs:
+  build-and-deploy:
+    name: build-and-deploy storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install and Build
+        run: |
+          yarn install
+          yarn build-storybook
+      - name: deploy storybook
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: storybook-static
+      - name: Slack Notification
+        uses: weseek/ghaction-slack-notification@master
+        if: always()
+        with:
+          type: ${{ job.status }}
+          job_name: '*deploy proeco storybook*'
+          channel: '#proeco-ci'
+          isCompactMode: true
+          url: ${{ secrets.SLACK_WEBHOOK_URL }}

@@ -1,6 +1,8 @@
 import React, { VFC, ComponentProps } from 'react';
 import {
   Add,
+  ChevronLeft,
+  ChevronRight,
   CreateOutlined,
   DashboardOutlined,
   Delete,
@@ -10,15 +12,16 @@ import {
   Logout,
   MoreVert,
   PersonOutline,
+  Photo,
   Settings,
   Update,
-  ChevronLeft,
-  ChevronRight,
 } from '@mui/icons-material';
 import { Box, styled } from '@mui/system';
 
 export const IconMap = {
   Add: <Add />,
+  ChevronLeft: <ChevronLeft />,
+  ChevronRight: <ChevronRight />,
   CreateOutlined: <CreateOutlined />,
   DashboardOutlined: <DashboardOutlined />,
   Delete: <Delete />,
@@ -28,10 +31,9 @@ export const IconMap = {
   Logout: <Logout />,
   MoreVert: <MoreVert />,
   PersonOutline: <PersonOutline />,
+  Photo: <Photo />,
   Settings: <Settings />,
   Update: <Update />,
-  ChevronLeft: <ChevronLeft />,
-  ChevronRight: <ChevronRight />,
 };
 
 type IconType = {

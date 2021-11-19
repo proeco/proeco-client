@@ -3,9 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import { MongoClient, ObjectId } from 'mongodb';
-
-const client = new MongoClient(process.env.MONGO_URI as string);
+import { clientPromise } from '~/libs/mongodb';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> =>
   NextAuth(req, res, {
@@ -16,8 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       }),
     ],
     adapter: MongoDBAdapter({
-      db: () => client.db('proeco'),
-      ObjectId,
+      db: (await clientPromise).db('proeco'),
     }),
 
     callbacks: {
