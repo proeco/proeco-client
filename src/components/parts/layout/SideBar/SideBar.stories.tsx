@@ -21,8 +21,6 @@ const Template: ComponentStory<typeof SideBar> = ({ ...rest }) => {
   return <SideBar {...rest} />;
 };
 
-export const Default = Template.bind({});
-
 const mockUser = createMockUser({ name: 'Proeco', image: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' });
 
 const openContent = (
@@ -38,7 +36,8 @@ const closeContent = (
   </Box>
 );
 
-Default.args = {
+export const DefaultSideBar = Template.bind({});
+DefaultSideBar.args = {
   asPath: URLS.DASHBOARD,
   openContent: openContent,
   closeContent: closeContent,
@@ -59,6 +58,11 @@ Default.args = {
       text: '設定',
     },
   ],
+};
+
+export const SideBarWithUserIcon = Template.bind({});
+SideBarWithUserIcon.args = {
+  ...DefaultSideBar.args,
   currentUser: mockUser,
   menuItems: [
     {

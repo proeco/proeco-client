@@ -87,7 +87,12 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
       </StyledSideBarWrapper>
       {currentUser && menuItems && (
         <Box p="0 0 16px 16px">
-          <StyledUserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} onClick={handleClick} />
+          <Box display="flex" alignItems="center">
+            <StyledUserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} onClick={handleClick} open={open} />
+            <StyledTypography variant="body1" open={open}>
+              {currentUser.name}
+            </StyledTypography>
+          </Box>
           <Menu
             transformOrigin={{
               vertical: 'top',
@@ -162,6 +167,11 @@ const StyledSideBarWrapper = styled(Box)`
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
 `;
 
-const StyledUserIcon = styled(UserIcon)`
+const StyledUserIcon = styled(UserIcon)<{ open: boolean }>`
   cursor: pointer;
+  margin-right: ${(props) => (props.open ? '8px' : '0px')};
+`;
+
+const StyledTypography = styled(Typography)<{ open: boolean }>`
+  display: ${(props) => (props.open ? 'block' : 'none')};
 `;

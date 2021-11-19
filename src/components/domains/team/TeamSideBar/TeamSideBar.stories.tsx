@@ -19,7 +19,7 @@ const Template: ComponentStory<typeof Component> = ({ ...rest }) => {
 };
 
 const mockTeam = createMockTeam({ name: 'Proeco', iconImage: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' });
-const mockUser = createMockUser({ image: 'https://storage.cloud.google.com/proeco/6190af4da62f638c34cdbcbf/team-icons/myicon.png' });
+const mockUser = createMockUser({ name: 'user', image: 'https://storage.cloud.google.com/proeco/6190af4da62f638c34cdbcbf/team-icons/myicon.png' });
 
 export const Default = Template.bind({});
 Default.args = {
