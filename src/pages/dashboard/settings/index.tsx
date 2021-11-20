@@ -11,7 +11,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { restClient } from '~/utils/rest-client';
 
 const DashboardSettingsPage: ProecoNextPage = () => {
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
   const [newUser, setNewUser] = useState<Pick<User, 'name' | 'description'>>({
     name: '',
     description: '',
@@ -42,10 +42,10 @@ const DashboardSettingsPage: ProecoNextPage = () => {
 
   const handleClickCreateNewTeam = async () => {
     setIsUpdating(true);
-    console.log('handleClickCreateNewTeam');
     try {
-      await restClient.apiPut('/users', { ...newUser });
+      const { data } = await restClient.apiPut<User>('/users', { ...newUser });
       notifySuccessMessage('チームを作成しました');
+      mutateCurrentUser(data, false);
       setIsUpdating(false);
     } catch (error) {
       notifyErrorMessage('チームの作成に失敗しました');
