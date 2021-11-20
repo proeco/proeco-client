@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { Box, styled } from '@mui/system';
 
 import { Skeleton } from '@mui/material';
-import { signOut } from 'next-auth/react';
 import { Typography, Icon } from '~/components/parts/commons';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { UserIconGroup } from '~/components/domains/user/UserIconGroup';
@@ -15,6 +14,7 @@ import { URLS } from '~/constants/urls';
 import { useTeam, useTeamUsers } from '~/stores/team';
 import { SideBar } from '~/components/parts/layout/SideBar';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useAuth } from '~/hooks/useAuth/useAuth';
 
 type Props = {
   currentTeam?: Team;
@@ -138,6 +138,7 @@ export const TeamSideBar: VFC = memo(() => {
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUser();
+  const { logout } = useAuth();
 
   const { data: currentTeam, isValidating: isValidatingTeam } = useTeam({
     teamId: router.query.teamId as string,
@@ -151,7 +152,7 @@ export const TeamSideBar: VFC = memo(() => {
     {
       icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
       text: 'Logout',
-      onClick: () => signOut(),
+      onClick: () => logout(),
     },
   ];
 

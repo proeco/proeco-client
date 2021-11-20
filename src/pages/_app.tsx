@@ -1,7 +1,5 @@
-import { SessionProvider } from 'next-auth/react';
 import { SnackbarProvider } from 'notistack';
 import { GlobalStyles } from '@mui/material';
-import { Session } from 'next-auth';
 import { ReactNode } from 'react';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 
@@ -26,7 +24,7 @@ const inputGlobalStyles = (
   />
 );
 
-function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode; session?: Session } }): JSX.Element {
+function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode } }): JSX.Element {
   const getLayout =
     Component.getLayout ||
     ((page) => (
@@ -39,10 +37,8 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
   return (
     <MaterialThemeProvider theme={theme}>
       <SnackbarProvider>
-        <SessionProvider session={pageProps.session}>
-          {inputGlobalStyles}
-          {getLayout(<Component {...pageProps} />)}
-        </SessionProvider>
+        {inputGlobalStyles}
+        {getLayout(<Component {...pageProps} />)}
       </SnackbarProvider>
     </MaterialThemeProvider>
   );

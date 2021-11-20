@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { signIn, signOut } from 'next-auth/react';
 import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
 import { AppBar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -13,6 +12,7 @@ import { LoginModal } from '~/components/parts/authentication/LoginModal';
 import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
+import { useAuth } from '~/hooks/useAuth/useAuth';
 
 type Props = {
   currentUser?: User;
@@ -50,12 +50,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
     }
 
     return (
-      <StyledButton
-        bold
-        onClick={() => {
-          setIsLoginModalOpen(true);
-        }}
-      >
+      <StyledButton bold onClick={() => setIsLoginModalOpen(true)}>
         Login Button
       </StyledButton>
     );
@@ -104,27 +99,20 @@ const StyledUserIcon = styled(UserIcon)`
 `;
 
 export const NavigationBar: VFC = memo(() => {
+  const { login, logout } = useAuth();
   const menuItems = [
     {
       icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
       text: 'Logout',
-      onClick: () => signOut(),
+      onClick: logout,
     },
   ];
 
-  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
 
   const handleClickLoginButton = () => {
-    signIn('google');
+    login();
   };
 
-  return (
-    <Component
-      currentUser={currentUser}
-      isValidating={isValidatingCurrentUser}
-      onClickLoginButton={handleClickLoginButton}
-      menuItems={menuItems}
-      logoImagePath={IMAGE_PATH.LOGO}
-    />
-  );
+  return <Component currentUser={currentUser} isValidating onClickLoginButton={handleClickLoginButton} menuItems={menuItems} logoImagePath={IMAGE_PATH.LOGO} />;
 });
