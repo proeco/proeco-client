@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import { signOut } from 'next-auth/react';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
@@ -9,8 +8,8 @@ import { URLS } from '~/constants';
 import { useAuth } from '~/hooks/useAuth/useAuth';
 
 const Home: NextPage = () => {
-  const { currentUser } = useCurrentUser();
-  const { login } = useAuth();
+  const { data: currentUser } = useCurrentUser();
+  const { login, logout } = useAuth();
 
   return (
     <>
@@ -27,7 +26,7 @@ const Home: NextPage = () => {
         <>
           <Typography variant="h3">Hello {currentUser.name}!</Typography>
           <img height="200px" width="200px" src={currentUser.image} />
-          <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={() => signOut()}>
+          <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={logout}>
             Logout
           </Button>
         </>
