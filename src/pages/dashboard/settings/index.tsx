@@ -1,11 +1,34 @@
 import { Box } from '@mui/system';
-import { ReactNode } from 'react';
-import { Typography } from '~/components/parts/commons';
+import { useEffect, useState, ReactNode } from 'react';
+import { Paper, TextField, Typography } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
+import { User } from '~/domains';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 const DashboardSettingsPage: ProecoNextPage = () => {
+  const { data: currentUser } = useCurrentUser();
+  const [nerUser, setNewUser] = useState<Pick<User, 'name' | 'description'>>({
+    name: '',
+    description: '',
+  });
+
+  useEffect(() => {
+    if (currentUser) {
+      setNewUser(currentUser);
+    }
+  }, [currentUser]);
+
+  const updateUserForm = (newObject: Partial<User>) => {
+    setNewUser((prevState) => {
+      return {
+        ...prevState,
+        ...newObject,
+      };
+    });
+  };
+
   return (
     <>
       <ProecoOgpHead />
@@ -15,6 +38,20 @@ const DashboardSettingsPage: ProecoNextPage = () => {
             設定
           </Typography>
         </Box>
+        <Paper>
+          <Box mb="16px">
+            <Typography mb="4px" variant="body1" color="textColor.light">
+              ユーザー名
+            </Typography>
+            <TextField fullWidth value={nerUser?.name} onChange={(e) => updateUserForm({ name: e.target.value })} />
+          </Box>
+          <Box mb="16px">
+            <Typography mb="4px" variant="body1" color="textColor.light">
+              自己紹介
+            </Typography>
+            <TextField fullWidth multiline rows={4} value={nerUser?.description} onChange={(e) => updateUserForm({ description: e.target.value })} />
+          </Box>
+        </Paper>
       </Box>
     </>
   );
