@@ -31,6 +31,7 @@
     "chromaui",
     "countup",
     "favicons",
+    "ghaction",
     "gtag",
     "hoge",
     "huga",
@@ -54,6 +55,7 @@
     "tada",
     "toastr",
     "unstyled",
-    "Webev"
+    "Webev",
+    "weseek"
   ]
 }

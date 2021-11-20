@@ -2,6 +2,8 @@ name: Storybook Build and Deploy
 
 on:
   push:
+    paths:
+      - '**.stories.tsx'
     branches-ignore:
       - release/**
 
