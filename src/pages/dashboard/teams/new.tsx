@@ -80,7 +80,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Typography>
           <TextField fullWidth multiline value={team.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
-            説明
+            どんなプロダクト？
           </Typography>
           <TextField fullWidth multiline value={team.description} rows={4} onChange={(e) => updateStoryForm({ description: e.target.value })} />
           <Box mt={4} textAlign="center">
