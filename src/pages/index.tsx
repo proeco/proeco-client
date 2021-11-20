@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       </Typography>
       <Link href={URLS.DASHBOARD}>
         <Button color="primary" variant="contained">
-          ダッシュボードへ
+          ホームへ
         </Button>
       </Link>
       {currentUser ? (

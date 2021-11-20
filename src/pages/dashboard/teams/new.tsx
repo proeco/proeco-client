@@ -69,7 +69,8 @@ const DashboardTeamPage: ProecoNextPage = () => {
       <ProecoOgpHead />
       <Box p={5} mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h3" bold>
+          <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+            <Icon icon="CreateOutlined" width={32} />
             新規チームを作成する
           </Typography>
         </Box>
@@ -80,7 +81,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Typography>
           <TextField fullWidth multiline value={team.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
-            説明
+            どんなプロダクト？
           </Typography>
           <TextField fullWidth multiline value={team.description} rows={4} onChange={(e) => updateStoryForm({ description: e.target.value })} />
           <Box mt={4} textAlign="center">

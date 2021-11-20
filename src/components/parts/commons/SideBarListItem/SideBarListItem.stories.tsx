@@ -14,7 +14,7 @@ const Template: ComponentStory<typeof SideBarListItem> = ({ icon, selected }) =>
   return (
     <StyledList>
       <SideBarListItem icon={icon} selected={selected}>
-        <Typography variant="body1">ダッシュボード</Typography>
+        <Typography variant="body1">ホーム</Typography>
       </SideBarListItem>
     </StyledList>
   );

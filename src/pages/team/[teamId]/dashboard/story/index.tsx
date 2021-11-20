@@ -44,7 +44,8 @@ const StoryList: ProecoNextPage = () => {
       <ProecoOgpHead />
       <Box p={5} mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h3" bold>
+          <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+            <Icon icon="HistoryEdu" width={32} />
             ストーリーリスト
           </Typography>
           <Button variant="contained" bold onClick={handleClickCreateStoryButton} startIcon={<Icon icon="CreateOutlined" width="20px" />}>
