@@ -1,6 +1,6 @@
 import { Box } from '@mui/system';
 import { useEffect, useState, ReactNode } from 'react';
-import { Paper, TextField, Typography } from '~/components/parts/commons';
+import { Button, Icon, Paper, TextField, Typography } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { User } from '~/domains';
@@ -13,6 +13,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     name: '',
     description: '',
   });
+  const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -27,6 +28,11 @@ const DashboardSettingsPage: ProecoNextPage = () => {
         ...newObject,
       };
     });
+  };
+
+  const handleClickCreateNewTeam = () => {
+    setIsCreating(true);
+    console.log('handleClickCreateNewTeam');
   };
 
   return (
@@ -50,6 +56,11 @@ const DashboardSettingsPage: ProecoNextPage = () => {
               自己紹介
             </Typography>
             <TextField fullWidth multiline rows={4} value={nerUser?.description} onChange={(e) => updateUserForm({ description: e.target.value })} />
+          </Box>
+          <Box mt={4} textAlign="center">
+            <Button disabled={isCreating} color="primary" variant="contained" startIcon={<Icon icon="Update" width="20px" />} onClick={handleClickCreateNewTeam}>
+              更新する
+            </Button>
           </Box>
         </Paper>
       </Box>
