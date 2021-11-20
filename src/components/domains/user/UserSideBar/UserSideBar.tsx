@@ -94,7 +94,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
     );
   }, [isValidating, currentUser]);
 
-  return <SideBar asPath={asPath} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
+  return <SideBar asPath={asPath} currentUser={currentUser} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
 });
 
 const StyledUserIconWrapper = styled(Box)`

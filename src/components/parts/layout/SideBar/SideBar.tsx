@@ -85,23 +85,25 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
             );
           })}
         </Box>
-        {currentUser && menuItems && (
+        {currentUser && (
           <Box mt="auto">
-            <StyledBox onClick={handleClick} display="flex" alignItems="center" gap="8px">
+            <StyledBox onClick={handleClick} display="flex" alignItems="center" gap="8px" isPointer={!!menuItems}>
               <UserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} />
               {open && <Typography variant="body1">{currentUser.name}</Typography>}
             </StyledBox>
-            <Menu
-              anchorOrigin={{ vertical: -8, horizontal: 'left' }}
-              transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              anchorEl={anchorEl}
-              open={menuOpen}
-              menuItems={menuItems}
-              onClose={handleClose}
-            />
+            {menuItems && (
+              <Menu
+                anchorOrigin={{ vertical: -8, horizontal: 'left' }}
+                transformOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                anchorEl={anchorEl}
+                open={menuOpen}
+                menuItems={menuItems}
+                onClose={handleClose}
+              />
+            )}
           </Box>
         )}
       </StyledSideBarWrapper>
@@ -164,6 +166,6 @@ const StyledSideBarWrapper = styled(Box)`
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
 `;
 
-const StyledBox = styled(Box)`
-  cursor: pointer;
+const StyledBox = styled(Box)<{ isPointer: boolean }>`
+  ${(props) => props.isPointer && 'cursor: pointer;'}
 `;

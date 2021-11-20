@@ -14,7 +14,6 @@ import { URLS } from '~/constants/urls';
 import { useTeam, useTeamUsers } from '~/stores/team';
 import { SideBar } from '~/components/parts/layout/SideBar';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { useAuth } from '~/hooks/useAuth/useAuth';
 
 type Props = {
   currentTeam?: Team;
@@ -138,7 +137,6 @@ export const TeamSideBar: VFC = memo(() => {
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUser();
-  const { logout } = useAuth();
 
   const { data: currentTeam, isValidating: isValidatingTeam } = useTeam({
     teamId: router.query.teamId as string,
@@ -151,8 +149,8 @@ export const TeamSideBar: VFC = memo(() => {
   const menuItems = [
     {
       icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
-      text: 'Logout',
-      onClick: () => logout(),
+      text: '個人画面に戻る',
+      onClick: () => router.push(URLS.DASHBOARD),
     },
   ];
 
