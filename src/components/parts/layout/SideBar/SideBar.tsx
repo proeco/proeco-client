@@ -1,10 +1,14 @@
-import { ComponentProps, memo, VFC, useState } from 'react';
+import { ComponentProps, memo, VFC, useState, MouseEvent } from 'react';
 
 import { Box } from '@mui/system';
 import { Drawer as MuiDrawer } from '@mui/material';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 
-import { Typography, SideBarListItem, Icon, Link, IconButton } from '~/components/parts/commons';
+import { Typography, SideBarListItem, Icon, Link, IconButton, Menu } from '~/components/parts/commons';
+import { UserIcon } from '~/components/domains/user/UserIcon';
+import { User } from '~/domains';
+
+import { useLocalStorage } from '~/hooks/useLocalStorage';
 
 type Props = {
   asPath: string;
@@ -15,29 +19,45 @@ type Props = {
     url: string;
     text: string;
   }[];
+  currentUser?: User;
+  menuItems?: {
+    icon: JSX.Element;
+    text: string;
+    onClick: () => void;
+  }[];
 };
 
 const drawerWidth = 280;
+const isOpenSideBar = 'isOpenSideBar';
 
-export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent }) => {
-  const [open, setOpen] = useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent, currentUser, menuItems }) => {
+  const { fetchData, storeData } = useLocalStorage();
+  const value = fetchData<boolean>(isOpenSideBar);
+  const [open, setOpen] = useState(value ?? true);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const menuOpen = Boolean(anchorEl);
+
+  const handleClickChevronButton = () => {
+    setOpen((prevState) => {
+      storeData<boolean>(isOpenSideBar, !prevState);
+      return !prevState;
+    });
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
   };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <StyledDrawer variant="permanent" open={open}>
       <Box position="absolute" width="100%" bgcolor="whitesmoke" display="flex" alignItems="center" justifyContent={open ? 'flex-end' : 'center'}>
-        {open ? (
-          <IconButton icon="ChevronLeft" width={30} onClick={handleDrawerClose} />
-        ) : (
-          <IconButton icon="ChevronRight" width={30} onClick={handleDrawerOpen} />
-        )}
+        <IconButton icon={open ? 'ChevronLeft' : 'ChevronRight'} width={30} onClick={handleClickChevronButton} />
       </Box>
-      <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke">
+      <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke" height="100%" display="flex" flexDirection="column">
         {open ? openContent : closeContent}
         <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
           {sidebarItems.map((sidebarItem, index) => {
@@ -65,6 +85,25 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
             );
           })}
         </Box>
+        {currentUser && menuItems && (
+          <Box mt="auto">
+            <StyledBox onClick={handleClick} display="flex" alignItems="center" gap="8px">
+              <UserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} />
+              {open && <Typography variant="body1">{currentUser.name}</Typography>}
+            </StyledBox>
+            <Menu
+              anchorOrigin={{ vertical: -8, horizontal: 'left' }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              anchorEl={anchorEl}
+              open={menuOpen}
+              menuItems={menuItems}
+              onClose={handleClose}
+            />
+          </Box>
+        )}
       </StyledSideBarWrapper>
     </StyledDrawer>
   );
@@ -96,9 +135,9 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
   flex-shrink: 0;
   white-space: nowrap;
   box-sizing: border-box;
+
   .MuiDrawer-paper {
     background-color: whitesmoke;
-    top: 64px;
   }
   ${(props) =>
     props.open && {
@@ -123,4 +162,8 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
 const StyledSideBarWrapper = styled(Box)`
   box-sizing: border-box;
   border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
+`;
+
+const StyledBox = styled(Box)`
+  cursor: pointer;
 `;

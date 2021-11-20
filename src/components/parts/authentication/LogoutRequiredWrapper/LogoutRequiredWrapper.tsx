@@ -1,29 +1,29 @@
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 
 import { Box } from '@mui/system';
 import { URLS } from '~/constants';
 import { CircularProgress } from '~/components/parts/commons/CircularProgress';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 export const LogoutRequiredWrapper: FC = ({ children }) => {
-  const { status } = useSession();
+  const { data: currentUser, isValidating } = useCurrentUser();
   const router = useRouter();
 
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (!isValidating && currentUser) {
       router.push(URLS.TOP);
     }
-  }, [status]);
+  }, [isValidating, currentUser]);
 
-  if (typeof window !== 'undefined' && status === 'loading')
+  if (typeof window !== 'undefined' && isValidating)
     return (
       <Box textAlign="center" pt="40px">
         <CircularProgress />
       </Box>
     );
 
-  if (status === 'unauthenticated') {
+  if (!currentUser) {
     return <>{children}</>;
   }
 

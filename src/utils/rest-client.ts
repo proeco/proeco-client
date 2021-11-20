@@ -20,7 +20,7 @@ class RestClient {
   getAccessToken() {
     const cookies = parseCookies();
 
-    return cookies['next-auth-access-token'];
+    return cookies['access-token'];
   }
 
   async apiGet(url: string, query = {}): Promise<AxiosResponse> {
@@ -33,7 +33,7 @@ class RestClient {
     }
   }
 
-  async apiPost<T>(url: string, body = {}, option?: { 'Content-Type': string }): Promise<AxiosResponse<T>> {
+  async apiPost<T>(url: string, body = {}, option?: { 'Content-Type'?: string }): Promise<AxiosResponse<T>> {
     const accessToken = this.getAccessToken();
     try {
       return await this.axios.post(`/api/v1${url}`, body, { headers: { Authorization: `Bearer ${accessToken}`, ...option } });

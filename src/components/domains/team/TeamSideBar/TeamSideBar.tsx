@@ -13,6 +13,8 @@ import { Team, User } from '~/domains';
 import { URLS } from '~/constants/urls';
 import { useTeam, useTeamUsers } from '~/stores/team';
 import { SideBar } from '~/components/parts/layout/SideBar';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useAuth } from '~/hooks/useAuth/useAuth';
 
 type Props = {
   currentTeam?: Team;
@@ -20,9 +22,15 @@ type Props = {
   isValidating: boolean;
   teamUsers: User[];
   teamId?: string;
+  currentUser?: User;
+  menuItems?: {
+    icon: JSX.Element;
+    text: string;
+    onClick: () => void;
+  }[];
 };
 
-export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating, teamId }) => {
+export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating, teamId, currentUser, menuItems }) => {
   const sidebarItems: {
     icon: ComponentProps<typeof Icon>['icon'];
     url: string;
@@ -114,7 +122,9 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
     );
   }, [isValidating, currentTeam]);
 
-  return <SideBar asPath={asPath} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
+  return (
+    <SideBar asPath={asPath} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} currentUser={currentUser} menuItems={menuItems} />
+  );
 });
 
 const StyledUserIconWrapper = styled(Box)`
@@ -127,6 +137,9 @@ const StyledUserIconWrapper = styled(Box)`
 export const TeamSideBar: VFC = memo(() => {
   const router = useRouter();
 
+  const { data: currentUser } = useCurrentUser();
+  const { logout } = useAuth();
+
   const { data: currentTeam, isValidating: isValidatingTeam } = useTeam({
     teamId: router.query.teamId as string,
   });
@@ -135,7 +148,23 @@ export const TeamSideBar: VFC = memo(() => {
     teamId: currentTeam?._id,
   });
 
+  const menuItems = [
+    {
+      icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
+      text: 'Logout',
+      onClick: () => logout(),
+    },
+  ];
+
   return (
-    <Component asPath={router.asPath} currentTeam={currentTeam} isValidating={isValidatingTeam} teamUsers={teamUser} teamId={router.query.teamId as string} />
+    <Component
+      asPath={router.asPath}
+      currentTeam={currentTeam}
+      isValidating={isValidatingTeam}
+      teamUsers={teamUser}
+      teamId={router.query.teamId as string}
+      currentUser={currentUser}
+      menuItems={menuItems}
+    />
   );
 });
