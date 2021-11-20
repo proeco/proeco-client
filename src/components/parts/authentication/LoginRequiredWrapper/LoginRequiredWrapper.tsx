@@ -26,7 +26,7 @@ export const LoginRequiredWrapper: FC = ({ children }) => {
       </Box>
     );
 
-  if (status === 'authenticated') {
+  if (currentUser) {
     return <>{children}</>;
   }
 

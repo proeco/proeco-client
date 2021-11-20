@@ -23,7 +23,7 @@ export const LogoutRequiredWrapper: FC = ({ children }) => {
       </Box>
     );
 
-  if (status === 'unauthenticated') {
+  if (!currentUser) {
     return <>{children}</>;
   }
 
