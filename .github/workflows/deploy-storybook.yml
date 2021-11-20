@@ -2,6 +2,8 @@ name: Storybook Build and Deploy
 
 on:
   push:
+    paths:
+      - '**.stories.tsx'
     branches-ignore:
       - release/**
 
@@ -16,7 +18,7 @@ jobs:
           yarn install
           yarn build-storybook
       - name: deploy storybook
-        uses: JamesIves/github-pages-deploy-action@4.1.0
+        uses: JamesIves/github-pages-deploy-action@4.1.6
         with:
           branch: gh-pages
           folder: storybook-static

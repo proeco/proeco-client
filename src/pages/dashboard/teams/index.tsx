@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { Box, styled } from '@mui/system';
 import { ReactNode } from 'react';
 import { Button, Icon, Link, Typography } from '~/components/parts/commons';
@@ -14,6 +15,7 @@ import { TeamCard } from '~/components/domains/team/TeamCard';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 
 const DashboardTeamPage: ProecoNextPage = () => {
+  const router = useRouter();
   const { data: currentUser } = useCurrentUser();
   const { data: teams } = useTeams({
     userId: currentUser?._id,
@@ -24,7 +26,8 @@ const DashboardTeamPage: ProecoNextPage = () => {
       <ProecoOgpHead />
       <Box p={5} mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h3" bold>
+          <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+            <Icon icon="Group" width={32} />
             チームリスト
           </Typography>
           <Link href={URLS.DASHBOARD_TEAMS_NEW}>
@@ -34,11 +37,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Link>
         </Box>
         <StyledTeamList display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center" gap="40px">
-          {teams ? (
-            teams.map((team) => <TeamCard key={team._id} team={team} onClick={() => window.open(`/team/${team._id}/dashboard`, '_blank')} />)
-          ) : (
-            <SkeltonTeamCard />
-          )}
+          {teams ? teams.map((team) => <TeamCard key={team._id} team={team} onClick={() => router.push(`/team/${team._id}/dashboard`)} />) : <SkeltonTeamCard />}
         </StyledTeamList>
       </Box>
     </>

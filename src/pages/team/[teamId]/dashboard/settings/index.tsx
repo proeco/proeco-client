@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 
 import { ReactNode } from 'react';
-import { Typography } from '~/components/parts/commons';
+import { Icon, Paper, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
@@ -12,9 +12,13 @@ const StoryList: ProecoNextPage = () => {
     <>
       <ProecoOgpHead />
       <Box p={5} mx="auto" maxWidth="1200px">
-        <Typography variant="h3" bold>
-          設定
-        </Typography>
+        <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
+          <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+            <Icon icon="Settings" width={32} />
+            設定
+          </Typography>
+        </Box>
+        <Paper>TBD</Paper>
       </Box>
     </>
   );
