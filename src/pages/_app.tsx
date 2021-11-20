@@ -24,7 +24,7 @@ const inputGlobalStyles = (
   />
 );
 
-function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode; session?: Session } }): JSX.Element {
+function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode } }): JSX.Element {
   const getLayout =
     Component.getLayout ||
     ((page) => (
