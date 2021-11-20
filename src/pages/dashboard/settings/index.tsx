@@ -4,20 +4,28 @@ import { Button, Icon, Paper, TextField, Typography } from '~/components/parts/c
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { User } from '~/domains';
+import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { restClient } from '~/utils/rest-client';
 
 const DashboardSettingsPage: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
-  const [nerUser, setNewUser] = useState<Pick<User, 'name' | 'description'>>({
+  const [newUser, setNewUser] = useState<Pick<User, 'name' | 'description'>>({
     name: '',
     description: '',
   });
-  const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const { notifyErrorMessage } = useErrorNotification();
+  const { notifySuccessMessage } = useSuccessNotification();
 
   useEffect(() => {
     if (currentUser) {
-      setNewUser(currentUser);
+      setNewUser({
+        name: currentUser.name,
+        description: currentUser.description,
+      });
     }
   }, [currentUser]);
 
@@ -30,9 +38,16 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     });
   };
 
-  const handleClickCreateNewTeam = () => {
-    setIsCreating(true);
+  const handleClickCreateNewTeam = async () => {
+    setIsUpdating(true);
     console.log('handleClickCreateNewTeam');
+    try {
+      await restClient.apiPut('/users', { ...newUser });
+      notifySuccessMessage('チームを作成しました');
+      setIsUpdating(false);
+    } catch (error) {
+      notifyErrorMessage('チームの作成に失敗しました');
+    }
   };
 
   return (
@@ -49,16 +64,16 @@ const DashboardSettingsPage: ProecoNextPage = () => {
             <Typography mb="4px" variant="body1" color="textColor.light">
               ユーザー名
             </Typography>
-            <TextField fullWidth value={nerUser?.name} onChange={(e) => updateUserForm({ name: e.target.value })} />
+            <TextField fullWidth value={newUser?.name} onChange={(e) => updateUserForm({ name: e.target.value })} />
           </Box>
           <Box mb="16px">
             <Typography mb="4px" variant="body1" color="textColor.light">
               自己紹介
             </Typography>
-            <TextField fullWidth multiline rows={4} value={nerUser?.description} onChange={(e) => updateUserForm({ description: e.target.value })} />
+            <TextField fullWidth multiline rows={4} value={newUser?.description} onChange={(e) => updateUserForm({ description: e.target.value })} />
           </Box>
           <Box mt={4} textAlign="center">
-            <Button disabled={isCreating} color="primary" variant="contained" startIcon={<Icon icon="Update" width="20px" />} onClick={handleClickCreateNewTeam}>
+            <Button disabled={isUpdating} color="primary" variant="contained" startIcon={<Icon icon="Update" width="20px" />} onClick={handleClickCreateNewTeam}>
               更新する
             </Button>
           </Box>
