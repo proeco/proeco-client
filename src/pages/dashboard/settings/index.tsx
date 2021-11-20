@@ -17,6 +17,8 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     description: '',
   });
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isValidForm, setIsValidForm] = useState(true);
+
   const { notifyErrorMessage } = useErrorNotification();
   const { notifySuccessMessage } = useSuccessNotification();
 
@@ -50,6 +52,10 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     }
   };
 
+  useEffect(() => {
+    setIsValidForm(newUser.name.trim() !== '');
+  }, [newUser]);
+
   return (
     <>
       <ProecoOgpHead />
@@ -73,7 +79,13 @@ const DashboardSettingsPage: ProecoNextPage = () => {
             <TextField fullWidth multiline rows={4} value={newUser?.description} onChange={(e) => updateUserForm({ description: e.target.value })} />
           </Box>
           <Box mt={4} textAlign="center">
-            <Button disabled={isUpdating} color="primary" variant="contained" startIcon={<Icon icon="Update" width="20px" />} onClick={handleClickCreateNewTeam}>
+            <Button
+              disabled={isUpdating || !isValidForm}
+              color="primary"
+              variant="contained"
+              startIcon={<Icon icon="Update" width="20px" />}
+              onClick={handleClickCreateNewTeam}
+            >
               更新する
             </Button>
           </Box>
