@@ -1770,10 +1770,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@firebase/app@0.7.8":
-  version "0.7.8"
-  resolved "https://registry.yarnpkg.com/@firebase/app/-/app-0.7.8.tgz#3ea30155cac7f26726f0d28fe3783a910e8ab83f"
-  integrity sha512-jUoGu25aS1C+07VFHizFC/fw6ICkH0NCcRxwvBvD61fJwoTHMUw/mgXixMTTwBNGb5zAg5TAouZJE4DXmto7pQ==
+"@firebase/app@0.7.9":
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/@firebase/app/-/app-0.7.9.tgz#fc0e433393ebc9c714339f29a78ed8d9a355b606"
+  integrity sha512-Ke+FRbmCvGaHuJjnNU1UM/W8K1P4mF31sf0lkWrPaJrdQNCaRDJAoI0S/lyLqbJWTjdJgsMN1yw2McR5pAs3Rg==
   dependencies:
     "@firebase/component" "0.5.9"
     "@firebase/logger" "0.3.2"
