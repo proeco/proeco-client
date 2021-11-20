@@ -1,30 +1,19 @@
-import { FC, createContext, useEffect, useState } from 'react';
-import { auth } from '~/libs/firebase';
+import { FC, createContext } from 'react';
+import { User } from '~/domains';
+// import { auth } from '~/libs/firebase';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type AuthContextProps = {
-  currentUser: null | undefined;
+  currentUser: User | undefined;
+  isValidating: boolean;
 };
 
-const CurrentUserContext = createContext<AuthContextProps>({ currentUser: undefined });
+const CurrentUserContext = createContext<AuthContextProps>({ currentUser: undefined, isValidating: true });
 
 const AuthProvider: FC = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<any>(undefined);
+  const { data: currentUser, isValidating } = useCurrentUser();
 
-  const fetchCurrentUser = async () => {
-    auth.onAuthStateChanged(async (authUser) => {
-      console.log(15, authUser);
-      // Onn のユーザーデータが存在するかを確認する
-      if (authUser) {
-        setCurrentUser(authUser);
-      }
-    });
-  };
-
-  useEffect(() => {
-    fetchCurrentUser();
-  }, []);
-
-  return <CurrentUserContext.Provider value={{ currentUser }}>{children}</CurrentUserContext.Provider>;
+  return <CurrentUserContext.Provider value={{ currentUser, isValidating }}>{children}</CurrentUserContext.Provider>;
 };
 
 export { CurrentUserContext, AuthProvider };
