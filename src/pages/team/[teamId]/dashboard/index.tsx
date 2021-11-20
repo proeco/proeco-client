@@ -13,7 +13,7 @@ const Dashboard: ProecoNextPage = () => {
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
             <Icon icon="DashboardOutlined" width={32} />
-            ダッシュボード
+            ホーム
           </Typography>
         </Box>
       </Box>

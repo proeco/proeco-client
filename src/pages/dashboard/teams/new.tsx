@@ -69,7 +69,8 @@ const DashboardTeamPage: ProecoNextPage = () => {
       <ProecoOgpHead />
       <Box p={5} mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h3" bold>
+          <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+            <Icon icon="CreateOutlined" width={32} />
             新規チームを作成する
           </Typography>
         </Box>
