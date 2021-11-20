@@ -13,7 +13,6 @@ import { LoginModal } from '~/components/parts/authentication/LoginModal';
 import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
-import { useAuth } from '~/hooks/useAuth/useAuth';
 
 type Props = {
   currentUser?: User;
@@ -37,7 +36,6 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
     setAnchorEl(null);
   };
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const { login } = useAuth();
 
   const Contents = useMemo(() => {
     if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
@@ -52,13 +50,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
     }
 
     return (
-      <StyledButton
-        bold
-        onClick={() => {
-          login();
-          // setIsLoginModalOpen(true);
-        }}
-      >
+      <StyledButton bold onClick={() => setIsLoginModalOpen(true)}>
         Login Button
       </StyledButton>
     );
@@ -115,7 +107,7 @@ export const NavigationBar: VFC = memo(() => {
     },
   ];
 
-  const { currentUser } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
   console.log(currentUser);
 
   const handleClickLoginButton = () => {
