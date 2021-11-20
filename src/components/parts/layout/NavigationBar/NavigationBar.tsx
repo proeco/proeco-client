@@ -109,7 +109,6 @@ export const NavigationBar: VFC = memo(() => {
   ];
 
   const { data: currentUser } = useCurrentUser();
-  console.log(currentUser);
 
   const handleClickLoginButton = () => {
     login();
