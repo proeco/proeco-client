@@ -1,13 +1,11 @@
 import { SnackbarProvider } from 'notistack';
 import { GlobalStyles } from '@mui/material';
-import { Session } from 'next-auth';
 import { ReactNode } from 'react';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 
 import 'modern-css-reset/dist/reset.min.css';
 
 import { theme } from '../theme';
-import { AuthProvider } from '~/contexts/CurrentUserProvider';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 
@@ -37,14 +35,12 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
     ));
 
   return (
-    <AuthProvider>
-      <MaterialThemeProvider theme={theme}>
-        <SnackbarProvider>
-          {inputGlobalStyles}
-          {getLayout(<Component {...pageProps} />)}
-        </SnackbarProvider>
-      </MaterialThemeProvider>
-    </AuthProvider>
+    <MaterialThemeProvider theme={theme}>
+      <SnackbarProvider>
+        {inputGlobalStyles}
+        {getLayout(<Component {...pageProps} />)}
+      </SnackbarProvider>
+    </MaterialThemeProvider>
   );
 }
 
