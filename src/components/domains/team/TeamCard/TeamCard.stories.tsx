@@ -20,7 +20,7 @@ const Template: ComponentStory<typeof TeamCard> = ({ ...rest }) => {
   );
 };
 
-const mockTeam = createMockTeam({ name: 'Proeco', iconImage: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' });
+const mockTeam = createMockTeam({ name: 'Proeco' });
 const mockTeamWithoutImage = createMockTeam({ name: 'Proeco' });
 const mockLongTextTeam = createMockTeam({
   ...mockTeam,
