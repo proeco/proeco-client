@@ -14,7 +14,7 @@ export const LogoutRequiredWrapper: FC = ({ children }) => {
     if (!isValidating && currentUser) {
       router.push(URLS.TOP);
     }
-  }, [isValidating, currentUser]);
+  }, [isValidating, currentUser, router]);
 
   if (typeof window !== 'undefined' && isValidating)
     return (

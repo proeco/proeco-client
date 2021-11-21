@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent, ReactNode, ComponentProps, useMemo } from 'react';
+import React, { useState, MouseEvent, ReactNode, ComponentProps, useMemo, useCallback } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
@@ -47,12 +47,15 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { mutate: mutateIsOpenDeleteStoryTaskModal } = useIsOpenDeleteStoryTaskModal();
   const { mutate: mutateStoryTaskForDelete } = useStoryTaskForDelete();
 
-  const handleClickDeleteStoryTask = (id: string) => {
-    const storyTask = storyTasks?.docs.find((storyTask) => storyTask._id === id);
-    if (!storyTask) return;
-    mutateIsOpenDeleteStoryTaskModal(true);
-    mutateStoryTaskForDelete(storyTask);
-  };
+  const handleClickDeleteStoryTask = useCallback(
+    (id: string) => {
+      const storyTask = storyTasks?.docs.find((storyTask) => storyTask._id === id);
+      if (!storyTask) return;
+      mutateIsOpenDeleteStoryTaskModal(true);
+      mutateStoryTaskForDelete(storyTask);
+    },
+    [mutateIsOpenDeleteStoryTaskModal, mutateStoryTaskForDelete, storyTasks?.docs],
+  );
 
   const timeLineItems: {
     title: string;
@@ -84,7 +87,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         ],
       };
     });
-  }, [storyTasks, currentUser]);
+  }, [storyTasks, currentUser, handleClickDeleteStoryTask]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
