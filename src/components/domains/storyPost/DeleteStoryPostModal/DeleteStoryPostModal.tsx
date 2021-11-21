@@ -4,56 +4,56 @@ import { useRouter } from 'next/router';
 import { Button, Modal, Typography } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
-import { useIsOpenDeleteStoryTaskModal } from '~/stores/modal/useIsOpenDeleteStoryTaskModal';
-import { useStoryTaskForDelete } from '~/stores/storyTask/useStoryTaskForDelete';
+import { useIsOpenDeleteStoryPostModal } from '~/stores/modal/useIsOpenDeleteStoryPostModal';
+import { useStoryPostForDelete } from '~/stores/storyPost/useStoryPostForDelete';
 import { restClient } from '~/utils/rest-client';
-import { useStoryTasks } from '~/stores/storyTask';
+import { useStoryPosts } from '~/stores/storyPost';
 
 type Props = {
   isOpen: boolean;
   title: string;
-  onClickDeleteStoryTaskButton: () => void;
+  onClickDeleteStoryPostButton: () => void;
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, onClickDeleteStoryTaskButton, onCloseModal }) => {
+export const Component: VFC<Props> = ({ isOpen, title, onClickDeleteStoryPostButton, onCloseModal }) => {
   const content = (
     <>
       <Box mb="20px">
         <Typography mb="8px" variant="body1" color="textColor.main">
-          タスク名
+          ポスト名
         </Typography>
         <Typography variant="h3" bold>
           {title}
         </Typography>
       </Box>
       <Box width="100%" textAlign="center">
-        <Button color="error" variant="contained" onClick={onClickDeleteStoryTaskButton}>
+        <Button color="error" variant="contained" onClick={onClickDeleteStoryPostButton}>
           削除
         </Button>
       </Box>
     </>
   );
-  return <Modal open={isOpen} title="タスクを削除する" onClose={onCloseModal} content={content} emojiId="wastebasket" size="small" />;
+  return <Modal open={isOpen} title="ポストを削除する" onClose={onCloseModal} content={content} emojiId="wastebasket" size="small" />;
 };
 
-export const DeleteStoryTaskModal: VFC = () => {
+export const DeleteStoryPostModal: VFC = () => {
   const router = useRouter();
   const { storyId } = router.query;
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { mutate: mutateStoryTasks } = useStoryTasks({
+  const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId: storyId as string,
     page: page,
     limit: 10,
   });
 
-  const { data: isOpenDeleteStoryTaskModal, mutate: mutateIsOpenDeleteStoryTaskModal } = useIsOpenDeleteStoryTaskModal();
+  const { data: isOpenDeleteStoryPostModal, mutate: mutateIsOpenDeleteStoryPostModal } = useIsOpenDeleteStoryPostModal();
 
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
-  const { data: storyTaskForDelete } = useStoryTaskForDelete();
+  const { data: storyTaskForDelete } = useStoryPostForDelete();
   const [title, setTitle] = useState('');
 
   useEffect(() => {
@@ -64,26 +64,26 @@ export const DeleteStoryTaskModal: VFC = () => {
     setTitle(storyTaskForDelete.title);
   }, [storyTaskForDelete]);
 
-  const handleClickDeleteStoryTaskButton = async () => {
+  const handleClickDeleteStoryPostButton = async () => {
     try {
       await restClient.apiDelete(`/story-tasks/${storyTaskForDelete?._id}`);
-      mutateStoryTasks();
-      notifySuccessMessage('タスクを削除しました!');
+      mutateStoryPosts();
+      notifySuccessMessage('ポストを削除しました!');
       handleCloseModal();
     } catch (error) {
-      notifyErrorMessage('タスクの削除に失敗しました!');
+      notifyErrorMessage('ポストの削除に失敗しました!');
     }
   };
 
   const handleCloseModal = () => {
-    mutateIsOpenDeleteStoryTaskModal(false);
+    mutateIsOpenDeleteStoryPostModal(false);
   };
 
   return (
     <Component
-      isOpen={!!isOpenDeleteStoryTaskModal}
+      isOpen={!!isOpenDeleteStoryPostModal}
       title={title}
-      onClickDeleteStoryTaskButton={handleClickDeleteStoryTaskButton}
+      onClickDeleteStoryPostButton={handleClickDeleteStoryPostButton}
       onCloseModal={handleCloseModal}
     />
   );

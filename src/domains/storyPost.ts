@@ -1,4 +1,4 @@
-export class StoryTask {
+export class StoryPost {
   _id: string;
   title: string;
   storyId: string;
@@ -7,7 +7,7 @@ export class StoryTask {
   completedAt: Date;
   createdAt: Date;
   updatedAt: Date;
-  constructor(init: StoryTask) {
+  constructor(init: StoryPost) {
     this._id = init._id;
     this.title = init.title;
     this.storyId = init.storyId;

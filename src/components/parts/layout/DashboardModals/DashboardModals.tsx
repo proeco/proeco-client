@@ -2,8 +2,8 @@ import { VFC } from 'react';
 import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
-import { CreateNewStoryTaskModal } from '~/components/domains/storyTask/CreateNewStoryTaskModal';
-import { DeleteStoryTaskModal } from '~/components/domains/storyTask/DeleteStoryTaskModal';
+import { CreateNewStoryPostModal } from '~/components/domains/storyPost/CreateNewStoryPostModal';
+import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 
 export const DashboardModals: VFC = () => {
   return (
@@ -11,8 +11,8 @@ export const DashboardModals: VFC = () => {
       <CreateNewStoryModal />
       <UpdateStoryModal />
       <DeleteStoryModal />
-      <CreateNewStoryTaskModal />
-      <DeleteStoryTaskModal />
+      <CreateNewStoryPostModal />
+      <DeleteStoryPostModal />
     </>
   );
 };
