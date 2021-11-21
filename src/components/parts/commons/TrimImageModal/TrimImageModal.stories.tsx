@@ -17,7 +17,7 @@ export default {
 } as ComponentMeta<typeof TrimImageModal>;
 
 const Template: ComponentStory<typeof TrimImageModal> = ({ isOpen, imagePath, onCompleteImage, onTrimImage, onCloseModal }) => {
-  const [crop, setCrop] = useState<Crop>({ unit: '%', x: 25, y: 25, aspect: 1, width: 50, height: 50 });
+  const [crop, setCrop] = useState<Crop>({ unit: 'px', x: 65, y: 65, aspect: 1, width: 130, height: 130 });
   return (
     <Box>
       <TrimImageModal
