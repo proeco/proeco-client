@@ -10,7 +10,6 @@ export const createMockStory = (mock: Partial<Story> = {}): Story => {
     _id: mock._id || 'mockId',
     title: mock.title || 'mockTitle',
     emojiId: mock.emojiId || 'mockEmojiId',
-    description: mock.description || 'mockDescription',
     teamId: mock.teamId || 'team1',
     isPrivate: mock.isPrivate || false,
     createdUserId: mock.createdUserId || 'mockCreatedUserId',
