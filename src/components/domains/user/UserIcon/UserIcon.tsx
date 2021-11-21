@@ -2,9 +2,10 @@ import { memo, VFC, ComponentProps } from 'react';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Icon, Link } from '~/components/parts/commons';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type UserIconType = {
-  imagePath?: string;
+  iconImageId?: string;
   userId?: string;
   isLink?: boolean;
   size: number;
@@ -12,8 +13,9 @@ type UserIconType = {
 
 type Props = ComponentProps<typeof Avatar> & UserIconType;
 
-export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size = 40, ...rest }) => {
-  if (!imagePath) {
+export const UserIcon: VFC<Props> = memo(({ iconImageId, userId = '', isLink = false, size = 40, ...rest }) => {
+  const { data: signedUrl } = useSignedUrl(iconImageId);
+  if (!signedUrl) {
     return (
       <StyledAvatar size={size} {...rest}>
         <Icon icon="PersonOutline" color="#ccc" width="100%" />
@@ -21,11 +23,11 @@ export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = fal
     );
   }
 
-  if (!isLink) return <StyledAvatar size={size} alt={userId} src={imagePath} {...rest} />;
+  if (!isLink) return <StyledAvatar size={size} alt={userId} src={signedUrl} {...rest} />;
 
   return (
     <Link href={'/user/' + userId}>
-      <StyledAvatar size={size} alt={userId} src={imagePath} {...rest} />
+      <StyledAvatar size={size} alt={userId} src={signedUrl} {...rest} />
     </Link>
   );
 });

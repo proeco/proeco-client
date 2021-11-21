@@ -56,7 +56,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
     if (currentUser) {
       return (
         <StyledUserIconWrapper pb="16px">
-          <UserIcon size={80} imagePath={currentUser.image} userId={currentUser._id} isLink />
+          <UserIcon size={80} iconImageId={currentUser.iconImageId} userId={currentUser._id} isLink />
           <Typography variant="h3">{currentUser.name}</Typography>
         </StyledUserIconWrapper>
       );
@@ -82,7 +82,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
     if (currentUser) {
       return (
         <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-          <UserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} isLink />
+          <UserIcon size={40} iconImageId={currentUser.iconImageId} userId={currentUser._id} isLink />
         </StyledUserIconWrapper>
       );
     }

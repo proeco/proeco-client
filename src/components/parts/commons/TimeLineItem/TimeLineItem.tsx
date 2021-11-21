@@ -6,7 +6,7 @@ import { Paper, Typography, SpeedDial, Icon, FirstLetterIcon } from '~/component
 
 type TimeLineItemType = {
   title: string;
-  imagePath?: string;
+  iconImageId?: string;
   name?: string;
   children: React.ReactNode;
   actions: {
@@ -18,12 +18,12 @@ type TimeLineItemType = {
 
 type Props = ComponentProps<typeof TimelineItem> & TimeLineItemType;
 
-export const TimeLineItem: VFC<Props> = ({ title, imagePath, name = '', children, actions, ...rest }) => {
+export const TimeLineItem: VFC<Props> = ({ title, iconImageId, name = '', children, actions, ...rest }) => {
   return (
     <StyledDiv>
       <TimelineItem {...rest}>
         <TimelineSeparator>
-          <StyledTimeLineDot>{imagePath ? <UserIcon size={40} imagePath={imagePath} /> : <FirstLetterIcon name={name} />}</StyledTimeLineDot>
+          <StyledTimeLineDot>{iconImageId ? <UserIcon size={40} iconImageId={iconImageId} /> : <FirstLetterIcon name={name} />}</StyledTimeLineDot>
           <StyledTimeLineConnector />
         </TimelineSeparator>
         <StyledTimeLineContent>

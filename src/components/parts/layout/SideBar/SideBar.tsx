@@ -88,7 +88,7 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
         {currentUser && (
           <Box mt="auto">
             <StyledBox onClick={handleClick} display="flex" alignItems="center" gap="8px" isPointer={!!menuItems}>
-              <UserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} />
+              <UserIcon size={40} iconImageId={currentUser.iconImageId} userId={currentUser._id} />
               {open && <Typography variant="body1">{currentUser.name}</Typography>}
             </StyledBox>
             {menuItems && (
