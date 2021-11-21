@@ -4,7 +4,7 @@ import { useStaticSWR } from '~/stores/useStaticSWR';
 
 /**
  * 削除対象のStoryPostを取得するSWR
- * @returns data ストーリータスク
+ * @returns data ストーリーポスト
  * @returns isValidating 取得中を表す boolean
  * @returns error エラー
  * @returns mutate データの更新関数

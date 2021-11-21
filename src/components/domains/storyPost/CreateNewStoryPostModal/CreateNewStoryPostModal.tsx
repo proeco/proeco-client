@@ -23,7 +23,7 @@ export const Component: VFC<Props> = ({ isOpen, title, isDisabled, onChangeTitle
     <>
       <Box mb="20px">
         <Typography mb="8px" variant="body1" color="textColor.main">
-          タスク名
+          ポスト名
         </Typography>
         <StyledTextField fullWidth value={title} onChange={(e) => onChangeTitle(e.target.value)} />
       </Box>
@@ -34,7 +34,7 @@ export const Component: VFC<Props> = ({ isOpen, title, isDisabled, onChangeTitle
       </Box>
     </>
   );
-  return <Modal emojiId="pencil2" title="タスクを作成する" content={content} open={isOpen} onClose={onCloseModal} size="small" />;
+  return <Modal emojiId="pencil2" title="ポストを作成する" content={content} open={isOpen} onClose={onCloseModal} size="small" />;
 };
 
 const StyledTextField = styled(TextField)`
@@ -76,13 +76,13 @@ export const CreateNewStoryPostModal: VFC = () => {
 
       mutateStoryPosts();
 
-      notifySuccessMessage('タスクの作成に成功しました!');
+      notifySuccessMessage('ポストの作成に成功しました!');
 
       setTitle('');
 
       handleCloseModal();
     } catch (error) {
-      notifyErrorMessage('タスクの作成に失敗しました!');
+      notifyErrorMessage('ポストの作成に失敗しました!');
     }
   };
 

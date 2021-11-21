@@ -165,7 +165,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               <StyledTriangle></StyledTriangle>
               <StyledBox p={5}>
                 <Button variant="text" onClick={handleClickCreateStoryPostButton}>
-                  タスクを作成する
+                  ポストを作成する
                 </Button>
               </StyledBox>
             </StyledBoxWrapper>
