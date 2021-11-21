@@ -1,14 +1,14 @@
 import { SWRResponse } from 'swr';
-import { StoryTask } from '~/domains';
+import { StoryPost } from '~/domains';
 import { useStaticSWR } from '~/stores/useStaticSWR';
 
 /**
- * 削除対象のStoryTaskを取得するSWR
+ * 削除対象のStoryPostを取得するSWR
  * @returns data ストーリータスク
  * @returns isValidating 取得中を表す boolean
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useStoryTaskForDelete = (initialData?: StoryTask): SWRResponse<StoryTask, Error> => {
-  return useStaticSWR<StoryTask, Error>('useStoryTaskForDelete', initialData);
+export const useStoryPostForDelete = (initialData?: StoryPost): SWRResponse<StoryPost, Error> => {
+  return useStaticSWR<StoryPost, Error>('useStoryPostForDelete', initialData);
 };

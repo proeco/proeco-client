@@ -8,6 +8,6 @@ import { useStaticSWR } from '~/stores/useStaticSWR';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useIsOpenCreateNewStoryTaskModal = (initialData?: boolean): SWRResponse<boolean, Error> => {
-  return useStaticSWR<boolean, Error>('useIsOpenCreateNewStoryTaskModal', initialData);
+export const useIsOpenCreateNewStoryPostModal = (initialData?: boolean): SWRResponse<boolean, Error> => {
+  return useStaticSWR<boolean, Error>('useIsOpenCreateNewStoryPostModal', initialData);
 };

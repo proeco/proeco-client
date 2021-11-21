@@ -2,13 +2,14 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { Component } from './DeleteStoryTaskModal';
+import { Component } from './CreateNewStoryPostModal';
 
 export default {
-  title: 'domains/storyTask/DeleteStoryTaskModal',
+  title: 'domains/storyPost/CreateNewStoryPostModal',
   component: Component,
   argTypes: {
-    onClickDeleteStoryTaskButton: { action: 'onClickDeleteStoryTaskButton' },
+    onChangeTitle: { action: 'onChangeStoryTitle' },
+    onClickCreateNewStoryPostButton: { action: 'onClickCreateNewStoryPostButton' },
     onCloseModal: { action: 'onCloseModal' },
   },
 } as ComponentMeta<typeof Component>;
@@ -25,4 +26,5 @@ export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
   title: 'ここにタイトル',
+  isDisabled: false,
 };

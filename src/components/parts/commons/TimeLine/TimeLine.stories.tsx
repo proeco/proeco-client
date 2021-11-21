@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import { action } from '@storybook/addon-actions';
 import { Icon } from '../Icon';
 import { TimeLine } from './TimeLine';
-import { createMockStoryTask } from '~/mock';
+import { createMockStoryPost } from '~/mock';
 
 export default {
   title: 'parts/commons/TimeLine',
@@ -21,10 +21,10 @@ const Template: ComponentStory<typeof TimeLine> = ({ ...rest }) => {
   );
 };
 
-const mockStoryTasks = [
-  createMockStoryTask({ title: 'TimeLineItem１' }),
-  createMockStoryTask({ title: 'TimeLineItem2' }),
-  createMockStoryTask({ title: 'TimeLineItem3' }),
+const mockStoryPosts = [
+  createMockStoryPost({ title: 'TimeLineItem１' }),
+  createMockStoryPost({ title: 'TimeLineItem2' }),
+  createMockStoryPost({ title: 'TimeLineItem3' }),
 ];
 
 const defaultTimeLineItems: {
@@ -37,9 +37,9 @@ const defaultTimeLineItems: {
     name: string;
     onClick: () => void;
   }[];
-}[] = mockStoryTasks.map((mockStoryTask) => {
+}[] = mockStoryPosts.map((mockStoryPost) => {
   return {
-    title: mockStoryTask.title,
+    title: mockStoryPost.title,
     imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
     children: <Box width="500px" height="250px"></Box>,
     actions: [
@@ -67,9 +67,9 @@ const timeLineItemsWithoutImage: {
     name: string;
     onClick: () => void;
   }[];
-}[] = mockStoryTasks.map((mockStoryTask) => {
+}[] = mockStoryPosts.map((mockStoryPost) => {
   return {
-    title: mockStoryTask.title,
+    title: mockStoryPost.title,
     name: 'User',
     children: <Box width="500px" height="250px"></Box>,
     actions: [

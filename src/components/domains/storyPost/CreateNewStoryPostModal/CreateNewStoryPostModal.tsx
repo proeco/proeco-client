@@ -4,21 +4,21 @@ import { useRouter } from 'next/router';
 import { Button, Modal, TextField, Typography } from '~/components/parts/commons';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { useIsOpenCreateNewStoryTaskModal } from '~/stores/modal/useIsOpenCreateNewStoryTaskModal';
+import { useIsOpenCreateNewStoryPostModal } from '~/stores/modal/useIsOpenCreateNewStoryPostModal';
 import { restClient } from '~/utils/rest-client';
-import { StoryTask } from '~/domains';
-import { useStoryTasks } from '~/stores/storyTask';
+import { StoryPost } from '~/domains';
+import { useStoryPosts } from '~/stores/storyPost';
 
 type Props = {
   isOpen: boolean;
   title: string;
   isDisabled: boolean;
   onChangeTitle: (title: string) => void;
-  onClickCreateNewStoryTaskButton: () => void;
+  onClickCreateNewStoryPostButton: () => void;
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, isDisabled, onChangeTitle, onClickCreateNewStoryTaskButton, onCloseModal }) => {
+export const Component: VFC<Props> = ({ isOpen, title, isDisabled, onChangeTitle, onClickCreateNewStoryPostButton, onCloseModal }) => {
   const content = (
     <>
       <Box mb="20px">
@@ -28,7 +28,7 @@ export const Component: VFC<Props> = ({ isOpen, title, isDisabled, onChangeTitle
         <StyledTextField fullWidth value={title} onChange={(e) => onChangeTitle(e.target.value)} />
       </Box>
       <Box width="100%" textAlign="center">
-        <Button variant="contained" onClick={onClickCreateNewStoryTaskButton} disabled={isDisabled}>
+        <Button variant="contained" onClick={onClickCreateNewStoryPostButton} disabled={isDisabled}>
           作成する！
         </Button>
       </Box>
@@ -41,12 +41,12 @@ const StyledTextField = styled(TextField)`
   height: 40px;
 `;
 
-export const CreateNewStoryTaskModal: VFC = () => {
+export const CreateNewStoryPostModal: VFC = () => {
   const router = useRouter();
   const { storyId } = router.query;
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { mutate: mutateStoryTasks } = useStoryTasks({
+  const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId: storyId as string,
     page: page,
     limit: 10,
@@ -55,7 +55,7 @@ export const CreateNewStoryTaskModal: VFC = () => {
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
-  const { data: isOpenCreateNewStoryTaskModal, mutate: mutateIsOpenCreateNewStoryTaskModal } = useIsOpenCreateNewStoryTaskModal();
+  const { data: isOpenCreateNewStoryPostModal, mutate: mutateIsOpenCreateNewStoryPostModal } = useIsOpenCreateNewStoryPostModal();
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [title, setTitle] = useState('');
@@ -65,16 +65,16 @@ export const CreateNewStoryTaskModal: VFC = () => {
   }, [title]);
 
   const handleCloseModal = () => {
-    mutateIsOpenCreateNewStoryTaskModal(false);
+    mutateIsOpenCreateNewStoryPostModal(false);
   };
 
-  const handleClickCreateNewStoryTaskButton = async () => {
+  const handleClickCreateNewStoryPostButton = async () => {
     try {
-      await restClient.apiPost<StoryTask>('/story-tasks', {
-        storyTask: { title, storyId },
+      await restClient.apiPost<StoryPost>('/story-tasks', {
+        storyPost: { title, storyId },
       });
 
-      mutateStoryTasks();
+      mutateStoryPosts();
 
       notifySuccessMessage('タスクの作成に成功しました!');
 
@@ -88,9 +88,9 @@ export const CreateNewStoryTaskModal: VFC = () => {
 
   return (
     <Component
-      isOpen={!!isOpenCreateNewStoryTaskModal}
+      isOpen={!!isOpenCreateNewStoryPostModal}
       title={title}
-      onClickCreateNewStoryTaskButton={handleClickCreateNewStoryTaskButton}
+      onClickCreateNewStoryPostButton={handleClickCreateNewStoryPostButton}
       isDisabled={isDisabled}
       onChangeTitle={setTitle}
       onCloseModal={handleCloseModal}

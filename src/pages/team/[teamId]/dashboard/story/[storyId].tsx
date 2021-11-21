@@ -20,11 +20,11 @@ import { UserIcon } from '~/components/domains/user/UserIcon';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
-import { useIsOpenCreateNewStoryTaskModal } from '~/stores/modal/useIsOpenCreateNewStoryTaskModal';
-import { useStoryTasks } from '~/stores/storyTask';
+import { useIsOpenCreateNewStoryPostModal } from '~/stores/modal/useIsOpenCreateNewStoryPostModal';
+import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { useIsOpenDeleteStoryTaskModal } from '~/stores/modal/useIsOpenDeleteStoryTaskModal';
-import { useStoryTaskForDelete } from '~/stores/storyTask/useStoryTaskForDelete';
+import { useIsOpenDeleteStoryPostModal } from '~/stores/modal/useIsOpenDeleteStoryPostModal';
+import { useStoryPostForDelete } from '~/stores/storyPost/useStoryPostForDelete';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -38,23 +38,23 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { data: currentUser } = useCurrentUser();
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { data: storyTasks } = useStoryTasks({
+  const { data: storyPosts } = useStoryPosts({
     storyId: storyId as string,
     page: page,
     limit: 10,
   });
 
-  const { mutate: mutateIsOpenDeleteStoryTaskModal } = useIsOpenDeleteStoryTaskModal();
-  const { mutate: mutateStoryTaskForDelete } = useStoryTaskForDelete();
+  const { mutate: mutateIsOpenDeleteStoryPostModal } = useIsOpenDeleteStoryPostModal();
+  const { mutate: mutateStoryPostForDelete } = useStoryPostForDelete();
 
-  const handleClickDeleteStoryTask = useCallback(
+  const handleClickDeleteStoryPost = useCallback(
     (id: string) => {
-      const storyTask = storyTasks?.docs.find((storyTask) => storyTask._id === id);
-      if (!storyTask) return;
-      mutateIsOpenDeleteStoryTaskModal(true);
-      mutateStoryTaskForDelete(storyTask);
+      const stostoryPoststoryTasks?.docs.find((storyPost) => storyPost._id === id);
+      if (!storyPost) return;
+      mutateIsOpenDeleteStoryPostModal(true);
+      mutateStoryPostForDelete(storyPost);
     },
-    [mutateIsOpenDeleteStoryTaskModal, mutateStoryTaskForDelete, storyTasks?.docs],
+    [mutateIsOpenDeleteStoryPostModal, mutateStoryPostForDelete, storyPosts?.docs],
   );
 
   const timeLineItems: {
@@ -68,12 +68,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
       onClick: () => void;
     }[];
   }[] = useMemo(() => {
-    if (!storyTasks) {
+    if (!storyPosts) {
       return [];
     }
-    return storyTasks.docs.map((storyTask) => {
+    return storyPosts.docs.map((storyPost) => {
       return {
-        title: storyTask.title,
+        title: storyPost.title,
         imagePath: currentUser?.image,
         name: currentUser?.name,
         // TODO: Childrenの中身を作成する
@@ -82,12 +82,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           {
             icon: 'Delete',
             name: '削除',
-            onClick: () => handleClickDeleteStoryTask(storyTask._id),
+            onClick: () => handleClickDeleteStoryPost(storyPost._id),
           },
         ],
       };
     });
-  }, [storyTasks, currentUser, handleClickDeleteStoryTask]);
+  }, [storyPosts, currentUser, handleClickDeleteStoryPost]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -98,7 +98,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { mutate: mutateStoryForDelete } = useStoryForDelete();
 
-  const { mutate: mutateIsOpenCreateNewStoryTaskModal } = useIsOpenCreateNewStoryTaskModal();
+  const { mutate: mutateIsOpenCreateNewStoryPostModal } = useIsOpenCreateNewStoryPostModal();
 
   const handleClickMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -122,8 +122,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     mutateStoryForDelete(story);
   };
 
-  const handleClickCreateStoryTaskButton = () => {
-    mutateIsOpenCreateNewStoryTaskModal(true);
+  const handleClickCreateStoryPostButton = () => {
+    mutateIsOpenCreateNewStoryPostModal(true);
   };
 
   const menuItems = [
@@ -164,7 +164,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
             <StyledBoxWrapper width="100%" position="relative">
               <StyledTriangle></StyledTriangle>
               <StyledBox p={5}>
-                <Button variant="text" onClick={handleClickCreateStoryTaskButton}>
+                <Button variant="text" onClick={handleClickCreateStoryPostButton}>
                   タスクを作成する
                 </Button>
               </StyledBox>
