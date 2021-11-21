@@ -17,7 +17,7 @@ export const LoginRequiredWrapper: FC = ({ children }) => {
       notifyErrorMessage('ログインが必要です');
       router.push(URLS.TOP);
     }
-  }, [isValidating, currentUser]);
+  }, [isValidating, currentUser, notifyErrorMessage, router]);
 
   if (typeof window !== 'undefined' && isValidating)
     return (

@@ -89,10 +89,6 @@ export const TeamMenu: VFC = () => {
 
   const currentTeam = teams?.find((team) => team._id === router.query.id);
 
-  const handleClickItem = (id: string) => {
-    router.push(`/team/${id}/dashboard`);
-  };
-
   const teamMenuItems = useMemo(() => {
     if (!teams) {
       return [];
@@ -104,7 +100,7 @@ export const TeamMenu: VFC = () => {
           return {
             icon: <TeamIcon team={team} size={24} />,
             text: team.name,
-            onClick: () => handleClickItem(team._id),
+            onClick: () => router.push(`/team/${team._id}/dashboard`),
           };
         }),
       {
@@ -113,7 +109,7 @@ export const TeamMenu: VFC = () => {
         onClick: () => router.push(URLS.DASHBOARD_TEAMS_NEW),
       },
     ];
-  }, [teams, router.query.id]);
+  }, [teams, router]);
 
   return <Component currentTeam={currentTeam} menuItems={teamMenuItems} isValidating={isValidatingTeams} />;
 };

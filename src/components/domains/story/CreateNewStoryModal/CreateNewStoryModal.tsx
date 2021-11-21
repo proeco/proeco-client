@@ -19,7 +19,6 @@ import { URLS } from '~/constants';
 type Props = {
   isOpen: boolean;
   title: string;
-  description: string;
   emojiId: string;
   isDisabled: boolean;
   onChangeStoryForm: (newObject: Partial<Story>) => void;
@@ -27,7 +26,7 @@ type Props = {
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, isDisabled, onClickCreateNewStoryButton, onCloseModal, onChangeStoryForm }) => {
+export const Component: VFC<Props> = ({ isOpen, title, emojiId, isDisabled, onClickCreateNewStoryButton, onCloseModal, onChangeStoryForm }) => {
   const content = (
     <>
       <Box mb="16px">
@@ -40,12 +39,6 @@ export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, isD
           </Box>
           <StyledTextField fullWidth value={title} onChange={(e) => onChangeStoryForm({ title: e.target.value })} />
         </Box>
-      </Box>
-      <Box mb="16px">
-        <Typography mb="4px" variant="body1" color="textColor.light">
-          説明(任意)
-        </Typography>
-        <TextField fullWidth multiline rows={4} value={description} onChange={(e) => onChangeStoryForm({ description: e.target.value })} />
       </Box>
       <Box width="100%" textAlign="center">
         <Button variant="contained" onClick={onClickCreateNewStoryButton} disabled={isDisabled}>
@@ -78,10 +71,9 @@ export const CreateNewStoryModal: VFC = () => {
 
   const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
   const [isDisabled, setIsDisabled] = useState(true);
-  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'description' | 'teamId'>>({
+  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'teamId'>>({
     emojiId: 'open_file_folder',
     title: '',
-    description: '',
     teamId: teamId as string,
   });
 
@@ -104,7 +96,6 @@ export const CreateNewStoryModal: VFC = () => {
       setNewStory({
         emojiId: 'open_file_folder',
         title: '',
-        description: '',
         teamId: teamId as string,
       });
 
@@ -133,7 +124,6 @@ export const CreateNewStoryModal: VFC = () => {
     <Component
       isOpen={!!isOpenCreateNewStoryModal}
       title={newStory.title}
-      description={newStory.description}
       emojiId={newStory.emojiId}
       isDisabled={isDisabled}
       onClickCreateNewStoryButton={handleClickCreateNewStoryButton}
