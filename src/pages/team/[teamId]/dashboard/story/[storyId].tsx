@@ -59,7 +59,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   const timeLineItems: {
     title: string;
-    imagePath?: string;
+    iconImageId?: string;
     name?: string;
     children: ReactNode;
     actions: {
@@ -74,7 +74,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     return storyPosts.docs.map((storyPost) => {
       return {
         title: storyPost.title,
-        imagePath: currentUser?.image,
+        iconImageId: currentUser?.iconImageId,
         name: currentUser?.name,
         // TODO: Childrenの中身を作成する
         children: <Box minHeight="250px"></Box>,
@@ -160,7 +160,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         <Box my={4} maxWidth="600px" mx="auto">
           <TimeLine timeLineItems={timeLineItems} />
           <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
-            <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} />
+            <UserIcon size={40} iconImageId={currentUser?.iconImageId} userId={currentUser?._id} />
             <StyledBoxWrapper width="100%" position="relative">
               <StyledTriangle></StyledTriangle>
               <StyledBox p={5}>

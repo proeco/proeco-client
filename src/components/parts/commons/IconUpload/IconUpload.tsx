@@ -2,7 +2,6 @@ import React, { VFC, ChangeEvent } from 'react';
 import { Box, styled } from '@mui/system';
 import { Avatar, Typography } from '@mui/material';
 import { Icon } from '../Icon/Icon';
-import { UserIcon } from '~/components/domains/user/UserIcon';
 
 type Props = {
   onSelectImage: (file: ChangeEvent<HTMLInputElement>) => void;
@@ -14,7 +13,7 @@ export const IconUpload: VFC<Props> = ({ onSelectImage, currentImagePath, size =
   return (
     <StyledLabel htmlFor="image">
       {currentImagePath ? (
-        <UserIcon size={size} imagePath={currentImagePath} />
+        <StyledAvatar size={size} src={currentImagePath} />
       ) : (
         <StyledAvatar size={size}>
           <Icon icon="Group" color="#ccc" width="100%" />

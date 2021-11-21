@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Team } from '~/domains';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
-import { TextField, Typography, Button, Icon, Paper } from '~/components/parts/commons';
+import { TextField, Typography, Button, Icon, Paper, IconUpload } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { restClient } from '~/utils/rest-client';
@@ -80,7 +80,9 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Typography>
         </Box>
         <Paper square>
-          <input type="file" name="image" onChange={handleChangeFile} accept="image/*" />
+          <Box display="flex" justifyContent="center">
+            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : undefined} />
+          </Box>
           <Typography mb="4px" variant="body1" color="textColor.light">
             名前
           </Typography>

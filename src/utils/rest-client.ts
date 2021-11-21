@@ -43,10 +43,10 @@ class RestClient {
     }
   }
 
-  async apiPut<T>(url: string, body = {}): Promise<AxiosResponse<T>> {
+  async apiPut<T>(url: string, body = {}, option?: { 'Content-Type'?: string }): Promise<AxiosResponse<T>> {
     const accessToken = this.getAccessToken();
     try {
-      return await this.axios.put(`/api/v1${url}`, body, { headers: { Authorization: `Bearer ${accessToken}` } });
+      return await this.axios.put(`/api/v1${url}`, body, { headers: { Authorization: `Bearer ${accessToken}`, ...option } });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       throw apiErrorHandler(err);

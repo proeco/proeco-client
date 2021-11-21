@@ -6,6 +6,7 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { Button, Link, Typography } from '~/components/parts/commons';
 import { URLS } from '~/constants';
 import { useAuth } from '~/hooks/useAuth/useAuth';
+import { UserIcon } from '~/components/domains/user/UserIcon';
 
 const Home: NextPage = () => {
   const { data: currentUser } = useCurrentUser();
@@ -25,7 +26,7 @@ const Home: NextPage = () => {
       {currentUser ? (
         <>
           <Typography variant="h3">Hello {currentUser.name}!</Typography>
-          <img height="200px" width="200px" src={currentUser.image} />
+          <UserIcon size={200} iconImageId={currentUser.iconImageId} />
           <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={logout}>
             Logout
           </Button>
