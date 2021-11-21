@@ -25,6 +25,5 @@ export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
   title: 'Webevのコメント機能を開発する',
-  description: 'Webev のコメント機能を開発して、リリースまで行う！',
   emojiId: 'wrench',
 };
