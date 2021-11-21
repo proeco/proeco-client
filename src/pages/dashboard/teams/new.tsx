@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { ReactNode, useState, ChangeEvent } from 'react';
+import { ReactNode, useState, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { Team } from '~/domains';
@@ -21,6 +21,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
 
   const [isCreating, setIsCreating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
+  const [isValidForm, setIsValidForm] = useState(true);
   const [team, setTeam] = useState<Pick<Team, 'name' | 'description'>>({
     name: '',
     description: '',
@@ -64,6 +65,10 @@ const DashboardTeamPage: ProecoNextPage = () => {
     setIconImage(e.target.files[0]);
   };
 
+  useEffect(() => {
+    setIsValidForm(team.name.trim() !== '' && team.description.trim() !== '');
+  }, [team]);
+
   return (
     <>
       <ProecoOgpHead />
@@ -86,7 +91,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           <TextField fullWidth multiline value={team.description} rows={4} onChange={(e) => updateStoryForm({ description: e.target.value })} />
           <Box mt={4} textAlign="center">
             <Button
-              disabled={isCreating}
+              disabled={isCreating || !isValidForm}
               color="primary"
               variant="contained"
               startIcon={<Icon icon="CreateOutlined" width="20px" />}
