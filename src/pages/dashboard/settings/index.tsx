@@ -7,6 +7,7 @@ import { User } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { restClient } from '~/utils/rest-client';
 
@@ -16,6 +17,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     name: '',
     description: '',
   });
+  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
   const [isUpdating, setIsUpdating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
   const [isValidForm, setIsValidForm] = useState(true);
@@ -52,12 +54,17 @@ const DashboardSettingsPage: ProecoNextPage = () => {
   const handleClickCreateNewTeam = async () => {
     setIsUpdating(true);
     try {
-      const { data } = await restClient.apiPut<User>('/users', { ...newUser });
-      notifySuccessMessage('チームを作成しました');
+      const params = new FormData();
+      if (iconImage) {
+        params.append('file', iconImage);
+      }
+      params.append('newUser', JSON.stringify(newUser));
+      const { data } = await restClient.apiPut<User>('/users', params, { 'Content-Type': 'multipart/form-data' });
+      notifySuccessMessage('ユーザー情報更新しました');
       mutateCurrentUser(data, false);
       setIsUpdating(false);
     } catch (error) {
-      notifyErrorMessage('チームの作成に失敗しました');
+      notifyErrorMessage('ユーザー情報の更新に失敗しました');
     }
   };
 
@@ -77,7 +84,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
         </Box>
         <Paper>
           <Box display="flex" justifyContent="center">
-            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : undefined} />
+            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
           </Box>
           <Box mb="16px">
             <Typography mb="4px" variant="body1" color="textColor.light">

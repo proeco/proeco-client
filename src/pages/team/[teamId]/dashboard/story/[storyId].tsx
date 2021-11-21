@@ -25,6 +25,7 @@ import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useIsOpenDeleteStoryPostModal } from '~/stores/modal/useIsOpenDeleteStoryPostModal';
 import { useStoryPostForDelete } from '~/stores/storyPost/useStoryPostForDelete';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -36,6 +37,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { storyId } = router.query;
   const { data: story } = useStory(storyId as string, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
+  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { data: storyPosts } = useStoryPosts({
@@ -74,7 +76,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     return storyPosts.docs.map((storyPost) => {
       return {
         title: storyPost.title,
-        imagePath: currentUser?.image,
+        imagePath: signedUrl,
         name: currentUser?.name,
         // TODO: Childrenの中身を作成する
         children: <Box minHeight="250px"></Box>,
@@ -87,7 +89,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         ],
       };
     });
-  }, [storyPosts, currentUser, handleClickDeleteStoryPost]);
+  }, [storyPosts, signedUrl, currentUser, handleClickDeleteStoryPost]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -160,7 +162,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         <Box my={4} maxWidth="600px" mx="auto">
           <TimeLine timeLineItems={timeLineItems} />
           <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
-            <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} />
+            <UserIcon size={40} imagePath={signedUrl} userId={currentUser?._id} />
             <StyledBoxWrapper width="100%" position="relative">
               <StyledTriangle></StyledTriangle>
               <StyledBox p={5}>
