@@ -1,6 +1,6 @@
 import { Box } from '@mui/system';
-import { useEffect, useState, ReactNode } from 'react';
-import { Button, Icon, Paper, TextField, Typography } from '~/components/parts/commons';
+import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
+import { Button, Icon, IconUpload, Paper, TextField, Typography } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { User } from '~/domains';
@@ -17,6 +17,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     description: '',
   });
   const [isUpdating, setIsUpdating] = useState(false);
+  const [iconImage, setIconImage] = useState<File>();
   const [isValidForm, setIsValidForm] = useState(true);
 
   const { notifyErrorMessage } = useErrorNotification();
@@ -38,6 +39,14 @@ const DashboardSettingsPage: ProecoNextPage = () => {
         ...newObject,
       };
     });
+  };
+
+  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    setIconImage(e.target.files[0]);
   };
 
   const handleClickCreateNewTeam = async () => {
@@ -67,6 +76,9 @@ const DashboardSettingsPage: ProecoNextPage = () => {
           </Typography>
         </Box>
         <Paper>
+          <Box display="flex" justifyContent="center">
+            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : undefined} />
+          </Box>
           <Box mb="16px">
             <Typography mb="4px" variant="body1" color="textColor.light">
               ユーザー名
