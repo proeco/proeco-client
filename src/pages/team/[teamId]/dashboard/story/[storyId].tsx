@@ -49,12 +49,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   const handleClickDeleteStoryPost = useCallback(
     (id: string) => {
-      const stostoryPoststoryTasks?.docs.find((storyPost) => storyPost._id === id);
+      const storyPost = storyPosts?.docs.find((storyPost) => storyPost._id === id);
       if (!storyPost) return;
       mutateIsOpenDeleteStoryPostModal(true);
       mutateStoryPostForDelete(storyPost);
     },
-    [mutateIsOpenDeleteStoryPostModal, mutateStoryPostForDelete, storyPosts?.docs],
+    [mutateIsOpenDeleteStoryPostModal, mutateStoryPostForDelete, storyPosts],
   );
 
   const timeLineItems: {
