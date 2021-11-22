@@ -1,6 +1,7 @@
 import React, { VFC, ChangeEvent, useState } from 'react';
 import { Box, styled } from '@mui/system';
 import { Avatar, Typography } from '@mui/material';
+import { Crop } from 'react-image-crop';
 import { Icon } from '../Icon/Icon';
 import { TrimImageModal } from '~/components/parts/commons';
 
@@ -8,10 +9,38 @@ type Props = {
   onSelectImage: (file: ChangeEvent<HTMLInputElement>) => void;
   currentImagePath?: string;
   size?: number;
+  crop: Crop;
+  onChangeImage: (crop: Crop) => void;
+  onCompleteCropImage: (crop: Crop) => void;
+  onImageLoaded: (image: HTMLImageElement) => void;
+  onTrimImage: () => void;
 };
 
-export const IconUploader: VFC<Props> = ({ onSelectImage, currentImagePath, size = 100 }) => {
+export const IconUploader: VFC<Props> = ({
+  onSelectImage,
+  currentImagePath,
+  size = 100,
+  crop,
+  onChangeImage,
+  onImageLoaded,
+  onCompleteCropImage,
+  onTrimImage,
+}) => {
   const [open, setOpen] = useState(false);
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
+  const handleSelectImage = (file: ChangeEvent<HTMLInputElement>) => {
+    onSelectImage(file);
+    setOpen(true);
+  };
+
+  const handleTrimImage = () => {
+    onTrimImage();
+    setOpen(false);
+  };
 
   return (
     <>
@@ -29,9 +58,20 @@ export const IconUploader: VFC<Props> = ({ onSelectImage, currentImagePath, size
             写真を変更
           </StyledTypography>
         </StyledOverlay>
-        <StyledInput type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
+        <StyledInput type="file" name="image" id="image" onChange={handleSelectImage} accept="image/*" />
       </StyledLabel>
-      {currentImagePath && <TrimImageModal isOpen={open} imagePath={currentImagePath} />}
+      {currentImagePath && (
+        <TrimImageModal
+          isOpen={open}
+          imagePath={currentImagePath}
+          onCloseModal={handleCloseModal}
+          crop={crop}
+          onChangeImage={onChangeImage}
+          onCompleteCropImage={onCompleteCropImage}
+          onImageLoaded={onImageLoaded}
+          onTrimImage={handleTrimImage}
+        />
+      )}
     </>
   );
 };
