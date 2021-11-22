@@ -1,7 +1,8 @@
-import React, { VFC, ChangeEvent } from 'react';
+import React, { VFC, ChangeEvent, useState } from 'react';
 import { Box, styled } from '@mui/system';
 import { Avatar, Typography } from '@mui/material';
 import { Icon } from '../Icon/Icon';
+import { TrimImageModal } from '~/components/parts/commons';
 
 type Props = {
   onSelectImage: (file: ChangeEvent<HTMLInputElement>) => void;
@@ -9,24 +10,29 @@ type Props = {
   size?: number;
 };
 
-export const IconUpload: VFC<Props> = ({ onSelectImage, currentImagePath, size = 100 }) => {
+export const IconUploader: VFC<Props> = ({ onSelectImage, currentImagePath, size = 100 }) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <StyledLabel htmlFor="image">
-      {currentImagePath ? (
-        <StyledAvatar size={size} src={currentImagePath} />
-      ) : (
-        <StyledAvatar size={size}>
-          <Icon icon="Group" color="#ccc" width="100%" />
-        </StyledAvatar>
-      )}
-      <StyledOverlay>
-        <StyledIcon icon="Photo" width="25%" color="white" size={size} />
-        <StyledTypography variant="overline" color="white" size={size}>
-          写真を変更
-        </StyledTypography>
-      </StyledOverlay>
-      <StyledInput type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
-    </StyledLabel>
+    <>
+      <StyledLabel htmlFor="image">
+        {currentImagePath ? (
+          <StyledAvatar size={size} src={currentImagePath} />
+        ) : (
+          <StyledAvatar size={size}>
+            <Icon icon="Group" color="#ccc" width="100%" />
+          </StyledAvatar>
+        )}
+        <StyledOverlay>
+          <StyledIcon icon="Photo" width="25%" color="white" size={size} />
+          <StyledTypography variant="overline" color="white" size={size}>
+            写真を変更
+          </StyledTypography>
+        </StyledOverlay>
+        <StyledInput type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
+      </StyledLabel>
+      {currentImagePath && <TrimImageModal isOpen={open} imagePath={currentImagePath} />}
+    </>
   );
 };
 

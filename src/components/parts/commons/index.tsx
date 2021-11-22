@@ -8,7 +8,7 @@ export { EmojiRadioGroup } from './EmojiRadioGroup';
 export { FirstLetterIcon } from './FirstLetterIcon';
 export { Icon } from './Icon';
 export { IconButton } from './IconButton';
-export { IconUpload } from './IconUpload';
+export { IconUploader } from './IconUploader';
 export { Link } from './Link';
 export { Menu } from './Menu';
 export { Modal } from './Modal';

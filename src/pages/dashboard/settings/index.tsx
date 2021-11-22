@@ -1,6 +1,6 @@
 import { Box } from '@mui/system';
 import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
-import { Button, Icon, IconUpload, Paper, TextField, Typography } from '~/components/parts/commons';
+import { Button, Icon, IconUploader, Paper, TextField, Typography } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { User } from '~/domains';
@@ -84,7 +84,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
         </Box>
         <Paper>
           <Box display="flex" justifyContent="center">
-            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
+            <IconUploader onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
           </Box>
           <Box mb="16px">
             <Typography mb="4px" variant="body1" color="textColor.light">
