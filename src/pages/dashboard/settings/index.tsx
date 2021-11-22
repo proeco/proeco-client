@@ -1,5 +1,6 @@
+import { useEffect, useState, ReactNode, ChangeEvent, useRef } from 'react';
 import { Box } from '@mui/system';
-import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
+import { Crop } from 'react-image-crop';
 import { Button, Icon, IconUploader, Paper, TextField, Typography } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -21,6 +22,11 @@ const DashboardSettingsPage: ProecoNextPage = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
   const [isValidForm, setIsValidForm] = useState(true);
+
+  const [crop, setCrop] = useState<Crop>({ unit: 'px', x: 65, y: 65, aspect: 1, width: 130, height: 130 });
+  const [completedCrop, setCompletedCrop] = useState<Crop | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  // const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const { notifyErrorMessage } = useErrorNotification();
   const { notifySuccessMessage } = useSuccessNotification();
@@ -68,6 +74,46 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     }
   };
 
+  const onImageLoaded = (image: HTMLImageElement) => {
+    imageRef.current = image;
+  };
+
+  const handleTrimImage = async () => {
+    if (!imageRef.current || !completedCrop) {
+      return;
+    }
+    const canvas = document.createElement('canvas');
+    const image = imageRef.current;
+    const crop = completedCrop;
+    console.log(imageRef.current.width);
+    console.log(imageRef.current.naturalWidth);
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const pixelRatio = window.devicePixelRatio;
+    const ctx = canvas.getContext('2d');
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    if (ctx !== null) {
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(image, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width, crop.height);
+    }
+    console.log(canvas);
+    canvas.toBlob(
+      (blob: Blob | null) => {
+        if (blob) {
+          console.log('canvas.toBlob');
+          const newFile = new File([blob], 'trimImage.png');
+          setIconImage(newFile);
+        }
+      },
+      'image/jpeg',
+      1,
+    );
+  };
+
   useEffect(() => {
     setIsValidForm(newUser.name.trim() !== '');
   }, [newUser]);
@@ -84,7 +130,15 @@ const DashboardSettingsPage: ProecoNextPage = () => {
         </Box>
         <Paper>
           <Box display="flex" justifyContent="center">
-            <IconUploader onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
+            <IconUploader
+              onSelectImage={handleChangeFile}
+              currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl}
+              crop={crop}
+              onChangeImage={(newCrop) => setCrop(newCrop)}
+              onCompleteCropImage={(newCrop) => setCompletedCrop(newCrop)}
+              onImageLoaded={onImageLoaded}
+              onTrimImage={handleTrimImage}
+            />
           </Box>
           <Box mb="16px">
             <Typography mb="4px" variant="body1" color="textColor.light">
