@@ -10,13 +10,13 @@ export default {
   title: 'parts/commons/TrimImageModal',
   component: TrimImageModal,
   argTypes: {
-    onCompleteImage: { action: 'onCompleteImage' },
+    onCompleteCropImage: { action: 'onCompleteCropImage' },
     onTrimImage: { action: 'onTrimImage' },
     onCloseModal: { action: 'onCloseModal' },
   },
 } as ComponentMeta<typeof TrimImageModal>;
 
-const Template: ComponentStory<typeof TrimImageModal> = ({ isOpen, imagePath, onCompleteImage, onTrimImage, onCloseModal }) => {
+const Template: ComponentStory<typeof TrimImageModal> = ({ isOpen, imagePath, onCompleteCropImage, onTrimImage, onCloseModal }) => {
   const [crop, setCrop] = useState<Crop>({ unit: 'px', x: 65, y: 65, aspect: 1, width: 130, height: 130 });
   return (
     <Box>
@@ -25,7 +25,7 @@ const Template: ComponentStory<typeof TrimImageModal> = ({ isOpen, imagePath, on
         crop={crop}
         imagePath={imagePath}
         onChangeImage={(newCrop) => setCrop(newCrop)}
-        onCompleteImage={onCompleteImage}
+        onCompleteCropImage={onCompleteCropImage}
         onTrimImage={onTrimImage}
         onCloseModal={onCloseModal}
       />

@@ -12,15 +12,15 @@ type Props = {
   imagePath: string;
   crop: Crop;
   onChangeImage: (crop: Crop) => void;
-  onCompleteImage: (crop: Crop) => void;
+  onCompleteCropImage: (crop: Crop) => void;
   onTrimImage: () => void;
   onCloseModal: () => void;
 };
 
-export const TrimImageModal: VFC<Props> = ({ isOpen, imagePath, crop, onChangeImage, onCompleteImage, onTrimImage, onCloseModal }) => {
+export const TrimImageModal: VFC<Props> = ({ isOpen, imagePath, crop, onChangeImage, onCompleteCropImage, onTrimImage, onCloseModal }) => {
   const content = (
     <Box width="260px" m="0 auto" display="flex" flexDirection="column" alignItems="center" gap="12px">
-      <ReactCrop src={imagePath} crop={crop} onChange={onChangeImage} onComplete={onCompleteImage} circularCrop locked />
+      <ReactCrop src={imagePath} crop={crop} onChange={onChangeImage} onComplete={onCompleteCropImage} circularCrop locked />
       <StyledInput
         type="range"
         min={130}
