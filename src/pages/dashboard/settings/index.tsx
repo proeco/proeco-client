@@ -1,4 +1,4 @@
-import { useEffect, useState, ReactNode, ChangeEvent, useRef } from 'react';
+import { useEffect, useState, ReactNode, ChangeEvent, useRef, useCallback } from 'react';
 import { Box } from '@mui/system';
 import { Crop } from 'react-image-crop';
 import { Button, Icon, IconUploader, Paper, TextField, Typography } from '~/components/parts/commons';
@@ -26,7 +26,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
   const [crop, setCrop] = useState<Crop>({ unit: 'px', x: 65, y: 65, aspect: 1, width: 130, height: 130 });
   const [completedCrop, setCompletedCrop] = useState<Crop | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
-  // const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const { notifyErrorMessage } = useErrorNotification();
   const { notifySuccessMessage } = useSuccessNotification();
@@ -74,44 +74,45 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     }
   };
 
-  const onImageLoaded = (image: HTMLImageElement) => {
+  const onImageLoaded = useCallback((image: HTMLImageElement) => {
     imageRef.current = image;
-  };
+  }, []);
 
-  const handleTrimImage = async () => {
-    if (!imageRef.current || !completedCrop) {
+  const handleTrimImage = () => {
+    if (!imageRef.current || !completedCrop || !previewCanvasRef.current) {
       return;
     }
-    const canvas = document.createElement('canvas');
+
+    const canvas = previewCanvasRef.current;
     const image = imageRef.current;
-    const crop = completedCrop;
-    console.log(imageRef.current.width);
-    console.log(imageRef.current.naturalWidth);
 
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    const pixelRatio = window.devicePixelRatio;
-    const ctx = canvas.getContext('2d');
-    canvas.width = crop.width * pixelRatio * scaleX;
-    canvas.height = crop.height * pixelRatio * scaleY;
+    image.onload = () => {
+      const crop = completedCrop;
 
-    if (ctx !== null) {
-      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(image, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width, crop.height);
-    }
-    console.log(canvas);
-    canvas.toBlob(
-      (blob: Blob | null) => {
-        if (blob) {
-          console.log('canvas.toBlob');
-          const newFile = new File([blob], 'trimImage.png');
-          setIconImage(newFile);
-        }
-      },
-      'image/jpeg',
-      1,
-    );
+      const scaleX = image.naturalWidth / image.width;
+      const scaleY = image.naturalHeight / image.height;
+      const pixelRatio = window.devicePixelRatio;
+      const ctx = canvas.getContext('2d');
+      canvas.width = crop.width * pixelRatio * scaleX;
+      canvas.height = crop.height * pixelRatio * scaleY;
+
+      if (ctx !== null) {
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(image, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width, crop.height);
+      }
+      console.log(canvas);
+      canvas.toBlob(
+        (blob: Blob | null) => {
+          if (blob) {
+            const newFile = new File([blob], 'trimImage.png');
+            setIconImage(newFile);
+          }
+        },
+        'image/jpeg',
+        1,
+      );
+    };
   };
 
   useEffect(() => {
@@ -165,6 +166,14 @@ const DashboardSettingsPage: ProecoNextPage = () => {
           </Box>
         </Paper>
       </Box>
+      <canvas
+        ref={previewCanvasRef}
+        style={{
+          width: Math.round(completedCrop?.width ?? 0),
+          height: Math.round(completedCrop?.height ?? 0),
+          display: 'none',
+        }}
+      />
     </>
   );
 };
