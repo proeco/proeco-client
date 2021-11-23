@@ -1,22 +1,24 @@
 import { VFC } from 'react';
-import { styled } from '@mui/material/styles';
-
 import { AvatarGroup } from '@mui/material';
-import { User } from '~/domains';
+import { styled } from '@mui/material/styles';
 
 import { UserIcon } from '~/components/domains/user/UserIcon';
 
 type Props = {
-  users: User[];
+  usersInfo: {
+    userId: string;
+    name: string;
+    signedUrl: string;
+  }[];
   maxCount?: number;
   isLink?: boolean;
 };
 
-export const UserIconGroup: VFC<Props> = ({ users, maxCount = 3, isLink = false }) => {
+export const UserIconGroup: VFC<Props> = ({ usersInfo, maxCount = 3, isLink = false }) => {
   return (
     <StyledAvatarGroup max={maxCount}>
-      {users.map((user) => {
-        return <UserIcon key={user._id} size={40} userId={user._id} iconImageId={user.iconImageId} isLink={isLink} />;
+      {usersInfo.map((userInfo) => {
+        return <UserIcon key={userInfo.userId} size={40} userId={userInfo.userId} signedUrl={userInfo.signedUrl} isLink={isLink} />;
       })}
     </StyledAvatarGroup>
   );

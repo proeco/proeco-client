@@ -3,6 +3,7 @@ import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, Timeline
 import { Box, styled } from '@mui/system';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { Paper, Typography, SpeedDial, Icon, FirstLetterIcon } from '~/components/parts/commons';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type TimeLineItemType = {
   title: string;
@@ -19,11 +20,13 @@ type TimeLineItemType = {
 type Props = ComponentProps<typeof TimelineItem> & TimeLineItemType;
 
 export const TimeLineItem: VFC<Props> = ({ title, iconImageId, name = '', children, actions, ...rest }) => {
+  const { data: signedUrl } = useSignedUrl(iconImageId);
+
   return (
     <StyledDiv>
       <TimelineItem {...rest}>
         <TimelineSeparator>
-          <StyledTimeLineDot>{iconImageId ? <UserIcon size={40} iconImageId={iconImageId} /> : <FirstLetterIcon name={name} />}</StyledTimeLineDot>
+          <StyledTimeLineDot>{signedUrl ? <UserIcon size={40} signedUrl={signedUrl} /> : <FirstLetterIcon name={name} />}</StyledTimeLineDot>
           <StyledTimeLineConnector />
         </TimelineSeparator>
         <StyledTimeLineContent>

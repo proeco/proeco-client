@@ -13,6 +13,7 @@ import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
 import { useAuth } from '~/hooks/useAuth/useAuth';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type Props = {
   currentUser?: User;
@@ -27,6 +28,8 @@ type Props = {
 };
 
 export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickLoginButton, menuItems, logoImagePath }) => {
+  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -43,7 +46,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
     if (currentUser) {
       return (
         <>
-          <StyledUserIcon size={40} iconImageId={currentUser.iconImageId} userId={currentUser._id} onClick={handleClick} />
+          <StyledUserIcon size={40} signedUrl={signedUrl} userId={currentUser._id} onClick={handleClick} />
           <Menu anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </>
       );
@@ -54,7 +57,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
         Login Button
       </StyledButton>
     );
-  }, [isValidating, currentUser, anchorEl, open, menuItems]);
+  }, [isValidating, currentUser, anchorEl, open, menuItems, signedUrl]);
 
   return (
     <>

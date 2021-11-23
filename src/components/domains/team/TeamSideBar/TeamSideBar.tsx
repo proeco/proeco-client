@@ -8,20 +8,31 @@ import { Typography, Icon } from '~/components/parts/commons';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { UserIconGroup } from '~/components/domains/user/UserIconGroup';
 
-import { Team, User } from '~/domains';
-
 import { URLS } from '~/constants/urls';
 import { useTeam, useTeamUsers } from '~/stores/team';
 import { SideBar } from '~/components/parts/layout/SideBar';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useSignedUrls } from '~/stores/attachment/useSignedUrls';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type Props = {
-  currentTeam?: Team;
+  currentTeamInfo?: {
+    name: string;
+    signedUrl?: string;
+  };
   asPath: string;
   isValidating: boolean;
-  teamUsers: User[];
+  teamUsersInfo: {
+    userId: string;
+    name: string;
+    signedUrl: string;
+  }[];
+  currentUserInfo?: {
+    userId: string;
+    name: string;
+    signedUrl?: string;
+  };
   teamId?: string;
-  currentUser?: User;
   menuItems?: {
     icon: JSX.Element;
     text: string;
@@ -29,7 +40,7 @@ type Props = {
   }[];
 };
 
-export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating, teamId, currentUser, menuItems }) => {
+export const Component: VFC<Props> = memo(({ asPath, teamUsersInfo, currentTeamInfo, isValidating, currentUserInfo, teamId, menuItems }) => {
   const sidebarItems: {
     icon: ComponentProps<typeof Icon>['icon'];
     url: string;
@@ -65,12 +76,12 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
       );
     }
 
-    if (currentTeam) {
+    if (currentTeamInfo) {
       return (
         <>
-          <TeamIcon team={currentTeam} size={80} />
+          <TeamIcon teamName={currentTeamInfo.name} signedUrl={currentTeamInfo.signedUrl} size={80} />
           <Typography variant="h3" maximum_lines={1}>
-            {currentTeam.name}
+            {currentTeamInfo.name}
           </Typography>
         </>
       );
@@ -82,7 +93,7 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
         <Typography variant="h3">undefined</Typography>
       </>
     );
-  }, [isValidating, currentTeam]);
+  }, [isValidating, currentTeamInfo]);
 
   const openContent = useMemo(() => {
     return (
@@ -91,11 +102,11 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
           {TeamContent}
         </Box>
         <Box py="8px" borderBottom="1px solid #eaecf1">
-          <UserIconGroup users={teamUsers} isLink />
+          <UserIconGroup usersInfo={teamUsersInfo} isLink />
         </Box>
       </>
     );
-  }, [TeamContent, teamUsers]);
+  }, [TeamContent, teamUsersInfo]);
 
   const closeContent = useMemo(() => {
     if (isValidating) {
@@ -106,10 +117,10 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
       );
     }
 
-    if (currentTeam) {
+    if (currentTeamInfo) {
       return (
         <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-          <TeamIcon size={40} team={currentTeam} />
+          <TeamIcon size={40} teamName={currentTeamInfo.name} signedUrl={currentTeamInfo.signedUrl} />
         </StyledUserIconWrapper>
       );
     }
@@ -119,10 +130,17 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
         <Icon width={40} icon="Group" />
       </StyledUserIconWrapper>
     );
-  }, [isValidating, currentTeam]);
+  }, [isValidating, currentTeamInfo]);
 
   return (
-    <SideBar asPath={asPath} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} currentUser={currentUser} menuItems={menuItems} />
+    <SideBar
+      asPath={asPath}
+      openContent={openContent}
+      closeContent={closeContent}
+      currentUserInfo={currentUserInfo}
+      sidebarItems={sidebarItems}
+      menuItems={menuItems}
+    />
   );
 });
 
@@ -138,12 +156,28 @@ export const TeamSideBar: VFC = memo(() => {
 
   const { data: currentUser } = useCurrentUser();
 
+  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
+  const currentUserInfo = currentUser ? { userId: currentUser._id, name: currentUser.name, signedUrl } : undefined;
+
   const { data: currentTeam, isValidating: isValidatingTeam } = useTeam({
     teamId: router.query.teamId as string,
   });
+  const { data: teamSignedUrl } = useSignedUrl(currentTeam?.iconImageId);
 
-  const { data: teamUser = [] } = useTeamUsers({
+  const currentTeamInfo = currentTeam ? { name: currentTeam.name, signedUrl: teamSignedUrl } : undefined;
+
+  const { data: teamUsers = [] } = useTeamUsers({
     teamId: currentTeam?._id,
+  });
+
+  const iconImageIds = teamUsers.map((teamUser) => {
+    return teamUser.iconImageId;
+  });
+
+  const { data: userSignedUrls = [] } = useSignedUrls(iconImageIds);
+
+  const teamUsersInfo = teamUsers.map((teamUser, i) => {
+    return { userId: teamUser._id, name: teamUser.name, signedUrl: userSignedUrls[i] };
   });
 
   const menuItems = [
@@ -157,12 +191,12 @@ export const TeamSideBar: VFC = memo(() => {
   return (
     <Component
       asPath={router.asPath}
-      currentTeam={currentTeam}
+      currentTeamInfo={currentTeamInfo}
       isValidating={isValidatingTeam}
-      teamUsers={teamUser}
+      teamUsersInfo={teamUsersInfo}
       teamId={router.query.teamId as string}
-      currentUser={currentUser}
       menuItems={menuItems}
+      currentUserInfo={currentUserInfo}
     />
   );
 });

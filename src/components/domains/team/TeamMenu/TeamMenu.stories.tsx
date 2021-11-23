@@ -5,7 +5,6 @@ import { Box } from '@mui/system';
 
 import { action } from '@storybook/addon-actions';
 import { Component } from './TeamMenu';
-import { createMockTeam } from '~/mock';
 import { Icon } from '~/components/parts/commons';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 
@@ -22,17 +21,12 @@ const Template: ComponentStory<typeof Component> = ({ ...rest }) => {
   );
 };
 
-const mockTeam = createMockTeam({ name: 'Proeco' });
-const mockTeamWithoutImage = createMockTeam({ name: 'Proeco' });
-
-const mockAnotherTeam = createMockTeam({ name: 'AnotherTeam' });
-
 export const DefaultTeam = Template.bind({});
 DefaultTeam.args = {
-  currentTeam: mockTeam,
+  currentTeamInfo: { name: 'Proeco', signedUrl: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' },
   menuItems: [
     {
-      icon: <TeamIcon team={mockAnotherTeam} size={24} />,
+      icon: <TeamIcon teamName="AnotherTeam" size={24} />,
       text: 'AnotherTeam',
       onClick: action('clickMenuItem'),
     },
@@ -48,7 +42,7 @@ DefaultTeam.args = {
 export const TeamWithoutImage = Template.bind({});
 TeamWithoutImage.args = {
   ...DefaultTeam.args,
-  currentTeam: mockTeamWithoutImage,
+  currentTeamInfo: { name: 'Proeco' },
 };
 
 export const LoadingTeam = Template.bind({});
@@ -60,5 +54,5 @@ LoadingTeam.args = {
 export const UndefinedTeam = Template.bind({});
 UndefinedTeam.args = {
   ...DefaultTeam.args,
-  currentTeam: undefined,
+  currentTeamInfo: undefined,
 };
