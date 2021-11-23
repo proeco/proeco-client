@@ -48,6 +48,7 @@ const StyledTeamCard = styled(Card)`
   box-sizing: border-box;
   position: relative;
   top: 0;
+  width: 100%;
   transition: all 0.3s;
   ${(props) =>
     props.onClick &&
