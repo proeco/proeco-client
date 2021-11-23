@@ -44,7 +44,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
     if (currentUser) {
       return (
         <>
-          <StyledUserIcon size={40} attachmentId={currentUser._id} userId={currentUser._id} onClick={handleClick} />
+          <StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} onClick={handleClick} />
           <Menu anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </>
       );
