@@ -13,7 +13,7 @@ export default {
 
 const Template: ComponentStory<typeof TeamCard> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="#e5e5e5">
+    <Box p="40px" bgcolor="#e5e5e5" width="400px">
       <TeamCard {...rest}></TeamCard>
     </Box>
   );
@@ -36,7 +36,7 @@ LongTextTeamCard.args = {
 
 const SkeltonTemplate: ComponentStory<typeof SkeltonTeamCard> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="#e5e5e5">
+    <Box p="40px" bgcolor="#e5e5e5" width="400px">
       <SkeltonTeamCard {...rest}></SkeltonTeamCard>
     </Box>
   );
