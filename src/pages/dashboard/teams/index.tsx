@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Box, styled } from '@mui/system';
+import { Box } from '@mui/system';
 import { ReactNode } from 'react';
 import { Grid } from '@mui/material';
 import { Button, Icon, Link, Typography } from '~/components/parts/commons';
@@ -62,12 +62,3 @@ const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>
 
 DashboardTeamPage.getLayout = getLayout;
 export default DashboardTeamPage;
-
-const StyledTeamList = styled(Box)`
-  /* 最後の行が左寄せになるように記述  */
-  &::after {
-    content: '';
-    display: block;
-    width: 300px;
-  }
-`;
