@@ -1,3 +1,4 @@
+export { createMockAttachment } from './createMockAttachment';
 export { createMockStory } from './createMockStory';
 export { createMockStoryPost } from './createMockStoryPost';
 export { createMockTeam } from './createMockTeam';
