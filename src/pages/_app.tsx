@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
     ));
 
   if (process.env.NODE_ENV === 'development') {
-    const startServer = () => import('~/mocks/api/worker');
+    const startServer = () => import('~/mocks/worker');
     startServer();
   }
 
