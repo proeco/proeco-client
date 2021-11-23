@@ -2,7 +2,6 @@ import { memo, VFC, ComponentProps } from 'react';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Icon, Link } from '~/components/parts/commons';
-// import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type UserIconType = {
   signedUrl?: string;
@@ -14,7 +13,6 @@ type UserIconType = {
 type Props = ComponentProps<typeof Avatar> & UserIconType;
 
 export const UserIcon: VFC<Props> = memo(({ signedUrl, userId = '', isLink = false, size = 40, ...rest }) => {
-  // const { data: signedUrl } = useSignedUrl(iconImageId);
   if (!signedUrl) {
     return (
       <StyledAvatar size={size} {...rest}>

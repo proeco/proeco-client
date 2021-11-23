@@ -6,7 +6,7 @@ import { Typography, Card } from '~/components/parts/commons';
 
 type Props = {
   teamInfo: {
-    teamId?: string;
+    teamId: string;
     name: string;
     description: string;
     signedUrl?: string;

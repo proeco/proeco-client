@@ -21,7 +21,7 @@ const Template: ComponentStory<typeof TeamCard> = ({ ...rest }) => {
 
 export const DefaultTeamCard = Template.bind({});
 DefaultTeamCard.args = {
-  teamInfo: { name: 'Proeco', description: 'description', signedUrl: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' },
+  teamInfo: { teamId: 'Proeco', name: 'Proeco', description: 'description', signedUrl: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' },
   onClick: action('clickTeamCard'),
 };
 
@@ -29,6 +29,7 @@ export const LongTextTeamCard = Template.bind({});
 LongTextTeamCard.args = {
   ...DefaultTeamCard.args,
   teamInfo: {
+    teamId: 'Proeco',
     name: 'Proeco',
     description: 'Proeco は頑張る人を応援するプラットフォームです。プロジェクトを作って Story を作ることで',
     signedUrl: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
@@ -38,7 +39,7 @@ LongTextTeamCard.args = {
 export const TeamCardWithoutImage = Template.bind({});
 TeamCardWithoutImage.args = {
   ...DefaultTeamCard.args,
-  teamInfo: { name: 'Proeco', description: 'description' },
+  teamInfo: { teamId: 'Proeco', name: 'Proeco', description: 'description' },
 };
 
 const SkeltonTemplate: ComponentStory<typeof SkeltonTeamCard> = ({ ...rest }) => {
