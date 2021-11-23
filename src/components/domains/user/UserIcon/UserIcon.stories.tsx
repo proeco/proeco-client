@@ -24,5 +24,4 @@ export const guestUser = Template.bind({});
 export const loginUser = Template.bind({});
 loginUser.args = {
   userId: mockUser._id,
-  signedUrl: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
 };

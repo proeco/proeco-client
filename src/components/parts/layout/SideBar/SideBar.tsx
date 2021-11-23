@@ -4,13 +4,14 @@ import { Box } from '@mui/system';
 import { Drawer as MuiDrawer } from '@mui/material';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 
+import { useRouter } from 'next/router';
 import { Typography, SideBarListItem, Icon, Link, IconButton, Menu } from '~/components/parts/commons';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 
 import { useLocalStorage } from '~/hooks/useLocalStorage';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type Props = {
-  asPath: string;
   openContent: JSX.Element;
   closeContent: JSX.Element;
   sidebarItems: {
@@ -18,11 +19,6 @@ type Props = {
     url: string;
     text: string;
   }[];
-  currentUserInfo?: {
-    userId: string;
-    name: string;
-    signedUrl?: string;
-  };
   menuItems?: {
     icon: JSX.Element;
     text: string;
@@ -33,11 +29,13 @@ type Props = {
 const drawerWidth = 280;
 const isOpenSideBar = 'isOpenSideBar';
 
-export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent, currentUserInfo, menuItems }) => {
+export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeContent, menuItems }) => {
+  const { data: currentUser } = useCurrentUser();
+  const router = useRouter();
+
   const { fetchData, storeData } = useLocalStorage();
   const value = fetchData<boolean>(isOpenSideBar);
   const [open, setOpen] = useState(value ?? true);
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
 
@@ -68,8 +66,8 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
               return (
                 <Link href={sidebarItem.url} key={index}>
                   <SideBarListItem
-                    icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === asPath ? '#fff' : 'textColor.main'} />}
-                    selected={sidebarItem.url === asPath}
+                    icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === router.asPath ? '#fff' : 'textColor.main'} />}
+                    selected={sidebarItem.url === router.asPath}
                   >
                     <Typography variant="body1">{sidebarItem.text}</Typography>
                   </SideBarListItem>
@@ -79,8 +77,8 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
             return (
               <Link href={sidebarItem.url} key={index}>
                 <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
-                  <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'} />
-                  <Typography variant="overline" color={sidebarItem.url === asPath ? 'primary.main' : 'textColor.main'}>
+                  <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === router.asPath ? 'primary.main' : 'textColor.main'} />
+                  <Typography variant="overline" color={sidebarItem.url === router.asPath ? 'primary.main' : 'textColor.main'}>
                     {sidebarItem.text}
                   </Typography>
                 </Box>
@@ -88,11 +86,11 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
             );
           })}
         </Box>
-        {currentUserInfo && (
+        {currentUser && (
           <Box mt="auto">
             <StyledBox onClick={handleClick} display="flex" alignItems="center" gap="8px" isPointer={!!menuItems}>
-              <UserIcon size={40} signedUrl={currentUserInfo.signedUrl} userId={currentUserInfo.userId} />
-              {open && <Typography variant="body1">{currentUserInfo.name}</Typography>}
+              <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
+              {open && <Typography variant="body1">{currentUser.name}</Typography>}
             </StyledBox>
             {menuItems && (
               <Menu

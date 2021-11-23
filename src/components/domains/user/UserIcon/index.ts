@@ -1,1 +1,1 @@
-export { UserIcon } from './UserIcon';
+export { SkeltonUserIcon, UserIcon } from './UserIcon';

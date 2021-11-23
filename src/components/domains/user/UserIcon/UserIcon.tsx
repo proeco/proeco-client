@@ -1,31 +1,40 @@
-import { memo, VFC, ComponentProps } from 'react';
-import { Avatar } from '@mui/material';
+import { memo, VFC, MouseEvent } from 'react';
+import { Avatar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Icon, Link } from '~/components/parts/commons';
+import { useAttachmentUrl } from '~/stores/attachment/useAttachmentUrl';
 
-type UserIconType = {
-  signedUrl?: string;
-  userId?: string;
+type Props = {
+  attachmentId: string;
+  userId: string;
   isLink?: boolean;
   size: number;
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
 };
 
-type Props = ComponentProps<typeof Avatar> & UserIconType;
+// ログインしていない状態の UserIcon
+export const GuestUserIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
+  return (
+    <StyledAvatar size={size}>
+      <Icon icon="PersonOutline" color="#ccc" width="100%" />
+    </StyledAvatar>
+  );
+};
 
-export const UserIcon: VFC<Props> = memo(({ signedUrl, userId = '', isLink = false, size = 40, ...rest }) => {
-  if (!signedUrl) {
-    return (
-      <StyledAvatar size={size} {...rest}>
-        <Icon icon="PersonOutline" color="#ccc" width="100%" />
-      </StyledAvatar>
-    );
-  }
+// ローディング状態の UserIcon
+export const SkeltonUserIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
+  return <Skeleton variant="circular" width={size} height={size} />;
+};
 
-  if (!isLink) return <StyledAvatar size={size} alt={userId} src={signedUrl} {...rest} />;
+// 通常状態の UserIcon
+export const UserIcon: VFC<Props> = memo(({ attachmentId, userId, isLink = false, size, onClick }) => {
+  const { data: attachmentUrl } = useAttachmentUrl(attachmentId);
+
+  if (!isLink) return <StyledAvatar size={size} alt={userId} src={attachmentUrl} />;
 
   return (
     <Link href={'/user/' + userId}>
-      <StyledAvatar size={size} alt={userId} src={signedUrl} {...rest} />
+      <StyledAvatar size={size} alt={userId} src={attachmentUrl} onClick={onClick} />
     </Link>
   );
 });

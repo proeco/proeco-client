@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
-import { AppBar, Skeleton } from '@mui/material';
+import { AppBar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -13,7 +13,7 @@ import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
 import { useAuth } from '~/hooks/useAuth/useAuth';
-import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
+import { SkeltonUserIcon } from '~/components/domains/user/UserIcon/UserIcon';
 
 type Props = {
   currentUser?: User;
@@ -28,8 +28,6 @@ type Props = {
 };
 
 export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickLoginButton, menuItems, logoImagePath }) => {
-  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -41,12 +39,12 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const Contents = useMemo(() => {
-    if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
+    if (isValidating) return <SkeltonUserIcon size={40} />;
 
     if (currentUser) {
       return (
         <>
-          <StyledUserIcon size={40} signedUrl={signedUrl} userId={currentUser._id} onClick={handleClick} />
+          <StyledUserIcon size={40} attachmentId={currentUser._id} userId={currentUser._id} onClick={handleClick} />
           <Menu anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </>
       );
@@ -57,7 +55,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
         Login Button
       </StyledButton>
     );
-  }, [isValidating, currentUser, anchorEl, open, menuItems, signedUrl]);
+  }, [isValidating, currentUser, anchorEl, open, menuItems]);
 
   return (
     <>

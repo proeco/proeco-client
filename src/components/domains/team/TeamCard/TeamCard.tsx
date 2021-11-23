@@ -5,12 +5,9 @@ import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { Typography, Card } from '~/components/parts/commons';
 
 type Props = {
-  teamInfo: {
-    teamId: string;
-    name: string;
-    description: string;
-    signedUrl?: string;
-  };
+  name: string;
+  description: string;
+  attachmentId: string;
   onClick: () => void;
 };
 
@@ -29,27 +26,25 @@ export const SkeltonTeamCard: VFC = () => {
   );
 };
 
-export const TeamCard: VFC<Props> = ({ teamInfo, onClick }) => {
+export const TeamCard: VFC<Props> = ({ name, description, attachmentId, onClick }) => {
   return (
     <StyledTeamCard onClick={onClick}>
       <Box display="flex" alignItems="center" mb="8px">
         <Box mr="8px">
-          <TeamIcon teamName={teamInfo.name} signedUrl={teamInfo.signedUrl} />
+          <TeamIcon size={40} attachmentId={attachmentId} />
         </Box>
         <Typography variant="h3" maximum_lines={1}>
-          {teamInfo.name}
+          {name}
         </Typography>
       </Box>
       <StyledDescription variant="caption" maximum_lines={2}>
-        {teamInfo.description}
+        {description}
       </StyledDescription>
     </StyledTeamCard>
   );
 };
 
 const StyledTeamCard = styled(Card)`
-  width: 300px;
-  height: 130px;
   box-sizing: border-box;
   position: relative;
   top: 0;

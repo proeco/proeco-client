@@ -13,28 +13,12 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
-import { useSignedUrls } from '~/stores/attachment/useSignedUrls';
 
 const DashboardTeamPage: ProecoNextPage = () => {
   const router = useRouter();
   const { data: currentUser } = useCurrentUser();
   const { data: teams } = useTeams({
     userId: currentUser?._id,
-  });
-
-  const iconImageIds = teams?.map((team) => {
-    return team.iconImageId ? team.iconImageId : '';
-  });
-
-  const { data: teamSignedUrls = [] } = useSignedUrls(iconImageIds);
-
-  const teamsInfo = teams?.map((team, i) => {
-    return {
-      teamId: team._id,
-      name: team.name,
-      description: team.description,
-      signedUrl: teamSignedUrls[i],
-    };
   });
 
   return (
@@ -53,8 +37,16 @@ const DashboardTeamPage: ProecoNextPage = () => {
           </Link>
         </Box>
         <StyledTeamList display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center" gap="40px">
-          {teamsInfo ? (
-            teamsInfo.map((teamInfo) => <TeamCard key={teamInfo.teamId} teamInfo={teamInfo} onClick={() => router.push(`/team/${teamInfo.teamId}/dashboard`)} />)
+          {teams ? (
+            teams.map((team) => (
+              <TeamCard
+                key={team._id}
+                name={team.name}
+                description={team.description}
+                attachmentId={team.iconImageId}
+                onClick={() => router.push(`/team/${team._id}/dashboard`)}
+              />
+            ))
           ) : (
             <SkeltonTeamCard />
           )}

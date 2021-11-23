@@ -43,5 +43,4 @@ export const TimeLineItemWithoutImage = Template.bind({});
 TimeLineItemWithoutImage.args = {
   ...DefaultTimeLineItem.args,
   iconImageId: undefined,
-  name: 'User',
 };
