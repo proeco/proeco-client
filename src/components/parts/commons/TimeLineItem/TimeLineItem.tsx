@@ -3,12 +3,13 @@ import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, Timeline
 import { Box, styled } from '@mui/system';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { Paper, Typography, SpeedDial, Icon, FirstLetterIcon } from '~/components/parts/commons';
-import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type TimeLineItemType = {
   title: string;
   iconImageId?: string;
-  name?: string;
+  userName: string;
+  userAttachmentId?: string;
+  userId?: string;
   children: React.ReactNode;
   actions: {
     icon: ComponentProps<typeof Icon>['icon'];
@@ -19,14 +20,14 @@ type TimeLineItemType = {
 
 type Props = ComponentProps<typeof TimelineItem> & TimeLineItemType;
 
-export const TimeLineItem: VFC<Props> = ({ title, iconImageId, name = '', children, actions, ...rest }) => {
-  const { data: signedUrl } = useSignedUrl(iconImageId);
-
+export const TimeLineItem: VFC<Props> = ({ title, userName, userAttachmentId, userId, children, actions, ...rest }) => {
   return (
     <StyledDiv>
       <TimelineItem {...rest}>
         <TimelineSeparator>
-          <StyledTimeLineDot>{signedUrl ? <UserIcon size={40} signedUrl={signedUrl} /> : <FirstLetterIcon name={name} />}</StyledTimeLineDot>
+          <StyledTimeLineDot>
+            {userId && userAttachmentId ? <UserIcon size={40} attachmentId={userAttachmentId} userId={userId} /> : <FirstLetterIcon name={userName} />}
+          </StyledTimeLineDot>
           <StyledTimeLineConnector />
         </TimelineSeparator>
         <StyledTimeLineContent>

@@ -8,7 +8,7 @@ type Props = {
   usersInfo: {
     userId: string;
     name: string;
-    signedUrl: string;
+    attachmentId: string;
   }[];
   maxCount?: number;
   isLink?: boolean;
@@ -18,7 +18,7 @@ export const UserIconGroup: VFC<Props> = ({ usersInfo, maxCount = 3, isLink = fa
   return (
     <StyledAvatarGroup max={maxCount}>
       {usersInfo.map((userInfo) => {
-        return <UserIcon key={userInfo.userId} size={40} userId={userInfo.userId} signedUrl={userInfo.signedUrl} isLink={isLink} />;
+        return <UserIcon key={userInfo.userId} size={40} userId={userInfo.userId} attachmentId={userInfo.attachmentId} isLink={isLink} />;
       })}
     </StyledAvatarGroup>
   );

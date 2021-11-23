@@ -7,12 +7,10 @@ import { Button, Link, Typography } from '~/components/parts/commons';
 import { URLS } from '~/constants';
 import { useAuth } from '~/hooks/useAuth/useAuth';
 import { UserIcon } from '~/components/domains/user/UserIcon';
-import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 const Home: NextPage = () => {
   const { data: currentUser } = useCurrentUser();
   const { login, logout } = useAuth();
-  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
 
   return (
     <>
@@ -28,7 +26,7 @@ const Home: NextPage = () => {
       {currentUser ? (
         <>
           <Typography variant="h3">Hello {currentUser.name}!</Typography>
-          <UserIcon size={200} signedUrl={signedUrl} />
+          <UserIcon size={200} userId={currentUser._id} attachmentId={currentUser.iconImageId} />
           <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={logout}>
             Logout
           </Button>

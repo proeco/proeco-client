@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import { Box, styled } from '@mui/system';
+import { Box } from '@mui/system';
 import { ReactNode } from 'react';
+import { Grid } from '@mui/material';
 import { Button, Icon, Link, Typography } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -13,28 +14,12 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
-import { useSignedUrls } from '~/stores/attachment/useSignedUrls';
 
 const DashboardTeamPage: ProecoNextPage = () => {
   const router = useRouter();
   const { data: currentUser } = useCurrentUser();
   const { data: teams } = useTeams({
     userId: currentUser?._id,
-  });
-
-  const iconImageIds = teams?.map((team) => {
-    return team.iconImageId ? team.iconImageId : '';
-  });
-
-  const { data: teamSignedUrls = [] } = useSignedUrls(iconImageIds);
-
-  const teamsInfo = teams?.map((team, i) => {
-    return {
-      teamId: team._id,
-      name: team.name,
-      description: team.description,
-      signedUrl: teamSignedUrls[i],
-    };
   });
 
   return (
@@ -52,13 +37,22 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </Box>
-        <StyledTeamList display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center" gap="40px">
-          {teamsInfo ? (
-            teamsInfo.map((teamInfo) => <TeamCard key={teamInfo.teamId} teamInfo={teamInfo} onClick={() => router.push(`/team/${teamInfo.teamId}/dashboard`)} />)
+        <Grid container rowSpacing="20px" columnSpacing="20px">
+          {teams ? (
+            teams.map((team) => (
+              <Grid key={team._id} item xs={12} sm={6}>
+                <TeamCard
+                  name={team.name}
+                  description={team.description}
+                  attachmentId={team.iconImageId}
+                  onClick={() => router.push(`/team/${team._id}/dashboard`)}
+                />
+              </Grid>
+            ))
           ) : (
             <SkeltonTeamCard />
           )}
-        </StyledTeamList>
+        </Grid>
       </Box>
     </>
   );
@@ -68,12 +62,3 @@ const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>
 
 DashboardTeamPage.getLayout = getLayout;
 export default DashboardTeamPage;
-
-const StyledTeamList = styled(Box)`
-  /* 最後の行が左寄せになるように記述  */
-  &::after {
-    content: '';
-    display: block;
-    width: 300px;
-  }
-`;

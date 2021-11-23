@@ -1,17 +1,23 @@
-import { Avatar } from '@mui/material';
+import { Avatar, Skeleton } from '@mui/material';
 import { styled } from '@mui/system';
 import React, { VFC } from 'react';
-import { FirstLetterIcon } from '~/components/parts/commons/FirstLetterIcon';
+import { useAttachmentUrl } from '~/stores/attachment/useAttachmentUrl';
 
 type Props = {
-  teamName: string;
-  signedUrl?: string;
-  size?: number;
+  attachmentId: string;
+  size: number;
 };
 
-export const TeamIcon: VFC<Props> = ({ teamName, signedUrl, size = 40 }) => {
-  if (signedUrl) return <StyledAvatar size={size} src={signedUrl} />;
-  return <FirstLetterIcon size={size} name={teamName} />;
+// ローディング状態の TeamIcon
+export const SkeltonTeamIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
+  return <Skeleton variant="circular" width={size} height={size} />;
+};
+
+// 通常状態の TeamIcon
+export const TeamIcon: VFC<Props> = ({ attachmentId, size }) => {
+  const { data: attachmentUrl } = useAttachmentUrl(attachmentId);
+
+  return <StyledAvatar size={size} src={attachmentUrl} />;
 };
 
 const StyledAvatar = styled(Avatar)<{ size: number }>`

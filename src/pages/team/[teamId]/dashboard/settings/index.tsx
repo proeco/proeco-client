@@ -11,7 +11,7 @@ import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayo
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { Team } from '~/domains';
 import { useTeam } from '~/stores/team';
-import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
+import { useAttachmentUrl } from '~/stores/attachment/useAttachmentUrl';
 
 const TeamSettings: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
@@ -26,7 +26,7 @@ const TeamSettings: ProecoNextPage = () => {
   const [isValidForm, setIsValidForm] = useState(true);
 
   const { data: team } = useTeam({ teamId: router.query.teamId as string });
-  const { data: signedUrl } = useSignedUrl(team?.iconImageId);
+  const { data: attachmentUrl } = useAttachmentUrl(team?.iconImageId);
 
   useEffect(() => {
     if (team) {
@@ -90,7 +90,7 @@ const TeamSettings: ProecoNextPage = () => {
         </Box>
         <Paper>
           <Box display="flex" justifyContent="center">
-            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
+            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachmentUrl} />
           </Box>
           <Typography mb="4px" variant="body1" color="textColor.light">
             名前
