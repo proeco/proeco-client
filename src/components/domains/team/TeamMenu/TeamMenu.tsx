@@ -4,13 +4,16 @@ import { useRouter } from 'next/router';
 import { Skeleton } from '@mui/material';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { IconButton, Menu, Typography, Icon } from '~/components/parts/commons';
-import { Team } from '~/domains';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeams } from '~/stores/team';
 import { URLS } from '~/constants';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type Props = {
-  currentTeam?: Team;
+  currentTeamInfo?: {
+    name: string;
+    signedUrl?: string;
+  };
   menuItems: {
     icon: JSX.Element;
     text: string;
@@ -19,7 +22,7 @@ type Props = {
   isValidating: boolean;
 };
 
-export const Component: VFC<Props> = ({ currentTeam, menuItems, isValidating }) => {
+export const Component: VFC<Props> = ({ currentTeamInfo, menuItems, isValidating }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -42,12 +45,12 @@ export const Component: VFC<Props> = ({ currentTeam, menuItems, isValidating }) 
       );
     }
 
-    if (currentTeam) {
+    if (currentTeamInfo) {
       return (
         <>
-          <TeamIcon team={currentTeam} />
+          <TeamIcon teamName={currentTeamInfo.name} signedUrl={currentTeamInfo.signedUrl} />
           <Typography variant="h3" maximum_lines={1}>
-            {currentTeam.name}
+            {currentTeamInfo.name}
           </Typography>
         </>
       );
@@ -59,7 +62,7 @@ export const Component: VFC<Props> = ({ currentTeam, menuItems, isValidating }) 
         <Typography variant="h3">undefined</Typography>
       </>
     );
-  }, [isValidating, currentTeam]);
+  }, [isValidating, currentTeamInfo]);
 
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between" position="relative">
@@ -88,6 +91,8 @@ export const TeamMenu: VFC = () => {
   });
 
   const currentTeam = teams?.find((team) => team._id === router.query.id);
+  const { data: signedUrl } = useSignedUrl(currentTeam?.iconImageId);
+  const currentTeamInfo = currentTeam ? { name: currentTeam.name, signedUrl } : undefined;
 
   const teamMenuItems = useMemo(() => {
     if (!teams) {
@@ -98,7 +103,7 @@ export const TeamMenu: VFC = () => {
         .filter((team) => team._id !== router.query.id)
         .map((team) => {
           return {
-            icon: <TeamIcon team={team} size={24} />,
+            icon: <TeamIcon teamName={team.name} signedUrl={signedUrl} size={24} />,
             text: team.name,
             onClick: () => router.push(`/team/${team._id}/dashboard`),
           };
@@ -109,7 +114,7 @@ export const TeamMenu: VFC = () => {
         onClick: () => router.push(URLS.DASHBOARD_TEAMS_NEW),
       },
     ];
-  }, [teams, router]);
+  }, [teams, router, signedUrl]);
 
-  return <Component currentTeam={currentTeam} menuItems={teamMenuItems} isValidating={isValidatingTeams} />;
+  return <Component menuItems={teamMenuItems} isValidating={isValidatingTeams} currentTeamInfo={currentTeamInfo} />;
 };
