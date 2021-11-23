@@ -34,6 +34,14 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
       </>
     ));
 
+  if (process.env.NODE_ENV === 'development') {
+    const startServer = () =>
+      import('~/mocks/api/browser').then((mock) => {
+        mock.worker.start();
+      });
+    startServer();
+  }
+
   return (
     <MaterialThemeProvider theme={theme}>
       <SnackbarProvider>
