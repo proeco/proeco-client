@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
       </>
     ));
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NEXT_PUBLIC_ENABLE_MOCK === 'TRUE') {
     const startServer = () => import('~/mocks/worker');
     startServer();
   }
