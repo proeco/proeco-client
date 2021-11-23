@@ -4,6 +4,8 @@ import { addDecorator} from '@storybook/react';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 
 import { theme } from '../src/theme';
+const { worker } = require('../src/mocks/browser');
+worker.start()
 
 Object.defineProperty(nextImage, 'default', {
   configurable: true,
@@ -11,6 +13,7 @@ Object.defineProperty(nextImage, 'default', {
     return <img {...props} />;
   },
 });
+
 
 addDecorator((story) => {
   return <MaterialThemeProvider theme={theme}>{story()}</MaterialThemeProvider>
