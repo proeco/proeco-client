@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
 import { UserIcon } from './UserIcon';
-import { createMockUser } from '~/mock/createMockUser';
+import { createMockUser } from '~/mocks/domains/createMockUser';
 
 export default {
   title: 'domains/user/UserIcon',

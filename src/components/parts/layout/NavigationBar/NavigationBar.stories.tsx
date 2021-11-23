@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { Component } from '~/components/parts/layout/NavigationBar';
 import { Icon } from '~/components/parts/commons';
 
-import { createMockUser } from '~/mock';
+import { createMockUser } from '~/mocks/domains';
 
 export default {
   title: 'parts/layout/NavigationBar',
