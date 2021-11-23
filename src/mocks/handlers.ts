@@ -1,8 +1,5 @@
 import { rest } from 'msw';
-import { createMockUser } from './domains';
+import { getAttachmentById } from './api/attachment';
+import { getCurrentUser } from './api/user';
 
-export const handlers = [
-  rest.get('/api/v1/users/me', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(createMockUser()));
-  }),
-];
+export const handlers = [rest.get('/api/v1/users/me', getCurrentUser), rest.get('/api/v1/attachments/:id', getAttachmentById)];
