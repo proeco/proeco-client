@@ -22,17 +22,18 @@ const Template: ComponentStory<typeof SideBar> = ({ ...rest }) => {
 };
 
 const mockUser = createMockUser({ name: 'Proeco' });
+const signedUrl = 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574';
 
 const openContent = (
   <Box display="flex" alignItems="center" flexDirection="column" borderBottom="1px solid #eaecf1" pb="16px">
-    <UserIcon size={80} iconImageId={mockUser.iconImageId} userId={mockUser._id} isLink />
+    <UserIcon size={80} signedUrl={signedUrl} userId={mockUser._id} isLink />
     <Typography variant="h3">{mockUser.name}</Typography>
   </Box>
 );
 
 const closeContent = (
   <Box display="flex" alignItems="center" flexDirection="column" borderBottom="1px solid #eaecf1" width="fit-content" pb="16px" pt="46px">
-    <UserIcon size={40} iconImageId={mockUser.iconImageId} userId={mockUser._id} isLink />
+    <UserIcon size={40} signedUrl={signedUrl} userId={mockUser._id} isLink />
   </Box>
 );
 

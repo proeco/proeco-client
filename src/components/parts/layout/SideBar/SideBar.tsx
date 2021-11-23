@@ -9,6 +9,7 @@ import { UserIcon } from '~/components/domains/user/UserIcon';
 import { User } from '~/domains';
 
 import { useLocalStorage } from '~/hooks/useLocalStorage';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type Props = {
   asPath: string;
@@ -31,6 +32,8 @@ const drawerWidth = 280;
 const isOpenSideBar = 'isOpenSideBar';
 
 export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent, currentUser, menuItems }) => {
+  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
+
   const { fetchData, storeData } = useLocalStorage();
   const value = fetchData<boolean>(isOpenSideBar);
   const [open, setOpen] = useState(value ?? true);
@@ -88,7 +91,7 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
         {currentUser && (
           <Box mt="auto">
             <StyledBox onClick={handleClick} display="flex" alignItems="center" gap="8px" isPointer={!!menuItems}>
-              <UserIcon size={40} iconImageId={currentUser.iconImageId} userId={currentUser._id} />
+              <UserIcon size={40} signedUrl={signedUrl} userId={currentUser._id} />
               {open && <Typography variant="body1">{currentUser.name}</Typography>}
             </StyledBox>
             {menuItems && (

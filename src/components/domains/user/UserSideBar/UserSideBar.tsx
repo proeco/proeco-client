@@ -14,6 +14,8 @@ import { User } from '~/domains';
 
 import { URLS } from '~/constants/urls';
 
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
+
 type Props = {
   currentUser?: User;
   asPath: string;
@@ -43,6 +45,8 @@ const sidebarItems: {
 ];
 
 export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating = false }) => {
+  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
+
   const openContent = useMemo(() => {
     if (isValidating) {
       return (
@@ -56,7 +60,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
     if (currentUser) {
       return (
         <StyledUserIconWrapper pb="16px">
-          <UserIcon size={80} iconImageId={currentUser.iconImageId} userId={currentUser._id} isLink />
+          <UserIcon size={80} signedUrl={signedUrl} userId={currentUser._id} isLink />
           <Typography variant="h3">{currentUser.name}</Typography>
         </StyledUserIconWrapper>
       );
@@ -68,7 +72,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
         <Typography variant="h3">undefined</Typography>
       </StyledUserIconWrapper>
     );
-  }, [isValidating, currentUser]);
+  }, [isValidating, currentUser, signedUrl]);
 
   const closeContent = useMemo(() => {
     if (isValidating) {
@@ -82,7 +86,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
     if (currentUser) {
       return (
         <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-          <UserIcon size={40} iconImageId={currentUser.iconImageId} userId={currentUser._id} isLink />
+          <UserIcon size={40} signedUrl={signedUrl} userId={currentUser._id} isLink />
         </StyledUserIconWrapper>
       );
     }
@@ -92,7 +96,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
         <Icon width={40} icon="PersonOutline" />
       </StyledUserIconWrapper>
     );
-  }, [isValidating, currentUser]);
+  }, [isValidating, currentUser, signedUrl]);
 
   return <SideBar asPath={asPath} currentUser={currentUser} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
 });
