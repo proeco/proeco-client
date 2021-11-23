@@ -5,7 +5,6 @@ import { Box } from '@mui/system';
 
 import { action } from '@storybook/addon-actions';
 import { SkeltonTeamCard, TeamCard } from './TeamCard';
-import { createMockTeam } from '~/mock';
 
 export default {
   title: 'domains/team/TeamCard',
@@ -20,34 +19,19 @@ const Template: ComponentStory<typeof TeamCard> = ({ ...rest }) => {
   );
 };
 
-const mockTeam = createMockTeam({ name: 'Proeco' });
-const mockTeamWithoutImage = createMockTeam({ name: 'Proeco' });
-const mockLongTextTeam = createMockTeam({
-  ...mockTeam,
-  description: 'Proeco は頑張る人を応援するプラットフォームです。プロジェクトを作って Story を作ることで',
-});
-
 export const DefaultTeamCard = Template.bind({});
 DefaultTeamCard.args = {
-  team: mockTeam,
+  name: 'Proeco',
+  description: 'description',
+  attachmentId: 'attachmentId1',
   onClick: action('clickTeamCard'),
 };
 
 export const LongTextTeamCard = Template.bind({});
 LongTextTeamCard.args = {
   ...DefaultTeamCard.args,
-  team: mockLongTextTeam,
-};
-
-export const TeamCardWithoutImage = Template.bind({});
-TeamCardWithoutImage.args = {
-  ...DefaultTeamCard.args,
-  team: mockTeamWithoutImage,
-};
-
-export const LoadingTeamCard = Template.bind({});
-LoadingTeamCard.args = {
-  ...DefaultTeamCard.args,
+  description: 'Proeco は頑張る人を応援するプラットフォームです。プロジェクトを作って Story を作ることで',
+  attachmentId: 'attachmentId1',
 };
 
 const SkeltonTemplate: ComponentStory<typeof SkeltonTeamCard> = ({ ...rest }) => {

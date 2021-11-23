@@ -25,6 +25,7 @@ import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useIsOpenDeleteStoryPostModal } from '~/stores/modal/useIsOpenDeleteStoryPostModal';
 import { useStoryPostForDelete } from '~/stores/storyPost/useStoryPostForDelete';
+import { GuestUserIcon } from '~/components/domains/user/UserIcon/UserIcon';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -36,6 +37,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { storyId } = router.query;
   const { data: story } = useStory(storyId as string, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
+
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { data: storyPosts } = useStoryPosts({
@@ -59,8 +61,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   const timeLineItems: {
     title: string;
-    imagePath?: string;
-    name?: string;
+    iconImageId?: string;
+    userName: string;
     children: ReactNode;
     actions: {
       icon: ComponentProps<typeof Icon>['icon'];
@@ -74,8 +76,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     return storyPosts.docs.map((storyPost) => {
       return {
         title: storyPost.title,
-        imagePath: currentUser?.image,
-        name: currentUser?.name,
+        iconImageId: currentUser?.iconImageId || '',
+        userName: currentUser?.name || '',
         // TODO: Childrenの中身を作成する
         children: <Box minHeight="250px"></Box>,
         actions: [
@@ -160,7 +162,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         <Box my={4} maxWidth="600px" mx="auto">
           <TimeLine timeLineItems={timeLineItems} />
           <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
-            <UserIcon size={40} imagePath={currentUser?.image} userId={currentUser?._id} />
+            {currentUser ? <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} /> : <GuestUserIcon size={40} />}
             <StyledBoxWrapper width="100%" position="relative">
               <StyledTriangle></StyledTriangle>
               <StyledBox p={5}>

@@ -1,12 +1,13 @@
 import { Box } from '@mui/system';
-import { useEffect, useState, ReactNode } from 'react';
-import { Button, Icon, Paper, TextField, Typography } from '~/components/parts/commons';
+import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
+import { Button, Icon, IconUpload, Paper, TextField, Typography } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { User } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { useAttachmentUrl } from '~/stores/attachment/useAttachmentUrl';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { restClient } from '~/utils/rest-client';
 
@@ -16,7 +17,9 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     name: '',
     description: '',
   });
+  const { data: signedUrl } = useAttachmentUrl(currentUser?.iconImageId);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [iconImage, setIconImage] = useState<File>();
   const [isValidForm, setIsValidForm] = useState(true);
 
   const { notifyErrorMessage } = useErrorNotification();
@@ -40,15 +43,28 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     });
   };
 
+  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    setIconImage(e.target.files[0]);
+  };
+
   const handleClickCreateNewTeam = async () => {
     setIsUpdating(true);
     try {
-      const { data } = await restClient.apiPut<User>('/users', { ...newUser });
-      notifySuccessMessage('チームを作成しました');
+      const params = new FormData();
+      if (iconImage) {
+        params.append('file', iconImage);
+      }
+      params.append('newUser', JSON.stringify(newUser));
+      const { data } = await restClient.apiPut<User>('/users', params, { 'Content-Type': 'multipart/form-data' });
+      notifySuccessMessage('ユーザー情報更新しました');
       mutateCurrentUser(data, false);
       setIsUpdating(false);
     } catch (error) {
-      notifyErrorMessage('チームの作成に失敗しました');
+      notifyErrorMessage('ユーザー情報の更新に失敗しました');
     }
   };
 
@@ -67,6 +83,9 @@ const DashboardSettingsPage: ProecoNextPage = () => {
           </Typography>
         </Box>
         <Paper>
+          <Box display="flex" justifyContent="center">
+            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
+          </Box>
           <Box mb="16px">
             <Typography mb="4px" variant="body1" color="textColor.light">
               ユーザー名

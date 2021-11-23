@@ -1,22 +1,29 @@
+import { Avatar, Skeleton } from '@mui/material';
+import { styled } from '@mui/system';
 import React, { VFC } from 'react';
-import { UserIcon } from '~/components/domains/user/UserIcon';
-import { FirstLetterIcon } from '~/components/parts/commons/FirstLetterIcon';
-import { Team } from '~/domains';
-import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
+import { useAttachmentUrl } from '~/stores/attachment/useAttachmentUrl';
 
 type Props = {
-  team: Team;
-  iconImageUrl?: string;
-  size?: number;
+  attachmentId: string;
+  size: number;
 };
 
-export const Component: VFC<Props> = ({ team, iconImageUrl, size = 40 }) => {
-  if (iconImageUrl) return <UserIcon size={size} imagePath={iconImageUrl} />;
-  return <FirstLetterIcon size={size} name={team.name} />;
+// ローディング状態の TeamIcon
+export const SkeltonTeamIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
+  return <Skeleton variant="circular" width={size} height={size} />;
 };
 
-export const TeamIcon: VFC<Props> = ({ team, size = 40 }) => {
-  const { data: iconImageUrl } = useSignedUrl(team.iconImageId);
+// 通常状態の TeamIcon
+export const TeamIcon: VFC<Props> = ({ attachmentId, size }) => {
+  const { data: attachmentUrl } = useAttachmentUrl(attachmentId);
 
-  return <Component team={team} size={size} iconImageUrl={iconImageUrl} />;
+  return <StyledAvatar size={size} src={attachmentUrl} />;
 };
+
+const StyledAvatar = styled(Avatar)<{ size: number }>`
+  background-color: white;
+  border: 2px solid ${(props) => props.theme.palette.primary.main};
+  box-sizing: border-box;
+  width: ${(props) => props.size}px;
+  height: ${(props) => props.size}px;
+`;

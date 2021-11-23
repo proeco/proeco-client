@@ -22,7 +22,6 @@ export const useAuth = () => {
         restClient.apiPost('/users', {
           user: {
             uid: user.uid,
-            image: user.photoURL,
             name: user.displayName,
             email: user.email,
             accessToken: credential.accessToken,

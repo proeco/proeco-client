@@ -1,12 +1,13 @@
 import React, { VFC } from 'react';
 import { Skeleton } from '@mui/material';
 import { Box, styled } from '@mui/system';
-import { Team } from '~/domains';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { Typography, Card } from '~/components/parts/commons';
 
 type Props = {
-  team: Team;
+  name: string;
+  description: string;
+  attachmentId: string;
   onClick: () => void;
 };
 
@@ -25,30 +26,29 @@ export const SkeltonTeamCard: VFC = () => {
   );
 };
 
-export const TeamCard: VFC<Props> = ({ team, onClick }) => {
+export const TeamCard: VFC<Props> = ({ name, description, attachmentId, onClick }) => {
   return (
     <StyledTeamCard onClick={onClick}>
       <Box display="flex" alignItems="center" mb="8px">
         <Box mr="8px">
-          <TeamIcon team={team} />
+          <TeamIcon size={40} attachmentId={attachmentId} />
         </Box>
         <Typography variant="h3" maximum_lines={1}>
-          {team.name}
+          {name}
         </Typography>
       </Box>
       <StyledDescription variant="caption" maximum_lines={2}>
-        {team.description}
+        {description}
       </StyledDescription>
     </StyledTeamCard>
   );
 };
 
 const StyledTeamCard = styled(Card)`
-  width: 300px;
-  height: 130px;
   box-sizing: border-box;
   position: relative;
   top: 0;
+  width: 100%;
   transition: all 0.3s;
   ${(props) =>
     props.onClick &&

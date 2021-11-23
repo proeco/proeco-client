@@ -1,1 +1,1 @@
-export { TeamIcon } from './TeamIcon';
+export { SkeltonTeamIcon, TeamIcon } from './TeamIcon';

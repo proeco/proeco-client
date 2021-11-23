@@ -5,31 +5,33 @@ import { Box, styled } from '@mui/system';
 
 import { Skeleton } from '@mui/material';
 import { Typography, Icon } from '~/components/parts/commons';
-import { TeamIcon } from '~/components/domains/team/TeamIcon';
+import { SkeltonTeamIcon, TeamIcon } from '~/components/domains/team/TeamIcon';
 import { UserIconGroup } from '~/components/domains/user/UserIconGroup';
-
-import { Team, User } from '~/domains';
 
 import { URLS } from '~/constants/urls';
 import { useTeam, useTeamUsers } from '~/stores/team';
 import { SideBar } from '~/components/parts/layout/SideBar';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-type Props = {
-  currentTeam?: Team;
-  asPath: string;
-  isValidating: boolean;
-  teamUsers: User[];
-  teamId?: string;
-  currentUser?: User;
-  menuItems?: {
-    icon: JSX.Element;
-    text: string;
-    onClick: () => void;
-  }[];
-};
+export const TeamSideBar: VFC<{ teamId: string }> = memo(({ teamId }) => {
+  const router = useRouter();
 
-export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isValidating, teamId, currentUser, menuItems }) => {
+  const { data: currentTeam } = useTeam({ teamId });
+
+  const { data: teamUsers = [], isValidating } = useTeamUsers({
+    teamId: currentTeam?._id,
+  });
+
+  const teamUsersInfo = teamUsers.map((teamUser) => {
+    return { userId: teamUser._id, name: teamUser.name, attachmentId: teamUser.iconImageId };
+  });
+
+  const menuItems = [
+    {
+      icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
+      text: '個人画面に戻る',
+      onClick: () => router.push(URLS.DASHBOARD),
+    },
+  ];
   const sidebarItems: {
     icon: ComponentProps<typeof Icon>['icon'];
     url: string;
@@ -68,20 +70,13 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
     if (currentTeam) {
       return (
         <>
-          <TeamIcon team={currentTeam} size={80} />
+          <TeamIcon attachmentId={currentTeam.iconImageId} size={80} />
           <Typography variant="h3" maximum_lines={1}>
             {currentTeam.name}
           </Typography>
         </>
       );
     }
-
-    return (
-      <>
-        <Icon width={40} icon="Group" />
-        <Typography variant="h3">undefined</Typography>
-      </>
-    );
   }, [isValidating, currentTeam]);
 
   const openContent = useMemo(() => {
@@ -91,17 +86,17 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
           {TeamContent}
         </Box>
         <Box py="8px" borderBottom="1px solid #eaecf1">
-          <UserIconGroup users={teamUsers} isLink />
+          <UserIconGroup usersInfo={teamUsersInfo} isLink />
         </Box>
       </>
     );
-  }, [TeamContent, teamUsers]);
+  }, [TeamContent, teamUsersInfo]);
 
   const closeContent = useMemo(() => {
     if (isValidating) {
       return (
         <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-          <Skeleton variant="circular" width={40} height={40} />
+          <SkeltonTeamIcon size={40} />
         </StyledUserIconWrapper>
       );
     }
@@ -109,7 +104,7 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
     if (currentTeam) {
       return (
         <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-          <TeamIcon size={40} team={currentTeam} />
+          <TeamIcon size={40} attachmentId={currentTeam.iconImageId} />
         </StyledUserIconWrapper>
       );
     }
@@ -119,11 +114,9 @@ export const Component: VFC<Props> = memo(({ asPath, teamUsers, currentTeam, isV
         <Icon width={40} icon="Group" />
       </StyledUserIconWrapper>
     );
-  }, [isValidating, currentTeam]);
+  }, [currentTeam, isValidating]);
 
-  return (
-    <SideBar asPath={asPath} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} currentUser={currentUser} menuItems={menuItems} />
-  );
+  return <SideBar openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} menuItems={menuItems} />;
 });
 
 const StyledUserIconWrapper = styled(Box)`
@@ -132,37 +125,3 @@ const StyledUserIconWrapper = styled(Box)`
   flex-direction: column;
   border-bottom: 1px solid ${(props) => props.theme.palette.borderColor.main};
 `;
-
-export const TeamSideBar: VFC = memo(() => {
-  const router = useRouter();
-
-  const { data: currentUser } = useCurrentUser();
-
-  const { data: currentTeam, isValidating: isValidatingTeam } = useTeam({
-    teamId: router.query.teamId as string,
-  });
-
-  const { data: teamUser = [] } = useTeamUsers({
-    teamId: currentTeam?._id,
-  });
-
-  const menuItems = [
-    {
-      icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
-      text: '個人画面に戻る',
-      onClick: () => router.push(URLS.DASHBOARD),
-    },
-  ];
-
-  return (
-    <Component
-      asPath={router.asPath}
-      currentTeam={currentTeam}
-      isValidating={isValidatingTeam}
-      teamUsers={teamUser}
-      teamId={router.query.teamId as string}
-      currentUser={currentUser}
-      menuItems={menuItems}
-    />
-  );
-});

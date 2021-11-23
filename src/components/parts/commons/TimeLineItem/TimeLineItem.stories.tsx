@@ -24,7 +24,7 @@ const Template: ComponentStory<typeof TimeLineItem> = ({ ...rest }) => {
 export const DefaultTimeLineItem = Template.bind({});
 DefaultTimeLineItem.args = {
   title: 'TimeLineItemのtitle',
-  imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
+  iconImageId: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
   actions: [
     {
       icon: 'Delete',
@@ -42,6 +42,5 @@ DefaultTimeLineItem.args = {
 export const TimeLineItemWithoutImage = Template.bind({});
 TimeLineItemWithoutImage.args = {
   ...DefaultTimeLineItem.args,
-  imagePath: undefined,
-  name: 'User',
+  iconImageId: undefined,
 };

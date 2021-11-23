@@ -1,5 +1,4 @@
-import { ComponentProps, memo, VFC, useMemo } from 'react';
-import { useRouter } from 'next/router';
+import React, { ComponentProps, memo, VFC, useMemo } from 'react';
 
 import { Box } from '@mui/system';
 import { Skeleton } from '@mui/material';
@@ -7,18 +6,10 @@ import { styled } from '@mui/material/styles';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { Typography, Icon } from '~/components/parts/commons';
-import { UserIcon } from '~/components/domains/user/UserIcon';
+import { SkeltonUserIcon, UserIcon } from '~/components/domains/user/UserIcon';
 import { SideBar } from '~/components/parts/layout/SideBar';
 
-import { User } from '~/domains';
-
 import { URLS } from '~/constants/urls';
-
-type Props = {
-  currentUser?: User;
-  asPath: string;
-  isValidating?: boolean;
-};
 
 const sidebarItems: {
   icon: ComponentProps<typeof Icon>['icon'];
@@ -42,12 +33,14 @@ const sidebarItems: {
   },
 ];
 
-export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating = false }) => {
+export const UserSideBar: VFC = memo(() => {
+  const { data: currentUser, isValidating: isValidatingUser } = useCurrentUser();
+
   const openContent = useMemo(() => {
-    if (isValidating) {
+    if (isValidatingUser) {
       return (
         <StyledUserIconWrapper pb="16px">
-          <Skeleton variant="circular" width={80} height={80} />
+          <SkeltonUserIcon size={80} />
           <Skeleton variant="text" width="100px" />
         </StyledUserIconWrapper>
       );
@@ -56,7 +49,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
     if (currentUser) {
       return (
         <StyledUserIconWrapper pb="16px">
-          <UserIcon size={80} imagePath={currentUser.image} userId={currentUser._id} isLink />
+          <UserIcon size={80} attachmentId={currentUser.iconImageId} userId={currentUser._id} isLink />
           <Typography variant="h3">{currentUser.name}</Typography>
         </StyledUserIconWrapper>
       );
@@ -68,12 +61,13 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
         <Typography variant="h3">undefined</Typography>
       </StyledUserIconWrapper>
     );
-  }, [isValidating, currentUser]);
+  }, [isValidatingUser, currentUser]);
 
   const closeContent = useMemo(() => {
-    if (isValidating) {
+    if (isValidatingUser) {
       return (
         <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
+          <SkeltonUserIcon size={40} />
           <Skeleton variant="circular" width={40} height={40} />
         </StyledUserIconWrapper>
       );
@@ -82,7 +76,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
     if (currentUser) {
       return (
         <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-          <UserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} isLink />
+          <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} isLink />
         </StyledUserIconWrapper>
       );
     }
@@ -92,9 +86,9 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
         <Icon width={40} icon="PersonOutline" />
       </StyledUserIconWrapper>
     );
-  }, [isValidating, currentUser]);
+  }, [currentUser, isValidatingUser]);
 
-  return <SideBar asPath={asPath} currentUser={currentUser} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
+  return <SideBar openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
 });
 
 const StyledUserIconWrapper = styled(Box)`
@@ -103,10 +97,3 @@ const StyledUserIconWrapper = styled(Box)`
   flex-direction: column;
   border-bottom: 1px solid ${(props) => props.theme.palette.borderColor.main};
 `;
-
-export const UserSideBar: VFC = memo(() => {
-  const router = useRouter();
-  const { data: currentUser, isValidating: isValidatingUser } = useCurrentUser();
-
-  return <Component currentUser={currentUser} asPath={router.asPath} isValidating={isValidatingUser} />;
-});

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
-import { AppBar, Skeleton } from '@mui/material';
+import { AppBar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -13,6 +13,7 @@ import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
 import { useAuth } from '~/hooks/useAuth/useAuth';
+import { SkeltonUserIcon } from '~/components/domains/user/UserIcon/UserIcon';
 
 type Props = {
   currentUser?: User;
@@ -38,12 +39,12 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const Contents = useMemo(() => {
-    if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
+    if (isValidating) return <SkeltonUserIcon size={40} />;
 
     if (currentUser) {
       return (
         <>
-          <StyledUserIcon size={40} imagePath={currentUser.image} userId={currentUser._id} onClick={handleClick} />
+          <StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} onClick={handleClick} />
           <Menu anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </>
       );

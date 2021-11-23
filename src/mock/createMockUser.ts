@@ -11,7 +11,7 @@ export const createMockUser = (mock: Partial<User> = {}): User => {
     name: mock.name || 'mockName',
     description: mock.description || 'mockDescription',
     email: mock.email || 'mockEmail',
-    image: mock.image || 'mockImage',
+    iconImageId: mock.iconImageId || 'iconImage1',
     createdAt: mock.createdAt || new Date(),
     updatedAt: mock.updatedAt || new Date(),
   });

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
-import { Box, styled } from '@mui/system';
+import { Box } from '@mui/system';
 import { ReactNode } from 'react';
+import { Grid } from '@mui/material';
 import { Button, Icon, Link, Typography } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -36,9 +37,22 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </Box>
-        <StyledTeamList display="flex" flexWrap="wrap" justifyContent="space-between" alignItems="center" gap="40px">
-          {teams ? teams.map((team) => <TeamCard key={team._id} team={team} onClick={() => router.push(`/team/${team._id}/dashboard`)} />) : <SkeltonTeamCard />}
-        </StyledTeamList>
+        <Grid container rowSpacing="20px" columnSpacing="20px">
+          {teams ? (
+            teams.map((team) => (
+              <Grid key={team._id} item xs={12} sm={6}>
+                <TeamCard
+                  name={team.name}
+                  description={team.description}
+                  attachmentId={team.iconImageId}
+                  onClick={() => router.push(`/team/${team._id}/dashboard`)}
+                />
+              </Grid>
+            ))
+          ) : (
+            <SkeltonTeamCard />
+          )}
+        </Grid>
       </Box>
     </>
   );
@@ -48,12 +62,3 @@ const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>
 
 DashboardTeamPage.getLayout = getLayout;
 export default DashboardTeamPage;
-
-const StyledTeamList = styled(Box)`
-  /* 最後の行が左寄せになるように記述  */
-  &::after {
-    content: '';
-    display: block;
-    width: 300px;
-  }
-`;
