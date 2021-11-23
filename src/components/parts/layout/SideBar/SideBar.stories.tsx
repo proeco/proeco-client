@@ -64,7 +64,7 @@ DefaultSideBar.args = {
 export const SideBarWithUserIcon = Template.bind({});
 SideBarWithUserIcon.args = {
   ...DefaultSideBar.args,
-  currentUser: mockUser,
+  currentUserInfo: { userId: 'Proeco', name: 'Proeco', signedUrl: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' },
   menuItems: [
     {
       icon: <Icon icon="Logout" width="20px" color="textColor.main" />,

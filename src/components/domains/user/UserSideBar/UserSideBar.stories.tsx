@@ -3,8 +3,6 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Component } from './UserSideBar';
 
-import { createMockUser } from '~/mock';
-
 import { URLS } from '~/constants/urls';
 
 export default {
@@ -22,6 +20,6 @@ const Template: ComponentStory<typeof Component> = ({ ...rest }) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  currentUser: createMockUser(),
+  currentUserInfo: { userId: 'user', name: 'user', signedUrl: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' },
   asPath: URLS.DASHBOARD,
 };

@@ -10,14 +10,16 @@ import { Typography, Icon } from '~/components/parts/commons';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { SideBar } from '~/components/parts/layout/SideBar';
 
-import { User } from '~/domains';
-
 import { URLS } from '~/constants/urls';
 
 import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type Props = {
-  currentUser?: User;
+  currentUserInfo?: {
+    userId: string;
+    name: string;
+    signedUrl?: string;
+  };
   asPath: string;
   isValidating?: boolean;
 };
@@ -44,9 +46,7 @@ const sidebarItems: {
   },
 ];
 
-export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating = false }) => {
-  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
-
+export const Component: VFC<Props> = memo(({ currentUserInfo, asPath, isValidating = false }) => {
   const openContent = useMemo(() => {
     if (isValidating) {
       return (
@@ -57,11 +57,11 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
       );
     }
 
-    if (currentUser) {
+    if (currentUserInfo) {
       return (
         <StyledUserIconWrapper pb="16px">
-          <UserIcon size={80} signedUrl={signedUrl} userId={currentUser._id} isLink />
-          <Typography variant="h3">{currentUser.name}</Typography>
+          <UserIcon size={80} signedUrl={currentUserInfo.signedUrl} userId={currentUserInfo.userId} isLink />
+          <Typography variant="h3">{currentUserInfo.name}</Typography>
         </StyledUserIconWrapper>
       );
     }
@@ -72,7 +72,7 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
         <Typography variant="h3">undefined</Typography>
       </StyledUserIconWrapper>
     );
-  }, [isValidating, currentUser, signedUrl]);
+  }, [isValidating, currentUserInfo]);
 
   const closeContent = useMemo(() => {
     if (isValidating) {
@@ -83,10 +83,10 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
       );
     }
 
-    if (currentUser) {
+    if (currentUserInfo) {
       return (
         <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-          <UserIcon size={40} signedUrl={signedUrl} userId={currentUser._id} isLink />
+          <UserIcon size={40} signedUrl={currentUserInfo.signedUrl} userId={currentUserInfo.userId} isLink />
         </StyledUserIconWrapper>
       );
     }
@@ -96,9 +96,9 @@ export const Component: VFC<Props> = memo(({ currentUser, asPath, isValidating =
         <Icon width={40} icon="PersonOutline" />
       </StyledUserIconWrapper>
     );
-  }, [isValidating, currentUser, signedUrl]);
+  }, [isValidating, currentUserInfo]);
 
-  return <SideBar asPath={asPath} currentUser={currentUser} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
+  return <SideBar asPath={asPath} currentUserInfo={currentUserInfo} openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
 });
 
 const StyledUserIconWrapper = styled(Box)`
@@ -112,5 +112,8 @@ export const UserSideBar: VFC = memo(() => {
   const router = useRouter();
   const { data: currentUser, isValidating: isValidatingUser } = useCurrentUser();
 
-  return <Component currentUser={currentUser} asPath={router.asPath} isValidating={isValidatingUser} />;
+  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
+  const currentUserInfo = currentUser ? { userId: currentUser._id, name: currentUser.name, signedUrl } : undefined;
+
+  return <Component currentUserInfo={currentUserInfo} asPath={router.asPath} isValidating={isValidatingUser} />;
 });

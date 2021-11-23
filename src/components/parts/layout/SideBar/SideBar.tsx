@@ -6,10 +6,8 @@ import { styled, Theme, CSSObject } from '@mui/material/styles';
 
 import { Typography, SideBarListItem, Icon, Link, IconButton, Menu } from '~/components/parts/commons';
 import { UserIcon } from '~/components/domains/user/UserIcon';
-import { User } from '~/domains';
 
 import { useLocalStorage } from '~/hooks/useLocalStorage';
-import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type Props = {
   asPath: string;
@@ -20,7 +18,11 @@ type Props = {
     url: string;
     text: string;
   }[];
-  currentUser?: User;
+  currentUserInfo?: {
+    userId: string;
+    name: string;
+    signedUrl?: string;
+  };
   menuItems?: {
     icon: JSX.Element;
     text: string;
@@ -31,9 +33,7 @@ type Props = {
 const drawerWidth = 280;
 const isOpenSideBar = 'isOpenSideBar';
 
-export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent, currentUser, menuItems }) => {
-  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
-
+export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, closeContent, currentUserInfo, menuItems }) => {
   const { fetchData, storeData } = useLocalStorage();
   const value = fetchData<boolean>(isOpenSideBar);
   const [open, setOpen] = useState(value ?? true);
@@ -88,11 +88,11 @@ export const SideBar: VFC<Props> = memo(({ asPath, sidebarItems, openContent, cl
             );
           })}
         </Box>
-        {currentUser && (
+        {currentUserInfo && (
           <Box mt="auto">
             <StyledBox onClick={handleClick} display="flex" alignItems="center" gap="8px" isPointer={!!menuItems}>
-              <UserIcon size={40} signedUrl={signedUrl} userId={currentUser._id} />
-              {open && <Typography variant="body1">{currentUser.name}</Typography>}
+              <UserIcon size={40} signedUrl={currentUserInfo.signedUrl} userId={currentUserInfo.userId} />
+              {open && <Typography variant="body1">{currentUserInfo.name}</Typography>}
             </StyledBox>
             {menuItems && (
               <Menu

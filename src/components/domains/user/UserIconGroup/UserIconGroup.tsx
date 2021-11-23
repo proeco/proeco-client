@@ -5,11 +5,11 @@ import { styled } from '@mui/material/styles';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 
 type Props = {
-  usersInfo: Array<{
+  usersInfo: {
     userId: string;
     name: string;
     signedUrl: string;
-  }>;
+  }[];
   maxCount?: number;
   isLink?: boolean;
 };
@@ -17,8 +17,8 @@ type Props = {
 export const UserIconGroup: VFC<Props> = ({ usersInfo, maxCount = 3, isLink = false }) => {
   return (
     <StyledAvatarGroup max={maxCount}>
-      {usersInfo.map((user) => {
-        return <UserIcon key={user.userId} size={40} userId={user.userId} signedUrl={user.signedUrl} isLink={isLink} />;
+      {usersInfo.map((userInfo) => {
+        return <UserIcon key={userInfo.userId} size={40} userId={userInfo.userId} signedUrl={userInfo.signedUrl} isLink={isLink} />;
       })}
     </StyledAvatarGroup>
   );
