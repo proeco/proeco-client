@@ -13,7 +13,7 @@ import { Attachment } from '~/domains';
  * @returns mutate データの更新関数
  */
 export const useAttachmentUrl = (attachmentId?: Attachment['_id']): SWRResponse<string, Error> => {
-  const key = attachmentId ? `/files/${attachmentId}` : null;
+  const key = attachmentId ? `/attachments/${attachmentId}` : null;
 
   return useSWRImmutable(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data));
 };

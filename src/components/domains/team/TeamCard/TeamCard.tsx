@@ -18,10 +18,10 @@ export const SkeltonTeamCard: VFC = () => {
         <Box mr="8px">
           <Skeleton variant="circular" width={40} height={40} />
         </Box>
-        <Skeleton variant="text" width="100px" />
+        <Skeleton variant="text" width="100%" />
       </Box>
-      <Skeleton variant="text" width="260px" />
-      <Skeleton variant="text" width="260px" />
+      <Skeleton variant="text" width="100%" />
+      <Skeleton variant="text" width="100%" />
     </StyledTeamCard>
   );
 };
