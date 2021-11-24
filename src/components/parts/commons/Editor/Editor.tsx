@@ -1,19 +1,19 @@
-import React, { VFC, useState } from 'react';
+import React, { VFC, useState, ReactNode } from 'react';
 import { Box } from '@mui/system';
 import { Tab, Tabs } from '@mui/material';
 
 import { TextField, Button } from '~/components/parts/commons';
 
 type TabPanelProps = {
-  textValue: string;
+  children: ReactNode;
   index: number;
   value: number;
 };
 
-const TabPanel: VFC<TabPanelProps> = ({ textValue, index, value }) => {
+const TabPanel: VFC<TabPanelProps> = ({ children, index, value }) => {
   return (
     <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`}>
-      {value === index && <TextField multiline fullWidth value={textValue} />}
+      {value === index && children}
     </div>
   );
 };
@@ -41,8 +41,12 @@ export const Editor: VFC<Props> = ({ ...rest }) => {
           <Tab label="Markdown" {...a11yProps(0)} />
           <Tab label="Preview" {...a11yProps(1)} />
         </Tabs>
-        <TabPanel value={value} index={0} textValue="Markdown" />
-        <TabPanel value={value} index={1} textValue="Preview" />
+        <TabPanel value={value} index={0}>
+          <TextField fullWidth multiline value="Markdown" />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <TextField fullWidth multiline value="Preview" />
+        </TabPanel>
       </Box>
       <Button variant="contained">投稿する</Button>
     </Box>
