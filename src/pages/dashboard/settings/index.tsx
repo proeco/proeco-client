@@ -17,7 +17,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     name: '',
     description: '',
   });
-  const { data: signedUrl } = useAttachmentUrl(currentUser?.iconImageId);
+  const { data: attachmentUrl } = useAttachmentUrl(currentUser?.iconImageId);
   const [isUpdating, setIsUpdating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
   const [isValidForm, setIsValidForm] = useState(true);
@@ -84,7 +84,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
         </Box>
         <Paper>
           <Box display="flex" justifyContent="center">
-            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
+            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachmentUrl} />
           </Box>
           <Box mb="16px">
             <Typography mb="4px" variant="body1" color="textColor.light">

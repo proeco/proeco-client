@@ -34,6 +34,11 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
       </>
     ));
 
+  if (process.env.NEXT_PUBLIC_ENABLE_MOCK === 'TRUE') {
+    const startServer = () => import('~/mocks/worker');
+    startServer();
+  }
+
   return (
     <MaterialThemeProvider theme={theme}>
       <SnackbarProvider>
