@@ -1,53 +1,32 @@
-import React, { VFC, useState, ReactNode } from 'react';
+import React, { VFC, useState } from 'react';
 import { Box } from '@mui/system';
-import { Tab, Tabs } from '@mui/material';
+import { Tab } from '@mui/material';
+
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 import { TextField, Button } from '~/components/parts/commons';
 
-type TabPanelProps = {
-  children: ReactNode;
-  index: number;
-  value: number;
-};
+export const Editor: VFC = () => {
+  const [value, setValue] = useState('Markdown');
 
-const TabPanel: VFC<TabPanelProps> = ({ children, index, value }) => {
-  return (
-    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`}>
-      {value === index && children}
-    </div>
-  );
-};
-
-const a11yProps = (index: number) => {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-};
-
-type Props = {};
-
-export const Editor: VFC<Props> = ({ ...rest }) => {
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 
   return (
-    <Box bgcolor="white" p="16px" {...rest}>
-      <Box>
-        <Tabs value={value} onChange={handleChange} aria-label="Editor tabs">
-          <Tab label="Markdown" {...a11yProps(0)} />
-          <Tab label="Preview" {...a11yProps(1)} />
-        </Tabs>
-        <TabPanel value={value} index={0}>
+    <Box bgcolor="white" p="16px">
+      <TabContext value={value}>
+        <TabList onChange={handleChange} aria-label="Editor tabs">
+          <Tab label="Markdown" value="Markdown" />
+          <Tab label="Preview" value="Preview" />
+        </TabList>
+        <TabPanel value="Markdown">
           <TextField fullWidth multiline value="Markdown" />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value="Preview">
           <TextField fullWidth multiline value="Preview" />
         </TabPanel>
-      </Box>
+      </TabContext>
       <Button variant="contained">投稿する</Button>
     </Box>
   );
