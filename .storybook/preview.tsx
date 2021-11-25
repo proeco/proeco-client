@@ -4,8 +4,14 @@ import { addDecorator} from '@storybook/react';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 
 import { theme } from '../src/theme';
-const { worker } = require('../src/mocks/browser');
-worker.start()
+
+if(process.env.NODE_ENV === "test"){
+  const { server } = require('../src/mocks/server');
+  server.listen();
+}else{
+  const { worker } = require('../src/mocks/browser');
+  worker.start()
+}
 
 Object.defineProperty(nextImage, 'default', {
   configurable: true,
