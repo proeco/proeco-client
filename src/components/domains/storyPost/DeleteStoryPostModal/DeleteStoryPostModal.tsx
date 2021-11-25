@@ -61,7 +61,7 @@ export const DeleteStoryPostModal: VFC = () => {
       return;
     }
 
-    setTitle(storyTaskForDelete.title);
+    setTitle(storyTaskForDelete.content);
   }, [storyTaskForDelete]);
 
   const handleClickDeleteStoryPostButton = async () => {

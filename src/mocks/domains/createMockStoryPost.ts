@@ -8,7 +8,7 @@ import { StoryPost } from '~/domains';
 export const createMockStoryPost = (mock: Partial<StoryPost> = {}): StoryPost => {
   return new StoryPost({
     _id: mock._id || 'storyTask1',
-    title: mock.title || 'mockTitle',
+    content: mock.content || 'content',
     storyId: mock.storyId || 'story1',
     createdUserId: mock.createdUserId || 'user1',
     startedAt: mock.startedAt || new Date(),
