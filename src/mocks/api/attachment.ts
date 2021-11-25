@@ -13,5 +13,5 @@ export const getAttachmentById = (req: any, res: any, ctx: any) => {
   const id = req.params.id;
   const attachment = db.find((v) => v._id === id);
 
-  return res(ctx.status(200), ctx.json(attachment?.filePath));
+  return res(ctx.status(200), ctx.json({ signedUrl: attachment?.filePath }));
 };
