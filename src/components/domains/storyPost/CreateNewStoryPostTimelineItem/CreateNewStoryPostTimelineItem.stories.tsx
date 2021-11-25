@@ -15,7 +15,7 @@ export default {
 const Template: ComponentStory<typeof CreateNewStoryPostTimelineItem> = ({ currentUser }) => {
   return (
     <SnackbarProvider>
-      <Box p={5}>
+      <Box p="40px" bgcolor="#e5e5e5" width="600px">
         <CreateNewStoryPostTimelineItem currentUser={currentUser} />
       </Box>
     </SnackbarProvider>
