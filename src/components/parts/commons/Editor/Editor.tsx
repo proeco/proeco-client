@@ -38,7 +38,7 @@ export const Editor: VFC<Props> = ({ content, onSubmit }) => {
         </StyledTabPanel>
         <StyledTabPanel value="preview">
           {markdownContent === '' ? (
-            <Box minHeight="112px" display="flex" p="16px" alignItems="center" justifyContent="center">
+            <Box minHeight="112px" display="flex" p="16px" my="16px" alignItems="center" justifyContent="center">
               <Typography variant="body1">本文がありません</Typography>
             </Box>
           ) : (
