@@ -12,7 +12,7 @@ import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryMo
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
 
-import { Button, Emoji, Icon, TimeLineItem, Typography } from '~/components/parts/commons';
+import { Editor, Emoji, Icon, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
 import { Menu } from '~/components/parts/commons/Menu';
@@ -21,10 +21,9 @@ import { UserIcon } from '~/components/domains/user/UserIcon';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
-import { useIsOpenCreateNewStoryPostModal } from '~/stores/modal/useIsOpenCreateNewStoryPostModal';
 import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { GuestUserIcon } from '~/components/domains/user/UserIcon/UserIcon';
+import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -36,6 +35,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { storyId } = router.query;
   const { data: story } = useStory(storyId as string, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
+  const { notifySuccessMessage } = useSuccessNotification();
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
@@ -70,8 +70,6 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { mutate: mutateStoryForDelete } = useStoryForDelete();
 
-  const { mutate: mutateIsOpenCreateNewStoryPostModal } = useIsOpenCreateNewStoryPostModal();
-
   const handleClickMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
@@ -94,8 +92,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     mutateStoryForDelete(story);
   };
 
-  const handleClickCreateStoryPostButton = () => {
-    mutateIsOpenCreateNewStoryPostModal(true);
+  const handleSubmitEditor = () => {
+    notifySuccessMessage('TODO');
   };
 
   const menuItems = [
@@ -137,44 +135,21 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               </TimeLineItem>
             ))}
           </StyledTimeline>
-          <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
-            {currentUser ? <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} /> : <GuestUserIcon size={40} />}
-            <StyledBoxWrapper width="100%" position="relative">
-              <StyledTriangle></StyledTriangle>
-              <StyledBox p={5}>
-                <Button variant="text" onClick={handleClickCreateStoryPostButton}>
-                  ポストを作成する
-                </Button>
-              </StyledBox>
-            </StyledBoxWrapper>
-          </Box>
+          {currentUser && (
+            <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
+              <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
+              <Box width="100%">
+                <Paper>
+                  <Editor content="hoge" onSubmit={handleSubmitEditor} />
+                </Paper>
+              </Box>
+            </Box>
+          )}
         </Box>
       </Box>
     </>
   );
 };
-
-const StyledBoxWrapper = styled(Box)`
-  filter: drop-shadow(1px 1px 10px rgb(0 0 0 / 25%));
-`;
-
-const StyledBox = styled(Box)`
-  background: white;
-  box-shadow: 1px 1px 10px rgb(0 0 0 / 25%);
-  border-radius: 4px;
-  margin-left: 10px;
-  text-align: center;
-`;
-
-const StyledTriangle = styled('div')`
-  position: absolute;
-  top: 14px;
-  left: 0;
-  z-index: 2;
-  border-top: 6px solid transparent;
-  border-right: 12px solid white;
-  border-bottom: 6px solid transparent;
-`;
 
 const StyledTimeline = styled(Timeline)`
   &.MuiTimeline-root {

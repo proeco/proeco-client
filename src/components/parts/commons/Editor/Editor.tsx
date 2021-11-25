@@ -13,26 +13,26 @@ import { TextField, Button, Typography } from '~/components/parts/commons';
 
 type Props = {
   content: string;
-  onPostContent: () => void;
+  onSubmit: () => void;
 };
 
-export const Editor: VFC<Props> = ({ content, onPostContent }) => {
+export const Editor: VFC<Props> = ({ content, onSubmit }) => {
   const [value, setValue] = useState<'editor' | 'preview'>('editor');
   const [markdownContent, setMarkdownContent] = useState(content);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: 'editor' | 'preview') => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: 'editor' | 'preview') => {
     setValue(newValue);
   };
 
   return (
-    <Box bgcolor="white" p="12px 16px 16px">
+    <Box>
       <TabContext value={value}>
         <StyledTabList onChange={handleChange} aria-label="Editor tabs">
           <StyledTab label="editor" value="editor" />
           <StyledTab label="preview" value="preview" />
         </StyledTabList>
         <StyledTabPanel value="editor">
-          <Box py="16px">
+          <Box my="16px">
             <TextField fullWidth multiline minRows={4} value={markdownContent} onChange={(e) => setMarkdownContent(e.target.value)} />
           </Box>
         </StyledTabPanel>
@@ -42,32 +42,34 @@ export const Editor: VFC<Props> = ({ content, onPostContent }) => {
               <Typography variant="body1">本文がありません</Typography>
             </Box>
           ) : (
-            <StyledMarkdownBody minHeight="112px" className="markdown-body" p="16px">
-              <ReactMarkdown
-                components={{
-                  code({ inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || '');
-                    return !inline && match ? (
-                      <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div">
-                        {String(children).replace(/\n$/, '')}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-                plugins={[gfm]}
-                unwrapDisallowed={false}
-              >
-                {markdownContent}
-              </ReactMarkdown>
-            </StyledMarkdownBody>
+            <Box minHeight="112px" p="16px" mt="8px" mb="24px">
+              <StyledMarkdownBody className="markdown-body">
+                <ReactMarkdown
+                  components={{
+                    code({ inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || '');
+                      return !inline && match ? (
+                        <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div">
+                          {String(children).replace(/\n$/, '')}
+                        </SyntaxHighlighter>
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                  plugins={[gfm]}
+                  unwrapDisallowed={false}
+                >
+                  {markdownContent}
+                </ReactMarkdown>
+              </StyledMarkdownBody>
+            </Box>
           )}
         </StyledTabPanel>
       </TabContext>
-      <StyledButton variant="contained" onClick={onPostContent}>
+      <StyledButton variant="contained" onClick={onSubmit}>
         投稿する
       </StyledButton>
     </Box>
@@ -89,16 +91,18 @@ const StyledTab = styled(Tab)`
 `;
 
 const StyledMarkdownBody = styled(Box)`
-  color: ${(props) => props.theme.palette.textColor.main};
-  background-color: #fff;
-  p {
-    white-space: pre-wrap;
-  }
-  pre {
-    background-color: rgb(30, 30, 30);
-  }
-  code {
-    color: #fff;
+  &.markdown-body {
+    color: ${(props) => props.theme.palette.textColor.main};
+    background-color: #fff;
+    p {
+      white-space: pre-wrap;
+    }
+    pre {
+      background-color: rgb(30, 30, 30);
+    }
+    code {
+      color: #fff;
+    }
   }
 `;
 
