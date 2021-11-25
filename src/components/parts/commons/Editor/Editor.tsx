@@ -14,12 +14,13 @@ import { TextField, Button, Typography } from '~/components/parts/commons';
 type Props = {
   content: string;
   isUpdateMode?: boolean;
+  isDisabled: boolean;
   onChangeContent: (content: string) => void;
-  onPostContent: () => void;
+  onCompleteContent: () => void;
   onCancelButton: () => void;
 };
 
-export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeContent, onPostContent, onCancelButton }) => {
+export const Editor: VFC<Props> = ({ content, isUpdateMode = false, isDisabled, onChangeContent, onCompleteContent, onCancelButton }) => {
   const [value, setValue] = useState<'editor' | 'preview'>('editor');
 
   const handleChange = (event: React.SyntheticEvent, newValue: 'editor' | 'preview') => {
@@ -27,7 +28,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
   };
 
   return (
-    <Box bgcolor="white" p="12px 16px 16px">
+    <Box p="12px 16px 16px">
       <TabContext value={value}>
         <StyledTabList onChange={handleChange} aria-label="Editor tabs">
           <StyledTab label="editor" value="editor" />
@@ -75,8 +76,8 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             キャンセル
           </Button>
         )}
-        <Button variant="contained" onClick={onPostContent}>
-          投稿する
+        <Button variant="contained" onClick={onCompleteContent} disabled={isDisabled}>
+          {isUpdateMode ? '更新する' : '投稿する'}
         </Button>
       </Box>
     </Box>
