@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { Component } from '~/components/parts/layout/NavigationBar';
 import { Icon } from '~/components/parts/commons';
 
-import { createMockUser } from '~/mock';
+import { createMockUser } from '~/mocks/domains';
 
 export default {
   title: 'parts/layout/NavigationBar',
@@ -43,7 +43,7 @@ LoadingUser.args = {
 
 export const LoginUser = Template.bind({});
 LoginUser.args = {
-  currentUser: createMockUser({ image: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574' }),
+  currentUser: createMockUser(),
   isValidating: false,
   menuItems: [
     {

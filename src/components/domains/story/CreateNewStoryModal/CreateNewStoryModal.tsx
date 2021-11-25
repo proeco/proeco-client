@@ -11,15 +11,14 @@ import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains';
 import { Modal, SelectableEmoji, Button, Typography, TextField } from '~/components/parts/commons';
 import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useStories } from '~/stores/story';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { URLS } from '~/constants';
 
 type Props = {
   isOpen: boolean;
   title: string;
-  description: string;
   emojiId: string;
   isDisabled: boolean;
   onChangeStoryForm: (newObject: Partial<Story>) => void;
@@ -27,7 +26,7 @@ type Props = {
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, isDisabled, onClickCreateNewStoryButton, onCloseModal, onChangeStoryForm }) => {
+export const Component: VFC<Props> = ({ isOpen, title, emojiId, isDisabled, onClickCreateNewStoryButton, onCloseModal, onChangeStoryForm }) => {
   const content = (
     <>
       <Box mb="16px">
@@ -40,12 +39,6 @@ export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, isD
           </Box>
           <StyledTextField fullWidth value={title} onChange={(e) => onChangeStoryForm({ title: e.target.value })} />
         </Box>
-      </Box>
-      <Box mb="16px">
-        <Typography mb="4px" variant="body1" color="textColor.light">
-          説明(任意)
-        </Typography>
-        <TextField fullWidth multiline rows={4} value={description} onChange={(e) => onChangeStoryForm({ description: e.target.value })} />
       </Box>
       <Box width="100%" textAlign="center">
         <Button variant="contained" onClick={onClickCreateNewStoryButton} disabled={isDisabled}>
@@ -64,11 +57,11 @@ const StyledTextField = styled(TextField)`
 
 export const CreateNewStoryModal: VFC = () => {
   const router = useRouter();
+  const { teamId } = router.query;
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { data: currentUser } = useCurrentUser();
   const { mutate: mutateStories } = useStories({
-    userId: currentUser?._id,
+    teamId: teamId as string,
     page: page,
     limit: 10,
   });
@@ -78,10 +71,10 @@ export const CreateNewStoryModal: VFC = () => {
 
   const { data: isOpenCreateNewStoryModal, mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
   const [isDisabled, setIsDisabled] = useState(true);
-  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'description'>>({
+  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'teamId'>>({
     emojiId: 'open_file_folder',
     title: '',
-    description: '',
+    teamId: teamId as string,
   });
 
   useEffect(() => {
@@ -92,6 +85,7 @@ export const CreateNewStoryModal: VFC = () => {
     try {
       const { data } = await restClient.apiPost<Story>('/stories', {
         story: newStory,
+        teamId,
       });
 
       mutateStories();
@@ -102,11 +96,11 @@ export const CreateNewStoryModal: VFC = () => {
       setNewStory({
         emojiId: 'open_file_folder',
         title: '',
-        description: '',
+        teamId: teamId as string,
       });
 
       // 作成後に作成したstoryの詳細ページに遷移する
-      router.push(`/story/${data._id}`);
+      router.push(URLS.TEAMS_DASHBOARD_STORY(teamId as string, data._id));
       handleCloseModal();
     } catch (error) {
       notifyErrorMessage('ストーリーの作成に失敗しました!');
@@ -130,7 +124,6 @@ export const CreateNewStoryModal: VFC = () => {
     <Component
       isOpen={!!isOpenCreateNewStoryModal}
       title={newStory.title}
-      description={newStory.description}
       emojiId={newStory.emojiId}
       isDisabled={isDisabled}
       onClickCreateNewStoryButton={handleClickCreateNewStoryButton}

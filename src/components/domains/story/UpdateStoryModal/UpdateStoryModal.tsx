@@ -17,12 +17,10 @@ import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryMo
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useStory, useStories, useStoryForUpdate } from '~/stores/story';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type Props = {
   isOpen: boolean;
   title: string;
-  description: string;
   emojiId: string;
   isDisabled: boolean;
   onChangeStoryForm: (newObject: Partial<Story>) => void;
@@ -30,7 +28,7 @@ type Props = {
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, isDisabled, onChangeStoryForm, onClickUpdateStoryButton, onCloseModal }) => {
+export const Component: VFC<Props> = ({ isOpen, title, emojiId, isDisabled, onChangeStoryForm, onClickUpdateStoryButton, onCloseModal }) => {
   const content = (
     <>
       <Box mb="16px">
@@ -43,12 +41,6 @@ export const Component: VFC<Props> = ({ isOpen, title, description, emojiId, isD
           </Box>
           <StyledTextField fullWidth value={title} onChange={(e) => onChangeStoryForm({ title: e.target.value })} />
         </Box>
-      </Box>
-      <Box mb="16px">
-        <Typography mb="4px" variant="body1" color="textColor.light">
-          説明(任意)
-        </Typography>
-        <TextField fullWidth multiline rows={4} value={description} onChange={(e) => onChangeStoryForm({ description: e.target.value })} />
       </Box>
       <Box width="100%" textAlign="center">
         <Button variant="contained" onClick={onClickUpdateStoryButton} disabled={isDisabled}>
@@ -74,19 +66,17 @@ export const UpdateStoryModal: VFC = () => {
 
   const { data: isOpenUpdateStoryModal, mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { data: storyForUpdate } = useStoryForUpdate();
-  const { data: currentUser } = useCurrentUser();
   const { mutate: mutateStory } = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
-    userId: currentUser?._id,
+    teamId: router.query.id as string,
     page: page,
     limit: 10,
   });
 
   const [isDisabled, setIsDisabled] = useState(true);
-  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'description'>>({
+  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title'>>({
     emojiId: 'open_file_folder',
     title: '',
-    description: '',
   });
 
   useEffect(() => {
@@ -98,7 +88,7 @@ export const UpdateStoryModal: VFC = () => {
       return;
     }
 
-    setNewStory({ emojiId: storyForUpdate.emojiId, title: storyForUpdate.title, description: storyForUpdate.description });
+    setNewStory({ emojiId: storyForUpdate.emojiId, title: storyForUpdate.title });
   }, [storyForUpdate]);
 
   const handleClickUpdateStoryButton = async () => {
@@ -140,7 +130,6 @@ export const UpdateStoryModal: VFC = () => {
     <Component
       isOpen={!!isOpenUpdateStoryModal}
       title={newStory.title}
-      description={newStory.description}
       emojiId={newStory.emojiId}
       isDisabled={isDisabled}
       onClickUpdateStoryButton={handleClickUpdateStoryButton}

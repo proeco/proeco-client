@@ -1,7 +1,6 @@
 import Image from 'next/image';
-import { signIn, signOut } from 'next-auth/client';
 import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
-import { AppBar, Skeleton } from '@mui/material';
+import { AppBar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -13,6 +12,8 @@ import { LoginModal } from '~/components/parts/authentication/LoginModal';
 import { User } from '~/domains';
 
 import { IMAGE_PATH } from '~/constants';
+import { useAuth } from '~/hooks/useAuth/useAuth';
+import { SkeltonUserIcon } from '~/components/domains/user/UserIcon/UserIcon';
 
 type Props = {
   currentUser?: User;
@@ -38,24 +39,19 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const Contents = useMemo(() => {
-    if (isValidating) return <Skeleton variant="circular" width={40} height={40} />;
+    if (isValidating) return <SkeltonUserIcon size={40} />;
 
     if (currentUser) {
       return (
         <>
-          <StyledUserIcon size="small" imagePath={currentUser.image} userId={currentUser._id} onClick={handleClick} />
+          <StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} onClick={handleClick} />
           <Menu anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </>
       );
     }
 
     return (
-      <StyledButton
-        bold
-        onClick={() => {
-          setIsLoginModalOpen(true);
-        }}
-      >
+      <StyledButton bold onClick={() => setIsLoginModalOpen(true)}>
         Login Button
       </StyledButton>
     );
@@ -63,7 +59,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
 
   return (
     <>
-      <StyledAppBar position="static">
+      <StyledAppBar position="sticky">
         <Link href="/">
           <Image src={logoImagePath} alt="Proeco Logo" width={195} height={40} />
         </Link>
@@ -75,7 +71,9 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
 });
 
 const StyledAppBar = styled(AppBar)`
-  position: relative;
+  position: sticky;
+  top: 0px;
+  z-index: 1300;
   background-color: ${(props) => props.theme.palette.primary.main};
   padding: 12px 20px;
   align-items: center;
@@ -102,24 +100,25 @@ const StyledUserIcon = styled(UserIcon)`
 `;
 
 export const NavigationBar: VFC = memo(() => {
+  const { login, logout } = useAuth();
   const menuItems = [
     {
       icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
       text: 'Logout',
-      onClick: () => signOut(),
+      onClick: logout,
     },
   ];
 
-  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
+  const { data: currentUser, isValidating: isValidatingUser } = useCurrentUser();
 
   const handleClickLoginButton = () => {
-    signIn('google');
+    login();
   };
 
   return (
     <Component
       currentUser={currentUser}
-      isValidating={isValidatingCurrentUser}
+      isValidating={isValidatingUser}
       onClickLoginButton={handleClickLoginButton}
       menuItems={menuItems}
       logoImagePath={IMAGE_PATH.LOGO}

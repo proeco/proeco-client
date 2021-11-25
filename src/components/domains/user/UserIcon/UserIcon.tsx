@@ -1,45 +1,50 @@
-import { memo, VFC, ComponentProps } from 'react';
-import { Avatar } from '@mui/material';
+import { memo, VFC, MouseEvent } from 'react';
+import { Avatar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Icon, Link } from '~/components/parts/commons';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
-type IconSizes = 'small' | 'medium' | 'large';
-
-type UserIconType = {
-  imagePath?: string;
-  userId?: string;
+type Props = {
+  attachmentId: string;
+  userId: string;
   isLink?: boolean;
-  size: IconSizes;
+  size: number;
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
 };
 
-type Props = ComponentProps<typeof Avatar> & UserIconType;
+// ログインしていない状態の UserIcon
+export const GuestUserIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
+  return (
+    <StyledAvatar size={size}>
+      <Icon icon="PersonOutline" color="#ccc" width="100%" />
+    </StyledAvatar>
+  );
+};
 
-export const UserIcon: VFC<Props> = memo(({ imagePath, userId = '', isLink = false, size = 'small', ...rest }) => {
-  if (!imagePath) {
-    return (
-      <StyledAvatar size={size} {...rest}>
-        <Icon icon="PersonOutline" color="#ccc" width="100%" />
-      </StyledAvatar>
-    );
-  }
+// ローディング状態の UserIcon
+export const SkeltonUserIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
+  return <Skeleton variant="circular" width={size} height={size} />;
+};
 
-  if (!isLink) return <StyledAvatar size={size} alt={userId} src={imagePath} {...rest} />;
+// 通常状態の UserIcon
+export const UserIcon: VFC<Props> = memo(({ attachmentId, userId, isLink = false, size, onClick }) => {
+  const { data: attachmentUrl } = useSignedUrl(attachmentId);
+
+  if (!isLink) return <StyledAvatar size={size} alt={userId} src={attachmentUrl} />;
 
   return (
     <Link href={'/user/' + userId}>
-      <StyledAvatar size={size} alt={userId} src={imagePath} {...rest} />
+      <StyledAvatar size={size} alt={userId} src={attachmentUrl} onClick={onClick} />
     </Link>
   );
 });
 
-const sizeMap: { [key in IconSizes]: number } = {
-  small: 40,
-  medium: 60,
-  large: 80,
-};
-
-const StyledAvatar = styled(Avatar)<{ size: IconSizes }>`
+const StyledAvatar = styled(Avatar)<{ size: number }>`
+  &.MuiAvatar-root {
+    border: 2px solid ${(props) => props.theme.palette.primary.main};
+  }
   background-color: white;
-  width: ${(props) => sizeMap[props.size]}px;
-  height: ${(props) => sizeMap[props.size]}px;
+  box-sizing: border-box;
+  width: ${(props) => props.size}px;
+  height: ${(props) => props.size}px;
 `;

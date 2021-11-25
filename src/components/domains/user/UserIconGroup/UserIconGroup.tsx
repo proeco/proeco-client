@@ -1,22 +1,31 @@
 import { VFC } from 'react';
-
 import { AvatarGroup } from '@mui/material';
-import { User } from '~/domains';
+import { styled } from '@mui/material/styles';
 
 import { UserIcon } from '~/components/domains/user/UserIcon';
 
 type Props = {
-  users: User[];
+  usersInfo: {
+    userId: string;
+    name: string;
+    attachmentId: string;
+  }[];
   maxCount?: number;
   isLink?: boolean;
 };
 
-export const UserIconGroup: VFC<Props> = ({ users, maxCount = 3, isLink = false }) => {
+export const UserIconGroup: VFC<Props> = ({ usersInfo, maxCount = 3, isLink = false }) => {
   return (
-    <AvatarGroup max={maxCount}>
-      {users.map((user) => {
-        return <UserIcon key={user._id} size="small" userId={user._id} imagePath={user.image} isLink={isLink} />;
+    <StyledAvatarGroup max={maxCount}>
+      {usersInfo.map((userInfo) => {
+        return <UserIcon key={userInfo.userId} size={40} userId={userInfo.userId} attachmentId={userInfo.attachmentId} isLink={isLink} />;
       })}
-    </AvatarGroup>
+    </StyledAvatarGroup>
   );
 };
+
+const StyledAvatarGroup = styled(AvatarGroup)`
+  /* デフォルトで右寄せになっているアイコンを左寄せにするため */
+  display: flex;
+  justify-content: start;
+`;

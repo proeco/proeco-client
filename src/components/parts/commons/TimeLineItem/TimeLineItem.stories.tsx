@@ -20,8 +20,14 @@ const Template: ComponentStory<typeof TimeLineItem> = ({ ...rest }) => {
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
+export const DefaultTimeLineItem = Template.bind({});
+DefaultTimeLineItem.args = {
   title: 'TimeLineItemのtitle',
-  imagePath: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
+  iconImageId: 'attachment1',
+};
+
+export const TimeLineItemWithoutImage = Template.bind({});
+TimeLineItemWithoutImage.args = {
+  ...DefaultTimeLineItem.args,
+  iconImageId: undefined,
 };

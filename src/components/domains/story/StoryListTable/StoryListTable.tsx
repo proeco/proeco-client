@@ -7,19 +7,18 @@ import { Typography } from '~/components/parts/commons';
 import { StoryTableRow } from '~/components/domains/story/StoryTableRow';
 
 import { useStories } from '~/stores/story/useStories';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { COLORS } from '~/constants';
 
 type Props = {
   page: number;
   limit: 10;
+  teamId: string;
 };
 
-export const StoryListTable: VFC<Props> = ({ page, limit }) => {
-  const { data: currentUser } = useCurrentUser();
+export const StoryListTable: VFC<Props> = ({ page, limit, teamId }) => {
   const { data: stories } = useStories({
-    userId: currentUser?._id,
+    teamId,
     page,
     limit,
   });
