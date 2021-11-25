@@ -7,9 +7,9 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { TextField, Button } from '~/components/parts/commons';
 
 export const Editor: VFC = () => {
-  const [value, setValue] = useState('Markdown');
+  const [value, setValue] = useState<'editor' | 'preview'>('editor');
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: 'editor' | 'preview') => {
     setValue(newValue);
   };
 
@@ -17,14 +17,14 @@ export const Editor: VFC = () => {
     <Box bgcolor="white" p="16px">
       <TabContext value={value}>
         <TabList onChange={handleChange} aria-label="Editor tabs">
-          <Tab label="Markdown" value="Markdown" />
-          <Tab label="Preview" value="Preview" />
+          <Tab label="editor" value="editor" />
+          <Tab label="preview" value="preview" />
         </TabList>
-        <TabPanel value="Markdown">
-          <TextField fullWidth multiline value="Markdown" />
+        <TabPanel value="editor">
+          <TextField fullWidth multiline value="editor" />
         </TabPanel>
-        <TabPanel value="Preview">
-          <TextField fullWidth multiline value="Preview" />
+        <TabPanel value="preview">
+          <TextField fullWidth multiline value="preview" />
         </TabPanel>
       </TabContext>
       <Button variant="contained">投稿する</Button>
