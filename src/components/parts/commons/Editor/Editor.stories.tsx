@@ -8,6 +8,9 @@ import { Editor } from './Editor';
 export default {
   title: 'parts/commons/Editor',
   component: Editor,
+  argTypes: {
+    onPostContent: { action: 'onPostContent' },
+  },
 } as ComponentMeta<typeof Editor>;
 
 const Template: ComponentStory<typeof Editor> = ({ ...rest }) => {
@@ -19,3 +22,6 @@ const Template: ComponentStory<typeof Editor> = ({ ...rest }) => {
 };
 
 export const Default = Template.bind({});
+Default.args = {
+  content: '',
+};

@@ -1,33 +1,94 @@
 import React, { VFC, useState } from 'react';
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 import { Tab } from '@mui/material';
-
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-import { TextField, Button } from '~/components/parts/commons';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import 'github-markdown-css';
 
-export const Editor: VFC = () => {
+import { TextField, Button, Typography } from '~/components/parts/commons';
+
+type Props = {
+  content: string;
+  onPostContent: () => void;
+};
+
+export const Editor: VFC<Props> = ({ content, onPostContent }) => {
   const [value, setValue] = useState<'editor' | 'preview'>('editor');
+  const [markdownContent, setMarkdownContent] = useState(content);
 
   const handleChange = (event: React.SyntheticEvent, newValue: 'editor' | 'preview') => {
     setValue(newValue);
   };
 
   return (
-    <Box bgcolor="white" p="16px">
+    <Box bgcolor="white" p="12px 16px 16px">
       <TabContext value={value}>
-        <TabList onChange={handleChange} aria-label="Editor tabs">
-          <Tab label="editor" value="editor" />
-          <Tab label="preview" value="preview" />
-        </TabList>
-        <TabPanel value="editor">
-          <TextField fullWidth multiline value="editor" />
-        </TabPanel>
-        <TabPanel value="preview">
-          <TextField fullWidth multiline value="preview" />
-        </TabPanel>
+        <StyledTabList onChange={handleChange} aria-label="Editor tabs">
+          <StyledTab label="editor" value="editor" />
+          <StyledTab label="preview" value="preview" />
+        </StyledTabList>
+        <StyledTabPanel value="editor">
+          <TextField fullWidth multiline minRows={4} value={markdownContent} onChange={(e) => setMarkdownContent(e.target.value)} />
+        </StyledTabPanel>
+        <StyledTabPanel value="preview">
+          {markdownContent === '' ? (
+            <Box padding="20px" display="flex" alignItems="center" justifyContent="center">
+              <Typography variant="body1">本文がありません</Typography>
+            </Box>
+          ) : (
+            <StyledMarkdownBody className="markdown-body" width="100%">
+              <ReactMarkdown
+                components={{
+                  code({ inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div">
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+                plugins={[gfm]}
+                unwrapDisallowed={false}
+              >
+                {markdownContent}
+              </ReactMarkdown>
+            </StyledMarkdownBody>
+          )}
+        </StyledTabPanel>
       </TabContext>
-      <Button variant="contained">投稿する</Button>
+      <Button variant="contained" onClick={onPostContent}>
+        投稿する
+      </Button>
     </Box>
   );
 };
+
+const StyledTabPanel = styled(TabPanel)`
+  padding: 16px 0;
+`;
+
+const StyledTabList = styled(TabList)`
+  min-height: unset;
+`;
+
+const StyledTab = styled(Tab)`
+  padding: 8px;
+  min-height: unset;
+  min-width: unset;
+`;
+
+const StyledMarkdownBody = styled(Box)`
+  pre {
+    background-color: rgb(30, 30, 30);
+    padding: 0;
+  }
+`;
