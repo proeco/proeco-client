@@ -20,7 +20,6 @@ export { SideBarListItem } from './SideBarListItem';
 export { SpeedDial } from './SpeedDial';
 export { Stepper } from './Stepper';
 export { TextField } from './TextField';
-export { TimeLine } from './TimeLine';
 export { TimeLineItem } from './TimeLineItem';
 export { TrimImageModal } from './TrimImageModal';
 export { Typography } from './Typography';
