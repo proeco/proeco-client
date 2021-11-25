@@ -1,9 +1,10 @@
-import React, { useState, MouseEvent, ReactNode, ComponentProps, useMemo, useCallback } from 'react';
+import React, { useState, MouseEvent, ReactNode, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { Box, styled } from '@mui/system';
 
+import { Timeline } from '@mui/lab';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
@@ -11,7 +12,7 @@ import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryMo
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
 
-import { Button, Emoji, Icon, TimeLine, Typography } from '~/components/parts/commons';
+import { Button, Emoji, Icon, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
 import { Menu } from '~/components/parts/commons/Menu';
@@ -23,8 +24,6 @@ import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayo
 import { useIsOpenCreateNewStoryPostModal } from '~/stores/modal/useIsOpenCreateNewStoryPostModal';
 import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { useIsOpenDeleteStoryPostModal } from '~/stores/modal/useIsOpenDeleteStoryPostModal';
-import { useStoryPostForDelete } from '~/stores/storyPost/useStoryPostForDelete';
 import { GuestUserIcon } from '~/components/domains/user/UserIcon/UserIcon';
 
 type Props = {
@@ -46,50 +45,21 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     limit: 10,
   });
 
-  const { mutate: mutateIsOpenDeleteStoryPostModal } = useIsOpenDeleteStoryPostModal();
-  const { mutate: mutateStoryPostForDelete } = useStoryPostForDelete();
-
-  const handleClickDeleteStoryPost = useCallback(
-    (id: string) => {
-      const storyPost = storyPosts?.docs.find((storyPost) => storyPost._id === id);
-      if (!storyPost) return;
-      mutateIsOpenDeleteStoryPostModal(true);
-      mutateStoryPostForDelete(storyPost);
-    },
-    [mutateIsOpenDeleteStoryPostModal, mutateStoryPostForDelete, storyPosts],
-  );
-
-  const timeLineItems: {
-    title: string;
-    iconImageId?: string;
-    userName: string;
-    children: ReactNode;
-    actions: {
-      icon: ComponentProps<typeof Icon>['icon'];
-      name: string;
-      onClick: () => void;
-    }[];
-  }[] = useMemo(() => {
+  const timeLineItems = useMemo(() => {
     if (!storyPosts) {
       return [];
     }
     return storyPosts.docs.map((storyPost) => {
       return {
-        title: storyPost.title,
+        content: storyPost.content,
+        // TODO fix image
         iconImageId: currentUser?.iconImageId || '',
-        userName: currentUser?.name || '',
+        createdUserId: storyPost.createdUserId || '',
         // TODO: Childrenの中身を作成する
         children: <Box minHeight="250px"></Box>,
-        actions: [
-          {
-            icon: 'Delete',
-            name: '削除',
-            onClick: () => handleClickDeleteStoryPost(storyPost._id),
-          },
-        ],
       };
     });
-  }, [storyPosts, currentUser, handleClickDeleteStoryPost]);
+  }, [storyPosts, currentUser]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -160,7 +130,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
-          <TimeLine timeLineItems={timeLineItems} />
+          <StyledTimeline>
+            {timeLineItems.map((item, i) => (
+              <TimeLineItem key={i} iconImageId={item.iconImageId} userId={item.createdUserId}>
+                {item.children}
+              </TimeLineItem>
+            ))}
+          </StyledTimeline>
           <Box display="flex" alignItems="top" justifyContent="space-between" gap={0.5}>
             {currentUser ? <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} /> : <GuestUserIcon size={40} />}
             <StyledBoxWrapper width="100%" position="relative">
@@ -198,6 +174,13 @@ const StyledTriangle = styled('div')`
   border-top: 6px solid transparent;
   border-right: 12px solid white;
   border-bottom: 6px solid transparent;
+`;
+
+const StyledTimeline = styled(Timeline)`
+  &.MuiTimeline-root {
+    padding: 0;
+    margin: 0;
+  }
 `;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
