@@ -36,7 +36,7 @@ export const Editor: VFC<Props> = ({ content, onPostContent }) => {
         </StyledTabPanel>
         <StyledTabPanel value="preview">
           {markdownContent === '' ? (
-            <Box padding="20px" display="flex" alignItems="center" justifyContent="center">
+            <Box minHeight="112px" display="flex" alignItems="center" justifyContent="center">
               <Typography variant="body1">本文がありません</Typography>
             </Box>
           ) : (
@@ -65,9 +65,9 @@ export const Editor: VFC<Props> = ({ content, onPostContent }) => {
           )}
         </StyledTabPanel>
       </TabContext>
-      <Button variant="contained" onClick={onPostContent}>
+      <StyledButton variant="contained" onClick={onPostContent}>
         投稿する
-      </Button>
+      </StyledButton>
     </Box>
   );
 };
@@ -87,8 +87,20 @@ const StyledTab = styled(Tab)`
 `;
 
 const StyledMarkdownBody = styled(Box)`
+  color: ${(props) => props.theme.palette.textColor.main};
+  background-color: #fff;
+  p {
+    white-space: pre-wrap;
+  }
   pre {
     background-color: rgb(30, 30, 30);
-    padding: 0;
   }
+  code {
+    color: #fff;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  display: block;
+  margin-left: auto;
 `;
