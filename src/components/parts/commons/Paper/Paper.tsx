@@ -14,5 +14,6 @@ export const Paper: VFC<Props> = ({ padding = 20, ...rest }) => {
 
 const StyledMuiPaper = styled(MuiPaper)<{ padding: number }>`
   padding: ${(props) => props.padding}px;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 8px;
 `;
