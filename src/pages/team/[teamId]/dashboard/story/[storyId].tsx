@@ -2,9 +2,8 @@ import React, { useState, MouseEvent, ReactNode, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { Box, styled } from '@mui/system';
+import { Box } from '@mui/system';
 
-import { Timeline } from '@mui/lab';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
@@ -128,19 +127,17 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
-          <StyledTimeline>
-            {timeLineItems.map((item, i) => (
-              <TimeLineItem key={i} iconImageId={item.iconImageId} userId={item.createdUserId}>
-                {item.children}
-              </TimeLineItem>
-            ))}
-          </StyledTimeline>
+          {timeLineItems.map((item, i) => (
+            <TimeLineItem key={i} iconImageId={item.iconImageId} userId={item.createdUserId}>
+              {item.children}
+            </TimeLineItem>
+          ))}
           {currentUser && (
             <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
               <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
               <Box width="100%">
                 <Paper>
-                  <Editor content="hoge" onSubmit={handleSubmitEditor} />
+                  <Editor content="" onSubmit={handleSubmitEditor} />
                 </Paper>
               </Box>
             </Box>
@@ -150,13 +147,6 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     </>
   );
 };
-
-const StyledTimeline = styled(Timeline)`
-  &.MuiTimeline-root {
-    padding: 0;
-    margin: 0;
-  }
-`;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
