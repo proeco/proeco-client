@@ -32,15 +32,17 @@ export const Editor: VFC<Props> = ({ content, onPostContent }) => {
           <StyledTab label="preview" value="preview" />
         </StyledTabList>
         <StyledTabPanel value="editor">
-          <TextField fullWidth multiline minRows={4} value={markdownContent} onChange={(e) => setMarkdownContent(e.target.value)} />
+          <Box py="16px">
+            <TextField fullWidth multiline minRows={4} value={markdownContent} onChange={(e) => setMarkdownContent(e.target.value)} />
+          </Box>
         </StyledTabPanel>
         <StyledTabPanel value="preview">
           {markdownContent === '' ? (
-            <Box minHeight="112px" display="flex" alignItems="center" justifyContent="center">
+            <Box minHeight="112px" display="flex" p="16px" alignItems="center" justifyContent="center">
               <Typography variant="body1">本文がありません</Typography>
             </Box>
           ) : (
-            <StyledMarkdownBody className="markdown-body" width="100%">
+            <StyledMarkdownBody minHeight="112px" className="markdown-body" p="16px">
               <ReactMarkdown
                 components={{
                   code({ inline, className, children, ...props }) {
@@ -73,7 +75,7 @@ export const Editor: VFC<Props> = ({ content, onPostContent }) => {
 };
 
 const StyledTabPanel = styled(TabPanel)`
-  padding: 16px 0;
+  padding: 0px;
 `;
 
 const StyledTabList = styled(TabList)`
