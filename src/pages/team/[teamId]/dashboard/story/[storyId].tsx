@@ -11,18 +11,17 @@ import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryMo
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
 
-import { Editor, Emoji, Icon, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
+import { Emoji, Icon, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
 import { Menu } from '~/components/parts/commons/Menu';
 import { IconButton } from '~/components/parts/commons/IconButton';
-import { UserIcon } from '~/components/domains/user/UserIcon';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
 import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { useSuccessNotification } from '~/hooks/useSuccessNotification';
+import { CreateNewStoryPostTimelineItem } from '~/components/domains/storyPost/CreateNewStoryPostTimelineItem/CreateNewStoryPostTimelineItem';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -34,7 +33,6 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { storyId } = router.query;
   const { data: story } = useStory(storyId as string, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
-  const { notifySuccessMessage } = useSuccessNotification();
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
@@ -91,10 +89,6 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     mutateStoryForDelete(story);
   };
 
-  const handleSubmitEditor = () => {
-    notifySuccessMessage('TODO');
-  };
-
   const menuItems = [
     {
       icon: <Icon icon="Update" width="20px" color="textColor.main" />,
@@ -132,16 +126,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {item.children}
             </TimeLineItem>
           ))}
-          {currentUser && (
-            <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
-              <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
-              <Box width="100%">
-                <Paper>
-                  <Editor content="" onSubmit={handleSubmitEditor} />
-                </Paper>
-              </Box>
-            </Box>
-          )}
+          {currentUser && <CreateNewStoryPostTimelineItem currentUser={currentUser} />}
         </Box>
       </Box>
     </>
