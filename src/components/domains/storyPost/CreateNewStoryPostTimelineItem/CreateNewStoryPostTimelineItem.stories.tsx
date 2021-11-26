@@ -25,6 +25,6 @@ const Template: ComponentStory<typeof CreateNewStoryPostTimelineItem> = ({ curre
 export const DefaultCard = Template.bind({});
 DefaultCard.args = {
   currentUser: createMockUser(),
-  storyId: '',
+  storyId: 'story1',
   page: 1,
 };

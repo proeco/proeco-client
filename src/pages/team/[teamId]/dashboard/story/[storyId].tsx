@@ -31,13 +31,16 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
 
   const { storyId } = router.query;
-  const { data: story } = useStory(storyId as string, storyFromServerSide);
+
+  const currentStoryId = storyId as string;
+
+  const { data: story } = useStory(currentStoryId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { data: storyPosts } = useStoryPosts({
-    storyId: storyId as string,
+    storyId: currentStoryId,
     page: page,
     limit: 10,
   });
@@ -126,7 +129,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {item.children}
             </TimeLineItem>
           ))}
-          {currentUser && <CreateNewStoryPostTimelineItem currentUser={currentUser} storyId={storyId as string} page={page} />}
+          {currentUser && <CreateNewStoryPostTimelineItem currentUser={currentUser} storyId={currentStoryId} page={page} />}
         </Box>
       </Box>
     </>
