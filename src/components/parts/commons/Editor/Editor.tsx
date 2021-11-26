@@ -16,11 +16,11 @@ type Props = {
   isUpdateMode?: boolean;
   isDisabled: boolean;
   onChangeContent: (content: string) => void;
-  onCompleteContent: () => void;
-  onCancelButton: () => void;
+  onCompleteEdit: () => void;
+  onClickCancelButton: () => void;
 };
 
-export const Editor: VFC<Props> = ({ content, isUpdateMode = false, isDisabled, onChangeContent, onCompleteContent, onCancelButton }) => {
+export const Editor: VFC<Props> = ({ content, isUpdateMode = false, isDisabled, onChangeContent, onCompleteEdit, onClickCancelButton }) => {
   const [value, setValue] = useState<'editor' | 'preview'>('editor');
 
   const handleChange = (event: React.SyntheticEvent, newValue: 'editor' | 'preview') => {
@@ -72,11 +72,11 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, isDisabled, 
       </TabContext>
       <Box display="flex" alignItems="center" justifyContent="flex-end" gap="4px">
         {isUpdateMode && (
-          <Button variant="text" onClick={onCancelButton}>
+          <Button variant="text" onClick={onClickCancelButton}>
             キャンセル
           </Button>
         )}
-        <Button variant="contained" onClick={onCompleteContent} disabled={isDisabled}>
+        <Button variant="contained" onClick={onCompleteEdit} disabled={isDisabled}>
           {isUpdateMode ? '更新する' : '投稿する'}
         </Button>
       </Box>

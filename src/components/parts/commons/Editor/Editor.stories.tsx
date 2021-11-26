@@ -10,12 +10,12 @@ export default {
   title: 'parts/commons/Editor',
   component: Editor,
   argTypes: {
-    onCompleteContent: { action: 'onCompleteContent' },
-    onCancelButton: { action: 'onCancelButton' },
+    onCompleteEdit: { action: 'onCompleteEdit' },
+    onClickCancelButton: { action: 'onClickCancelButton' },
   },
 } as ComponentMeta<typeof Editor>;
 
-const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, isDisabled, onCompleteContent, onCancelButton }) => {
+const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, isDisabled, onCompleteEdit, onClickCancelButton }) => {
   const [markdownContent, setMarkdownContent] = useState(content);
 
   return (
@@ -26,8 +26,8 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, isDisa
           onChangeContent={setMarkdownContent}
           isUpdateMode={isUpdateMode}
           isDisabled={isDisabled}
-          onCompleteContent={onCompleteContent}
-          onCancelButton={onCancelButton}
+          onCompleteEdit={onCompleteEdit}
+          onClickCancelButton={onClickCancelButton}
         />
       </Paper>
     </Box>
