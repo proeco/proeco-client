@@ -2,7 +2,7 @@ import { memo, VFC, MouseEvent } from 'react';
 import { Avatar, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Icon, Link } from '~/components/parts/commons';
-import { useAttachmentUrl } from '~/stores/attachment/useAttachmentUrl';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type Props = {
   attachmentId: string;
@@ -28,7 +28,7 @@ export const SkeltonUserIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
 
 // 通常状態の UserIcon
 export const UserIcon: VFC<Props> = memo(({ attachmentId, userId, isLink = false, size, onClick }) => {
-  const { data: attachmentUrl } = useAttachmentUrl(attachmentId);
+  const { data: attachmentUrl } = useSignedUrl(attachmentId);
 
   if (!isLink) return <StyledAvatar size={size} alt={userId} src={attachmentUrl} />;
 

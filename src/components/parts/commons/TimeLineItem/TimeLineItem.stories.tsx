@@ -3,7 +3,6 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 
-import { action } from '@storybook/addon-actions';
 import { TimeLineItem } from './TimeLineItem';
 
 export default {
@@ -24,19 +23,7 @@ const Template: ComponentStory<typeof TimeLineItem> = ({ ...rest }) => {
 export const DefaultTimeLineItem = Template.bind({});
 DefaultTimeLineItem.args = {
   title: 'TimeLineItemのtitle',
-  iconImageId: 'https://itizawa-tech.growi.cloud/attachment/616289c6c4e99c0051b30574',
-  actions: [
-    {
-      icon: 'Delete',
-      name: '削除',
-      onClick: action('clickDeleteButton'),
-    },
-    {
-      icon: 'Update',
-      name: '更新',
-      onClick: action('clickUpdateButton'),
-    },
-  ],
+  iconImageId: 'attachment1',
 };
 
 export const TimeLineItemWithoutImage = Template.bind({});
