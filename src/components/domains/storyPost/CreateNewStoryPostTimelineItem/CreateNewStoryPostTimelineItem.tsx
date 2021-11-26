@@ -28,13 +28,15 @@ export const CreateNewStoryPostTimelineItem: VFC<{ currentUser: User }> = ({ cur
 
   const [content, setContent] = useState('');
 
-  const handleCompleteEditor = async () => {
+  const handleCompleteEdit = async () => {
     try {
       await restClient.apiPost<StoryPost>('/story-posts', {
         storyPost: { content, storyId },
       });
 
       mutateStoryPosts();
+
+      setContent('');
 
       notifySuccessMessage('投稿に成功しました!');
     } catch (error) {
@@ -47,7 +49,7 @@ export const CreateNewStoryPostTimelineItem: VFC<{ currentUser: User }> = ({ cur
       <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
       <Box width="100%">
         <Paper>
-          <Editor content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEditor} />
+          <Editor content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEdit} />
         </Paper>
       </Box>
     </Box>
