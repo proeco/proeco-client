@@ -15,7 +15,7 @@ export default {
   },
 } as ComponentMeta<typeof Editor>;
 
-const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, isDisabled, onCompleteEdit, onClickCancelButton }) => {
+const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onCompleteEdit, onClickCancelButton }) => {
   const [markdownContent, setMarkdownContent] = useState(content);
 
   return (
@@ -25,7 +25,6 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, isDisa
           content={markdownContent}
           onChangeContent={setMarkdownContent}
           isUpdateMode={isUpdateMode}
-          isDisabled={isDisabled}
           onCompleteEdit={onCompleteEdit}
           onClickCancelButton={onClickCancelButton}
         />
@@ -37,18 +36,15 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, isDisa
 export const DefaultEditor = Template.bind({});
 DefaultEditor.args = {
   content: 'コンテンツを投稿する',
-  isDisabled: false,
 };
 
 export const UpdateEditor = Template.bind({});
 UpdateEditor.args = {
   content: 'コンテンツを更新する',
-  isDisabled: false,
   isUpdateMode: true,
 };
 
 export const disabledEditor = Template.bind({});
 disabledEditor.args = {
   content: '',
-  isDisabled: true,
 };
