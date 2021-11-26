@@ -77,7 +77,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             キャンセル
           </Button>
         )}
-        <Button variant="contained" onClick={onCompleteEdit} disabled={content === '' ? true : false}>
+        <Button variant="contained" onClick={onCompleteEdit} disabled={content.trim() === ''}>
           {isUpdateMode ? '更新する' : '投稿する'}
         </Button>
       </Box>
