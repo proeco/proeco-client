@@ -1,27 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 
 import { Editor } from './Editor';
+import { Paper } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/Editor',
   component: Editor,
   argTypes: {
-    onPostContent: { action: 'onPostContent' },
+    onCompleteEdit: { action: 'onCompleteEdit' },
+    onClickCancelButton: { action: 'onClickCancelButton' },
   },
 } as ComponentMeta<typeof Editor>;
 
-const Template: ComponentStory<typeof Editor> = ({ ...rest }) => {
+const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onCompleteEdit, onClickCancelButton }) => {
+  const [markdownContent, setMarkdownContent] = useState(content);
+
   return (
     <Box p="20px" width="600px" bgcolor="#e5e5e5">
-      <Editor {...rest} />
+      <Paper>
+        <Editor
+          content={markdownContent}
+          onChangeContent={setMarkdownContent}
+          isUpdateMode={isUpdateMode}
+          onCompleteEdit={onCompleteEdit}
+          onClickCancelButton={onClickCancelButton}
+        />
+      </Paper>
     </Box>
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
+export const DefaultEditor = Template.bind({});
+DefaultEditor.args = {
+  content: 'コンテンツを投稿する',
+};
+
+export const UpdateEditor = Template.bind({});
+UpdateEditor.args = {
+  content: 'コンテンツを更新する',
+  isUpdateMode: true,
+};
+
+export const disabledEditor = Template.bind({});
+disabledEditor.args = {
   content: '',
 };

@@ -13,12 +13,14 @@ import { TextField, Button, Typography } from '~/components/parts/commons';
 
 type Props = {
   content: string;
-  onSubmit: () => void;
+  isUpdateMode?: boolean;
+  onChangeContent: (content: string) => void;
+  onCompleteEdit: () => void;
+  onClickCancelButton?: () => void;
 };
 
-export const Editor: VFC<Props> = ({ content, onSubmit }) => {
+export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeContent, onCompleteEdit, onClickCancelButton }) => {
   const [value, setValue] = useState<'editor' | 'preview'>('editor');
-  const [markdownContent, setMarkdownContent] = useState(content);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: 'editor' | 'preview') => {
     setValue(newValue);
@@ -33,11 +35,11 @@ export const Editor: VFC<Props> = ({ content, onSubmit }) => {
         </StyledTabList>
         <StyledTabPanel value="editor">
           <Box my="16px">
-            <TextField fullWidth multiline minRows={4} value={markdownContent} onChange={(e) => setMarkdownContent(e.target.value)} />
+            <TextField fullWidth multiline minRows={4} value={content} onChange={(e) => onChangeContent(e.target.value)} />
           </Box>
         </StyledTabPanel>
         <StyledTabPanel value="preview">
-          {markdownContent === '' ? (
+          {content === '' ? (
             <Box minHeight="112px" display="flex" p="16px" my="16px" alignItems="center" justifyContent="center">
               <Typography variant="body1">本文がありません</Typography>
             </Box>
@@ -62,16 +64,23 @@ export const Editor: VFC<Props> = ({ content, onSubmit }) => {
                   plugins={[gfm]}
                   unwrapDisallowed={false}
                 >
-                  {markdownContent}
+                  {content}
                 </ReactMarkdown>
               </StyledMarkdownBody>
             </Box>
           )}
         </StyledTabPanel>
       </TabContext>
-      <StyledButton variant="contained" onClick={onSubmit}>
-        投稿する
-      </StyledButton>
+      <Box display="flex" alignItems="center" justifyContent="flex-end" gap="4px">
+        {isUpdateMode && (
+          <Button variant="text" onClick={onClickCancelButton}>
+            キャンセル
+          </Button>
+        )}
+        <Button variant="contained" onClick={onCompleteEdit} disabled={content.trim() === ''}>
+          {isUpdateMode ? '更新する' : '投稿する'}
+        </Button>
+      </Box>
     </Box>
   );
 };
@@ -104,9 +113,4 @@ const StyledMarkdownBody = styled(Box)`
       color: #fff;
     }
   }
-`;
-
-const StyledButton = styled(Button)`
-  display: block;
-  margin-left: auto;
 `;

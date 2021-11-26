@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import { VFC, useState } from 'react';
 import { Box } from '@mui/system';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
@@ -9,6 +9,7 @@ import { User } from '~/domains';
 
 export const CreateNewStoryPostTimelineItem: VFC<{ currentUser: User }> = ({ currentUser }) => {
   const { notifySuccessMessage } = useSuccessNotification();
+  const [content, setContent] = useState('');
 
   const handleSubmitEditor = () => {
     notifySuccessMessage('TODO');
@@ -19,7 +20,7 @@ export const CreateNewStoryPostTimelineItem: VFC<{ currentUser: User }> = ({ cur
       <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
       <Box width="100%">
         <Paper>
-          <Editor content="" onSubmit={handleSubmitEditor} />
+          <Editor content={content} onChangeContent={setContent} onCompleteEdit={handleSubmitEditor} />
         </Paper>
       </Box>
     </Box>
