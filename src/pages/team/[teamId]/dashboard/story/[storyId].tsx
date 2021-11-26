@@ -126,7 +126,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {item.children}
             </TimeLineItem>
           ))}
-          {currentUser && <CreateNewStoryPostTimelineItem currentUser={currentUser} />}
+          {currentUser && <CreateNewStoryPostTimelineItem currentUser={currentUser} storyId={storyId as string} page={page} />}
         </Box>
       </Box>
     </>
