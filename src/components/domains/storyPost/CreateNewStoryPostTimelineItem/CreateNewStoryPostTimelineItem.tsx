@@ -1,8 +1,6 @@
 import { VFC, useState } from 'react';
 import { Box } from '@mui/system';
 
-import { useRouter } from 'next/router';
-
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 
 import { UserIcon } from '~/components/domains/user/UserIcon';
@@ -12,11 +10,13 @@ import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
 
-export const CreateNewStoryPostTimelineItem: VFC<{ currentUser: User }> = ({ currentUser }) => {
-  const router = useRouter();
-  const { storyId } = router.query;
-  const page = router.query.page ? Number(router.query.page) : 1;
+type Props = {
+  currentUser: User;
+  storyId: string;
+  page: number;
+};
 
+export const CreateNewStoryPostTimelineItem: VFC<Props> = ({ currentUser, storyId, page }) => {
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId: storyId as string,
     page: page,

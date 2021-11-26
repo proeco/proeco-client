@@ -6,3 +6,7 @@ const db = [createMockStoryPost()];
 export const getStoryPosts = (req: any, res: any, ctx: any) => {
   return res(ctx.status(200), ctx.json(db[0]));
 };
+
+export const postStoryPosts = (req: any, res: any, ctx: any) => {
+  return res(ctx.status(200));
+};
