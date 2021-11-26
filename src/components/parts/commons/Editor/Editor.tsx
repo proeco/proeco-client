@@ -16,7 +16,7 @@ type Props = {
   isUpdateMode?: boolean;
   onChangeContent: (content: string) => void;
   onCompleteEdit: () => void;
-  onClickCancelButton: () => void;
+  onClickCancelButton?: () => void;
 };
 
 export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeContent, onCompleteEdit, onClickCancelButton }) => {
