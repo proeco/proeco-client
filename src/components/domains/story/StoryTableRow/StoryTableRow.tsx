@@ -32,7 +32,7 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
   const { mutate: mutateStoryForDelete } = useStoryForDelete();
 
   const handleClickRow = useCallback(() => {
-    router.push(URLS.TEAMS_DASHBOARD_STORY(story.teamId, story._id));
+    router.push(URLS.TEAMS_STORY(story.teamId, story._id));
   }, [router, story._id, story.teamId]);
 
   const handleClickMenu = (event: MouseEvent<HTMLElement>, story: Story) => {
