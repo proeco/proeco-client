@@ -6,7 +6,7 @@ import gfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
-import { Icon, IconButton, Link, Menu, Typography, Editor, EmojiRadioGroup } from '~/components/parts/commons';
+import { Icon, IconButton, Link, Menu, Editor, EmojiRadioGroup } from '~/components/parts/commons';
 import { StoryPost, User } from '~/domains';
 import 'github-markdown-css';
 
@@ -24,7 +24,7 @@ export const DisplayStoryPostTimeLineItem: VFC<Props> = ({ currentUser, storyPos
 
   const [isUpdate, setIsUpdate] = useState(false);
 
-  const [SelectedEmojiId, setSelectedEmojiId] = useState('thumbsup');
+  const [SelectedEmojiId, setSelectedEmojiId] = useState(emojiIds[0]);
 
   const handleClickCancelButton = () => {
     setContent(storyPost.content);
@@ -66,7 +66,7 @@ export const DisplayStoryPostTimeLineItem: VFC<Props> = ({ currentUser, storyPos
     <Box width="100%">
       <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
         <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
-        <Typography variant="caption">{storyPost.createdAt.toLocaleDateString()}</Typography>
+        <StyledTime dateTime={storyPost.createdAt.toLocaleDateString()}>{storyPost.createdAt.toLocaleDateString()}</StyledTime>
         <StyledIconButton icon="MoreVert" width={20} onClick={(e) => handleClickMenu(e)} />
         <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
       </StyledBox>
@@ -108,6 +108,11 @@ const StyledBox = styled(Box)`
     color: ${(props) => props.theme.palette.textColor.main};
     margin-right: 8px;
   }
+`;
+
+const StyledTime = styled('time')`
+  font-size: 12px;
+  color: ${(props) => props.theme.palette.textColor.main};
 `;
 
 const StyledIconButton = styled(IconButton)`
