@@ -22,10 +22,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
   const [isValidForm, setIsValidForm] = useState(true);
-  const [team, setTeam] = useState<Pick<Team, 'name' | 'description'>>({
-    name: '',
-    description: '',
-  });
+  const [team, setTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description'>>({ productId: '', url: '', name: '', description: '' });
 
   const handleClickCreateNewTeam = async () => {
     if (!currentUser) {
@@ -66,7 +63,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
   };
 
   useEffect(() => {
-    setIsValidForm(team.name.trim() !== '' && team.description.trim() !== '');
+    setIsValidForm(team.name.trim() !== '' && team.productId.trim() !== '' && team.productId.trim() !== '' && team.description.trim() !== '');
   }, [team]);
 
   return (
@@ -83,7 +80,15 @@ const DashboardTeamPage: ProecoNextPage = () => {
           <Box display="flex" justifyContent="center">
             <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : undefined} />
           </Box>
-          <Typography mb="4px" variant="body1" color="textColor.light">
+          <Typography mb={1} variant="body1" color="textColor.light">
+            プロダクトの url
+          </Typography>
+          <TextField fullWidth multiline value={team.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
+          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
+            Product Id
+          </Typography>
+          <TextField fullWidth multiline value={team.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
+          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             名前
           </Typography>
           <TextField fullWidth multiline value={team.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />

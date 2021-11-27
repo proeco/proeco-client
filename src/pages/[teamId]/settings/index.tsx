@@ -16,10 +16,7 @@ import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 const TeamSettings: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
   const router = useRouter();
-  const [newTeam, setNewTeam] = useState<Pick<Team, 'name' | 'description'>>({
-    name: '',
-    description: '',
-  });
+  const [newTeam, setNewTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description'>>({ productId: '', url: '', name: '', description: '' });
 
   const [isCreating, setIsCreating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
@@ -92,7 +89,15 @@ const TeamSettings: ProecoNextPage = () => {
           <Box display="flex" justifyContent="center">
             <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
           </Box>
-          <Typography mb="4px" variant="body1" color="textColor.light">
+          <Typography mb={1} variant="body1" color="textColor.light">
+            プロダクトの url
+          </Typography>
+          <TextField fullWidth multiline value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
+          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
+            Product Id
+          </Typography>
+          <TextField fullWidth multiline value={newTeam.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
+          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             名前
           </Typography>
           <TextField fullWidth multiline value={newTeam.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
