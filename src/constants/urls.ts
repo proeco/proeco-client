@@ -8,5 +8,6 @@ export const URLS = {
   TEAMS_STORIES: (teamId: string) => `/${teamId}/story`,
   TEAMS_STORY: (teamId: string, storyId: string) => `/${teamId}/story/${storyId}`,
   TEAMS_SETTING: (teamId: string) => `/${teamId}/settings`,
+  TERMS: '#',
   PRIVACY_POLICY: '#',
 };
