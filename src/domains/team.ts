@@ -5,7 +5,7 @@ export class Team {
   name: string;
   description: string;
   adminUserId: string;
-  iconImageId?: string;
+  iconImageId: string;
   createdAt: Date;
   updatedAt: Date;
   constructor(init: Team) {
