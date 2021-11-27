@@ -40,17 +40,17 @@ export const TeamSideBar: VFC<{ teamId: string }> = memo(({ teamId }) => {
     () => [
       {
         icon: 'DashboardOutlined',
-        url: URLS.TEAMS_DASHBOARD(teamId as string),
+        url: URLS.TEAMS(teamId as string),
         text: 'ホーム',
       },
       {
         icon: 'HistoryEdu',
-        url: URLS.TEAMS_DASHBOARD_STORIES(teamId as string),
+        url: URLS.TEAMS_STORIES(teamId as string),
         text: 'ストーリー',
       },
       {
         icon: 'Settings',
-        url: URLS.TEAMS_DASHBOARD_SETTING(teamId as string),
+        url: URLS.TEAMS_SETTING(teamId as string),
         text: '設定',
       },
     ],

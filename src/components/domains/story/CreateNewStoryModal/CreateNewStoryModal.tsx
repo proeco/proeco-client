@@ -100,7 +100,7 @@ export const CreateNewStoryModal: VFC = () => {
       });
 
       // 作成後に作成したstoryの詳細ページに遷移する
-      router.push(URLS.TEAMS_DASHBOARD_STORY(teamId as string, data._id));
+      router.push(URLS.TEAMS_STORY(teamId as string, data._id));
       handleCloseModal();
     } catch (error) {
       notifyErrorMessage('ストーリーの作成に失敗しました!');
