@@ -1,22 +1,19 @@
-import React, { VFC, ComponentProps } from 'react';
+import React, { VFC } from 'react';
 import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@mui/lab';
 import { styled } from '@mui/system';
 import { GuestUserIcon, UserIcon } from '~/components/domains/user/UserIcon';
 import { Paper } from '~/components/parts/commons';
 
-type TimeLineItemType = {
-  iconImageId?: string;
+type Props = {
   userAttachmentId?: string;
   userId: string;
   children: React.ReactNode;
 };
 
-type Props = ComponentProps<typeof TimelineItem> & TimeLineItemType;
-
-export const TimeLineItem: VFC<Props> = ({ userAttachmentId, userId, children, ...rest }) => {
+export const TimeLineItem: VFC<Props> = ({ userAttachmentId, userId, children }) => {
   return (
     <StyledDiv>
-      <TimelineItem {...rest}>
+      <TimelineItem>
         <TimelineSeparator>
           <StyledTimeLineDot>
             {userAttachmentId ? <UserIcon size={40} attachmentId={userAttachmentId} userId={userId} /> : <GuestUserIcon size={40} />}

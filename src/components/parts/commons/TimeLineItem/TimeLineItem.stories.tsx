@@ -22,12 +22,11 @@ const Template: ComponentStory<typeof TimeLineItem> = ({ ...rest }) => {
 
 export const DefaultTimeLineItem = Template.bind({});
 DefaultTimeLineItem.args = {
-  title: 'TimeLineItemのtitle',
-  iconImageId: 'attachment1',
+  userAttachmentId: 'attachment1',
 };
 
 export const TimeLineItemWithoutImage = Template.bind({});
 TimeLineItemWithoutImage.args = {
   ...DefaultTimeLineItem.args,
-  iconImageId: undefined,
+  userAttachmentId: undefined,
 };

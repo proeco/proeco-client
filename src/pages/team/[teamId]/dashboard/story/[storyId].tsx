@@ -125,7 +125,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
           {timeLineItems.map((item, i) => (
-            <TimeLineItem key={i} iconImageId={item.iconImageId} userId={item.createdUserId}>
+            <TimeLineItem key={i} userAttachmentId={item.iconImageId} userId={item.createdUserId}>
               {item.children}
             </TimeLineItem>
           ))}
