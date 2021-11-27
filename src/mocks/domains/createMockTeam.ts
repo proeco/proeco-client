@@ -8,9 +8,11 @@ import { Team } from '~/domains';
 export const createMockTeam = (mock: Partial<Team> = {}): Team => {
   return new Team({
     _id: mock._id || 'team1',
+    productId: mock.productId || 'product1',
+    url: mock.url || 'https://github.com/proeco',
     name: mock.name || 'name',
     description: mock.description || 'description',
-    adminUserId: mock.adminUserId || 'user1',
+    adminUserId: mock.adminUserId || 'adminUser1',
     iconImageId: mock.iconImageId || 'iconImage1',
     createdAt: mock.createdAt || new Date(),
     updatedAt: mock.updatedAt || new Date(),
