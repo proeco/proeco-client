@@ -66,7 +66,7 @@ module.exports = {
         endOfLine: 'lf',
         semi: true,
         singleQuote: true,
-        printWidth: 162,
+        printWidth: 142,
         tabWidth: 2,
       },
     ],
