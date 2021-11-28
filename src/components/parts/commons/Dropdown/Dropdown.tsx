@@ -25,7 +25,14 @@ export const Dropdown: FC<Props> = ({
       <StyledBox onClick={(e) => setAnchorEl(e.currentTarget)} width="fit-content">
         {toggle}
       </StyledBox>
-      <MuiMenu anchorOrigin={anchorOrigin} transformOrigin={transformOrigin} anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
+      <MuiMenu
+        anchorOrigin={anchorOrigin}
+        transformOrigin={transformOrigin}
+        anchorEl={anchorEl}
+        open={open}
+        onClick={() => setAnchorEl(null)}
+        onClose={() => setAnchorEl(null)}
+      >
         {children}
       </MuiMenu>
     </>
