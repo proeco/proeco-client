@@ -1,11 +1,12 @@
 import Image from 'next/image';
-import { memo, VFC, useState, useMemo, MouseEvent } from 'react';
-import { AppBar } from '@mui/material';
+import { memo, VFC, useState, useMemo } from 'react';
+import { AppBar, ListItemIcon, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+import { Dropdown } from '../../commons/Dropdown';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { Button, Icon, Link, Menu } from '~/components/parts/commons';
+import { Button, Icon, Link } from '~/components/parts/commons';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
@@ -28,14 +29,6 @@ type Props = {
 };
 
 export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickLoginButton, menuItems, logoImagePath }) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const Contents = useMemo(() => {
@@ -43,10 +36,14 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
 
     if (currentUser) {
       return (
-        <>
-          <StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} onClick={handleClick} />
-          <Menu anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
-        </>
+        <Dropdown toggle={<StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />}>
+          {menuItems.map((menuItem, i) => (
+            <MenuItem key={i} onClick={menuItem.onClick}>
+              <ListItemIcon>{menuItem.icon}</ListItemIcon>
+              {menuItem.text}
+            </MenuItem>
+          ))}
+        </Dropdown>
       );
     }
 
@@ -55,7 +52,7 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
         Login Button
       </StyledButton>
     );
-  }, [isValidating, currentUser, anchorEl, open, menuItems]);
+  }, [isValidating, currentUser, menuItems]);
 
   return (
     <>
@@ -65,7 +62,14 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
         </Link>
         {Contents}
       </StyledAppBar>
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onClickSignInButton={onClickLoginButton} />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onClickSignInButton={() => {
+          setIsLoginModalOpen(false);
+          onClickLoginButton();
+        }}
+      />
     </>
   );
 });
@@ -75,7 +79,7 @@ const StyledAppBar = styled(AppBar)`
   top: 0px;
   z-index: 1300;
   background-color: ${(props) => props.theme.palette.primary.main};
-  padding: 12px 20px;
+  padding: 8px 12px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;

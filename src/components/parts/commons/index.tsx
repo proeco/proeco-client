@@ -11,7 +11,6 @@ export { Icon } from './Icon';
 export { IconButton } from './IconButton';
 export { IconUpload } from './IconUpload';
 export { Link } from './Link';
-export { Menu } from './Menu';
 export { Modal } from './Modal';
 export { Pagination } from './Pagination';
 export { Paper } from './Paper';
