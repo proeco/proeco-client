@@ -1,6 +1,6 @@
 import React, { ReactNode, FC, useState, ComponentProps } from 'react';
 import { Menu as MuiMenu } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 
 type CustomProps = {
   toggle: ReactNode;
@@ -22,12 +22,16 @@ export const Dropdown: FC<Props> = ({
 
   return (
     <>
-      <Box onClick={(e) => setAnchorEl(e.currentTarget)} width="fit-content">
+      <StyledBox onClick={(e) => setAnchorEl(e.currentTarget)} width="fit-content">
         {toggle}
-      </Box>
+      </StyledBox>
       <MuiMenu anchorOrigin={anchorOrigin} transformOrigin={transformOrigin} anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
         {children}
       </MuiMenu>
     </>
   );
 };
+
+const StyledBox = styled(Box)`
+  cursor: pointer;
+`;
