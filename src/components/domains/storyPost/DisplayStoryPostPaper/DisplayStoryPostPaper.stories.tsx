@@ -2,18 +2,18 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { DisplayStoryPostTimeLineItem } from './DisplayStoryPostTimeLineItem';
+import { DisplayStoryPostPaper } from './DisplayStoryPostPaper';
 import { createMockStoryPost, createMockUser } from '~/mocks/domains';
 
 export default {
-  title: 'domains/storyPost/DisplayStoryPostTimeLineItem',
-  component: DisplayStoryPostTimeLineItem,
-} as ComponentMeta<typeof DisplayStoryPostTimeLineItem>;
+  title: 'domains/storyPost/DisplayStoryPostPaper',
+  component: DisplayStoryPostPaper,
+} as ComponentMeta<typeof DisplayStoryPostPaper>;
 
-const Template: ComponentStory<typeof DisplayStoryPostTimeLineItem> = ({ ...rest }) => {
+const Template: ComponentStory<typeof DisplayStoryPostPaper> = ({ ...rest }) => {
   return (
     <Box p="20px" width="600px" bgcolor="#e5e5e5">
-      <DisplayStoryPostTimeLineItem {...rest} />
+      <DisplayStoryPostPaper {...rest} />
     </Box>
   );
 };

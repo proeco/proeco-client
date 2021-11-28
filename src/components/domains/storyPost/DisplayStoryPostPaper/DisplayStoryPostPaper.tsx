@@ -2,6 +2,9 @@ import React, { VFC, useState } from 'react';
 import { Box, styled } from '@mui/system';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
+import { formatDistanceToNow } from 'date-fns';
+import ja from 'date-fns/locale/ja';
+
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -17,12 +20,14 @@ type Props = {
   emojiIds?: string[];
 };
 
-export const DisplayStoryPostTimeLineItem: VFC<Props> = ({ currentUser, storyPost, emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'] }) => {
+export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'] }) => {
   const [content, setContent] = useState(storyPost.content);
 
   const [isUpdate, setIsUpdate] = useState(false);
 
   const [SelectedEmojiId, setSelectedEmojiId] = useState(emojiIds[0]);
+
+  const displayDate = formatDistanceToNow(storyPost.createdAt, { addSuffix: true, locale: ja });
 
   const handleClickCancelButton = () => {
     setContent(storyPost.content);
@@ -39,6 +44,7 @@ export const DisplayStoryPostTimeLineItem: VFC<Props> = ({ currentUser, storyPos
   };
 
   const handleClickEmoji = (id: string) => {
+    // TODO: 絵文字を送信するapiを叩く
     setSelectedEmojiId(id);
   };
 
@@ -46,9 +52,13 @@ export const DisplayStoryPostTimeLineItem: VFC<Props> = ({ currentUser, storyPos
     <Paper>
       <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
         <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
-        <StyledTime dateTime={storyPost.createdAt.toLocaleDateString()}>{storyPost.createdAt.toLocaleDateString()}</StyledTime>
+        <StyledTime dateTime={storyPost.createdAt.toLocaleDateString()}>{displayDate}</StyledTime>
         <WrapDropdown>
-          <Dropdown toggle={<IconButton icon="MoreVert" width={20} />}>
+          <Dropdown
+            toggle={<IconButton icon="MoreVert" width={20} />}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          >
             <MenuItem onClick={handleClickUpdate}>
               <ListItemIcon>
                 <Icon icon="Update" width="20px" color="textColor.main" />
