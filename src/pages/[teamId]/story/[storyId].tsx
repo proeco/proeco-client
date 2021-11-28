@@ -107,7 +107,14 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {story.title}
             </Typography>
           </Box>
-          <Dropdown toggle={<Icon icon="MoreVert" width={24} />}>
+          <Dropdown
+            toggle={<Icon icon="MoreVert" width={24} />}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >
             {menuItems.map((menuItem, i) => (
               <MenuItem key={i} onClick={menuItem.onClick}>
                 <ListItemIcon>{menuItem.icon}</ListItemIcon>
