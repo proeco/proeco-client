@@ -6,7 +6,7 @@ type CustomProps = {
   toggle: ReactNode;
 };
 
-type Props = ComponentProps<typeof MuiMenu> & CustomProps;
+type Props = Omit<ComponentProps<typeof MuiMenu>, 'open' | 'onClose'> & CustomProps;
 
 export const Dropdown: FC<Props> = ({
   toggle,
