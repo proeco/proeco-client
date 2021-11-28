@@ -49,7 +49,6 @@ export const StoryListTable: VFC<Props> = ({ page, limit, teamId }) => {
                   最終更新日
                 </Typography>
               </StyledHeaderTableCell>
-              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>{stories && stories.docs.map((doc) => <StoryTableRow story={doc} key={doc._id} />)}</TableBody>
