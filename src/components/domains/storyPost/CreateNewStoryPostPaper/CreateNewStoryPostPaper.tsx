@@ -16,7 +16,7 @@ type Props = {
   page: number;
 };
 
-export const CreateNewStoryPostTimelineItem: VFC<Props> = ({ currentUser, storyId, page }) => {
+export const CreateNewStoryPostPaper: VFC<Props> = ({ currentUser, storyId, page }) => {
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId: storyId as string,
     page: page,

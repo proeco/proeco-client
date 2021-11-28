@@ -5,18 +5,18 @@ import { Box } from '@mui/system';
 import { SnackbarProvider } from 'notistack';
 import { createMockUser } from '~/mocks/domains/createMockUser';
 
-import { CreateNewStoryPostTimelineItem } from '~/components/domains/storyPost/CreateNewStoryPostTimelineItem';
+import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper';
 
 export default {
-  title: 'domains/storyPost/CreateNewStoryPostTimelineItem',
-  component: CreateNewStoryPostTimelineItem,
-} as ComponentMeta<typeof CreateNewStoryPostTimelineItem>;
+  title: 'domains/storyPost/CreateNewStoryPostPaper',
+  component: CreateNewStoryPostPaper,
+} as ComponentMeta<typeof CreateNewStoryPostPaper>;
 
-const Template: ComponentStory<typeof CreateNewStoryPostTimelineItem> = ({ currentUser, storyId, page }) => {
+const Template: ComponentStory<typeof CreateNewStoryPostPaper> = ({ currentUser, storyId, page }) => {
   return (
     <SnackbarProvider>
       <Box p="40px" bgcolor="#e5e5e5" width="600px">
-        <CreateNewStoryPostTimelineItem currentUser={currentUser} storyId={storyId} page={page} />
+        <CreateNewStoryPostPaper currentUser={currentUser} storyId={storyId} page={page} />
       </Box>
     </SnackbarProvider>
   );

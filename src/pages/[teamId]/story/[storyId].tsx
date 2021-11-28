@@ -20,7 +20,7 @@ import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
 import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { CreateNewStoryPostTimelineItem } from '~/components/domains/storyPost/CreateNewStoryPostTimelineItem/CreateNewStoryPostTimelineItem';
+import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
 import { Dropdown } from '~/components/parts/commons/Dropdown';
 
 type Props = {
@@ -129,7 +129,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {item.children}
             </TimeLineItem>
           ))}
-          {currentUser && <CreateNewStoryPostTimelineItem currentUser={currentUser} storyId={currentStoryId} page={page} />}
+          {currentUser && <CreateNewStoryPostPaper currentUser={currentUser} storyId={currentStoryId} page={page} />}
         </Box>
       </Box>
     </>
