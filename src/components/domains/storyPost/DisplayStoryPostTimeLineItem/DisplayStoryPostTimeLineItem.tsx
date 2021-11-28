@@ -7,7 +7,7 @@ import gfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
-import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup } from '~/components/parts/commons';
+import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper } from '~/components/parts/commons';
 import { StoryPost, User } from '~/domains';
 import 'github-markdown-css';
 
@@ -43,7 +43,7 @@ export const DisplayStoryPostTimeLineItem: VFC<Props> = ({ currentUser, storyPos
   };
 
   return (
-    <Box width="100%">
+    <Paper>
       <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
         <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
         <StyledTime dateTime={storyPost.createdAt.toLocaleDateString()}>{storyPost.createdAt.toLocaleDateString()}</StyledTime>
@@ -87,7 +87,7 @@ export const DisplayStoryPostTimeLineItem: VFC<Props> = ({ currentUser, storyPos
           <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
         </>
       )}
-    </Box>
+    </Paper>
   );
 };
 
