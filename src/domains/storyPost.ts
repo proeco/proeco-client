@@ -1,15 +1,16 @@
 export class StoryPost {
   _id: string;
-  title: string;
+  content: string;
   storyId: string;
   createdUserId: string;
-  startedAt: Date;
-  completedAt: Date;
+  startedAt?: Date;
+  completedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
+
   constructor(init: StoryPost) {
     this._id = init._id;
-    this.title = init.title;
+    this.content = init.content;
     this.storyId = init.storyId;
     this.createdUserId = init.createdUserId;
     this.startedAt = init.startedAt;
@@ -18,3 +19,5 @@ export class StoryPost {
     this.updatedAt = init.updatedAt;
   }
 }
+
+export type UpdatableKey = 'content';

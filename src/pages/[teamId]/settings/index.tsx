@@ -11,12 +11,14 @@ import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayo
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { Team } from '~/domains';
 import { useTeam } from '~/stores/team';
-import { useAttachmentUrl } from '~/stores/attachment/useAttachmentUrl';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 const TeamSettings: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
   const router = useRouter();
-  const [newTeam, setNewTeam] = useState<Pick<Team, 'name' | 'description'>>({
+  const [newTeam, setNewTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description'>>({
+    productId: '',
+    url: '',
     name: '',
     description: '',
   });
@@ -26,7 +28,7 @@ const TeamSettings: ProecoNextPage = () => {
   const [isValidForm, setIsValidForm] = useState(true);
 
   const { data: team } = useTeam({ teamId: router.query.teamId as string });
-  const { data: attachmentUrl } = useAttachmentUrl(team?.iconImageId);
+  const { data: signedUrl } = useSignedUrl(team?.iconImageId);
 
   useEffect(() => {
     if (team) {
@@ -90,16 +92,30 @@ const TeamSettings: ProecoNextPage = () => {
         </Box>
         <Paper>
           <Box display="flex" justifyContent="center">
-            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachmentUrl} />
+            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
           </Box>
-          <Typography mb="4px" variant="body1" color="textColor.light">
+          <Typography mb={1} variant="body1" color="textColor.light">
+            プロダクトの url
+          </Typography>
+          <TextField fullWidth multiline value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
+          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
+            Product Id
+          </Typography>
+          <TextField fullWidth multiline value={newTeam.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
+          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             名前
           </Typography>
           <TextField fullWidth multiline value={newTeam.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             どんなプロダクト？
           </Typography>
-          <TextField fullWidth multiline value={newTeam.description} rows={4} onChange={(e) => updateStoryForm({ description: e.target.value })} />
+          <TextField
+            fullWidth
+            multiline
+            value={newTeam.description}
+            rows={4}
+            onChange={(e) => updateStoryForm({ description: e.target.value })}
+          />
           <Box mt={4} textAlign="center">
             <Button
               disabled={isCreating || !isValidForm}

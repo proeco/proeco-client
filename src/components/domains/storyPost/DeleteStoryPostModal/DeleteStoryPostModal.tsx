@@ -44,7 +44,7 @@ export const DeleteStoryPostModal: VFC = () => {
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId: storyId as string,
-    page: page,
+    page,
     limit: 10,
   });
 
@@ -61,7 +61,7 @@ export const DeleteStoryPostModal: VFC = () => {
       return;
     }
 
-    setTitle(storyTaskForDelete.title);
+    setTitle(storyTaskForDelete.content);
   }, [storyTaskForDelete]);
 
   const handleClickDeleteStoryPostButton = async () => {

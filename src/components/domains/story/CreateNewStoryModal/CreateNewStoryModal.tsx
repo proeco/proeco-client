@@ -26,7 +26,15 @@ type Props = {
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, emojiId, isDisabled, onClickCreateNewStoryButton, onCloseModal, onChangeStoryForm }) => {
+export const Component: VFC<Props> = ({
+  isOpen,
+  title,
+  emojiId,
+  isDisabled,
+  onClickCreateNewStoryButton,
+  onCloseModal,
+  onChangeStoryForm,
+}) => {
   const content = (
     <>
       <Box mb="16px">
@@ -62,7 +70,7 @@ export const CreateNewStoryModal: VFC = () => {
 
   const { mutate: mutateStories } = useStories({
     teamId: teamId as string,
-    page: page,
+    page,
     limit: 10,
   });
 
@@ -100,7 +108,7 @@ export const CreateNewStoryModal: VFC = () => {
       });
 
       // 作成後に作成したstoryの詳細ページに遷移する
-      router.push(URLS.TEAMS_DASHBOARD_STORY(teamId as string, data._id));
+      router.push(URLS.TEAMS_STORY(teamId as string, data._id));
       handleCloseModal();
     } catch (error) {
       notifyErrorMessage('ストーリーの作成に失敗しました!');

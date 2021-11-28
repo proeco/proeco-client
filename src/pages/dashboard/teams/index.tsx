@@ -45,7 +45,8 @@ const DashboardTeamPage: ProecoNextPage = () => {
                   name={team.name}
                   description={team.description}
                   attachmentId={team.iconImageId}
-                  onClick={() => router.push(`/team/${team._id}/dashboard`)}
+                  url={team.url}
+                  onClick={() => router.push(URLS.TEAMS(team._id))}
                 />
               </Grid>
             ))

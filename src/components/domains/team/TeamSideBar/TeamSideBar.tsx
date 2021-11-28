@@ -1,5 +1,4 @@
 import { ComponentProps, memo, VFC, useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { Box, styled } from '@mui/system';
 
@@ -13,8 +12,6 @@ import { useTeam, useTeamUsers } from '~/stores/team';
 import { SideBar } from '~/components/parts/layout/SideBar';
 
 export const TeamSideBar: VFC<{ teamId: string }> = memo(({ teamId }) => {
-  const router = useRouter();
-
   const { data: currentTeam } = useTeam({ teamId });
 
   const { data: teamUsers = [], isValidating } = useTeamUsers({
@@ -25,13 +22,6 @@ export const TeamSideBar: VFC<{ teamId: string }> = memo(({ teamId }) => {
     return { userId: teamUser._id, name: teamUser.name, attachmentId: teamUser.iconImageId };
   });
 
-  const menuItems = [
-    {
-      icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
-      text: '個人画面に戻る',
-      onClick: () => router.push(URLS.DASHBOARD),
-    },
-  ];
   const sidebarItems: {
     icon: ComponentProps<typeof Icon>['icon'];
     url: string;
@@ -40,17 +30,17 @@ export const TeamSideBar: VFC<{ teamId: string }> = memo(({ teamId }) => {
     () => [
       {
         icon: 'DashboardOutlined',
-        url: URLS.TEAMS_DASHBOARD(teamId as string),
+        url: URLS.TEAMS(teamId as string),
         text: 'ホーム',
       },
       {
         icon: 'HistoryEdu',
-        url: URLS.TEAMS_DASHBOARD_STORIES(teamId as string),
+        url: URLS.TEAMS_STORIES(teamId as string),
         text: 'ストーリー',
       },
       {
         icon: 'Settings',
-        url: URLS.TEAMS_DASHBOARD_SETTING(teamId as string),
+        url: URLS.TEAMS_SETTING(teamId as string),
         text: '設定',
       },
     ],
@@ -116,7 +106,7 @@ export const TeamSideBar: VFC<{ teamId: string }> = memo(({ teamId }) => {
     );
   }, [currentTeam, isValidating]);
 
-  return <SideBar openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} menuItems={menuItems} />;
+  return <SideBar openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
 });
 
 const StyledUserIconWrapper = styled(Box)`

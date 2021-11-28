@@ -7,7 +7,7 @@ import { User } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
-import { useAttachmentUrl } from '~/stores/attachment/useAttachmentUrl';
+import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { restClient } from '~/utils/rest-client';
 
@@ -17,7 +17,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     name: '',
     description: '',
   });
-  const { data: attachmentUrl } = useAttachmentUrl(currentUser?.iconImageId);
+  const { data: signedUrl } = useSignedUrl(currentUser?.iconImageId);
   const [isUpdating, setIsUpdating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
   const [isValidForm, setIsValidForm] = useState(true);
@@ -84,7 +84,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
         </Box>
         <Paper>
           <Box display="flex" justifyContent="center">
-            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachmentUrl} />
+            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
           </Box>
           <Box mb="16px">
             <Typography mb="4px" variant="body1" color="textColor.light">
@@ -96,7 +96,13 @@ const DashboardSettingsPage: ProecoNextPage = () => {
             <Typography mb="4px" variant="body1" color="textColor.light">
               自己紹介
             </Typography>
-            <TextField fullWidth multiline rows={4} value={newUser?.description} onChange={(e) => updateUserForm({ description: e.target.value })} />
+            <TextField
+              fullWidth
+              multiline
+              rows={4}
+              value={newUser?.description}
+              onChange={(e) => updateUserForm({ description: e.target.value })}
+            />
           </Box>
           <Box mt={4} textAlign="center">
             <Button

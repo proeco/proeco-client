@@ -1,42 +1,26 @@
-import React, { VFC, ComponentProps } from 'react';
+import React, { VFC } from 'react';
 import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@mui/lab';
-import { Box, styled } from '@mui/system';
-import { UserIcon } from '~/components/domains/user/UserIcon';
-import { Paper, Typography, SpeedDial, Icon, FirstLetterIcon } from '~/components/parts/commons';
+import { styled } from '@mui/system';
+import { GuestUserIcon, UserIcon } from '~/components/domains/user/UserIcon';
+import { Paper } from '~/components/parts/commons';
 
-type TimeLineItemType = {
-  title: string;
-  iconImageId?: string;
-  userName: string;
+type Props = {
   userAttachmentId?: string;
-  userId?: string;
+  userId: string;
   children: React.ReactNode;
-  actions: {
-    icon: ComponentProps<typeof Icon>['icon'];
-    name: string;
-    onClick: () => void;
-  }[];
 };
 
-type Props = ComponentProps<typeof TimelineItem> & TimeLineItemType;
-
-export const TimeLineItem: VFC<Props> = ({ title, userName, userAttachmentId, userId, children, actions, ...rest }) => {
+export const TimeLineItem: VFC<Props> = ({ userAttachmentId, userId, children }) => {
   return (
     <StyledDiv>
-      <TimelineItem {...rest}>
+      <TimelineItem>
         <TimelineSeparator>
           <StyledTimeLineDot>
-            {userId && userAttachmentId ? <UserIcon size={40} attachmentId={userAttachmentId} userId={userId} /> : <FirstLetterIcon name={userName} />}
+            {userAttachmentId ? <UserIcon size={40} attachmentId={userAttachmentId} userId={userId} /> : <GuestUserIcon size={40} />}
           </StyledTimeLineDot>
           <StyledTimeLineConnector />
         </TimelineSeparator>
         <StyledTimeLineContent>
-          <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" width="100%" height="40px">
-            <Typography variant="h4" bold>
-              {title}
-            </Typography>
-            <SpeedDial actions={actions} />
-          </Box>
           <Paper>{children}</Paper>
         </StyledTimeLineContent>
       </TimelineItem>
