@@ -23,6 +23,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
 import { Dropdown } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
+import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -47,20 +48,19 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   });
 
   const timeLineItems = useMemo(() => {
-    if (!storyPosts) {
+    if (!storyPosts || !currentUser) {
       return [];
     }
     return storyPosts.docs.map((storyPost) => {
       return {
         content: storyPost.content,
         // TODO fix image
-        iconImageId: currentUser?.iconImageId || '',
+        iconImageId: currentUser.iconImageId || '',
         createdUserId: storyPost.createdUserId || '',
-        // TODO: Childrenの中身を作成する
-        children: <Box minHeight="250px"></Box>,
+        children: <DisplayStoryPostPaper currentUser={currentUser} storyPost={storyPost} storyId={currentStoryId} page={page} />,
       };
     });
-  }, [storyPosts, currentUser]);
+  }, [storyPosts, currentUser, currentStoryId, page]);
 
   const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
