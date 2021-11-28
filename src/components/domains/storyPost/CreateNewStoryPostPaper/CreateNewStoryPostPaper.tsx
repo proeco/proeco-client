@@ -16,7 +16,7 @@ type Props = {
 export const CreateNewStoryPostPaper: VFC<Props> = ({ storyId, page }) => {
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId: storyId as string,
-    page: page,
+    page,
     limit: 10,
   });
 

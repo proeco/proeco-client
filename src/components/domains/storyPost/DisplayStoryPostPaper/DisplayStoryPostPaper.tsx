@@ -20,7 +20,11 @@ type Props = {
   emojiIds?: string[];
 };
 
-export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'] }) => {
+export const DisplayStoryPostPaper: VFC<Props> = ({
+  currentUser,
+  storyPost,
+  emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'],
+}) => {
   const [content, setContent] = useState(storyPost.content);
 
   const [isUpdate, setIsUpdate] = useState(false);
@@ -69,7 +73,13 @@ export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emoj
         </WrapDropdown>
       </StyledBox>
       {isUpdate ? (
-        <Editor isUpdateMode content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEdit} onClickCancelButton={handleClickCancelButton} />
+        <Editor
+          isUpdateMode
+          content={content}
+          onChangeContent={setContent}
+          onCompleteEdit={handleCompleteEdit}
+          onClickCancelButton={handleClickCancelButton}
+        />
       ) : (
         <>
           <StyledMarkdownBody className="markdown-body">

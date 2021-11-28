@@ -26,7 +26,15 @@ type Props = {
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, emojiId, isDisabled, onClickCreateNewStoryButton, onCloseModal, onChangeStoryForm }) => {
+export const Component: VFC<Props> = ({
+  isOpen,
+  title,
+  emojiId,
+  isDisabled,
+  onClickCreateNewStoryButton,
+  onCloseModal,
+  onChangeStoryForm,
+}) => {
   const content = (
     <>
       <Box mb="16px">
@@ -62,7 +70,7 @@ export const CreateNewStoryModal: VFC = () => {
 
   const { mutate: mutateStories } = useStories({
     teamId: teamId as string,
-    page: page,
+    page,
     limit: 10,
   });
 

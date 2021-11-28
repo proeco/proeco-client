@@ -44,7 +44,7 @@ export const DeleteStoryPostModal: VFC = () => {
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId: storyId as string,
-    page: page,
+    page,
     limit: 10,
   });
 
