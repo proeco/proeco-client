@@ -17,7 +17,7 @@
     "deploy:storybook": "gh-pages -d storybook-static"
   },
   "dependencies": {
-    "@emotion/react": "11.6.0",
+    "@emotion/react": "11.7.0",
     "@emotion/styled": "11.6.0",
     "@firebase/app": "0.7.9",
     "@firebase/auth": "0.19.3",
