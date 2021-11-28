@@ -38,7 +38,9 @@ export const TeamCard: VFC<Props> = ({ name, description, attachmentId, url, onC
       <Box position="relative" p={2}>
         <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">
           <TeamIcon size={50} attachmentId={attachmentId} />
-          {name}
+          <Typography variant="body1" bold>
+            {name}
+          </Typography>
         </Box>
         <StyledDescription mt={2} variant="caption" maximum_lines={2}>
           {description}
