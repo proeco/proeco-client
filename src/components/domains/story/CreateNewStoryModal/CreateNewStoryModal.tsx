@@ -26,7 +26,15 @@ type Props = {
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, emojiId, isDisabled, onClickCreateNewStoryButton, onCloseModal, onChangeStoryForm }) => {
+export const Component: VFC<Props> = ({
+  isOpen,
+  title,
+  emojiId,
+  isDisabled,
+  onClickCreateNewStoryButton,
+  onCloseModal,
+  onChangeStoryForm,
+}) => {
   const content = (
     <>
       <Box mb="16px">

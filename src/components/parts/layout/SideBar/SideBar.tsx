@@ -41,7 +41,14 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
 
   return (
     <StyledDrawer variant="permanent" open={open}>
-      <Box position="absolute" width="100%" bgcolor="whitesmoke" display="flex" alignItems="center" justifyContent={open ? 'flex-end' : 'center'}>
+      <Box
+        position="absolute"
+        width="100%"
+        bgcolor="whitesmoke"
+        display="flex"
+        alignItems="center"
+        justifyContent={open ? 'flex-end' : 'center'}
+      >
         <IconButton icon={open ? 'ChevronLeft' : 'ChevronRight'} width={30} onClick={handleClickChevronButton} />
       </Box>
       <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke" height="100%" display="flex" flexDirection="column">

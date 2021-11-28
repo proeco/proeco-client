@@ -96,7 +96,13 @@ const DashboardSettingsPage: ProecoNextPage = () => {
             <Typography mb="4px" variant="body1" color="textColor.light">
               自己紹介
             </Typography>
-            <TextField fullWidth multiline rows={4} value={newUser?.description} onChange={(e) => updateUserForm({ description: e.target.value })} />
+            <TextField
+              fullWidth
+              multiline
+              rows={4}
+              value={newUser?.description}
+              onChange={(e) => updateUserForm({ description: e.target.value })}
+            />
           </Box>
           <Box mt={4} textAlign="center">
             <Button

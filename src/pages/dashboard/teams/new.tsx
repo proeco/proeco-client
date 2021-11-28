@@ -22,7 +22,12 @@ const DashboardTeamPage: ProecoNextPage = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
   const [isValidForm, setIsValidForm] = useState(true);
-  const [team, setTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description'>>({ productId: '', url: '', name: '', description: '' });
+  const [team, setTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description'>>({
+    productId: '',
+    url: '',
+    name: '',
+    description: '',
+  });
 
   const handleClickCreateNewTeam = async () => {
     if (!currentUser) {
@@ -95,7 +100,13 @@ const DashboardTeamPage: ProecoNextPage = () => {
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             どんなプロダクト？
           </Typography>
-          <TextField fullWidth multiline value={team.description} rows={4} onChange={(e) => updateStoryForm({ description: e.target.value })} />
+          <TextField
+            fullWidth
+            multiline
+            value={team.description}
+            rows={4}
+            onChange={(e) => updateStoryForm({ description: e.target.value })}
+          />
           <Box mt={4} textAlign="center">
             <Button
               disabled={isCreating || !isValidForm}

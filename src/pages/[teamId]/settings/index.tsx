@@ -16,7 +16,12 @@ import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 const TeamSettings: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
   const router = useRouter();
-  const [newTeam, setNewTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description'>>({ productId: '', url: '', name: '', description: '' });
+  const [newTeam, setNewTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description'>>({
+    productId: '',
+    url: '',
+    name: '',
+    description: '',
+  });
 
   const [isCreating, setIsCreating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
@@ -104,7 +109,13 @@ const TeamSettings: ProecoNextPage = () => {
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             どんなプロダクト？
           </Typography>
-          <TextField fullWidth multiline value={newTeam.description} rows={4} onChange={(e) => updateStoryForm({ description: e.target.value })} />
+          <TextField
+            fullWidth
+            multiline
+            value={newTeam.description}
+            rows={4}
+            onChange={(e) => updateStoryForm({ description: e.target.value })}
+          />
           <Box mt={4} textAlign="center">
             <Button
               disabled={isCreating || !isValidForm}
