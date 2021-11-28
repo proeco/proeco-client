@@ -10,7 +10,7 @@ import { StoryPost } from '~/domains';
  * @returns mutate データの更新関数
  */
 export const useStoryPost = (id?: string): SWRResponse<StoryPost, Error> => {
-  const key = id ? `/story-tasks/${id}` : null;
+  const key = id ? `/story-posts/${id}` : null;
   return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,

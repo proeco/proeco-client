@@ -10,32 +10,57 @@ import gfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
-import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper } from '~/components/parts/commons';
+import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup } from '~/components/parts/commons';
 import { StoryPost, User } from '~/domains';
 import 'github-markdown-css';
+import { useSuccessNotification } from '~/hooks/useSuccessNotification';
+import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { restClient } from '~/utils/rest-client';
+import { useStoryPosts } from '~/stores/storyPost';
 
 type Props = {
   currentUser: User;
   storyPost: StoryPost;
   emojiIds?: string[];
+  storyId: string;
+  page: number;
 };
 
-export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'] }) => {
+export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'], storyId, page }) => {
   const [content, setContent] = useState(storyPost.content);
 
   const [isUpdate, setIsUpdate] = useState(false);
 
   const [SelectedEmojiId, setSelectedEmojiId] = useState(emojiIds[0]);
 
-  const displayDate = formatDistanceToNow(storyPost.createdAt, { addSuffix: true, locale: ja });
+  const { mutate: mutateStoryPosts } = useStoryPosts({
+    storyId: storyId,
+    page: page,
+    limit: 10,
+  });
+
+  const displayDate = formatDistanceToNow(new Date(storyPost.createdAt), { addSuffix: true, locale: ja });
 
   const handleClickCancelButton = () => {
     setContent(storyPost.content);
     setIsUpdate(false);
   };
 
-  const handleCompleteEdit = () => {
-    // TODO: storyPostを更新できるようにする
+  const { notifySuccessMessage } = useSuccessNotification();
+  const { notifyErrorMessage } = useErrorNotification();
+
+  const handleCompleteEdit = async () => {
+    try {
+      await restClient.apiPut<StoryPost>(`/story-posts/${storyPost._id}`, {
+        storyPost: { content },
+      });
+
+      mutateStoryPosts();
+
+      notifySuccessMessage('更新に成功しました!');
+    } catch (error) {
+      notifyErrorMessage('更新に失敗しました!');
+    }
     setIsUpdate(false);
   };
 
@@ -49,10 +74,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emoj
   };
 
   return (
-    <Paper>
+    <>
       <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
         <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
-        <StyledTime dateTime={storyPost.createdAt.toLocaleDateString()}>{displayDate}</StyledTime>
+        <StyledTime dateTime={new Date(storyPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
         <WrapDropdown>
           <Dropdown
             toggle={<IconButton icon="MoreVert" width={20} />}
@@ -72,32 +97,34 @@ export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emoj
         <Editor isUpdateMode content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEdit} onClickCancelButton={handleClickCancelButton} />
       ) : (
         <>
-          <StyledMarkdownBody className="markdown-body">
-            <ReactMarkdown
-              components={{
-                code({ inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || '');
-                  return !inline && match ? (
-                    <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div">
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
-                  ) : (
-                    <code className={className} {...props}>
-                      {children}
-                    </code>
-                  );
-                },
-              }}
-              plugins={[gfm]}
-              unwrapDisallowed={false}
-            >
-              {content}
-            </ReactMarkdown>
-          </StyledMarkdownBody>
+          <Box mb="16px">
+            <StyledMarkdownBody className="markdown-body">
+              <ReactMarkdown
+                components={{
+                  code({ inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div">
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+                plugins={[gfm]}
+                unwrapDisallowed={false}
+              >
+                {content}
+              </ReactMarkdown>
+            </StyledMarkdownBody>
+          </Box>
           <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
         </>
       )}
-    </Paper>
+    </>
   );
 };
 

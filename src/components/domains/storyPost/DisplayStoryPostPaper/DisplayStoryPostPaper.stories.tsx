@@ -2,8 +2,10 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
+import { SnackbarProvider } from 'notistack';
 import { DisplayStoryPostPaper } from './DisplayStoryPostPaper';
 import { createMockStoryPost, createMockUser } from '~/mocks/domains';
+import { Paper } from '~/components/parts/commons';
 
 export default {
   title: 'domains/storyPost/DisplayStoryPostPaper',
@@ -12,9 +14,13 @@ export default {
 
 const Template: ComponentStory<typeof DisplayStoryPostPaper> = ({ ...rest }) => {
   return (
-    <Box p="20px" width="600px" bgcolor="#e5e5e5">
-      <DisplayStoryPostPaper {...rest} />
-    </Box>
+    <SnackbarProvider>
+      <Box p="20px" width="600px" bgcolor="#e5e5e5">
+        <Paper>
+          <DisplayStoryPostPaper {...rest} />
+        </Paper>
+      </Box>
+    </SnackbarProvider>
   );
 };
 
@@ -42,4 +48,6 @@ export const Default = Template.bind({});
 Default.args = {
   currentUser: mockUser,
   storyPost: mockStoryPost,
+  storyId: 'story1',
+  page: 1,
 };
