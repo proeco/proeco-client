@@ -1,9 +1,10 @@
-import React, { useState, MouseEvent, ReactNode, useMemo } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { Box } from '@mui/system';
 
+import { ListItemIcon, MenuItem } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
@@ -14,14 +15,13 @@ import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
 import { Emoji, Icon, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { useStory } from '~/stores/story/useStory';
-import { Menu } from '~/components/parts/commons/Menu';
-import { IconButton } from '~/components/parts/commons/IconButton';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
 import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { CreateNewStoryPostTimelineItem } from '~/components/domains/storyPost/CreateNewStoryPostTimelineItem/CreateNewStoryPostTimelineItem';
+import { Dropdown } from '~/components/parts/commons/Dropdown';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -61,29 +61,16 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     });
   }, [storyPosts, currentUser]);
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
   const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
 
   const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { mutate: mutateStoryForDelete } = useStoryForDelete();
 
-  const handleClickMenu = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleClickUpdate = () => {
     if (!story) return;
     mutateIsOpenUpdateStoryModal(true);
     mutateStoryForUpdate(story);
-    handleClose();
   };
 
   const handleClickDelete = () => {
@@ -120,8 +107,14 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {story.title}
             </Typography>
           </Box>
-          <IconButton icon="MoreVert" width={24} onClick={(e) => handleClickMenu(e)} />
-          <Menu onClick={(e) => e.stopPropagation()} anchorEl={anchorEl} open={open} menuItems={menuItems} onClose={handleClose} />
+          <Dropdown toggle={<Icon icon="MoreVert" width={24} />}>
+            {menuItems.map((menuItem, i) => (
+              <MenuItem key={i} onClick={menuItem.onClick}>
+                <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                {menuItem.text}
+              </MenuItem>
+            ))}
+          </Dropdown>
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
           {timeLineItems.map((item, i) => (
