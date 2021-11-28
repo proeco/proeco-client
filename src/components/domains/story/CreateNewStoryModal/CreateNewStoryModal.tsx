@@ -62,7 +62,7 @@ export const CreateNewStoryModal: VFC = () => {
 
   const { mutate: mutateStories } = useStories({
     teamId: teamId as string,
-    page: page,
+    page,
     limit: 10,
   });
 

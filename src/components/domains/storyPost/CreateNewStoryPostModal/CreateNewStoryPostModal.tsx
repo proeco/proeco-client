@@ -48,7 +48,7 @@ export const CreateNewStoryPostModal: VFC = () => {
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId: storyId as string,
-    page: page,
+    page,
     limit: 10,
   });
 
