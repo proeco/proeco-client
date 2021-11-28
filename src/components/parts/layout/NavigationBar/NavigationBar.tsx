@@ -62,7 +62,14 @@ export const Component: VFC<Props> = memo(({ currentUser, isValidating, onClickL
         </Link>
         {Contents}
       </StyledAppBar>
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onClickSignInButton={onClickLoginButton} />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onClickSignInButton={() => {
+          setIsLoginModalOpen(false);
+          onClickLoginButton();
+        }}
+      />
     </>
   );
 });
@@ -72,7 +79,7 @@ const StyledAppBar = styled(AppBar)`
   top: 0px;
   z-index: 1300;
   background-color: ${(props) => props.theme.palette.primary.main};
-  padding: 12px 20px;
+  padding: 8px 12px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;

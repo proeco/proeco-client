@@ -25,14 +25,7 @@ const inputGlobalStyles = (
 );
 
 function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode } }): JSX.Element {
-  const getLayout =
-    Component.getLayout ||
-    ((page) => (
-      <>
-        <NavigationBar />
-        {page}
-      </>
-    ));
+  const getLayout = Component.getLayout || ((page) => <>{page}</>);
 
   if (process.env.NEXT_PUBLIC_ENABLE_MOCK === 'TRUE') {
     const startServer = () => import('~/mocks/worker');
@@ -43,6 +36,7 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
     <MaterialThemeProvider theme={theme}>
       <SnackbarProvider>
         {inputGlobalStyles}
+        <NavigationBar />
         {getLayout(<Component {...pageProps} />)}
       </SnackbarProvider>
     </MaterialThemeProvider>
