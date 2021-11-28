@@ -41,7 +41,13 @@ const DashboardTeamPage: ProecoNextPage = () => {
           {teams ? (
             teams.map((team) => (
               <Grid key={team._id} item xs={12} sm={6}>
-                <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} onClick={() => router.push(URLS.TEAMS(team._id))} />
+                <TeamCard
+                  name={team.name}
+                  description={team.description}
+                  attachmentId={team.iconImageId}
+                  url={team.url}
+                  onClick={() => router.push(URLS.TEAMS(team._id))}
+                />
               </Grid>
             ))
           ) : (

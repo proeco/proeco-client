@@ -3,11 +3,14 @@ import { Skeleton } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { Typography, Card } from '~/components/parts/commons';
+import { useOgp } from '~/stores/ogp';
+import { FixedImage } from '~/components/parts/commons/FixedImage';
 
 type Props = {
   name: string;
   description: string;
   attachmentId: string;
+  url: string;
   onClick: () => void;
 };
 
@@ -26,25 +29,29 @@ export const SkeltonTeamCard: VFC = () => {
   );
 };
 
-export const TeamCard: VFC<Props> = ({ name, description, attachmentId, onClick }) => {
+export const TeamCard: VFC<Props> = ({ name, description, attachmentId, url, onClick }) => {
+  const { data: ogp } = useOgp(url);
+
   return (
     <StyledTeamCard onClick={onClick}>
-      <Box display="flex" alignItems="center" mb="8px">
-        <Box mr="8px">
-          <TeamIcon size={40} attachmentId={attachmentId} />
+      <FixedImage imageUrl={ogp?.image} />
+      <Box position="relative" p={2}>
+        <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">
+          <TeamIcon size={50} attachmentId={attachmentId} />
+          <Typography variant="body1" bold>
+            {name}
+          </Typography>
         </Box>
-        <Typography variant="h3" maximum_lines={1}>
-          {name}
-        </Typography>
+        <StyledDescription mt={2} variant="caption" maximum_lines={2}>
+          {description}
+        </StyledDescription>
       </Box>
-      <StyledDescription variant="caption" maximum_lines={2}>
-        {description}
-      </StyledDescription>
     </StyledTeamCard>
   );
 };
 
 const StyledTeamCard = styled(Card)`
+  padding: 0px;
   box-sizing: border-box;
   position: relative;
   top: 0;
