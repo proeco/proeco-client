@@ -1,5 +1,5 @@
 import { VFC } from 'react';
-import styled from 'styled-components';
+import { styled } from '@mui/system';
 import { IMAGE_PATH } from '~/constants';
 
 type Props = {
@@ -20,7 +20,7 @@ export const FixedImage: VFC<Props> = ({ imageUrl }) => {
   );
 };
 
-const StyledImageWrapper = styled.div`
+const StyledImageWrapper = styled('div')`
   position: relative;
   width: 100%;
   padding-top: 52.5%;
