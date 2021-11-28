@@ -140,6 +140,7 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
   box-sizing: border-box;
 
   .MuiDrawer-paper {
+    top: 56px;
     background-color: whitesmoke;
   }
   ${(props) =>
