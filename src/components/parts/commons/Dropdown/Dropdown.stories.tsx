@@ -15,7 +15,7 @@ export default {
 
 const Template: ComponentStory<typeof Dropdown> = ({ ...rest }) => {
   return (
-    <Box>
+    <Box p="40px">
       <Dropdown {...rest}>
         <MenuItem onClick={action('clickSettings')}>
           <ListItemIcon>

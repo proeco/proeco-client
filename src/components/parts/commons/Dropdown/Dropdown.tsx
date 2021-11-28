@@ -10,10 +10,10 @@ type Props = ComponentProps<typeof MuiMenu> & CustomProps;
 
 export const Dropdown: FC<Props> = ({
   toggle,
-  anchorOrigin = { vertical: 'bottom', horizontal: 'right' },
+  anchorOrigin = { vertical: 'bottom', horizontal: 'left' },
   transformOrigin = {
     vertical: 'top',
-    horizontal: 'right',
+    horizontal: 'left',
   },
   children,
 }) => {
@@ -22,7 +22,9 @@ export const Dropdown: FC<Props> = ({
 
   return (
     <>
-      <Box onClick={(e) => setAnchorEl(e.currentTarget)}>{toggle}</Box>
+      <Box onClick={(e) => setAnchorEl(e.currentTarget)} width="fit-content">
+        {toggle}
+      </Box>
       <MuiMenu anchorOrigin={anchorOrigin} transformOrigin={transformOrigin} anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
         {children}
       </MuiMenu>
