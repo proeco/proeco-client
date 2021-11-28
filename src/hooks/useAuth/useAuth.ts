@@ -2,12 +2,14 @@ import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
 import { setCookie, destroyCookie } from 'nookies';
 import { useRouter } from 'next/router';
 import { useErrorNotification } from '../useErrorNotification';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { auth, googleAuthProvider } from '~/libs/firebase';
 import { restClient } from '~/utils/rest-client';
 import { URLS } from '~/constants';
 
 export const useAuth = () => {
   const router = useRouter();
+  const { mutate: mutateCurrentUser } = useCurrentUser();
   const { notifyErrorMessage } = useErrorNotification();
 
   const login = () => {
@@ -32,6 +34,7 @@ export const useAuth = () => {
           maxAge: 30 * 24 * 60 * 60,
           path: '/',
         });
+        mutateCurrentUser();
         router.push(URLS.DASHBOARD_SETTINGS);
       })
       .catch((e) => {
@@ -42,6 +45,7 @@ export const useAuth = () => {
   const logout = () => {
     auth.signOut().then(() => {
       destroyCookie(null, 'access-token');
+      mutateCurrentUser();
       router.push(URLS.TOP);
     });
   };
