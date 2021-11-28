@@ -22,6 +22,7 @@ import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
 import { Dropdown } from '~/components/parts/commons/Dropdown';
+import { UserIcon } from '~/components/domains/user/UserIcon';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -129,7 +130,14 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {item.children}
             </TimeLineItem>
           ))}
-          {currentUser && <CreateNewStoryPostPaper currentUser={currentUser} storyId={currentStoryId} page={page} />}
+          {currentUser && (
+            <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
+              <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
+              <Box width="100%">
+                <CreateNewStoryPostPaper storyId={currentStoryId} page={page} />
+              </Box>
+            </Box>
+          )}
         </Box>
       </Box>
     </>
