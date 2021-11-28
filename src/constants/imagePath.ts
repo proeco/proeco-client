@@ -3,4 +3,5 @@ export const IMAGE_PATH = {
   ERROR_404: '/images/Error_404_SVG.svg',
   TWITTER_OGP: '/images/twitter-ogp.png',
   SIGN_IN_GOOGLE: '/images/sign_in_with_google.png',
+  NO_IMAGE: '/images/no-image.png',
 };
