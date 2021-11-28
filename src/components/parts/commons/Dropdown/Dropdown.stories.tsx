@@ -37,5 +37,4 @@ const Template: ComponentStory<typeof Dropdown> = ({ ...rest }) => {
 export const Default = Template.bind({});
 Default.args = {
   toggle: <Icon icon="MoreVert" width={24} />,
-  open: true,
 };
