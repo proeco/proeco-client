@@ -1,0 +1,1 @@
+export { CreateNewStoryPostPaper } from './CreateNewStoryPostPaper';

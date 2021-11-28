@@ -1,22 +1,19 @@
 import { VFC, useState } from 'react';
-import { Box } from '@mui/system';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 
-import { UserIcon } from '~/components/domains/user/UserIcon';
 import { Editor, Paper } from '~/components/parts/commons';
-import { StoryPost, User } from '~/domains';
+import { StoryPost } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
 
 type Props = {
-  currentUser: User;
   storyId: string;
   page: number;
 };
 
-export const CreateNewStoryPostTimelineItem: VFC<Props> = ({ currentUser, storyId, page }) => {
+export const CreateNewStoryPostPaper: VFC<Props> = ({ storyId, page }) => {
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId: storyId as string,
     page: page,
@@ -45,13 +42,8 @@ export const CreateNewStoryPostTimelineItem: VFC<Props> = ({ currentUser, storyI
   };
 
   return (
-    <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
-      <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
-      <Box width="100%">
-        <Paper>
-          <Editor content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEdit} />
-        </Paper>
-      </Box>
-    </Box>
+    <Paper>
+      <Editor content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEdit} />
+    </Paper>
   );
 };
