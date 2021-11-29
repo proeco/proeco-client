@@ -3,13 +3,7 @@ import { Box, styled } from '@mui/system';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import 'github-markdown-css';
-
-import { TextField, Button, Typography } from '~/components/parts/commons';
+import { TextField, Button, Typography, MarkdownToHtmlBody } from '~/components/parts/commons';
 
 type Props = {
   content: string;
@@ -45,28 +39,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             </Box>
           ) : (
             <Box minHeight="112px" p="16px" mt="8px" mb="24px">
-              <StyledMarkdownBody className="markdown-body">
-                <ReactMarkdown
-                  components={{
-                    code({ inline, className, children, ...props }) {
-                      const match = /language-(\w+)/.exec(className || '');
-                      return !inline && match ? (
-                        <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div">
-                          {String(children).replace(/\n$/, '')}
-                        </SyntaxHighlighter>
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                  }}
-                  plugins={[gfm]}
-                  unwrapDisallowed={false}
-                >
-                  {content}
-                </ReactMarkdown>
-              </StyledMarkdownBody>
+              <MarkdownToHtmlBody content={content} />
             </Box>
           )}
         </StyledTabPanel>
@@ -97,20 +70,4 @@ const StyledTab = styled(Tab)`
   padding: 8px;
   min-height: unset;
   min-width: unset;
-`;
-
-const StyledMarkdownBody = styled(Box)`
-  &.markdown-body {
-    color: ${(props) => props.theme.palette.textColor.main};
-    background-color: #fff;
-    p {
-      white-space: pre-wrap;
-    }
-    pre {
-      background-color: rgb(30, 30, 30);
-    }
-    code {
-      color: #fff;
-    }
-  }
 `;
