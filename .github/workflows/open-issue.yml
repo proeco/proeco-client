@@ -1,4 +1,5 @@
 name: Open issues
+
 on:
   issues:
     types:
@@ -11,6 +12,6 @@ jobs:
     steps:
       - uses: alex-page/github-project-automation-plus@master
         with:
-          project: proeco/proeco-client
+          project: Proeco Dev
           column: Open
           repo-token: ${{ secrets.ISSUE_OPEN_TOKEN }}
