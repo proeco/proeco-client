@@ -13,4 +13,4 @@ jobs:
         with:
           project: proeco/proeco-client
           column: Open
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.ISSUE_OPEN_TOKEN }}
