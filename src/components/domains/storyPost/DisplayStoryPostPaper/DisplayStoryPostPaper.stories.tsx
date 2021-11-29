@@ -5,6 +5,7 @@ import { Box } from '@mui/system';
 import { SnackbarProvider } from 'notistack';
 import { DisplayStoryPostPaper } from './DisplayStoryPostPaper';
 import { createMockStoryPost, createMockUser } from '~/mocks/domains';
+import { SAMPLE_MD } from '~/constants';
 
 export default {
   title: 'domains/storyPost/DisplayStoryPostPaper',
@@ -23,22 +24,7 @@ const Template: ComponentStory<typeof DisplayStoryPostPaper> = ({ ...rest }) => 
 
 const mockUser = createMockUser({ name: 'user' });
 const mockStoryPost = createMockStoryPost({
-  content: `
-  # Title
-
-## SubTitle
-
-hoge**hoge**
-
-- foo
-- bar
-- baz
-
-\`\`\`ts
-const hoge = () => console.log('hoge')
-hoge()
-\`\`\`
-`,
+  content: SAMPLE_MD,
 });
 
 export const Default = Template.bind({});

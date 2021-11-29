@@ -4,6 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
 import { MarkdownToHtmlItem } from './MarkdownToHtmlItem';
+import { SAMPLE_MD } from '~/constants';
 
 export default {
   title: 'parts/commons/MarkdownToHtmlItem',
@@ -20,5 +21,5 @@ const Template: ComponentStory<typeof MarkdownToHtmlItem> = ({ ...rest }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  content: 'MarkdownをHTMLに変換して表示するcomponent',
+  content: SAMPLE_MD,
 };
