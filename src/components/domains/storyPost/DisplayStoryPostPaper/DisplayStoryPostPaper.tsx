@@ -26,7 +26,13 @@ type Props = {
   page: number;
 };
 
-export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'], storyId, page }) => {
+export const DisplayStoryPostPaper: VFC<Props> = ({
+  currentUser,
+  storyPost,
+  emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'],
+  storyId,
+  page,
+}) => {
   const [content, setContent] = useState(storyPost.content);
 
   const [isUpdate, setIsUpdate] = useState(false);
@@ -34,8 +40,8 @@ export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emoj
   const [SelectedEmojiId, setSelectedEmojiId] = useState(emojiIds[0]);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
-    storyId: storyId,
-    page: page,
+    storyId,
+    page,
     limit: 10,
   });
 
@@ -94,7 +100,13 @@ export const DisplayStoryPostPaper: VFC<Props> = ({ currentUser, storyPost, emoj
         </WrapDropdown>
       </StyledBox>
       {isUpdate ? (
-        <Editor isUpdateMode content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEdit} onClickCancelButton={handleClickCancelButton} />
+        <Editor
+          isUpdateMode
+          content={content}
+          onChangeContent={setContent}
+          onCompleteEdit={handleCompleteEdit}
+          onClickCancelButton={handleClickCancelButton}
+        />
       ) : (
         <>
           <Box mb="16px">

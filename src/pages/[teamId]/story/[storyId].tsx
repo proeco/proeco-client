@@ -43,7 +43,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   const { data: storyPosts } = useStoryPosts({
     storyId: currentStoryId,
-    page: page,
+    page,
     limit: 10,
   });
 

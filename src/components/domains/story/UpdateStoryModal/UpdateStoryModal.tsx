@@ -69,7 +69,7 @@ export const UpdateStoryModal: VFC = () => {
   const { mutate: mutateStory } = useStory(storyForUpdate?._id);
   const { mutate: mutateStories } = useStories({
     teamId: router.query.id as string,
-    page: page,
+    page,
     limit: 10,
   });
 

@@ -14,11 +14,13 @@ const StyledMuiTextField = styled(MuiTextField)`
     padding: 8px 12px;
   }
   &.MuiFormControl-root {
-    ${(props) => (props.error ? `border: ${props.theme.palette.error.main} 2px solid;` : `border: ${props.theme.palette.borderColor.main} 2px solid;`)}
+    ${(props) =>
+      props.error ? `border: ${props.theme.palette.error.main} 2px solid;` : `border: ${props.theme.palette.borderColor.main} 2px solid;`}
     border-radius: 4px;
     box-sizing: border-box;
     &:focus-within {
-      ${(props) => (props.error ? `border: ${props.theme.palette.error.main} 2px solid;` : `border: ${props.theme.palette.primary.main} 2px solid;`)}
+      ${(props) =>
+        props.error ? `border: ${props.theme.palette.error.main} 2px solid;` : `border: ${props.theme.palette.primary.main} 2px solid;`}
     }
   }
   .MuiOutlinedInput-root {
