@@ -5,7 +5,6 @@ import { Box } from '@mui/system';
 import { SnackbarProvider } from 'notistack';
 import { DisplayStoryPostPaper } from './DisplayStoryPostPaper';
 import { createMockStoryPost, createMockUser } from '~/mocks/domains';
-import { Paper } from '~/components/parts/commons';
 
 export default {
   title: 'domains/storyPost/DisplayStoryPostPaper',
@@ -16,9 +15,7 @@ const Template: ComponentStory<typeof DisplayStoryPostPaper> = ({ ...rest }) => 
   return (
     <SnackbarProvider>
       <Box p="20px" width="600px" bgcolor="#e5e5e5">
-        <Paper>
-          <DisplayStoryPostPaper {...rest} />
-        </Paper>
+        <DisplayStoryPostPaper {...rest} />
       </Box>
     </SnackbarProvider>
   );

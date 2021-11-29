@@ -2,7 +2,6 @@ import React, { VFC } from 'react';
 import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@mui/lab';
 import { styled } from '@mui/system';
 import { GuestUserIcon, UserIcon } from '~/components/domains/user/UserIcon';
-import { Paper } from '~/components/parts/commons';
 
 type Props = {
   userAttachmentId?: string;
@@ -20,9 +19,7 @@ export const TimeLineItem: VFC<Props> = ({ userAttachmentId, userId, children })
           </StyledTimeLineDot>
           <StyledTimeLineConnector />
         </TimelineSeparator>
-        <StyledTimeLineContent>
-          <Paper>{children}</Paper>
-        </StyledTimeLineContent>
+        <StyledTimeLineContent>{children}</StyledTimeLineContent>
       </TimelineItem>
     </StyledDiv>
   );
