@@ -5,12 +5,7 @@ import { ListItemIcon, MenuItem } from '@mui/material';
 import { formatDistanceToNow } from 'date-fns';
 import ja from 'date-fns/locale/ja';
 
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-
-import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper } from '~/components/parts/commons';
+import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper, MarkdownToHtmlItem } from '~/components/parts/commons';
 import { StoryPost, User } from '~/domains';
 import 'github-markdown-css';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
@@ -110,28 +105,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
       ) : (
         <>
           <Box mb="16px">
-            <StyledMarkdownBody className="markdown-body">
-              <ReactMarkdown
-                components={{
-                  code({ inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || '');
-                    return !inline && match ? (
-                      <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div">
-                        {String(children).replace(/\n$/, '')}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-                plugins={[gfm]}
-                unwrapDisallowed={false}
-              >
-                {content}
-              </ReactMarkdown>
-            </StyledMarkdownBody>
+            <MarkdownToHtmlItem content={content} />
           </Box>
           <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
         </>
@@ -154,21 +128,4 @@ const WrapDropdown = styled(Box)`
 const StyledTime = styled('time')`
   font-size: 12px;
   color: ${(props) => props.theme.palette.textColor.main};
-`;
-
-const StyledMarkdownBody = styled(Box)`
-  margin-bottom: 20px;
-  &.markdown-body {
-    color: ${(props) => props.theme.palette.textColor.main};
-    background-color: #fff;
-    p {
-      white-space: pre-wrap;
-    }
-    pre {
-      background-color: rgb(30, 30, 30);
-    }
-    code {
-      color: #fff;
-    }
-  }
 `;
