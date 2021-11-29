@@ -11,7 +11,7 @@ type Props = {
   content: string;
 };
 
-export const MarkdownToHtmlItem: VFC<Props> = ({ content }) => {
+export const MarkdownToHtmlBody: VFC<Props> = ({ content }) => {
   return (
     <StyledMarkdownBody className="markdown-body">
       <ReactMarkdown

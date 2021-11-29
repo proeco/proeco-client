@@ -3,7 +3,7 @@ import { Box, styled } from '@mui/system';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-import { TextField, Button, Typography, MarkdownToHtmlItem } from '~/components/parts/commons';
+import { TextField, Button, Typography, MarkdownToHtmlBody } from '~/components/parts/commons';
 
 type Props = {
   content: string;
@@ -39,7 +39,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             </Box>
           ) : (
             <Box minHeight="112px" p="16px" mt="8px" mb="24px">
-              <MarkdownToHtmlItem content={content} />
+              <MarkdownToHtmlBody content={content} />
             </Box>
           )}
         </StyledTabPanel>
