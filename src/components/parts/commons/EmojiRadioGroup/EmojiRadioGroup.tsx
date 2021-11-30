@@ -11,7 +11,7 @@ type Props = {
 
 export const EmojiRadioGroup: VFC<Props> = ({ emojiIds, onClick, selectedEmojiId }) => {
   return (
-    <Box display="flex" alignItems="center" gap="12px">
+    <Box display="flex" alignItems="center" gap="12px" bgcolor="#e5e5e5" width="fit-content" borderRadius="18px" p="0 8px">
       {emojiIds.map((emojiId, i) => {
         if (selectedEmojiId) {
           return (
@@ -35,7 +35,7 @@ const StyledBox = styled(Box)`
   padding: 8px;
   transition: all ease 100ms;
   &:hover {
-    transform: scale(1.35);
+    transform: scale(1.3);
   }
 `;
 
