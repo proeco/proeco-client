@@ -1,4 +1,4 @@
-import React, { VFC, useState, useEffect } from 'react';
+import React, { VFC } from 'react';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
 import { Button, Modal, Typography } from '~/components/parts/commons';
@@ -11,30 +11,39 @@ import { useStoryPosts } from '~/stores/storyPost';
 
 type Props = {
   isOpen: boolean;
-  title: string;
   onClickDeleteStoryPostButton: () => void;
   onCloseModal: () => void;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, onClickDeleteStoryPostButton, onCloseModal }) => {
+export const Component: VFC<Props> = ({ isOpen, onClickDeleteStoryPostButton, onCloseModal }) => {
   const content = (
     <>
-      <Box mb="20px">
-        <Typography mb="8px" variant="body1" color="textColor.main">
-          ポスト名
-        </Typography>
+      <Box mb="20px" textAlign="center">
         <Typography variant="h3" bold>
-          {title}
+          投稿を削除しますか？
+        </Typography>
+        <Typography mb="8px" variant="body1" color="textColor.main">
+          この操作は戻すことが出来ません。
         </Typography>
       </Box>
       <Box width="100%" textAlign="center">
         <Button color="error" variant="contained" onClick={onClickDeleteStoryPostButton}>
-          削除
+          削除する
         </Button>
       </Box>
     </>
   );
-  return <Modal open={isOpen} title="投稿を削除する" onClose={onCloseModal} content={content} emojiId="wastebasket" size="small" />;
+  return (
+    <Modal
+      open={isOpen}
+      title="投稿を削除する"
+      onClose={onCloseModal}
+      content={content}
+      emojiId="wastebasket"
+      size="small"
+      isWithHeader={false}
+    />
+  );
 };
 
 export const DeleteStoryPostModal: VFC = () => {
@@ -53,20 +62,11 @@ export const DeleteStoryPostModal: VFC = () => {
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
-  const { data: storyTaskForDelete } = useStoryPostForDelete();
-  const [title, setTitle] = useState('');
-
-  useEffect(() => {
-    if (!storyTaskForDelete) {
-      return;
-    }
-
-    setTitle(storyTaskForDelete.content);
-  }, [storyTaskForDelete]);
+  const { data: storyPostForDelete } = useStoryPostForDelete();
 
   const handleClickDeleteStoryPostButton = async () => {
     try {
-      await restClient.apiDelete(`/story-tasks/${storyTaskForDelete?._id}`);
+      await restClient.apiDelete(`/story-posts/${storyPostForDelete?._id}`);
       mutateStoryPosts();
       notifySuccessMessage('投稿を削除しました!');
       handleCloseModal();
@@ -82,7 +82,6 @@ export const DeleteStoryPostModal: VFC = () => {
   return (
     <Component
       isOpen={!!isOpenDeleteStoryPostModal}
-      title={title}
       onClickDeleteStoryPostButton={handleClickDeleteStoryPostButton}
       onCloseModal={handleCloseModal}
     />

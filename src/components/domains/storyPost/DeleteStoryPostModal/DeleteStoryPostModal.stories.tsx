@@ -24,5 +24,4 @@ const Template: ComponentStory<typeof Component> = (args) => {
 export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
-  title: 'ここにタイトル',
 };
