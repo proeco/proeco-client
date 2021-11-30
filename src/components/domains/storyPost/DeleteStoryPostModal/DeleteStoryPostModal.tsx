@@ -33,17 +33,7 @@ export const Component: VFC<Props> = ({ isOpen, onClickDeleteStoryPostButton, on
       </Box>
     </>
   );
-  return (
-    <Modal
-      open={isOpen}
-      title="投稿を削除する"
-      onClose={onCloseModal}
-      content={content}
-      emojiId="wastebasket"
-      size="small"
-      isWithHeader={false}
-    />
-  );
+  return <Modal open={isOpen} onClose={onCloseModal} content={content} emojiId="wastebasket" size="small" />;
 };
 
 export const DeleteStoryPostModal: VFC = () => {

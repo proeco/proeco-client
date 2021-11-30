@@ -28,7 +28,7 @@ const Template: ComponentStory<typeof Modal> = (args) => {
 export const SmallModal = Template.bind({});
 export const MediumModal = Template.bind({});
 export const LargeModal = Template.bind({});
-export const ModalWithoutHeader = Template.bind({});
+export const ModalWithoutTitle = Template.bind({});
 
 SmallModal.args = {
   size: 'small',
@@ -47,7 +47,7 @@ LargeModal.args = {
   size: 'large',
 };
 
-ModalWithoutHeader.args = {
+ModalWithoutTitle.args = {
   ...SmallModal.args,
-  isWithHeader: false,
+  title: undefined,
 };

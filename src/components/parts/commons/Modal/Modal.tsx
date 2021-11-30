@@ -10,11 +10,10 @@ type Size = 'small' | 'medium' | 'large';
 type Props = {
   open: boolean;
   emojiId?: string;
-  title: string;
+  title?: string;
   content: JSX.Element;
   onClose: () => void;
   size?: Size;
-  isWithHeader?: boolean;
 };
 
 const sizeMap: { [key in Size]: string } = {
@@ -23,11 +22,11 @@ const sizeMap: { [key in Size]: string } = {
   large: '700px',
 };
 
-export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size = 'medium', isWithHeader = true }) => {
+export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size = 'medium' }) => {
   return (
     <MuiModal open={open} onClose={onClose}>
       <StyledBox width={sizeMap[size]}>
-        {isWithHeader && (
+        {title && (
           <>
             <Box py="8px" display="flex" alignItems="center" justifyContent="center" alignContent="center" gap="8px">
               {emojiId && <Emoji emojiId={emojiId} size={size === 'small' ? 20 : 24} />}
