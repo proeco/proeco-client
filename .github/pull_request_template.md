@@ -1,5 +1,5 @@
 ## 対象IssueのLink
-fix #
+close #
 
 ## 変更箇所
 
