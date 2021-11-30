@@ -35,7 +35,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const [SelectedEmojiId, setSelectedEmojiId] = useState(emojiIds[0]);
 
-  const [open, setOpen] = useState(false);
+  const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
@@ -72,17 +72,9 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     setIsUpdate(true);
   };
 
-  const handleClickDelete = () => {
-    setOpen(true);
-  };
-
   const handleClickEmoji = (id: string) => {
     // TODO: 絵文字を送信するapiを叩く
     setSelectedEmojiId(id);
-  };
-
-  const handleCloseModal = () => {
-    setOpen(false);
   };
 
   return (
@@ -103,7 +95,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
                 </ListItemIcon>
                 更新する
               </MenuItem>
-              <MenuItem onClick={handleClickDelete}>
+              <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
                 <ListItemIcon>
                   <Icon icon="Delete" width="20px" color="textColor.main" />
                 </ListItemIcon>
@@ -129,7 +121,13 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
           </>
         )}
       </Paper>
-      <DeleteStoryPostModal isOpen={open} onCloseModal={handleCloseModal} storyId={storyId} page={page} storyPostId={storyPost._id} />
+      <DeleteStoryPostModal
+        isOpen={isOpenDeleteStoryPostModal}
+        onCloseModal={() => setIsOpenDeleteStoryPostModal(false)}
+        storyId={storyId}
+        page={page}
+        storyPostId={storyPost._id}
+      />
     </>
   );
 };

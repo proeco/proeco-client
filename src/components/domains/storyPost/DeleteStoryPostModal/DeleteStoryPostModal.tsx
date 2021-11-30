@@ -52,5 +52,5 @@ export const DeleteStoryPostModal: VFC<Props> = ({ isOpen, storyPostId, storyId,
       </Box>
     </>
   );
-  return <Modal open={isOpen} onClose={onCloseModal} content={content} emojiId="wastebasket" size="small" />;
+  return <Modal open={isOpen} onClose={onCloseModal} content={content} size="small" />;
 };
