@@ -2,12 +2,21 @@ import { getAuth, GoogleAuthProvider } from '@firebase/auth';
 
 import { initializeApp } from '@firebase/app';
 
-const config = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyAqqqO49JBwCwPtWFB3ejiwUTl23YWYqrU',
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'norse-analyst-328513.firebaseapp.com',
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'norse-analyst-328513',
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:580504140285:web:2c0959ceb65daccef38194',
+const isProd = process.env.NODE_ENV === 'production';
+
+const devConfig = {
+  apiKey: 'AIzaSyAqqqO49JBwCwPtWFB3ejiwUTl23YWYqrU',
+  authDomain: 'norse-analyst-328513.firebaseapp.com',
+  projectId: 'norse-analyst-328513',
+  appId: '1:580504140285:web:2c0959ceb65daccef38194',
 };
 
-export const auth = getAuth(initializeApp(config));
+const prodConfig = {
+  apiKey: 'AIzaSyDl2T6yg7uh5xnHjfE-5dmHa8TJHtAPfHM',
+  authDomain: 'proeco-prod.firebaseapp.com',
+  projectId: 'proeco-prod',
+  appId: '1:819977946051:web:fad4ad95e150f645037376',
+};
+
+export const auth = getAuth(initializeApp(isProd ? prodConfig : devConfig));
 export const googleAuthProvider = new GoogleAuthProvider();
