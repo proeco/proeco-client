@@ -7,6 +7,10 @@ export const getStoryPosts = (req: any, res: any, ctx: any) => {
   return res(ctx.status(200), ctx.json(db[0]));
 };
 
-export const postStoryPosts = (req: any, res: any, ctx: any) => {
+export const postStoryPost = (req: any, res: any, ctx: any) => {
+  return res(ctx.status(200));
+};
+
+export const deleteStoryPost = (req: any, res: any, ctx: any) => {
   return res(ctx.status(200));
 };

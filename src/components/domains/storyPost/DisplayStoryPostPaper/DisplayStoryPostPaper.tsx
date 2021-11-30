@@ -6,13 +6,13 @@ import { formatDistanceToNow } from 'date-fns';
 import ja from 'date-fns/locale/ja';
 
 import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper, MarkdownToHtmlBody } from '~/components/parts/commons';
+import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { StoryPost, User } from '~/domains';
 import 'github-markdown-css';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
-import { useStoryPostForDelete, useStoryPosts } from '~/stores/storyPost';
-import { useIsOpenDeleteStoryPostModal } from '~/stores/modal/useIsOpenDeleteStoryPostModal';
+import { useStoryPosts } from '~/stores/storyPost';
 
 type Props = {
   currentUser: User;
@@ -35,6 +35,8 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const [SelectedEmojiId, setSelectedEmojiId] = useState(emojiIds[0]);
 
+  const [open, setOpen] = useState(false);
+
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
     page,
@@ -50,9 +52,6 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
-
-  const { mutate: mutateStoryPostForDelete } = useStoryPostForDelete();
-  const { mutate: mutateIsOpenDeleteStoryPostModal } = useIsOpenDeleteStoryPostModal();
 
   const handleCompleteEdit = async () => {
     try {
@@ -74,8 +73,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   };
 
   const handleClickDelete = () => {
-    mutateStoryPostForDelete(storyPost);
-    mutateIsOpenDeleteStoryPostModal(true);
+    setOpen(true);
   };
 
   const handleClickEmoji = (id: string) => {
@@ -83,49 +81,56 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     setSelectedEmojiId(id);
   };
 
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
   return (
-    <Paper>
-      <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
-        <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
-        <StyledTime dateTime={new Date(storyPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
-        <WrapDropdown>
-          <Dropdown
-            toggle={<IconButton icon="MoreVert" width={20} />}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          >
-            <MenuItem onClick={handleClickUpdate}>
-              <ListItemIcon>
-                <Icon icon="Update" width="20px" color="textColor.main" />
-              </ListItemIcon>
-              更新する
-            </MenuItem>
-            <MenuItem onClick={handleClickDelete}>
-              <ListItemIcon>
-                <Icon icon="Delete" width="20px" color="textColor.main" />
-              </ListItemIcon>
-              削除する
-            </MenuItem>
-          </Dropdown>
-        </WrapDropdown>
-      </StyledBox>
-      {isUpdate ? (
-        <Editor
-          isUpdateMode
-          content={content}
-          onChangeContent={setContent}
-          onCompleteEdit={handleCompleteEdit}
-          onClickCancelButton={handleClickCancelButton}
-        />
-      ) : (
-        <>
-          <Box mb="16px">
-            <MarkdownToHtmlBody content={content} />
-          </Box>
-          <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
-        </>
-      )}
-    </Paper>
+    <>
+      <Paper>
+        <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
+          <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
+          <StyledTime dateTime={new Date(storyPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
+          <WrapDropdown>
+            <Dropdown
+              toggle={<IconButton icon="MoreVert" width={20} />}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+              <MenuItem onClick={handleClickUpdate}>
+                <ListItemIcon>
+                  <Icon icon="Update" width="20px" color="textColor.main" />
+                </ListItemIcon>
+                更新する
+              </MenuItem>
+              <MenuItem onClick={handleClickDelete}>
+                <ListItemIcon>
+                  <Icon icon="Delete" width="20px" color="textColor.main" />
+                </ListItemIcon>
+                削除する
+              </MenuItem>
+            </Dropdown>
+          </WrapDropdown>
+        </StyledBox>
+        {isUpdate ? (
+          <Editor
+            isUpdateMode
+            content={content}
+            onChangeContent={setContent}
+            onCompleteEdit={handleCompleteEdit}
+            onClickCancelButton={handleClickCancelButton}
+          />
+        ) : (
+          <>
+            <Box mb="16px">
+              <MarkdownToHtmlBody content={content} />
+            </Box>
+            <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
+          </>
+        )}
+      </Paper>
+      <DeleteStoryPostModal isOpen={open} onCloseModal={handleCloseModal} storyId={storyId} page={page} storyPostId={storyPost._id} />
+    </>
   );
 };
 
