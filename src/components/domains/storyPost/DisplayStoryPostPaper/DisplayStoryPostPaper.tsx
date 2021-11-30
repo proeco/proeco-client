@@ -33,7 +33,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const [isUpdate, setIsUpdate] = useState(false);
 
-  const [SelectedEmojiId, setSelectedEmojiId] = useState(emojiIds[0]);
+  const [SelectedEmojiId, setSelectedEmojiId] = useState<string>();
 
   const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
 
@@ -114,7 +114,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
           />
         ) : (
           <>
-            <Box mb="16px">
+            <Box mb="24px">
               <MarkdownToHtmlBody content={content} />
             </Box>
             <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
