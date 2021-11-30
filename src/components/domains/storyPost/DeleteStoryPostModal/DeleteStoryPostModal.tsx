@@ -19,10 +19,10 @@ export const Component: VFC<Props> = ({ isOpen, onClickDeleteStoryPostButton, on
   const content = (
     <>
       <Box mb="20px" textAlign="center">
-        <Typography variant="h3" bold>
+        <Typography variant="h3" bold mb="8px">
           投稿を削除しますか？
         </Typography>
-        <Typography mb="8px" variant="body1" color="textColor.main">
+        <Typography mb="8px" variant="body2" color="textColor.main">
           この操作は戻すことが出来ません。
         </Typography>
       </Box>

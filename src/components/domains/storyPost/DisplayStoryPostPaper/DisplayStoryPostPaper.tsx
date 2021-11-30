@@ -11,7 +11,7 @@ import 'github-markdown-css';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
-import { useStoryPosts } from '~/stores/storyPost';
+import { useStoryPostForDelete, useStoryPosts } from '~/stores/storyPost';
 import { useIsOpenDeleteStoryPostModal } from '~/stores/modal/useIsOpenDeleteStoryPostModal';
 
 type Props = {
@@ -51,6 +51,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
+  const { mutate: mutateStoryPostForDelete } = useStoryPostForDelete();
   const { mutate: mutateIsOpenDeleteStoryPostModal } = useIsOpenDeleteStoryPostModal();
 
   const handleCompleteEdit = async () => {
@@ -73,6 +74,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   };
 
   const handleClickDelete = () => {
+    mutateStoryPostForDelete(storyPost);
     mutateIsOpenDeleteStoryPostModal(true);
   };
 
@@ -102,7 +104,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
               <ListItemIcon>
                 <Icon icon="Delete" width="20px" color="textColor.main" />
               </ListItemIcon>
-              更新する
+              削除する
             </MenuItem>
           </Dropdown>
         </WrapDropdown>
