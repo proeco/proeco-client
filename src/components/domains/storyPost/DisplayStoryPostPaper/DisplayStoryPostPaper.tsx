@@ -12,6 +12,7 @@ import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
+import { useIsOpenDeleteStoryPostModal } from '~/stores/modal/useIsOpenDeleteStoryPostModal';
 
 type Props = {
   currentUser: User;
@@ -50,6 +51,8 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
+  const { mutate: mutateIsOpenDeleteStoryPostModal } = useIsOpenDeleteStoryPostModal();
+
   const handleCompleteEdit = async () => {
     try {
       await restClient.apiPut<StoryPost>(`/story-posts/${storyPost._id}`, {
@@ -67,6 +70,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const handleClickUpdate = () => {
     setIsUpdate(true);
+  };
+
+  const handleClickDelete = () => {
+    mutateIsOpenDeleteStoryPostModal(true);
   };
 
   const handleClickEmoji = (id: string) => {
@@ -88,6 +95,12 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             <MenuItem onClick={handleClickUpdate}>
               <ListItemIcon>
                 <Icon icon="Update" width="20px" color="textColor.main" />
+              </ListItemIcon>
+              更新する
+            </MenuItem>
+            <MenuItem onClick={handleClickDelete}>
+              <ListItemIcon>
+                <Icon icon="Delete" width="20px" color="textColor.main" />
               </ListItemIcon>
               更新する
             </MenuItem>

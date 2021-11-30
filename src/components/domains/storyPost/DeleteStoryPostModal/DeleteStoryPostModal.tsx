@@ -34,7 +34,7 @@ export const Component: VFC<Props> = ({ isOpen, title, onClickDeleteStoryPostBut
       </Box>
     </>
   );
-  return <Modal open={isOpen} title="ポストを削除する" onClose={onCloseModal} content={content} emojiId="wastebasket" size="small" />;
+  return <Modal open={isOpen} title="投稿を削除する" onClose={onCloseModal} content={content} emojiId="wastebasket" size="small" />;
 };
 
 export const DeleteStoryPostModal: VFC = () => {
@@ -68,10 +68,10 @@ export const DeleteStoryPostModal: VFC = () => {
     try {
       await restClient.apiDelete(`/story-tasks/${storyTaskForDelete?._id}`);
       mutateStoryPosts();
-      notifySuccessMessage('ポストを削除しました!');
+      notifySuccessMessage('投稿を削除しました!');
       handleCloseModal();
     } catch (error) {
-      notifyErrorMessage('ポストの削除に失敗しました!');
+      notifyErrorMessage('投稿の削除に失敗しました!');
     }
   };
 
