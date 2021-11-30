@@ -15,9 +15,9 @@ export const EmojiRadioGroup: VFC<Props> = ({ emojiIds, onClick, selectedEmojiId
       {emojiIds.map((emojiId, i) => {
         if (selectedEmojiId) {
           return (
-            <AfterSelectedEmojiBox key={i} selected={selectedEmojiId === emojiId}>
+            <SelectedEmojiBox key={i} selected={selectedEmojiId === emojiId}>
               <Emoji emojiId={emojiId} size={20} onClick={() => onClick(emojiId)} />
-            </AfterSelectedEmojiBox>
+            </SelectedEmojiBox>
           );
         }
         return (
@@ -39,7 +39,7 @@ const StyledBox = styled(Box)`
   }
 `;
 
-const AfterSelectedEmojiBox = styled(StyledBox)<{ selected: boolean }>`
+const SelectedEmojiBox = styled(StyledBox)<{ selected: boolean }>`
   filter: ${(props) => (props.selected ? 'grayscale(0%)' : 'grayscale(100%)')};
   -webkit-filter: ${(props) => (props.selected ? 'grayscale(0%)' : 'grayscale(100%)')};
   transform: ${(props) => (props.selected ? 'scale(1.35)' : 'scale(1)')};
