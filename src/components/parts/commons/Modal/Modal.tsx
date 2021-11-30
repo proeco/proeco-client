@@ -10,7 +10,7 @@ type Size = 'small' | 'medium' | 'large';
 type Props = {
   open: boolean;
   emojiId?: string;
-  title: string;
+  title?: string;
   content: JSX.Element;
   onClose: () => void;
   size?: Size;
@@ -26,13 +26,17 @@ export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size
   return (
     <MuiModal open={open} onClose={onClose}>
       <StyledBox width={sizeMap[size]}>
-        <Box py="8px" display="flex" alignItems="center" justifyContent="center" alignContent="center" gap="8px">
-          {emojiId && <Emoji emojiId={emojiId} size={size === 'small' ? 20 : 24} />}
-          <Typography display="block" variant={size === 'small' ? 'body1' : 'h4'}>
-            {title}
-          </Typography>
-        </Box>
-        <Divider />
+        {title && (
+          <>
+            <Box py="8px" display="flex" alignItems="center" justifyContent="center" alignContent="center" gap="8px">
+              {emojiId && <Emoji emojiId={emojiId} size={size === 'small' ? 20 : 24} />}
+              <Typography display="block" variant={size === 'small' ? 'body1' : 'h4'}>
+                {title}
+              </Typography>
+            </Box>
+            <Divider />
+          </>
+        )}
         <Box p="20px">{content}</Box>
       </StyledBox>
     </MuiModal>

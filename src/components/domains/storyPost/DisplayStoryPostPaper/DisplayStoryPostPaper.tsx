@@ -6,6 +6,7 @@ import { formatDistanceToNow } from 'date-fns';
 import ja from 'date-fns/locale/ja';
 
 import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper, MarkdownToHtmlBody } from '~/components/parts/commons';
+import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { StoryPost, User } from '~/domains';
 import 'github-markdown-css';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
@@ -33,6 +34,8 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const [isUpdate, setIsUpdate] = useState(false);
 
   const [SelectedEmojiId, setSelectedEmojiId] = useState(emojiIds[0]);
+
+  const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
@@ -75,42 +78,57 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   };
 
   return (
-    <Paper>
-      <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
-        <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
-        <StyledTime dateTime={new Date(storyPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
-        <WrapDropdown>
-          <Dropdown
-            toggle={<IconButton icon="MoreVert" width={20} />}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          >
-            <MenuItem onClick={handleClickUpdate}>
-              <ListItemIcon>
-                <Icon icon="Update" width="20px" color="textColor.main" />
-              </ListItemIcon>
-              更新する
-            </MenuItem>
-          </Dropdown>
-        </WrapDropdown>
-      </StyledBox>
-      {isUpdate ? (
-        <Editor
-          isUpdateMode
-          content={content}
-          onChangeContent={setContent}
-          onCompleteEdit={handleCompleteEdit}
-          onClickCancelButton={handleClickCancelButton}
-        />
-      ) : (
-        <>
-          <Box mb="16px">
-            <MarkdownToHtmlBody content={content} />
-          </Box>
-          <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
-        </>
-      )}
-    </Paper>
+    <>
+      <Paper>
+        <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
+          <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
+          <StyledTime dateTime={new Date(storyPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
+          <WrapDropdown>
+            <Dropdown
+              toggle={<IconButton icon="MoreVert" width={20} />}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+              <MenuItem onClick={handleClickUpdate}>
+                <ListItemIcon>
+                  <Icon icon="Update" width="20px" color="textColor.main" />
+                </ListItemIcon>
+                更新する
+              </MenuItem>
+              <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
+                <ListItemIcon>
+                  <Icon icon="Delete" width="20px" color="textColor.main" />
+                </ListItemIcon>
+                削除する
+              </MenuItem>
+            </Dropdown>
+          </WrapDropdown>
+        </StyledBox>
+        {isUpdate ? (
+          <Editor
+            isUpdateMode
+            content={content}
+            onChangeContent={setContent}
+            onCompleteEdit={handleCompleteEdit}
+            onClickCancelButton={handleClickCancelButton}
+          />
+        ) : (
+          <>
+            <Box mb="16px">
+              <MarkdownToHtmlBody content={content} />
+            </Box>
+            <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
+          </>
+        )}
+      </Paper>
+      <DeleteStoryPostModal
+        isOpen={isOpenDeleteStoryPostModal}
+        onCloseModal={() => setIsOpenDeleteStoryPostModal(false)}
+        storyId={storyId}
+        page={page}
+        storyPostId={storyPost._id}
+      />
+    </>
   );
 };
 
