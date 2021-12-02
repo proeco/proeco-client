@@ -5,7 +5,8 @@ import { ListItemIcon, MenuItem } from '@mui/material';
 import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 
-import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper, MarkdownToHtmlBody } from '~/components/parts/commons';
+import { Emoji } from 'emoji-mart';
+import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper, MarkdownToHtmlBody, Typography } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { Reaction, StoryPost, User } from '~/domains';
 import 'github-markdown-css';
@@ -13,6 +14,7 @@ import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
+import { COLORS } from '~/constants';
 
 type Props = {
   currentUser: User;
@@ -89,7 +91,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   return (
     <>
-      <Paper>
+      <Paper padding={16}>
         <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
           <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
           <StyledTime dateTime={new Date(storyPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
@@ -127,6 +129,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             <Box mb="24px">
               <MarkdownToHtmlBody content={content} />
             </Box>
+            <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
+              <Emoji emoji="bulb" size={14} />
+              リアクションを送信しましょう
+            </Typography>
             <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
           </>
         )}
