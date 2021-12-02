@@ -21,7 +21,7 @@ const Template: ComponentStory<typeof Divider> = ({ margin, ...rest }) => {
       <Typography>Vertical</Typography>
       <Card sx={{ width: '300px', display: 'flex' }}>
         <Typography>Left Text</Typography>
-        <Divider {...rest} margin={margin} orientation="vertical" flexItem />
+        <Divider {...rest} margin={margin} orientation="vertical" />
         <Typography>Right Text</Typography>
       </Card>
     </Box>
