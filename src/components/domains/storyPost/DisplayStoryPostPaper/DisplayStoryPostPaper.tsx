@@ -1,4 +1,4 @@
-import React, { VFC, useState } from 'react';
+import React, { VFC, useState, useCallback } from 'react';
 import { Box, styled } from '@mui/system';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
@@ -72,21 +72,23 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     setIsUpdate(true);
   };
 
-  const handleClickEmoji = async (id: string) => {
-    try {
-      // TODO: すでに絵文字が作成されていれば、絵文字を更新するAPIを叩く
-      await restClient.apiPost<Reaction>('/reactions', {
-        reaction: {
-          targetId: storyPost._id,
-          emojiId: id,
-        },
-      });
+  const handleClickEmoji = useCallback(
+    async (emojiId: string) => {
+      try {
+        await restClient.apiPost<Reaction>('/reactions', {
+          reaction: {
+            targetId: storyPost._id,
+            emojiId,
+          },
+        });
 
-      setSelectedEmojiId(id);
-    } catch (error) {
-      notifyErrorMessage('更新に失敗しました!');
-    }
-  };
+        setSelectedEmojiId(emojiId);
+      } catch (error) {
+        notifyErrorMessage('更新に失敗しました!');
+      }
+    },
+    [notifyErrorMessage, storyPost._id],
+  );
 
   return (
     <>
