@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, { ReactNode } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
@@ -47,21 +47,6 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     limit: 10,
   });
 
-  const timeLineItems = useMemo(() => {
-    if (!storyPosts || !currentUser) {
-      return [];
-    }
-    return storyPosts.docs.map((storyPost) => {
-      return {
-        content: storyPost.content,
-        // TODO fix image
-        iconImageId: currentUser.iconImageId || '',
-        createdUserId: storyPost.createdUserId || '',
-        children: <DisplayStoryPostPaper currentUser={currentUser} storyPost={storyPost} storyId={currentStoryId} page={page} />,
-      };
-    });
-  }, [storyPosts, currentUser, currentStoryId, page]);
-
   const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
 
@@ -93,7 +78,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     },
   ];
 
-  if (!story) {
+  if (!story || !storyPosts || !currentUser) {
     return null;
   }
 
@@ -125,11 +110,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           </Dropdown>
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
-          {timeLineItems.map((item, i) => (
-            <TimeLineItem key={i} userAttachmentId={item.iconImageId} userId={item.createdUserId}>
-              {item.children}
-            </TimeLineItem>
-          ))}
+          {storyPosts.docs.map((storyPost) => {
+            return (
+              <TimeLineItem key={storyPost._id} userAttachmentId={currentUser.iconImageId} userId={storyPost.createdUserId}>
+                <DisplayStoryPostPaper currentUser={currentUser} storyPost={storyPost} storyId={currentStoryId} page={page} />
+              </TimeLineItem>
+            );
+          })}
           {currentUser && (
             <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
               <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
