@@ -155,5 +155,5 @@ const WrapDropdown = styled(Box)`
 
 const StyledTime = styled('time')`
   font-size: 12px;
-  color: ${(props) => props.theme.palette.textColor.main};
+  color: ${(props) => props.theme.palette.textColor.light};
 `;
