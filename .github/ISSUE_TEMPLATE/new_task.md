@@ -1,8 +1,8 @@
 ---
 name: New Task
 about: for task
-title: ''
-labels: ''
+title: '[pt]'
+labels: '✨ New Feature'
 assignees: ''
 
 ---

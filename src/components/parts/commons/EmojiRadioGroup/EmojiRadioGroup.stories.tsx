@@ -27,5 +27,5 @@ const Template: ComponentStory<typeof EmojiRadioGroup> = ({ selectedEmojiId, ...
 export const Default = Template.bind({});
 Default.args = {
   emojiIds: ['sob', 'confused', 'grinning', 'star-struck'],
-  selectedEmojiId: 'sob',
+  selectedEmojiId: undefined,
 };

@@ -5,6 +5,7 @@ import { Box } from '@mui/system';
 
 import { Editor } from './Editor';
 import { Paper } from '~/components/parts/commons';
+import { SAMPLE_MD } from '~/constants';
 
 export default {
   title: 'parts/commons/Editor',
@@ -35,12 +36,12 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onComp
 
 export const DefaultEditor = Template.bind({});
 DefaultEditor.args = {
-  content: 'コンテンツを投稿する',
+  content: SAMPLE_MD,
 };
 
 export const UpdateEditor = Template.bind({});
 UpdateEditor.args = {
-  content: 'コンテンツを更新する',
+  content: SAMPLE_MD,
   isUpdateMode: true,
 };
 

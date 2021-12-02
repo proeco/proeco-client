@@ -2,27 +2,29 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { Component } from './DeleteStoryPostModal';
+import { SnackbarProvider } from 'notistack';
+import { DeleteStoryPostModal } from './DeleteStoryPostModal';
 
 export default {
   title: 'domains/storyPost/DeleteStoryPostModal',
-  component: Component,
+  component: DeleteStoryPostModal,
   argTypes: {
     onClickDeleteStoryPostButton: { action: 'onClickDeleteStoryPostButton' },
     onCloseModal: { action: 'onCloseModal' },
   },
-} as ComponentMeta<typeof Component>;
+} as ComponentMeta<typeof DeleteStoryPostModal>;
 
-const Template: ComponentStory<typeof Component> = (args) => {
+const Template: ComponentStory<typeof DeleteStoryPostModal> = (args) => {
   return (
-    <Box>
-      <Component {...args} />
-    </Box>
+    <SnackbarProvider>
+      <Box>
+        <DeleteStoryPostModal {...args} />
+      </Box>
+    </SnackbarProvider>
   );
 };
 
 export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
-  title: 'ここにタイトル',
 };

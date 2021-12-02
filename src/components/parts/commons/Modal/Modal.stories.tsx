@@ -28,6 +28,7 @@ const Template: ComponentStory<typeof Modal> = (args) => {
 export const SmallModal = Template.bind({});
 export const MediumModal = Template.bind({});
 export const LargeModal = Template.bind({});
+export const ModalWithoutTitle = Template.bind({});
 
 SmallModal.args = {
   size: 'small',
@@ -37,15 +38,16 @@ SmallModal.args = {
 };
 
 MediumModal.args = {
+  ...SmallModal.args,
   size: 'medium',
-  open: true,
-  content: Content,
-  title: 'ここにタイトルが入る',
 };
 
 LargeModal.args = {
+  ...SmallModal.args,
   size: 'large',
-  open: true,
-  content: Content,
-  title: 'ここにタイトルが入る',
+};
+
+ModalWithoutTitle.args = {
+  ...SmallModal.args,
+  title: undefined,
 };
