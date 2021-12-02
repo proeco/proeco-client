@@ -30,11 +30,8 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   page,
 }) => {
   const [content, setContent] = useState(storyPost.content);
-
   const [isUpdate, setIsUpdate] = useState(false);
-
-  const [SelectedEmojiId, setSelectedEmojiId] = useState<string>();
-
+  const [SelectedEmojiId, setSelectedEmojiId] = useState<string>('');
   const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
