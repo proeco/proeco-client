@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import { ReactNode, useState, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { Team } from '~/domains';
+import { Attachment, Team } from '~/domains';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 import { TextField, Typography, Button, Icon, Paper, IconUpload } from '~/components/parts/commons';
@@ -40,8 +40,10 @@ const DashboardTeamPage: ProecoNextPage = () => {
       if (iconImage) {
         params.append('file', iconImage);
       }
-      params.append('team', JSON.stringify(team));
-      await restClient.apiPost('/teams', params, { 'Content-Type': 'multipart/form-data' });
+      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/team-icons`, params, {
+        'Content-Type': 'multipart/form-data',
+      });
+      await restClient.apiPost<Team>('/teams', { team: { ...team, iconImageId: attachment._id } });
       notifySuccessMessage('チームを作成しました');
       router.push('/dashboard/teams');
       setIsCreating(false);
