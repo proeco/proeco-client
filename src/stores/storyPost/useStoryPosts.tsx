@@ -1,4 +1,5 @@
-import useSWR, { SWRResponse } from 'swr';
+import { SWRResponse } from 'swr';
+import useSWRImmutable from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
 import { StoryPost } from '~/domains';
@@ -12,7 +13,7 @@ import { StoryPost } from '~/domains';
  */
 export const useStoryPosts = ({ storyId, page, limit }: { storyId?: string; page: number; limit: 10 }): SWRResponse<StoryPost[], Error> => {
   const key = storyId ? `/story-posts?storyId=${storyId}&page=${page}&limit=${limit}` : null;
-  return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.docs), {
+  return useSWRImmutable(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.docs), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
   });
