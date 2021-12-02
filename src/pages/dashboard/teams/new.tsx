@@ -1,75 +1,17 @@
 import { Box } from '@mui/system';
-import { ReactNode, useState, ChangeEvent, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { ReactNode } from 'react';
 
-import { Team } from '~/domains';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
-import { TextField, Typography, Button, Icon, Paper, IconUpload } from '~/components/parts/commons';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+
+import { Typography, Icon } from '~/components/parts/commons';
 import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { restClient } from '~/utils/rest-client';
-import { useSuccessNotification } from '~/hooks/useSuccessNotification';
-import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { TeamFormPaper } from '~/components/domains/team/TeamFormPaper';
 
 const DashboardTeamPage: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
-  const { notifySuccessMessage } = useSuccessNotification();
-  const { notifyErrorMessage } = useErrorNotification();
-  const router = useRouter();
-
-  const [isCreating, setIsCreating] = useState(false);
-  const [iconImage, setIconImage] = useState<File>();
-  const [isValidForm, setIsValidForm] = useState(true);
-  const [team, setTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description'>>({
-    productId: '',
-    url: '',
-    name: '',
-    description: '',
-  });
-
-  const handleClickCreateNewTeam = async () => {
-    if (!currentUser) {
-      return;
-    }
-
-    setIsCreating(true);
-    try {
-      const params = new FormData();
-      if (iconImage) {
-        params.append('file', iconImage);
-      }
-      params.append('team', JSON.stringify(team));
-      await restClient.apiPost('/teams', params, { 'Content-Type': 'multipart/form-data' });
-      notifySuccessMessage('チームを作成しました');
-      router.push('/dashboard/teams');
-      setIsCreating(false);
-    } catch (error) {
-      notifyErrorMessage('チームの作成に失敗しました');
-    }
-  };
-
-  const updateStoryForm = (newObject: Partial<Team>) => {
-    setTeam((prevState) => {
-      return {
-        ...prevState,
-        ...newObject,
-      };
-    });
-  };
-
-  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    }
-
-    setIconImage(e.target.files[0]);
-  };
-
-  useEffect(() => {
-    setIsValidForm(team.name.trim() !== '' && team.productId.trim() !== '' && team.productId.trim() !== '' && team.description.trim() !== '');
-  }, [team]);
 
   return (
     <>
@@ -81,44 +23,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
             新規チームを作成する
           </Typography>
         </Box>
-        <Paper square>
-          <Box display="flex" justifyContent="center">
-            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : undefined} />
-          </Box>
-          <Typography mb={1} variant="body1" color="textColor.light">
-            プロダクトの url
-          </Typography>
-          <TextField fullWidth multiline value={team.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
-          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
-            Product Id
-          </Typography>
-          <TextField fullWidth multiline value={team.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
-          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
-            名前
-          </Typography>
-          <TextField fullWidth multiline value={team.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
-          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
-            どんなプロダクト？
-          </Typography>
-          <TextField
-            fullWidth
-            multiline
-            value={team.description}
-            rows={4}
-            onChange={(e) => updateStoryForm({ description: e.target.value })}
-          />
-          <Box mt={4} textAlign="center">
-            <Button
-              disabled={isCreating || !isValidForm}
-              color="primary"
-              variant="contained"
-              startIcon={<Icon icon="CreateOutlined" width="20px" />}
-              onClick={handleClickCreateNewTeam}
-            >
-              新規チームを作成する
-            </Button>
-          </Box>
-        </Paper>
+        {currentUser && <TeamFormPaper currentUser={currentUser} />}
       </Box>
     </>
   );
