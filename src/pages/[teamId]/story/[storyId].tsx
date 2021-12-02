@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
@@ -8,22 +8,26 @@ import { ListItemIcon, MenuItem } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
+import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
+
+import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { COLORS } from '~/constants';
+
 import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
-import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
+import { useStory } from '~/stores/story/useStory';
+import { useStoryPosts } from '~/stores/storyPost';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useReactionsByUserId } from '~/stores/reaction';
 
 import { Emoji, Icon, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { useStory } from '~/stores/story/useStory';
-import { ProecoNextPage } from '~/interfaces/proecoNextPage';
-import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
-import { useStoryPosts } from '~/stores/storyPost';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
 import { Dropdown } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
+import { Reaction, StoryPost } from '~/domains';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -38,6 +42,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   const { data: story } = useStory(currentStoryId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
+  const { data: reactions } = useReactionsByUserId(currentUser?._id);
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
@@ -46,6 +51,16 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     page,
     limit: 10,
   });
+
+  const customStoryPosts: Array<StoryPost & { currentUserReaction?: Reaction }> = useMemo(() => {
+    if (!storyPosts || !reactions) return [];
+    return storyPosts?.map((s) => {
+      return {
+        ...s,
+        currentUserReaction: reactions.find((r) => r.targetId === s._id),
+      };
+    });
+  }, [storyPosts, reactions]);
 
   const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
@@ -110,10 +125,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           </Dropdown>
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
-          {storyPosts.docs.map((storyPost) => {
+          {customStoryPosts.map((customStoryPost) => {
             return (
-              <TimeLineItem key={storyPost._id} userAttachmentId={currentUser.iconImageId} userId={storyPost.createdUserId}>
-                <DisplayStoryPostPaper currentUser={currentUser} storyPost={storyPost} storyId={currentStoryId} page={page} />
+              <TimeLineItem key={customStoryPost._id} userAttachmentId={currentUser.iconImageId} userId={customStoryPost.createdUserId}>
+                <DisplayStoryPostPaper currentUser={currentUser} storyPost={customStoryPost} storyId={currentStoryId} page={page} />
               </TimeLineItem>
             );
           })}

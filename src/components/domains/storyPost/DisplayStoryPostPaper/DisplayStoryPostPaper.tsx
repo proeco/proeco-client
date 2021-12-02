@@ -16,7 +16,7 @@ import { useStoryPosts } from '~/stores/storyPost';
 
 type Props = {
   currentUser: User;
-  storyPost: StoryPost;
+  storyPost: StoryPost & { currentUserReaction?: Reaction };
   emojiIds?: string[];
   storyId: string;
   page: number;
@@ -31,7 +31,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 }) => {
   const [content, setContent] = useState(storyPost.content);
   const [isUpdate, setIsUpdate] = useState(false);
-  const [SelectedEmojiId, setSelectedEmojiId] = useState<string>('');
+  const [SelectedEmojiId, setSelectedEmojiId] = useState<string>(storyPost.currentUserReaction?.emojiId || '');
   const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
