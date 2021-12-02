@@ -2,7 +2,7 @@ import { SWRResponse } from 'swr';
 import useSWRImmutable from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
-import { User } from '~/domains';
+import { Reaction, User } from '~/domains';
 
 /**
  * userIdに紐づいた reaction を取得するSWR
@@ -12,8 +12,8 @@ import { User } from '~/domains';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useReactionsByUserId = (userId?: User['_id']): SWRResponse<string, Error> => {
+export const useReactionsByUserId = (userId?: User['_id']): SWRResponse<Reaction[], Error> => {
   const key = userId ? `/reactions?createdUserId=${userId}` : null;
 
-  return useSWRImmutable(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.signedUrl));
+  return useSWRImmutable(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.reactions.docs));
 };
