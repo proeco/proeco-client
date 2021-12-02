@@ -1,11 +1,23 @@
-import React, { VFC, useState } from 'react';
+import React, { VFC, useState, useCallback } from 'react';
 import { Box, styled } from '@mui/system';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
 import { formatDistanceToNow } from 'date-fns';
-import ja from 'date-fns/locale/ja';
+import { ja } from 'date-fns/locale';
 
-import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper, MarkdownToHtmlBody } from '~/components/parts/commons';
+import { Emoji } from 'emoji-mart';
+import {
+  Icon,
+  IconButton,
+  Link,
+  Dropdown,
+  Editor,
+  EmojiRadioGroup,
+  Paper,
+  MarkdownToHtmlBody,
+  Typography,
+  Divider,
+} from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { Reaction, StoryPost, User } from '~/domains';
 import 'github-markdown-css';
@@ -13,10 +25,11 @@ import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
+import { COLORS } from '~/constants';
 
 type Props = {
   currentUser: User;
-  storyPost: StoryPost;
+  storyPost: StoryPost & { currentUserReaction?: Reaction };
   emojiIds?: string[];
   storyId: string;
   page: number;
@@ -30,11 +43,8 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   page,
 }) => {
   const [content, setContent] = useState(storyPost.content);
-
   const [isUpdate, setIsUpdate] = useState(false);
-
-  const [SelectedEmojiId, setSelectedEmojiId] = useState<string>();
-
+  const [SelectedEmojiId, setSelectedEmojiId] = useState<string>(storyPost.currentUserReaction?.emojiId || '');
   const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
@@ -72,63 +82,75 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     setIsUpdate(true);
   };
 
-  const handleClickEmoji = async (id: string) => {
-    try {
-      // TODO: すでに絵文字が作成されていれば、絵文字を更新するAPIを叩く
-      await restClient.apiPost<Reaction>('/reactions', {
-        reaction: {
-          targetId: storyPost._id,
-          emojiId: id,
-        },
-      });
+  const handleClickEmoji = useCallback(
+    async (emojiId: string) => {
+      try {
+        await restClient.apiPost<Reaction>('/reactions', {
+          reaction: {
+            targetId: storyPost._id,
+            emojiId,
+          },
+        });
 
-      setSelectedEmojiId(id);
-    } catch (error) {
-      notifyErrorMessage('更新に失敗しました!');
-    }
-  };
+        setSelectedEmojiId(emojiId);
+      } catch (error) {
+        notifyErrorMessage('更新に失敗しました!');
+      }
+    },
+    [notifyErrorMessage, storyPost._id],
+  );
 
   return (
     <>
-      <Paper>
-        <StyledBox width="100%" display="flex" alignItems="center" mb="12px">
-          <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
-          <StyledTime dateTime={new Date(storyPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
-          <WrapDropdown>
-            <Dropdown
-              toggle={<IconButton icon="MoreVert" width={20} />}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            >
-              <MenuItem onClick={handleClickUpdate}>
-                <ListItemIcon>
-                  <Icon icon="Update" width="20px" color="textColor.main" />
-                </ListItemIcon>
-                更新する
-              </MenuItem>
-              <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
-                <ListItemIcon>
-                  <Icon icon="Delete" width="20px" color="textColor.main" />
-                </ListItemIcon>
-                削除する
-              </MenuItem>
-            </Dropdown>
-          </WrapDropdown>
-        </StyledBox>
-        {isUpdate ? (
-          <Editor
-            isUpdateMode
-            content={content}
-            onChangeContent={setContent}
-            onCompleteEdit={handleCompleteEdit}
-            onClickCancelButton={handleClickCancelButton}
-          />
-        ) : (
+      <Paper padding={0}>
+        <Box p="12px">
+          <StyledBox width="100%" display="flex" alignItems="center">
+            <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
+            <StyledTime dateTime={new Date(storyPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
+            <WrapDropdown>
+              <Dropdown
+                toggle={<IconButton icon="MoreVert" width={20} />}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              >
+                <MenuItem onClick={handleClickUpdate}>
+                  <ListItemIcon>
+                    <Icon icon="Update" width="20px" color="textColor.main" />
+                  </ListItemIcon>
+                  更新する
+                </MenuItem>
+                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
+                  <ListItemIcon>
+                    <Icon icon="Delete" width="20px" color="textColor.main" />
+                  </ListItemIcon>
+                  削除する
+                </MenuItem>
+              </Dropdown>
+            </WrapDropdown>
+          </StyledBox>
+          {isUpdate && (
+            <Editor
+              isUpdateMode
+              content={content}
+              onChangeContent={setContent}
+              onCompleteEdit={handleCompleteEdit}
+              onClickCancelButton={handleClickCancelButton}
+            />
+          )}
+        </Box>
+        {!isUpdate && (
           <>
-            <Box mb="24px">
+            <Box p="12px">
               <MarkdownToHtmlBody content={content} />
             </Box>
-            <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
+            <Divider margin={0} />
+            <Box p="12px">
+              <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
+                <Emoji emoji="bulb" size={12} />
+                リアクションを送信しましょう
+              </Typography>
+              <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
+            </Box>
           </>
         )}
       </Paper>
@@ -156,5 +178,5 @@ const WrapDropdown = styled(Box)`
 
 const StyledTime = styled('time')`
   font-size: 12px;
-  color: ${(props) => props.theme.palette.textColor.main};
+  color: ${(props) => props.theme.palette.textColor.light};
 `;

@@ -8,22 +8,26 @@ import { ListItemIcon, MenuItem } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
+import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
+
+import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { COLORS } from '~/constants';
+
 import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
-import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
+import { useStory } from '~/stores/story/useStory';
+import { useStoryPosts } from '~/stores/storyPost';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useReactionsByUserId } from '~/stores/reaction';
 
 import { Emoji, Icon, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { useStory } from '~/stores/story/useStory';
-import { ProecoNextPage } from '~/interfaces/proecoNextPage';
-import { COLORS } from '~/constants';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
-import { useStoryPosts } from '~/stores/storyPost';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
 import { Dropdown } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
+import { Reaction, StoryPost } from '~/domains';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -38,6 +42,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   const { data: story } = useStory(currentStoryId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
+  const { data: reactions } = useReactionsByUserId(currentUser?._id);
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
@@ -47,20 +52,15 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     limit: 10,
   });
 
-  const timeLineItems = useMemo(() => {
-    if (!storyPosts || !currentUser) {
-      return [];
-    }
-    return storyPosts.docs.map((storyPost) => {
+  const customStoryPosts: Array<StoryPost & { currentUserReaction?: Reaction }> = useMemo(() => {
+    if (!storyPosts || !reactions) return [];
+    return storyPosts?.map((s) => {
       return {
-        content: storyPost.content,
-        // TODO fix image
-        iconImageId: currentUser.iconImageId || '',
-        createdUserId: storyPost.createdUserId || '',
-        children: <DisplayStoryPostPaper currentUser={currentUser} storyPost={storyPost} storyId={currentStoryId} page={page} />,
+        ...s,
+        currentUserReaction: reactions.find((r) => r.targetId === s._id),
       };
     });
-  }, [storyPosts, currentUser, currentStoryId, page]);
+  }, [storyPosts, reactions]);
 
   const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
   const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
@@ -93,7 +93,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     },
   ];
 
-  if (!story) {
+  if (!story || !storyPosts || !currentUser) {
     return null;
   }
 
@@ -125,11 +125,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           </Dropdown>
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
-          {timeLineItems.map((item, i) => (
-            <TimeLineItem key={i} userAttachmentId={item.iconImageId} userId={item.createdUserId}>
-              {item.children}
-            </TimeLineItem>
-          ))}
+          {customStoryPosts.map((customStoryPost) => {
+            return (
+              <TimeLineItem key={customStoryPost._id} userAttachmentId={currentUser.iconImageId} userId={customStoryPost.createdUserId}>
+                <DisplayStoryPostPaper currentUser={currentUser} storyPost={customStoryPost} storyId={currentStoryId} page={page} />
+              </TimeLineItem>
+            );
+          })}
           {currentUser && (
             <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
               <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
