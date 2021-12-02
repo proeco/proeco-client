@@ -17,5 +17,6 @@ const StyledMuiDivider = styled(MuiDivider)<{
   orientation: 'vertical' | 'horizontal' | undefined;
 }>`
   margin: ${(props) => (props.orientation === 'vertical' ? `0 ${props.margin}px` : `${props.margin}px 0`)};
+  height: auto;
   border-color: ${(props) => props.theme.palette.borderColor.main};
 `;
