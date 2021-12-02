@@ -74,6 +74,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const handleClickEmoji = async (id: string) => {
     try {
+      // TODO: すでに絵文字が作成されていれば、絵文字を更新するAPIを叩く
       await restClient.apiPost<Reaction>('/reactions', {
         reaction: {
           targetId: storyPost._id,
