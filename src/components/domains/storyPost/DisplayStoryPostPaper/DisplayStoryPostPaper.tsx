@@ -7,7 +7,7 @@ import ja from 'date-fns/locale/ja';
 
 import { Icon, IconButton, Link, Dropdown, Editor, EmojiRadioGroup, Paper, MarkdownToHtmlBody } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
-import { StoryPost, User } from '~/domains';
+import { Reaction, StoryPost, User } from '~/domains';
 import 'github-markdown-css';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -72,9 +72,20 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     setIsUpdate(true);
   };
 
-  const handleClickEmoji = (id: string) => {
-    // TODO: 絵文字を送信するapiを叩く
-    setSelectedEmojiId(id);
+  const handleClickEmoji = async (id: string) => {
+    try {
+      // TODO: すでに絵文字が作成されていれば、絵文字を更新するAPIを叩く
+      await restClient.apiPost<Reaction>('/reactions', {
+        reaction: {
+          targetId: storyPost._id,
+          emojiId: id,
+        },
+      });
+
+      setSelectedEmojiId(id);
+    } catch (error) {
+      notifyErrorMessage('更新に失敗しました!');
+    }
   };
 
   return (
