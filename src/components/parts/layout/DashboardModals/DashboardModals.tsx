@@ -10,6 +10,7 @@ export const DashboardModals: VFC = () => {
       <CreateNewStoryModal />
       <UpdateStoryModal />
       <DeleteStoryModal />
+      {/* TODO delete */}
       <CreateNewStoryPostModal />
     </>
   );

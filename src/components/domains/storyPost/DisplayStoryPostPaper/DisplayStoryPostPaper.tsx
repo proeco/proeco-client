@@ -42,9 +42,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   storyId,
   page,
 }) => {
-  const [content, setContent] = useState(storyPost.content);
+  const [currentStoryPost, setCurrentStoryPost] = useState(storyPost);
+  const [content, setContent] = useState(currentStoryPost.content);
   const [isUpdate, setIsUpdate] = useState(false);
-  const [SelectedEmojiId, setSelectedEmojiId] = useState<string>(storyPost.currentUserReaction?.emojiId || '');
+  const [SelectedEmojiId, setSelectedEmojiId] = useState<string>(currentStoryPost.currentUserReaction?.emojiId || '');
   const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
@@ -53,10 +54,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     limit: 10,
   });
 
-  const displayDate = formatDistanceToNow(new Date(storyPost.createdAt), { addSuffix: true, locale: ja });
+  const displayDate = formatDistanceToNow(new Date(currentStoryPost.createdAt), { addSuffix: true, locale: ja });
 
   const handleClickCancelButton = () => {
-    setContent(storyPost.content);
+    setContent(currentStoryPost.content);
     setIsUpdate(false);
   };
 
@@ -65,7 +66,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const handleCompleteEdit = async () => {
     try {
-      await restClient.apiPut<StoryPost>(`/story-posts/${storyPost._id}`, {
+      await restClient.apiPut<StoryPost>(`/story-posts/${currentStoryPost._id}`, {
         storyPost: { content },
       });
 
@@ -85,19 +86,35 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const handleClickEmoji = useCallback(
     async (emojiId: string) => {
       try {
-        await restClient.apiPost<Reaction>('/reactions', {
+        if (!currentStoryPost.currentUserReaction) {
+          const result = await restClient.apiPost<Reaction>('/reactions', {
+            reaction: {
+              targetId: currentStoryPost._id,
+              emojiId,
+            },
+          });
+
+          setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: result.data });
+
+          setSelectedEmojiId(emojiId);
+          return;
+        }
+
+        if (SelectedEmojiId === emojiId) return;
+
+        const result = await restClient.apiPut<Reaction>('/reactions', {
           reaction: {
-            targetId: storyPost._id,
+            ...currentStoryPost.currentUserReaction,
             emojiId,
           },
         });
-
+        setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: result.data });
         setSelectedEmojiId(emojiId);
       } catch (error) {
         notifyErrorMessage('更新に失敗しました!');
       }
     },
-    [notifyErrorMessage, storyPost._id],
+    [notifyErrorMessage, currentStoryPost, SelectedEmojiId],
   );
 
   return (
@@ -106,7 +123,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
         <Box p="12px">
           <StyledBox width="100%" display="flex" alignItems="center">
             <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
-            <StyledTime dateTime={new Date(storyPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
+            <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
             <WrapDropdown>
               <Dropdown
                 toggle={<IconButton icon="MoreVert" width={20} />}
@@ -159,7 +176,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
         onCloseModal={() => setIsOpenDeleteStoryPostModal(false)}
         storyId={storyId}
         page={page}
-        storyPostId={storyPost._id}
+        storyPostId={currentStoryPost._id}
       />
     </>
   );

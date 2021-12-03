@@ -49,7 +49,7 @@ const StyledMarkdownBody = styled(Box)`
       background-color: rgb(30, 30, 30);
     }
     code {
-      background-color: whitesmoke;
+      color: #fff;
     }
   }
 `;
