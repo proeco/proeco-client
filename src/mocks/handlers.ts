@@ -12,9 +12,9 @@ export const handlers = [
   rest.get(generateRoute('/users/me'), getCurrentUser),
   rest.get(generateRoute('/attachments/:id/signedUrl'), getAttachmentById),
   rest.get(generateRoute('/story-posts'), getStoryPosts),
-  rest.get(generateRoute('/reactions'), getReaction),
   rest.post(generateRoute('/story-posts'), postStoryPost),
+  rest.delete(generateRoute('/story-posts/:id'), deleteStoryPost),
+  rest.get(generateRoute('/reactions'), getReaction),
   rest.post(generateRoute('/reactions'), postReaction),
   rest.put(generateRoute('/reactions'), putReaction),
-  rest.delete(generateRoute('/story-posts/:id'), deleteStoryPost),
 ];
