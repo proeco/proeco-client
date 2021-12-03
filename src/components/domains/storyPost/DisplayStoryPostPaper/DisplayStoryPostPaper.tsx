@@ -88,7 +88,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const handleClickEmoji = useCallback(
     async (emojiId: string) => {
       try {
-        if (!storyPost.currentUserReaction?._id) {
+        if (!storyPost.currentUserReaction) {
           await restClient.apiPost<Reaction>('/reactions', {
             reaction: {
               targetId: storyPost._id,
@@ -100,16 +100,15 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
           return;
         }
 
-        const updateEmojiId = SelectedEmojiId === emojiId ? '' : emojiId;
+        if (SelectedEmojiId === emojiId) return;
 
         await restClient.apiPut<Reaction>('/reactions', {
           reaction: {
             ...storyPost.currentUserReaction,
-            emojiId: updateEmojiId,
+            emojiId,
           },
         });
-        mutateReactionsByUserId();
-        setSelectedEmojiId(updateEmojiId);
+        setSelectedEmojiId(emojiId);
       } catch (error) {
         notifyErrorMessage('更新に失敗しました!');
       }
