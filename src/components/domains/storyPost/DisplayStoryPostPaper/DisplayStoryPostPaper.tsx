@@ -26,6 +26,7 @@ import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
 import { COLORS } from '~/constants';
+import { useReactionsByUserId } from '~/stores/reaction';
 
 type Props = {
   currentUser: User;
@@ -52,6 +53,8 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     page,
     limit: 10,
   });
+
+  const { mutate: mutateReactionsByUserId } = useReactionsByUserId(currentUser._id);
 
   const displayDate = formatDistanceToNow(new Date(storyPost.createdAt), { addSuffix: true, locale: ja });
 
@@ -85,37 +88,33 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const handleClickEmoji = useCallback(
     async (emojiId: string) => {
       try {
-        if (SelectedEmojiId === '') {
+        if (!storyPost.currentUserReaction?._id) {
           await restClient.apiPost<Reaction>('/reactions', {
             reaction: {
               targetId: storyPost._id,
               emojiId,
             },
           });
-        } else {
-          if (SelectedEmojiId === emojiId) {
-            await restClient.apiPut<Reaction>('/reactions', {
-              reaction: {
-                ...storyPost.currentUserReaction,
-                emojiId: '',
-              },
-            });
-          } else {
-            await restClient.apiPut<Reaction>('/reactions', {
-              reaction: {
-                ...storyPost.currentUserReaction,
-                emojiId,
-              },
-            });
-          }
+          mutateReactionsByUserId();
+          setSelectedEmojiId(emojiId);
+          return;
         }
 
-        setSelectedEmojiId(emojiId);
+        const updateEmojiId = SelectedEmojiId === emojiId ? '' : emojiId;
+
+        await restClient.apiPut<Reaction>('/reactions', {
+          reaction: {
+            ...storyPost.currentUserReaction,
+            emojiId: updateEmojiId,
+          },
+        });
+        mutateReactionsByUserId();
+        setSelectedEmojiId(updateEmojiId);
       } catch (error) {
         notifyErrorMessage('更新に失敗しました!');
       }
     },
-    [notifyErrorMessage, storyPost, SelectedEmojiId],
+    [notifyErrorMessage, storyPost, SelectedEmojiId, mutateReactionsByUserId],
   );
 
   return (
