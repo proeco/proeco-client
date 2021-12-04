@@ -1,42 +1,65 @@
-import React, { VFC, useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, { VFC } from 'react';
 import { Box } from '@mui/system';
+import { useRouter } from 'next/router';
 import { Modal, Button, Emoji, Typography } from '~/components/parts/commons';
-
-import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
-import { useStories, useStoryForDelete } from '~/stores/story';
+import { useStories } from '~/stores/story';
 
 import { restClient } from '~/utils/rest-client';
+import { Story } from '~/domains';
+import { URLS } from '~/constants';
 
 type Props = {
   isOpen: boolean;
-  title: string;
-  emojiId: string;
-  onClickDeleteStoryButton: () => void;
   onCloseModal: () => void;
+  teamId: string;
+  page: number;
+  story: Story;
 };
 
-export const Component: VFC<Props> = ({ isOpen, title, emojiId, onClickDeleteStoryButton, onCloseModal }) => {
+export const DeleteStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, page, story }) => {
+  const { notifySuccessMessage } = useSuccessNotification();
+  const { notifyErrorMessage } = useErrorNotification();
+
+  const router = useRouter();
+
+  const { mutate: mutateStories } = useStories({
+    teamId,
+    page,
+    limit: 10,
+  });
+
+  const handleClickDeleteStoryButton = async () => {
+    try {
+      await restClient.apiDelete(`/stories/${story?._id}`);
+      mutateStories();
+      notifySuccessMessage('ストーリーを削除しました!');
+      onCloseModal();
+      router.push(URLS.TEAMS_STORIES(teamId));
+    } catch (error) {
+      notifyErrorMessage('ストーリーの削除に失敗しました!');
+    }
+  };
+
   const content = (
     <>
       <Box>
         <Typography>ストーリー名</Typography>
         <Box display="flex" alignItems="center">
           <Box mr="8px">
-            <Emoji emojiId={emojiId} size={32} />
+            <Emoji emojiId={story.emojiId} size={32} />
           </Box>
           <Typography variant="h2" bold>
-            {title}
+            {story.title}
           </Typography>
         </Box>
       </Box>
 
       <Box mt={3} width="100%" textAlign="center">
-        <Button color="error" variant="contained" onClick={onClickDeleteStoryButton}>
+        <Button color="error" variant="contained" onClick={handleClickDeleteStoryButton}>
           削除
         </Button>
       </Box>
@@ -44,61 +67,4 @@ export const Component: VFC<Props> = ({ isOpen, title, emojiId, onClickDeleteSto
   );
 
   return <Modal open={isOpen} emojiId="wastebasket" title="ストーリーを削除する" content={content} onClose={onCloseModal} />;
-};
-
-export const DeleteStoryModal: VFC = () => {
-  const router = useRouter();
-  const page = router.query.page ? Number(router.query.page) : 1;
-
-  const { notifySuccessMessage } = useSuccessNotification();
-  const { notifyErrorMessage } = useErrorNotification();
-
-  const { data: isOpenDeleteStoryModal, mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
-  const { data: storyForDelete } = useStoryForDelete();
-
-  const { mutate: mutateStories } = useStories({
-    teamId: router.query.id as string,
-    page,
-    limit: 10,
-  });
-
-  const [title, setTitle] = useState('');
-  const [emojiId, setEmojiId] = useState<string>('open_file_folder');
-
-  useEffect(() => {
-    if (!storyForDelete) {
-      return;
-    }
-
-    setTitle(storyForDelete.title);
-    setEmojiId(storyForDelete.emojiId);
-  }, [storyForDelete]);
-
-  const handleClickDeleteStoryButton = async () => {
-    try {
-      await restClient.apiDelete(`/stories/${storyForDelete?._id}`);
-      mutateStories();
-      notifySuccessMessage('ストーリーを削除しました!');
-      handleCloseModal();
-      if (router.pathname !== '/story') {
-        router.push('/story');
-      }
-    } catch (error) {
-      notifyErrorMessage('ストーリーの削除に失敗しました!');
-    }
-  };
-
-  const handleCloseModal = () => {
-    mutateIsOpenDeleteStoryModal(false);
-  };
-
-  return (
-    <Component
-      isOpen={!!isOpenDeleteStoryModal}
-      title={title}
-      emojiId={emojiId}
-      onClickDeleteStoryButton={handleClickDeleteStoryButton}
-      onCloseModal={handleCloseModal}
-    />
-  );
 };

@@ -1,5 +1,6 @@
 import * as nextImage from 'next/image';
 import React from 'react';
+import { SnackbarProvider } from 'notistack';
 import { addDecorator} from '@storybook/react';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 
@@ -16,7 +17,13 @@ Object.defineProperty(nextImage, 'default', {
 
 
 addDecorator((story) => {
-  return <MaterialThemeProvider theme={theme}>{story()}</MaterialThemeProvider>
+  return (
+    <MaterialThemeProvider theme={theme}>
+      <SnackbarProvider>
+        {story()}
+      </SnackbarProvider>
+    </MaterialThemeProvider>
+  )
 });
   
 export const parameters = {
