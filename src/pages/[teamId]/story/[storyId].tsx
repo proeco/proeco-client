@@ -8,12 +8,9 @@ import { ListItemIcon, MenuItem } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
-import { useStoryForDelete } from '~/stores/story';
-
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 
-import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 import { useStory } from '~/stores/story/useStory';
 import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -28,6 +25,7 @@ import { UserIcon } from '~/components/domains/user/UserIcon';
 import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
 import { Reaction, StoryPost } from '~/domains';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
+import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -37,6 +35,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
 
   const [isOpenUpdateStoryModal, setIsOpenUpdateStoryModal] = useState(false);
+  const [isOpenDeleteStoryModal, setIsOpenDeleteStoryModal] = useState(false);
   const teamId = router.query.teamId as string;
   const storyId = router.query.storyId as string;
 
@@ -62,18 +61,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     });
   }, [storyPosts, reactions]);
 
-  const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
-  const { mutate: mutateStoryForDelete } = useStoryForDelete();
-
   const handleClickUpdate = () => {
-    if (!story) return;
     setIsOpenUpdateStoryModal(true);
   };
 
   const handleClickDelete = () => {
-    if (!story) return;
-    mutateIsOpenDeleteStoryModal(true);
-    mutateStoryForDelete(story);
+    setIsOpenDeleteStoryModal(true);
   };
 
   const menuItems = [
@@ -144,6 +137,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         story={story}
         teamId={teamId}
         page={page}
+      />
+      <DeleteStoryModal
+        isOpen={isOpenDeleteStoryModal}
+        onCloseModal={() => setIsOpenDeleteStoryModal(false)}
+        page={page}
+        teamId={teamId}
+        story={story}
       />
     </>
   );
