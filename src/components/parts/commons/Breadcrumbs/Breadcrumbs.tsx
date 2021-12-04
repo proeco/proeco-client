@@ -4,5 +4,9 @@ import { Breadcrumbs as MuiBreadcrumbs } from '@mui/material';
 type Props = ComponentProps<typeof MuiBreadcrumbs>;
 
 export const Breadcrumbs: VFC<Props> = ({ children, ...rest }) => {
-  return <MuiBreadcrumbs {...rest}>{children}</MuiBreadcrumbs>;
+  return (
+    <MuiBreadcrumbs separator="›" aria-label="breadcrumb" {...rest}>
+      {children}
+    </MuiBreadcrumbs>
+  );
 };
