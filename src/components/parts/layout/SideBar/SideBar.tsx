@@ -42,6 +42,7 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
   return (
     <StyledDrawer variant="permanent" open={open}>
       <Box
+        mt="8px"
         position="absolute"
         width="100%"
         bgcolor="whitesmoke"
