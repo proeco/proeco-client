@@ -1,25 +1,25 @@
-import React, { VFC, ComponentProps } from 'react';
+import React, { VFC } from 'react';
 import { Breadcrumbs as MuiBreadcrumbs } from '@mui/material';
 
 import { Link, Typography } from '~/components/parts/commons';
 
-type BreadcrumbsType = {
+type Props = {
   BreadcrumbsItems: Array<{
     url?: string;
     label: string;
   }>;
 };
 
-type Props = ComponentProps<typeof MuiBreadcrumbs> & BreadcrumbsType;
-
-export const Breadcrumbs: VFC<Props> = ({ BreadcrumbsItems, ...rest }) => {
+export const Breadcrumbs: VFC<Props> = ({ BreadcrumbsItems }) => {
   return (
-    <MuiBreadcrumbs separator="›" aria-label="breadcrumb" {...rest}>
+    <MuiBreadcrumbs separator="›" aria-label="breadcrumb">
       {BreadcrumbsItems.map((BreadcrumbsItem, i) => {
         if (BreadcrumbsItem.url) {
           return (
-            <Link href={BreadcrumbsItem.url} key={i} size={12}>
-              {BreadcrumbsItem.label}
+            <Link href={BreadcrumbsItem.url} key={i}>
+              <Typography variant="caption" color="primary.main">
+                {BreadcrumbsItem.label}
+              </Typography>
             </Link>
           );
         }
