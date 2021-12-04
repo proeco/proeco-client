@@ -20,7 +20,7 @@ const Template: ComponentStory<typeof Breadcrumbs> = ({ ...rest }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  BreadcrumbsItems: [
+  breadcrumbsItems: [
     {
       url: '/teamId',
       label: 'チーム',

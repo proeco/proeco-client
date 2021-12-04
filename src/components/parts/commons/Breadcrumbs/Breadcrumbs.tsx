@@ -4,28 +4,28 @@ import { Breadcrumbs as MuiBreadcrumbs } from '@mui/material';
 import { Link, Typography } from '~/components/parts/commons';
 
 type Props = {
-  BreadcrumbsItems: Array<{
+  breadcrumbsItems: Array<{
     url?: string;
     label: string;
   }>;
 };
 
-export const Breadcrumbs: VFC<Props> = ({ BreadcrumbsItems }) => {
+export const Breadcrumbs: VFC<Props> = ({ breadcrumbsItems }) => {
   return (
     <MuiBreadcrumbs separator="›" aria-label="breadcrumb">
-      {BreadcrumbsItems.map((BreadcrumbsItem, i) => {
-        if (BreadcrumbsItem.url) {
+      {breadcrumbsItems.map((breadcrumbsItem, i) => {
+        if (breadcrumbsItem.url) {
           return (
-            <Link href={BreadcrumbsItem.url} key={i}>
+            <Link href={breadcrumbsItem.url} key={i}>
               <Typography variant="caption" color="primary.main">
-                {BreadcrumbsItem.label}
+                {breadcrumbsItem.label}
               </Typography>
             </Link>
           );
         }
         return (
           <Typography variant="caption" key={i}>
-            {BreadcrumbsItem.label}
+            {breadcrumbsItem.label}
           </Typography>
         );
       })}
