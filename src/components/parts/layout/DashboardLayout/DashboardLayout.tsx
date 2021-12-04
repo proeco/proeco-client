@@ -1,4 +1,4 @@
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 import { FC } from 'react';
 import { UserSideBar } from '../../../domains/user/UserSideBar';
 import { LoginRequiredWrapper } from '~/components/parts/authentication/LoginRequiredWrapper';
@@ -10,8 +10,19 @@ export const DashBoardLayout: FC = ({ children }) => {
         <Box flexShrink={1}>
           <UserSideBar />
         </Box>
-        <Box width="100%">{children}</Box>
+        <StyledBox width="100%" p={5}>
+          {children}
+        </StyledBox>
       </Box>
     </LoginRequiredWrapper>
   );
 };
+
+const StyledBox = styled(Box)`
+  /*
+   * モバイルではサイドバーを表示しない
+   */
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm}px) {
+    padding: 12px;
+  }
+`;
