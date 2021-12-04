@@ -102,9 +102,8 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
         if (SelectedEmojiId === emojiId) return;
 
-        const result = await restClient.apiPut<Reaction>('/reactions', {
+        const result = await restClient.apiPut<Reaction>(`/reactions/${currentStoryPost.currentUserReaction._id}`, {
           reaction: {
-            ...currentStoryPost.currentUserReaction,
             emojiId,
           },
         });
