@@ -13,20 +13,19 @@ import { Modal, SelectableEmoji, Button, Typography, TextField } from '~/compone
 import { useStories } from '~/stores/story';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { URLS } from '~/constants';
 
 type Props = {
   isOpen: boolean;
   onCloseModal: () => void;
+  teamId: string;
 };
 
-export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal }) => {
+export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId }) => {
   const router = useRouter();
-  const { teamId } = router.query;
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { mutate: mutateStories } = useStories({
-    teamId: teamId as string,
+    teamId,
     page,
     limit: 10,
   });
@@ -47,7 +46,7 @@ export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal }) => {
 
   const handleClickCreateNewStoryButton = async () => {
     try {
-      const { data } = await restClient.apiPost<Story>('/stories', {
+      await restClient.apiPost<Story>('/stories', {
         story: newStory,
         teamId,
       });
@@ -60,11 +59,9 @@ export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal }) => {
       setNewStory({
         emojiId: 'open_file_folder',
         title: '',
-        teamId: teamId as string,
+        teamId,
       });
 
-      // 作成後に作成したstoryの詳細ページに遷移する
-      router.push(URLS.TEAMS_STORY(teamId as string, data._id));
       onCloseModal();
     } catch (error) {
       notifyErrorMessage('ストーリーの作成に失敗しました!');

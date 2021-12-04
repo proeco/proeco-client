@@ -17,12 +17,12 @@ const limit = 10;
 
 const StoryList: ProecoNextPage = () => {
   const router = useRouter();
-  const { teamId } = router.query;
+  const teamId = router.query.teamId as string;
 
   const [isOpenCreateNewStoryModal, setIsOpeCreateNewStoryModal] = useState(false);
   const [page, setPage] = useState(1);
   const { data: stories } = useStories({
-    teamId: teamId as string,
+    teamId,
     page,
     limit,
   });
@@ -52,10 +52,10 @@ const StoryList: ProecoNextPage = () => {
             ストーリーを追加する
           </Button>
         </Box>
-        <StoryListTable page={page} limit={limit} teamId={teamId as string} />
+        <StoryListTable page={page} limit={limit} teamId={teamId} />
         <StyledPagination count={count} page={page} onChange={handleChangePage} />
       </Box>
-      <CreateNewStoryModal isOpen={isOpenCreateNewStoryModal} onCloseModal={() => setIsOpeCreateNewStoryModal(false)} />
+      <CreateNewStoryModal isOpen={isOpenCreateNewStoryModal} onCloseModal={() => setIsOpeCreateNewStoryModal(false)} teamId={teamId} />
     </>
   );
 };

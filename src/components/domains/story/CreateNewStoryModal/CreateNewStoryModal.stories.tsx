@@ -25,4 +25,5 @@ export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
   onCloseModal: action('onCloseModal'),
+  teamId: 'team1',
 };
