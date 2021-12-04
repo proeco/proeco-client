@@ -8,10 +8,10 @@ import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { Button, Pagination, Typography, Icon } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
-import { useIsOpenCreateNewStoryModal } from '~/stores/modal/useIsOpenCreateNewStory';
 import { useStories } from '~/stores/story';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
+import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
 
 const limit = 10;
 
@@ -19,13 +19,13 @@ const StoryList: ProecoNextPage = () => {
   const router = useRouter();
   const { teamId } = router.query;
 
+  const [isOpenCreateNewStoryModal, setIsOpeCreateNewStoryModal] = useState(false);
   const [page, setPage] = useState(1);
   const { data: stories } = useStories({
     teamId: teamId as string,
     page,
     limit,
   });
-  const { mutate: mutateIsOpenCreateNewStoryModal } = useIsOpenCreateNewStoryModal();
 
   const count = stories ? stories.totalPages : 1;
 
@@ -36,7 +36,7 @@ const StoryList: ProecoNextPage = () => {
   };
 
   const handleClickCreateStoryButton = () => {
-    mutateIsOpenCreateNewStoryModal(true);
+    setIsOpeCreateNewStoryModal(true);
   };
 
   return (
@@ -55,6 +55,7 @@ const StoryList: ProecoNextPage = () => {
         <StoryListTable page={page} limit={limit} teamId={teamId as string} />
         <StyledPagination count={count} page={page} onChange={handleChangePage} />
       </Box>
+      <CreateNewStoryModal isOpen={isOpenCreateNewStoryModal} onCloseModal={() => setIsOpeCreateNewStoryModal(false)} />
     </>
   );
 };
