@@ -1,6 +1,6 @@
 {
   "name": "proeco-client",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": false,
   "author": "itizawa <itizawa.pen@gmail.com>",
   "homepage": "https://github.com/proeco/proeco#readme",
@@ -22,12 +22,12 @@
     "@firebase/app": "0.7.9",
     "@firebase/auth": "0.19.3",
     "@mui/icons-material": "5.2.0",
-    "@mui/lab": "5.0.0-alpha.57",
-    "@mui/material": "5.2.1",
+    "@mui/lab": "5.0.0-alpha.58",
+    "@mui/material": "5.2.2",
     "@mui/styled-engine-sc": "5.1.0",
     "@mui/types": "7.1.0",
     "axios": "0.24.0",
-    "date-fns": "2.26.0",
+    "date-fns": "2.27.0",
     "emoji-mart": "3.0.1",
     "github-markdown-css": "5.0.0",
     "modern-css-reset": "1.4.0",
@@ -38,10 +38,10 @@
     "react": "latest",
     "react-dom": "17.0.2",
     "react-image-crop": "9.0.5",
-    "react-markdown": "7.1.0",
+    "react-markdown": "7.1.1",
     "react-syntax-highlighter": "15.4.5",
     "remark-gfm": "3.0.1",
-    "swr": "1.0.1"
+    "swr": "1.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",
@@ -55,17 +55,17 @@
     "@types/emoji-mart": "3.0.8",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/jest": "27.0.3",
-    "@types/node": "16.11.10",
+    "@types/node": "16.11.11",
     "@types/react": "17.0.37",
     "@types/react-beautiful-dnd": "13.1.2",
     "@types/react-copy-to-clipboard": "5.0.2",
     "@types/react-test-renderer": "17.0.1",
     "@types/socket.io-client": "3.0.0",
-    "@types/styled-components": "5.1.15",
+    "@types/styled-components": "5.1.16",
     "@types/throttle-debounce": "2.1.0",
     "@types/toastr": "2.1.39",
     "@typescript-eslint/eslint-plugin": "rc-v5",
-    "@typescript-eslint/parser": "5.4.0",
+    "@typescript-eslint/parser": "5.5.0",
     "babel-loader": "8.2.3",
     "babel-preset-react-app": "10.0.0",
     "enzyme": "3.11.0",
@@ -84,7 +84,7 @@
     "jest": "27.3.1",
     "jest-styled-components": "7.0.8",
     "msw": "0.35.0",
-    "msw-storybook-addon": "1.4.1",
+    "msw-storybook-addon": "1.5.0",
     "npm-run-all": "4.1.5",
     "prettier": "2.5.0",
     "react-test-renderer": "17.0.2",
@@ -93,5 +93,8 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "volta": {
+    "node": "16.13.1"
   }
 }

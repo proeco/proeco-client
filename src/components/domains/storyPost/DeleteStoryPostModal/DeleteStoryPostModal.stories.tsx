@@ -2,7 +2,6 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { SnackbarProvider } from 'notistack';
 import { DeleteStoryPostModal } from './DeleteStoryPostModal';
 
 export default {
@@ -16,11 +15,9 @@ export default {
 
 const Template: ComponentStory<typeof DeleteStoryPostModal> = (args) => {
   return (
-    <SnackbarProvider>
-      <Box>
-        <DeleteStoryPostModal {...args} />
-      </Box>
-    </SnackbarProvider>
+    <Box>
+      <DeleteStoryPostModal {...args} />
+    </Box>
   );
 };
 

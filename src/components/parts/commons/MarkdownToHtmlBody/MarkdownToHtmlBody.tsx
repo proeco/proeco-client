@@ -41,7 +41,7 @@ export const MarkdownToHtmlBody: VFC<Props> = ({ content }) => {
 const StyledMarkdownBody = styled(Box)`
   &.markdown-body {
     color: ${(props) => props.theme.palette.textColor.main};
-    background-color: #fff;
+    background-color: whitesmoke;
     p {
       white-space: pre-wrap;
     }

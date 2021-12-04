@@ -2,21 +2,22 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { Component } from './DeleteStoryModal';
+import { action } from '@storybook/addon-actions';
+import { DeleteStoryModal } from './DeleteStoryModal';
+import { createMockStory } from '~/mocks/domains';
 
 export default {
   title: 'domains/story/DeleteStoryModal',
-  component: Component,
+  component: DeleteStoryModal,
   argTypes: {
     onCloseModal: { action: 'onCloseModal' },
-    onClickDeleteStoryButton: { action: 'onClickDeleteStoryButton' },
   },
-} as ComponentMeta<typeof Component>;
+} as ComponentMeta<typeof DeleteStoryModal>;
 
-const Template: ComponentStory<typeof Component> = (args) => {
+const Template: ComponentStory<typeof DeleteStoryModal> = (args) => {
   return (
     <Box>
-      <Component {...args} />
+      <DeleteStoryModal {...args} />
     </Box>
   );
 };
@@ -24,6 +25,8 @@ const Template: ComponentStory<typeof Component> = (args) => {
 export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
-  title: 'Webevのコメント機能を開発する',
-  emojiId: 'wrench',
+  onCloseModal: action('onCloseModal'),
+  teamId: 'team1',
+  page: 1,
+  story: createMockStory(),
 };
