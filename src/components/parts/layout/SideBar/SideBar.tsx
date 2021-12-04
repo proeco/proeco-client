@@ -136,9 +136,8 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
 
   /*
    * モバイルではサイドバーを表示しない
-   * TODO: Mixin を実装する
    */
-  @media (max-width: 425px) {
+  @media (max-width:  ${({ theme }) => theme.breakpoints.values.sm}px) {
     display: none;
   }
 `;
