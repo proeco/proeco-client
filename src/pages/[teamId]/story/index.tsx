@@ -55,7 +55,12 @@ const StoryList: ProecoNextPage = () => {
         <StoryListTable page={page} limit={limit} teamId={teamId} />
         <StyledPagination count={count} page={page} onChange={handleChangePage} />
       </Box>
-      <CreateNewStoryModal isOpen={isOpenCreateNewStoryModal} onCloseModal={() => setIsOpeCreateNewStoryModal(false)} teamId={teamId} />
+      <CreateNewStoryModal
+        isOpen={isOpenCreateNewStoryModal}
+        onCloseModal={() => setIsOpeCreateNewStoryModal(false)}
+        teamId={teamId}
+        page={page}
+      />
     </>
   );
 };

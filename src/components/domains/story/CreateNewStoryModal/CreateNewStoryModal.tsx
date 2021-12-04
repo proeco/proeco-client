@@ -1,5 +1,4 @@
 import React, { VFC, useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 import 'emoji-mart/css/emoji-mart.css';
 
@@ -18,16 +17,16 @@ type Props = {
   isOpen: boolean;
   onCloseModal: () => void;
   teamId: string;
+  page: number;
 };
 
-export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId }) => {
-  const router = useRouter();
-  const page = router.query.page ? Number(router.query.page) : 1;
+const limit = 10;
 
+export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, page }) => {
   const { mutate: mutateStories } = useStories({
     teamId,
     page,
-    limit: 10,
+    limit,
   });
 
   const { notifySuccessMessage } = useSuccessNotification();

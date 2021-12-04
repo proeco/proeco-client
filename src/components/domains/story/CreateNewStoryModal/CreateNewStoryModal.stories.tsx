@@ -26,4 +26,5 @@ OpenModal.args = {
   isOpen: true,
   onCloseModal: action('onCloseModal'),
   teamId: 'team1',
+  page: 1,
 };
