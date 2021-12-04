@@ -138,7 +138,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
                 </MenuItem>
                 <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
                   <ListItemIcon>
-                    <Icon icon="Delete" width="20px" color="textColor.main" />
+                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
                   </ListItemIcon>
                   削除する
                 </MenuItem>
