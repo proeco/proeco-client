@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
@@ -8,12 +8,11 @@ import { ListItemIcon, MenuItem } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
-import { useStoryForUpdate, useStoryForDelete } from '~/stores/story';
+import { useStoryForDelete } from '~/stores/story';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { COLORS } from '~/constants';
 
-import { useIsOpenUpdateStoryModal } from '~/stores/modal/useIsOpenUpdateStoryModal';
 import { useIsOpenDeleteStoryModal } from '~/stores/modal/useIsOpenDeleteStoryModal';
 import { useStory } from '~/stores/story/useStory';
 import { useStoryPosts } from '~/stores/storyPost';
@@ -28,6 +27,7 @@ import { Dropdown } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
 import { Reaction, StoryPost } from '~/domains';
+import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -36,18 +36,18 @@ type Props = {
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
 
-  const { storyId } = router.query;
+  const [isOpenUpdateStoryModal, setIsOpenUpdateStoryModal] = useState(false);
+  const teamId = router.query.teamId as string;
+  const storyId = router.query.storyId as string;
 
-  const currentStoryId = storyId as string;
-
-  const { data: story } = useStory(currentStoryId, storyFromServerSide);
+  const { data: story } = useStory(storyId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
   const { data: reactions } = useReactionsByUserId(currentUser?._id);
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
   const { data: storyPosts } = useStoryPosts({
-    storyId: currentStoryId,
+    storyId,
     page,
     limit: 10,
   });
@@ -62,16 +62,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     });
   }, [storyPosts, reactions]);
 
-  const { mutate: mutateIsOpenUpdateStoryModal } = useIsOpenUpdateStoryModal();
-  const { mutate: mutateStoryForUpdate } = useStoryForUpdate();
-
   const { mutate: mutateIsOpenDeleteStoryModal } = useIsOpenDeleteStoryModal();
   const { mutate: mutateStoryForDelete } = useStoryForDelete();
 
   const handleClickUpdate = () => {
     if (!story) return;
-    mutateIsOpenUpdateStoryModal(true);
-    mutateStoryForUpdate(story);
+    setIsOpenUpdateStoryModal(true);
   };
 
   const handleClickDelete = () => {
@@ -128,7 +124,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           {customStoryPosts.map((customStoryPost) => {
             return (
               <TimeLineItem key={customStoryPost._id} userAttachmentId={currentUser.iconImageId} userId={customStoryPost.createdUserId}>
-                <DisplayStoryPostPaper currentUser={currentUser} storyPost={customStoryPost} storyId={currentStoryId} page={page} />
+                <DisplayStoryPostPaper currentUser={currentUser} storyPost={customStoryPost} storyId={storyId} page={page} />
               </TimeLineItem>
             );
           })}
@@ -136,12 +132,19 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
             <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
               <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
               <Box width="100%">
-                <CreateNewStoryPostPaper storyId={currentStoryId} page={page} />
+                <CreateNewStoryPostPaper storyId={storyId} page={page} />
               </Box>
             </Box>
           )}
         </Box>
       </Box>
+      <UpdateStoryModal
+        isOpen={isOpenUpdateStoryModal}
+        onCloseModal={() => setIsOpenUpdateStoryModal(false)}
+        story={story}
+        teamId={teamId}
+        page={page}
+      />
     </>
   );
 };
