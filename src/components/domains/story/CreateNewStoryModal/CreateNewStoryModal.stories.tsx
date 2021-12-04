@@ -2,22 +2,21 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { Component } from './CreateNewStoryModal';
+import { action } from '@storybook/addon-actions';
+import { CreateNewStoryModal } from '.';
 
 export default {
   title: 'domains/story/CreateNewStoryModal',
-  component: Component,
+  component: CreateNewStoryModal,
   argTypes: {
-    onChangeStoryForm: { action: 'onChangeStoryForm' },
-    onClickCreateNewStoryButton: { action: 'onClickCreateNewStoryButton' },
     onCloseModal: { action: 'onCloseModal' },
   },
-} as ComponentMeta<typeof Component>;
+} as ComponentMeta<typeof CreateNewStoryModal>;
 
-const Template: ComponentStory<typeof Component> = (args) => {
+const Template: ComponentStory<typeof CreateNewStoryModal> = (args) => {
   return (
     <Box>
-      <Component {...args} />
+      <CreateNewStoryModal {...args} />
     </Box>
   );
 };
@@ -25,7 +24,5 @@ const Template: ComponentStory<typeof Component> = (args) => {
 export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
-  title: 'ここにタイトル',
-  emojiId: 'tada',
-  isDisabled: false,
+  onCloseModal: action('onCloseModal'),
 };
