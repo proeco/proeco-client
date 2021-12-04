@@ -1,7 +1,6 @@
 import { Box } from '@mui/system';
 import { FC } from 'react';
 import { useRouter } from 'next/router';
-import { DashboardModals } from '../DashboardModals';
 import { TeamSideBar } from '~/components/domains/team/TeamSideBar';
 import { LoginRequiredWrapper } from '~/components/parts/authentication/LoginRequiredWrapper';
 
@@ -21,7 +20,6 @@ export const TeamDashboardLayout: FC = ({ children }) => {
         <Box flexShrink={1}>{isString(teamId) && <TeamSideBar teamId={teamId} />}</Box>
         <Box width="100%">{children}</Box>
       </Box>
-      <DashboardModals />
     </LoginRequiredWrapper>
   );
 };

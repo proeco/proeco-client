@@ -138,7 +138,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
                 </MenuItem>
                 <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
                   <ListItemIcon>
-                    <Icon icon="Delete" width="20px" color="textColor.main" />
+                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
                   </ListItemIcon>
                   削除する
                 </MenuItem>
@@ -161,12 +161,14 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
               <MarkdownToHtmlBody content={content} />
             </Box>
             <Divider margin={0} />
-            <Box p="12px">
+            <Box p="12px" textAlign="center">
               <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
                 <Emoji emoji="bulb" size={12} />
                 リアクションを送信しましょう
               </Typography>
-              <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
+              <Box display="flex" justifyContent="center">
+                <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
+              </Box>
             </Box>
           </>
         )}

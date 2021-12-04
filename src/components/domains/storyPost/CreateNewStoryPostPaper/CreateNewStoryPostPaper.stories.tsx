@@ -2,7 +2,6 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { SnackbarProvider } from 'notistack';
 
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper';
 
@@ -13,11 +12,9 @@ export default {
 
 const Template: ComponentStory<typeof CreateNewStoryPostPaper> = ({ storyId, page }) => {
   return (
-    <SnackbarProvider>
-      <Box p="40px" bgcolor="#e5e5e5" width="600px">
-        <CreateNewStoryPostPaper storyId={storyId} page={page} />
-      </Box>
-    </SnackbarProvider>
+    <Box p="40px" bgcolor="#e5e5e5" width="600px">
+      <CreateNewStoryPostPaper storyId={storyId} page={page} />
+    </Box>
   );
 };
 
