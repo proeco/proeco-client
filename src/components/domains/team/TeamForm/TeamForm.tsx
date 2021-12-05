@@ -1,16 +1,22 @@
 import { useRouter } from 'next/router';
 import { VFC, useState, ChangeEvent, useEffect } from 'react';
 
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 import { Grid } from '@mui/material';
+
 import { TeamCard } from '../TeamCard';
+import { Ogp } from '~/interfaces/ogp';
 import { Attachment, Team, User } from '~/domains';
-import { TextField, Typography, Button, Icon, Paper, IconUpload } from '~/components/parts/commons';
-import { restClient } from '~/utils/rest-client';
-import { useSuccessNotification } from '~/hooks/useSuccessNotification';
-import { useErrorNotification } from '~/hooks/useErrorNotification';
+
 import { COLORS, URLS } from '~/constants';
 import { useTeamsRelatedUser } from '~/stores/team';
+import { isValidUrl } from '~/utils/isValidUrl';
+import { restClient } from '~/utils/rest-client';
+
+import { useSuccessNotification } from '~/hooks/useSuccessNotification';
+import { useErrorNotification } from '~/hooks/useErrorNotification';
+
+import { TextField, Typography, Button, Icon, Paper, IconUpload } from '~/components/parts/commons';
 
 type Props = {
   currentUser: User;
@@ -32,6 +38,17 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
     description: '',
     iconImageId: '',
   });
+
+  const handleClickFetchByUrl = async () => {
+    try {
+      const {
+        data: { ogp },
+      } = await restClient.apiGet<{ ogp: Ogp }>(`/ogps?url=${team.url}`);
+      updateStoryForm({ description: ogp.description || '', name: ogp.siteName || '' });
+    } catch (error) {
+      notifyErrorMessage('データの取得に失敗しました');
+    }
+  };
 
   const handleClickCreateNewTeam = async () => {
     if (!iconImage) return null;
@@ -75,7 +92,14 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
   };
 
   useEffect(() => {
-    setIsValidForm(team.name.trim() !== '' && team.productId.trim() !== '' && team.productId.trim() !== '' && team.description.trim() !== '');
+    setIsValidForm(
+      isValidUrl(team.url) &&
+        team.name.trim() !== '' &&
+        team.productId.trim() !== '' &&
+        team.productId.trim() !== '' &&
+        team.iconImageId.trim() !== '' &&
+        team.description.trim() !== '',
+    );
   }, [team]);
 
   return (
@@ -88,7 +112,12 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
           <Typography mb={1} variant="body1" color="textColor.light">
             プロダクトの url
           </Typography>
-          <TextField fullWidth multiline value={team.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
+          <Box display="flex" alignItems="center" gap={1}>
+            <TextField fullWidth multiline value={team.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
+            <StyledButton color="primary" variant="contained" size="medium" disabled={!isValidUrl(team.url)} onClick={handleClickFetchByUrl}>
+              データ取得
+            </StyledButton>
+          </Box>
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             Product Id
           </Typography>
@@ -104,7 +133,7 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
             fullWidth
             multiline
             value={team.description}
-            rows={4}
+            rows={6}
             onChange={(e) => updateStoryForm({ description: e.target.value })}
           />
           <Box mt={4} textAlign="center">
@@ -129,3 +158,7 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
     </Grid>
   );
 };
+
+const StyledButton = styled(Button)`
+  white-space: nowrap;
+`;

@@ -15,5 +15,5 @@ import { restClient } from '~/utils/rest-client';
 export const useOgp = (url: string): SWRResponse<Ogp, Error> => {
   const key = `/ogps?url=${url}`;
 
-  return useSWRImmutable(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.ogp));
+  return useSWRImmutable(key, (endpoint: string) => restClient.apiGet<{ ogp: Ogp }>(endpoint).then((result) => result.data.ogp));
 };
