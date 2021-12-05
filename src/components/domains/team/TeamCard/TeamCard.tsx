@@ -17,14 +17,19 @@ type Props = {
 export const SkeltonTeamCard: VFC = () => {
   return (
     <StyledTeamCard>
-      <Box display="flex" alignItems="center" mb="8px">
-        <Box mr="8px">
-          <Skeleton variant="circular" width={40} height={40} />
+      <FixedImage />
+      <Box p={2}>
+        <Box display="flex" alignItems="center" p={2}>
+          <Box mr="8px">
+            <Skeleton variant="circular" width={40} height={40} />
+          </Box>
+          <Skeleton variant="text" width="100%" />
         </Box>
-        <Skeleton variant="text" width="100%" />
+        <Box>
+          <Skeleton variant="text" width="100%" />
+          <Skeleton variant="text" width="100%" />
+        </Box>
       </Box>
-      <Skeleton variant="text" width="100%" />
-      <Skeleton variant="text" width="100%" />
     </StyledTeamCard>
   );
 };
