@@ -1,5 +1,8 @@
-import useSWR, { SWRResponse } from 'swr';
+import { SWRResponse } from 'swr';
+import useImmutableSWR from 'swr/immutable';
+
 import { User } from '~/domains';
+import { PaginationResult } from '~/interfaces';
 import { restClient } from '~/utils/rest-client';
 
 /**
@@ -11,7 +14,7 @@ import { restClient } from '~/utils/rest-client';
  */
 export const useTeamUsers = ({ teamId }: { teamId?: string }): SWRResponse<User[], Error> => {
   const key = teamId ? `/teams/${teamId}/users` : null;
-  return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.docs), {
+  return useImmutableSWR(key, (endpoint: string) => restClient.apiGet<PaginationResult<User>>(endpoint).then((result) => result.data.docs), {
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
   });

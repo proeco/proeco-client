@@ -1,5 +1,5 @@
 import { SWRResponse } from 'swr';
-import useSWRImmutable from 'swr/immutable';
+import useImmutableSWR from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
 import { Team } from '~/domains';
@@ -13,7 +13,7 @@ import { PaginationResult } from '~/interfaces';
  * @returns mutate データの更新関数
  */
 export const useTeams = ({ page = 1, limit = 10 }: { page: number; limit?: 10 }): SWRResponse<PaginationResult<Team>, Error> => {
-  return useSWRImmutable(`/teams?page=${page}&limit=${limit}`, (endpoint: string) =>
-    restClient.apiGet(endpoint).then((result) => result.data),
+  return useImmutableSWR(`/teams?page=${page}&limit=${limit}`, (endpoint: string) =>
+    restClient.apiGet<PaginationResult<Team>>(endpoint).then((result) => result.data),
   );
 };

@@ -1,7 +1,9 @@
-import useSWR, { SWRResponse } from 'swr';
+import { SWRResponse } from 'swr';
+import useImmutableSWR from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains';
+import { PaginationResult } from '~/interfaces';
 
 /**
  * SideBarで使用する複数ストーリーを取得するSWR
@@ -20,15 +22,9 @@ export const useStoriesForSideBar = ({
   limit: 3;
 }): SWRResponse<{ totalDocs: number; stories: Story[] }, Error> => {
   const key = userId ? `/stories?userId=${userId}&page=${page}&limit=${limit}` : null;
-  return useSWR(
-    key,
-    (endpoint: string) =>
-      restClient.apiGet(endpoint).then((result) => {
-        return { totalDocs: result.data.totalDocs, stories: result.data.docs };
-      }),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: true,
-    },
+  return useImmutableSWR(key, (endpoint: string) =>
+    restClient.apiGet<PaginationResult<Story>>(endpoint).then((result) => {
+      return { totalDocs: result.data.totalDocs, stories: result.data.docs };
+    }),
   );
 };
