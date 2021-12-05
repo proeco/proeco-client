@@ -87,7 +87,7 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
       updateStoryForm({ iconImageId: attachment._id });
       setIconImage(file);
     } catch (error) {
-      notifyErrorMessage('チームの作成に失敗しました');
+      notifyErrorMessage('ファイルのアップロードに失敗しました');
     }
   };
 
