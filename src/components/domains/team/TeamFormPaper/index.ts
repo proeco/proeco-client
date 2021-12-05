@@ -1,1 +1,0 @@
-export { TeamFormPaper } from './TeamFormPaper';

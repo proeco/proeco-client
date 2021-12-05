@@ -36,6 +36,7 @@ const Home: NextPage = () => {
               <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
                 <TeamCard
                   name={team.name}
+                  productId={team.productId}
                   description={team.description}
                   attachmentId={team.iconImageId}
                   url={team.url}
