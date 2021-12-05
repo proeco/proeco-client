@@ -42,6 +42,7 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
   return (
     <StyledDrawer variant="permanent" open={open}>
       <Box
+        mt="8px"
         position="absolute"
         width="100%"
         bgcolor="whitesmoke"
@@ -136,9 +137,8 @@ const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
 
   /*
    * モバイルではサイドバーを表示しない
-   * TODO: Mixin を実装する
    */
-  @media (max-width: 425px) {
+  @media (max-width:  ${({ theme }) => theme.breakpoints.values.sm}px) {
     display: none;
   }
 `;

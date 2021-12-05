@@ -1,4 +1,4 @@
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 import { FC } from 'react';
 import { useRouter } from 'next/router';
 import { TeamSideBar } from '~/components/domains/team/TeamSideBar';
@@ -18,8 +18,19 @@ export const TeamDashboardLayout: FC = ({ children }) => {
     <LoginRequiredWrapper>
       <Box display="flex">
         <Box flexShrink={1}>{isString(teamId) && <TeamSideBar teamId={teamId} />}</Box>
-        <Box width="100%">{children}</Box>
+        <StyledBox p="40px" width="100%">
+          {children}
+        </StyledBox>
       </Box>
     </LoginRequiredWrapper>
   );
 };
+
+const StyledBox = styled(Box)`
+  /*
+   * モバイルではサイドバーを表示しない
+   */
+  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm}px) {
+    padding: 12px;
+  }
+`;

@@ -3,6 +3,7 @@ import { memo, VFC, useState, useMemo } from 'react';
 import { AppBar, ListItemIcon, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+import { useRouter } from 'next/router';
 import { Dropdown } from '../../commons/Dropdown';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
@@ -12,7 +13,7 @@ import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 import { User } from '~/domains';
 
-import { IMAGE_PATH } from '~/constants';
+import { IMAGE_PATH, URLS } from '~/constants';
 import { useAuth } from '~/hooks/useAuth/useAuth';
 import { SkeltonUserIcon } from '~/components/domains/user/UserIcon/UserIcon';
 
@@ -104,8 +105,14 @@ const StyledUserIcon = styled(UserIcon)`
 `;
 
 export const NavigationBar: VFC = memo(() => {
+  const router = useRouter();
   const { login, logout } = useAuth();
   const menuItems = [
+    {
+      icon: <Icon icon="PersonOutline" color="textColor.main" width="20px" />,
+      text: 'ダッシュボード',
+      onClick: () => router.push(URLS.DASHBOARD),
+    },
     {
       icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
       text: 'Logout',

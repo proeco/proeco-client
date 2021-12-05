@@ -23,7 +23,7 @@ class RestClient {
     return cookies['access-token'];
   }
 
-  async apiGet(url: string, query = {}): Promise<AxiosResponse> {
+  async apiGet<T>(url: string, query = {}): Promise<AxiosResponse<T>> {
     const accessToken = this.getAccessToken();
     try {
       return await this.axios.get(`/api/v1${url}`, { ...query, headers: { Authorization: `Bearer ${accessToken}` } });

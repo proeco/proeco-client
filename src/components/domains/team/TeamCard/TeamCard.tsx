@@ -5,31 +5,38 @@ import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { Typography, Card } from '~/components/parts/commons';
 import { useOgp } from '~/stores/ogp';
 import { FixedImage } from '~/components/parts/commons/FixedImage';
+import { COLORS } from '~/constants';
 
 type Props = {
   name: string;
+  productId: string;
   description: string;
   attachmentId: string;
   url: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export const SkeltonTeamCard: VFC = () => {
   return (
     <StyledTeamCard>
-      <Box display="flex" alignItems="center" mb="8px">
-        <Box mr="8px">
-          <Skeleton variant="circular" width={40} height={40} />
+      <FixedImage />
+      <Box p={2}>
+        <Box display="flex" alignItems="center" p={2}>
+          <Box mr="8px">
+            <Skeleton variant="circular" width={40} height={40} />
+          </Box>
+          <Skeleton variant="text" width="100%" />
         </Box>
-        <Skeleton variant="text" width="100%" />
+        <Box>
+          <Skeleton variant="text" width="100%" />
+          <Skeleton variant="text" width="100%" />
+        </Box>
       </Box>
-      <Skeleton variant="text" width="100%" />
-      <Skeleton variant="text" width="100%" />
     </StyledTeamCard>
   );
 };
 
-export const TeamCard: VFC<Props> = ({ name, description, attachmentId, url, onClick }) => {
+export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentId, url, onClick }) => {
   const { data: ogp } = useOgp(url);
 
   return (
@@ -40,6 +47,9 @@ export const TeamCard: VFC<Props> = ({ name, description, attachmentId, url, onC
           <TeamIcon size={50} attachmentId={attachmentId} />
           <Typography variant="body1" bold>
             {name}
+          </Typography>
+          <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
+            @{productId}
           </Typography>
         </Box>
         <StyledDescription mt={2} variant="caption" maximum_lines={2}>
