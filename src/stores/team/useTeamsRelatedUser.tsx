@@ -12,8 +12,10 @@ import { PaginationResult } from '~/interfaces';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useTeams = ({ page = 1, limit = 10 }: { page: number; limit?: 10 }): SWRResponse<PaginationResult<Team>, Error> => {
-  return useImmutableSWR(`/teams?page=${page}&limit=${limit}`, (endpoint: string) =>
-    restClient.apiGet<PaginationResult<Team>>(endpoint).then((result) => result.data),
-  );
+export const useTeamsRelatedUser = ({ userId }: { userId?: string }): SWRResponse<Team[], Error> => {
+  const key = userId ? `/teams/related-user?userId=${userId}` : null;
+  return useImmutableSWR(key, (endpoint: string) => restClient.apiGet<PaginationResult<Team>>(endpoint).then((result) => result.data.docs), {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+  });
 };

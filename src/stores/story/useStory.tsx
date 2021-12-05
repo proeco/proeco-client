@@ -1,4 +1,5 @@
-import useSWR, { SWRResponse } from 'swr';
+import { SWRResponse } from 'swr';
+import useImmutableSWR from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains';
@@ -11,9 +12,11 @@ import { Story } from '~/domains';
  * @returns mutate データの更新関数
  */
 export const useStory = (id?: string, fallbackData?: Story): SWRResponse<Story, Error> => {
-  return useSWR(id ? `/stories/${id}` : null, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data), {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-    fallbackData,
-  });
+  return useImmutableSWR(
+    id ? `/stories/${id}` : null,
+    (endpoint: string) => restClient.apiGet<Story>(endpoint).then((result) => result.data),
+    {
+      fallbackData,
+    },
+  );
 };

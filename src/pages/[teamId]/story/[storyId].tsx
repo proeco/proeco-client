@@ -89,7 +89,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   return (
     <>
       <ProecoOgpHead title={story.title} />
-      <Box p={5} mx="auto" maxWidth="1200px">
+      <Box mx="auto" maxWidth="1200px">
         <Box mb={4} display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center" gap="16px">
             <Emoji emojiId={story.emojiId} size={40} />

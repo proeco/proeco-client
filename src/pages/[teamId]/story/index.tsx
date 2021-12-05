@@ -42,7 +42,7 @@ const StoryList: ProecoNextPage = () => {
   return (
     <>
       <ProecoOgpHead />
-      <Box p={5} mx="auto" maxWidth="1200px">
+      <Box mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
             <Icon icon="HistoryEdu" width={32} />

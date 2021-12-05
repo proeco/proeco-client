@@ -1,5 +1,5 @@
 import { SWRResponse } from 'swr';
-import useSWRImmutable from 'swr/immutable';
+import useImmutableSWR from 'swr/immutable';
 import { Ogp } from '~/interfaces/ogp';
 
 import { restClient } from '~/utils/rest-client';
@@ -15,5 +15,5 @@ import { restClient } from '~/utils/rest-client';
 export const useOgp = (url: string): SWRResponse<Ogp, Error> => {
   const key = `/ogps?url=${url}`;
 
-  return useSWRImmutable(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.ogp));
+  return useImmutableSWR(key, (endpoint: string) => restClient.apiGet<{ ogp: Ogp }>(endpoint).then((result) => result.data.ogp));
 };

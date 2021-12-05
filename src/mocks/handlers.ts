@@ -3,7 +3,7 @@ import { getAttachmentById } from './api/attachment';
 import { getCurrentUser } from './api/user';
 import { getStories, postStories } from './api/stories';
 import { getStoryPosts, postStoryPost, deleteStoryPost } from './api/storyPost';
-import { getReaction, postReaction, putReaction } from './api/reaction';
+import { getReaction, postReaction, putReaction, deleteReaction } from './api/reaction';
 
 const generateRoute = (path: string) => {
   return `${process.env.NEXT_PUBLIC_BACKEND_URL_FROM_CLIENT}/api/v1${path}`;
@@ -24,4 +24,5 @@ export const handlers = [
   rest.get(generateRoute('/reactions'), getReaction),
   rest.post(generateRoute('/reactions'), postReaction),
   rest.put(generateRoute('/reactions'), putReaction),
+  rest.delete(generateRoute('/reactions'), deleteReaction),
 ];

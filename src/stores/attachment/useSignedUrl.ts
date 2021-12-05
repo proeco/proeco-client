@@ -1,5 +1,5 @@
 import { SWRResponse } from 'swr';
-import useSWRImmutable from 'swr/immutable';
+import useImmutableSWR from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
 import { Attachment } from '~/domains';
@@ -15,5 +15,7 @@ import { Attachment } from '~/domains';
 export const useSignedUrl = (attachmentId?: Attachment['_id']): SWRResponse<string, Error> => {
   const key = attachmentId ? `/attachments/${attachmentId}/signedUrl` : null;
 
-  return useSWRImmutable(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.signedUrl));
+  return useImmutableSWR(key, (endpoint: string) =>
+    restClient.apiGet<{ signedUrl: string }>(endpoint).then((result) => result.data.signedUrl),
+  );
 };
