@@ -100,7 +100,14 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
           return;
         }
 
-        if (SelectedEmojiId === emojiId) return;
+        if (SelectedEmojiId === emojiId) {
+          await restClient.apiDelete<Reaction>(`/reactions/${currentStoryPost.currentUserReaction._id}`);
+
+          setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: undefined });
+
+          setSelectedEmojiId('');
+          return;
+        }
 
         const result = await restClient.apiPut<Reaction>(`/reactions/${currentStoryPost.currentUserReaction._id}`, {
           reaction: {
