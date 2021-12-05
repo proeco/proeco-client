@@ -110,7 +110,7 @@ export const NavigationBar: VFC = memo(() => {
   const menuItems = [
     {
       icon: <Icon icon="PersonOutline" color="textColor.main" width="20px" />,
-      text: '個人設定画面',
+      text: 'ダッシュボード',
       onClick: () => router.push(URLS.DASHBOARD),
     },
     {
