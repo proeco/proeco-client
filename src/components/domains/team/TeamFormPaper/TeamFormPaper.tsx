@@ -41,8 +41,8 @@ export const TeamFormPaper: VFC<Props> = ({ currentUser }) => {
       });
       await restClient.apiPost<Team>('/teams', { team: { ...team, iconImageId: attachment._id } });
       notifySuccessMessage('チームを作成しました');
+      await mutateTeamsRelatedUser();
       router.push(URLS.DASHBOARD_TEAMS);
-      mutateTeamsRelatedUser();
       setIsCreating(false);
     } catch (error) {
       notifyErrorMessage('チームの作成に失敗しました');
