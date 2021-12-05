@@ -8,7 +8,7 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { URLS } from '~/constants';
 
-import { useTeams } from '~/stores/team';
+import { useTeamsRelatedUser } from '~/stores/team';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
@@ -18,7 +18,7 @@ import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 const DashboardTeamPage: ProecoNextPage = () => {
   const router = useRouter();
   const { data: currentUser } = useCurrentUser();
-  const { data: teams } = useTeams({
+  const { data: teams } = useTeamsRelatedUser({
     userId: currentUser?._id,
   });
 

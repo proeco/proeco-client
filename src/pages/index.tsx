@@ -36,6 +36,9 @@ const Home: NextPage = () => {
           Login
         </Button>
       )}
+      <Typography variant="h1" align="center" bold my={1}>
+        プロダクト一覧
+      </Typography>
     </>
   );
 };
