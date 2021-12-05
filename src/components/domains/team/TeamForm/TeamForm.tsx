@@ -25,23 +25,19 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
   const [isValidForm, setIsValidForm] = useState(true);
-  const [team, setTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description'>>({
+  const [team, setTeam] = useState<Pick<Team, 'name' | 'productId' | 'url' | 'description' | 'iconImageId'>>({
     productId: '',
     url: '',
     name: '',
     description: '',
+    iconImageId: '',
   });
 
   const handleClickCreateNewTeam = async () => {
     if (!iconImage) return null;
     setIsCreating(true);
     try {
-      const params = new FormData();
-      params.append('file', iconImage);
-      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/team-icons`, params, {
-        'Content-Type': 'multipart/form-data',
-      });
-      await restClient.apiPost<Team>('/teams', { team: { ...team, iconImageId: attachment._id } });
+      await restClient.apiPost<Team>('/teams', { team });
       notifySuccessMessage('チームを作成しました');
       await mutateTeamsRelatedUser();
       router.push(URLS.DASHBOARD_TEAMS);
@@ -60,12 +56,22 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
     });
   };
 
-  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;
     }
-
-    setIconImage(e.target.files[0]);
+    const file = e.target.files[0];
+    const params = new FormData();
+    try {
+      params.append('file', file);
+      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/team-icons`, params, {
+        'Content-Type': 'multipart/form-data',
+      });
+      updateStoryForm({ iconImageId: attachment._id });
+      setIconImage(file);
+    } catch (error) {
+      notifyErrorMessage('チームの作成に失敗しました');
+    }
   };
 
   useEffect(() => {
@@ -118,7 +124,7 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
         <Typography variant="h4" align="center" color={COLORS.TEXT} mb={2}>
           プレビュー
         </Typography>
-        <TeamCard name={team.name} url={team.url} description={team.description} />
+        <TeamCard name={team.name} productId={team.productId} url={team.url} description={team.description} attachmentId={team.iconImageId} />
       </Grid>
     </Grid>
   );
