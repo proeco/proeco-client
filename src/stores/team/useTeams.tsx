@@ -1,7 +1,9 @@
-import useSWR, { SWRResponse } from 'swr';
+import { SWRResponse } from 'swr';
+import useSWRImmutable from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
 import { Team } from '~/domains';
+import { PaginationResult } from '~/interfaces';
 
 /**
  * 複数チームを取得するSWR
@@ -10,10 +12,8 @@ import { Team } from '~/domains';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useTeams = ({ userId }: { userId?: string }): SWRResponse<Team[], Error> => {
-  const key = userId ? `/teams?userId=${userId}` : null;
-  return useSWR(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data.docs), {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-  });
+export const useTeams = ({ page = 1, limit = 10 }: { page: number; limit?: 10 }): SWRResponse<PaginationResult<Team>, Error> => {
+  return useSWRImmutable(`/teams?page=${page}&limit=${limit}`, (endpoint: string) =>
+    restClient.apiGet(endpoint).then((result) => result.data),
+  );
 };

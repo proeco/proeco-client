@@ -8,7 +8,7 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { URLS } from '~/constants';
 
-import { useTeams } from '~/stores/team';
+import { useTeamsRelatedUser } from '~/stores/team';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
@@ -18,7 +18,7 @@ import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 const DashboardTeamPage: ProecoNextPage = () => {
   const router = useRouter();
   const { data: currentUser } = useCurrentUser();
-  const { data: teams } = useTeams({
+  const { data: teams } = useTeamsRelatedUser({
     userId: currentUser?._id,
   });
 
@@ -37,10 +37,10 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </Box>
-        <Grid container rowSpacing="20px" columnSpacing="20px">
+        <Grid container>
           {teams ? (
             teams.map((team) => (
-              <Grid key={team._id} item xs={12} sm={6}>
+              <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
                 <TeamCard
                   name={team.name}
                   description={team.description}
@@ -51,7 +51,14 @@ const DashboardTeamPage: ProecoNextPage = () => {
               </Grid>
             ))
           ) : (
-            <SkeltonTeamCard />
+            <>
+              <Grid item xs={12} sm={6} px={1}>
+                <SkeltonTeamCard />
+              </Grid>
+              <Grid item xs={12} sm={6} px={1}>
+                <SkeltonTeamCard />
+              </Grid>
+            </>
           )}
         </Grid>
       </Box>
