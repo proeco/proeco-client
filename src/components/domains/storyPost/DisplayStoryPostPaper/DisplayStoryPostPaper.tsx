@@ -83,26 +83,45 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     setIsUpdate(true);
   };
 
-  const handleClickEmoji = useCallback(
+  const handlePostReaction = useCallback(
     async (emojiId: string) => {
       try {
-        if (!currentStoryPost.currentUserReaction) {
-          const result = await restClient.apiPost<Reaction>('/reactions', {
-            reaction: {
-              targetId: currentStoryPost._id,
-              emojiId,
-            },
-          });
+        const result = await restClient.apiPost<Reaction>('/reactions', {
+          reaction: {
+            targetId: currentStoryPost._id,
+            emojiId,
+          },
+        });
 
-          setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: result.data });
+        setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: result.data });
 
-          setSelectedEmojiId(emojiId);
-          return;
-        }
+        setSelectedEmojiId(emojiId);
+      } catch (error) {
+        notifyErrorMessage('リアクションの送信に失敗しました!');
+      }
+    },
+    [notifyErrorMessage, currentStoryPost, setCurrentStoryPost, setSelectedEmojiId],
+  );
 
-        if (SelectedEmojiId === emojiId) return;
+  const handleDeleteReaction = useCallback(
+    async (reactionId: string) => {
+      try {
+        await restClient.apiDelete<Reaction>(`/reactions/${reactionId}`);
 
-        const result = await restClient.apiPut<Reaction>(`/reactions/${currentStoryPost.currentUserReaction._id}`, {
+        setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: undefined });
+
+        setSelectedEmojiId('');
+      } catch (error) {
+        notifyErrorMessage('リアクションの取り消しに失敗しました!');
+      }
+    },
+    [notifyErrorMessage, setCurrentStoryPost, currentStoryPost, setSelectedEmojiId],
+  );
+
+  const handlePutReaction = useCallback(
+    async (emojiId: string, reactionId: string) => {
+      try {
+        const result = await restClient.apiPut<Reaction>(`/reactions/${reactionId}`, {
           reaction: {
             emojiId,
           },
@@ -110,10 +129,25 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
         setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: result.data });
         setSelectedEmojiId(emojiId);
       } catch (error) {
-        notifyErrorMessage('更新に失敗しました!');
+        notifyErrorMessage('リアクションの更新に失敗しました!');
       }
     },
-    [notifyErrorMessage, currentStoryPost, SelectedEmojiId],
+    [notifyErrorMessage, setCurrentStoryPost, currentStoryPost, setSelectedEmojiId],
+  );
+
+  const handleClickEmoji = useCallback(
+    (emojiId: string) => {
+      if (!currentStoryPost.currentUserReaction) {
+        return handlePostReaction(emojiId);
+      }
+
+      if (SelectedEmojiId === emojiId) {
+        return handleDeleteReaction(currentStoryPost.currentUserReaction._id);
+      }
+
+      handlePutReaction(emojiId, currentStoryPost.currentUserReaction._id);
+    },
+    [currentStoryPost, SelectedEmojiId, handlePostReaction, handleDeleteReaction, handlePutReaction],
   );
 
   return (

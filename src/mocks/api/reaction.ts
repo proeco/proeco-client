@@ -14,3 +14,7 @@ export const postReaction = (req: any, res: any, ctx: any) => {
 export const putReaction = (req: any, res: any, ctx: any) => {
   return res(ctx.status(200));
 };
+
+export const deleteReaction = (req: any, res: any, ctx: any) => {
+  return res(ctx.status(200));
+};
