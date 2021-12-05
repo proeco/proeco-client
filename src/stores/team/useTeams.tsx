@@ -2,7 +2,7 @@ import { SWRResponse } from 'swr';
 import useSWRImmutable from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
-import { Story } from '~/domains';
+import { Team } from '~/domains';
 import { PaginationResult } from '~/interfaces';
 
 /**
@@ -12,15 +12,8 @@ import { PaginationResult } from '~/interfaces';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useTeams = ({
-  teamId,
-  page = 1,
-  limit = 10,
-}: {
-  teamId?: string;
-  page: number;
-  limit?: 10;
-}): SWRResponse<PaginationResult<Story>, Error> => {
-  const key = teamId ? `/teams&page=${page}&limit=${limit}` : null;
-  return useSWRImmutable(key, (endpoint: string) => restClient.apiGet(endpoint).then((result) => result.data));
+export const useTeams = ({ page = 1, limit = 10 }: { page: number; limit?: 10 }): SWRResponse<PaginationResult<Team>, Error> => {
+  return useSWRImmutable(`/teams?page=${page}&limit=${limit}`, (endpoint: string) =>
+    restClient.apiGet(endpoint).then((result) => result.data),
+  );
 };
