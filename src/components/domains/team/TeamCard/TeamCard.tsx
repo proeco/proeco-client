@@ -11,7 +11,7 @@ type Props = {
   description: string;
   attachmentId: string;
   url: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export const SkeltonTeamCard: VFC = () => {
