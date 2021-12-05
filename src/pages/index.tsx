@@ -34,7 +34,7 @@ const Home: NextPage = () => {
         <Grid container maxWidth="900px" mx="auto">
           {teamList ? (
             teamList.docs.map((team) => (
-              <Grid key={team._id} item xs={12} sm={6} px={1} pb={1}>
+              <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
                 <TeamCard
                   name={team.name}
                   description={team.description}

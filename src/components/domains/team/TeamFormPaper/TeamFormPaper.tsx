@@ -8,6 +8,7 @@ import { restClient } from '~/utils/rest-client';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { URLS } from '~/constants';
+import { useTeamsRelatedUser } from '~/stores/team';
 
 type Props = {
   currentUser: User;
@@ -17,6 +18,7 @@ export const TeamFormPaper: VFC<Props> = ({ currentUser }) => {
   const router = useRouter();
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
+  const { mutate: mutateTeamsRelatedUser } = useTeamsRelatedUser({ userId: currentUser._id });
 
   const [isCreating, setIsCreating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
@@ -40,6 +42,7 @@ export const TeamFormPaper: VFC<Props> = ({ currentUser }) => {
       await restClient.apiPost<Team>('/teams', { team: { ...team, iconImageId: attachment._id } });
       notifySuccessMessage('チームを作成しました');
       router.push(URLS.DASHBOARD_TEAMS);
+      mutateTeamsRelatedUser();
       setIsCreating(false);
     } catch (error) {
       notifyErrorMessage('チームの作成に失敗しました');
