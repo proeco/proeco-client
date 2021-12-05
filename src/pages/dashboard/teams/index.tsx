@@ -37,10 +37,10 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </Box>
-        <Grid container rowSpacing="20px" columnSpacing="20px">
+        <Grid container>
           {teams ? (
             teams.map((team) => (
-              <Grid key={team._id} item xs={12} sm={6}>
+              <Grid key={team._id} item xs={12} sm={6} px={1} pb={1}>
                 <TeamCard
                   name={team.name}
                   description={team.description}
@@ -51,7 +51,14 @@ const DashboardTeamPage: ProecoNextPage = () => {
               </Grid>
             ))
           ) : (
-            <SkeltonTeamCard />
+            <>
+              <Grid item xs={12} sm={6} px={1}>
+                <SkeltonTeamCard />
+              </Grid>
+              <Grid item xs={12} sm={6} px={1}>
+                <SkeltonTeamCard />
+              </Grid>
+            </>
           )}
         </Grid>
       </Box>
