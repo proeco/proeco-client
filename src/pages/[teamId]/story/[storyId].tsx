@@ -135,6 +135,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
                   storyPost={customStoryPost}
                   storyId={storyId}
                   page={page}
+                  isEditMode={isBelongCurrentUser}
                 />
               </TimeLineItem>
             );

@@ -7,9 +7,10 @@ type Props = {
   userAttachmentId?: string;
   userId: string;
   children: React.ReactNode;
+  isConnect?: boolean;
 };
 
-export const TimeLineItem: VFC<Props> = ({ userAttachmentId, userId, children }) => {
+export const TimeLineItem: VFC<Props> = ({ userAttachmentId, userId, children, isConnect = true }) => {
   return (
     <StyledDiv>
       <TimelineItem>
@@ -17,7 +18,7 @@ export const TimeLineItem: VFC<Props> = ({ userAttachmentId, userId, children })
           <StyledTimeLineDot>
             {userAttachmentId ? <UserIcon size={40} attachmentId={userAttachmentId} userId={userId} /> : <GuestUserIcon size={40} />}
           </StyledTimeLineDot>
-          <StyledTimeLineConnector />
+          {isConnect && <StyledTimeLineConnector />}
         </TimelineSeparator>
         <StyledTimeLineContent>{children}</StyledTimeLineContent>
       </TimelineItem>
