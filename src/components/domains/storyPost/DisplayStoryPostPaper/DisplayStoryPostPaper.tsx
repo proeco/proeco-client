@@ -1,4 +1,4 @@
-import React, { VFC, useState, useCallback } from 'react';
+import React, { VFC, useState, useCallback, useRef } from 'react';
 import { Box, styled } from '@mui/system';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
@@ -27,6 +27,7 @@ import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
 import { COLORS, URLS } from '~/constants';
+import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
 
 type Props = {
   createdUserId?: string;
@@ -36,6 +37,7 @@ type Props = {
   teamId: string;
   storyId: string;
   page: number;
+  isScrollTarget?: boolean;
 };
 
 export const DisplayStoryPostPaper: VFC<Props> = ({
@@ -46,7 +48,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   teamId,
   storyId,
   page,
+  isScrollTarget = false,
 }) => {
+  const boxRef = useRef<HTMLDivElement>(null);
+
   const [currentStoryPost, setCurrentStoryPost] = useState(storyPost);
   const [content, setContent] = useState(currentStoryPost.content);
   const [isUpdate, setIsUpdate] = useState(false);
@@ -68,6 +73,12 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
+
+  useScrollToTargetElement({
+    enabled: isScrollTarget,
+    targetRef: boxRef,
+    scrollYOffset: 90,
+  });
 
   const handleCompleteEdit = async () => {
     try {
@@ -158,7 +169,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   return (
     <>
       <Paper padding={0}>
-        <Box p="12px">
+        <Box p="12px" ref={boxRef}>
           <StyledBox width="100%" display="flex" alignItems="center">
             {createdUserId && createdUserName ? (
               <Link href={'/user/' + createdUserId}>{createdUserName}</Link>
