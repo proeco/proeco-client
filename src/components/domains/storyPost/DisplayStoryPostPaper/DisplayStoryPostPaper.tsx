@@ -19,7 +19,7 @@ import {
   Divider,
 } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
-import { Reaction, StoryPost, User } from '~/domains';
+import { Reaction, StoryPost } from '~/domains';
 import 'github-markdown-css';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -28,7 +28,8 @@ import { useStoryPosts } from '~/stores/storyPost';
 import { COLORS } from '~/constants';
 
 type Props = {
-  currentUser: User;
+  createdUserId?: string;
+  createdUserName?: string;
   storyPost: StoryPost & { currentUserReaction?: Reaction };
   emojiIds?: string[];
   storyId: string;
@@ -36,7 +37,8 @@ type Props = {
 };
 
 export const DisplayStoryPostPaper: VFC<Props> = ({
-  currentUser,
+  createdUserId,
+  createdUserName,
   storyPost,
   emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'],
   storyId,
@@ -155,7 +157,12 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
       <Paper padding={0}>
         <Box p="12px">
           <StyledBox width="100%" display="flex" alignItems="center">
-            <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
+            {createdUserId && createdUserName ? (
+              <Link href={'/user/' + createdUserId}>{createdUserName}</Link>
+            ) : (
+              <Typography variant="body1">undefined</Typography>
+            )}
+
             <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
             <WrapDropdown>
               <Dropdown

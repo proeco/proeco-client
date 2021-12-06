@@ -26,6 +26,7 @@ import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplaySto
 import { Reaction, StoryPost } from '~/domains';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
+import { useTeamUsers } from '~/stores/team';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -41,6 +42,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   const { data: story } = useStory(storyId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
+  const { data: teamUsers = [] } = useTeamUsers({ teamId });
+
   const { data: reactions } = useReactionsByUserId(currentUser?._id);
 
   const page = router.query.page ? Number(router.query.page) : 1;
@@ -82,7 +85,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     },
   ];
 
-  if (!story || !storyPosts || !currentUser) {
+  if (!story || !storyPosts) {
     return null;
   }
 
@@ -115,9 +118,20 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
           {customStoryPosts.map((customStoryPost) => {
+            const createdStoryPostUser = teamUsers.find((teamUser) => teamUser._id === customStoryPost.createdUserId);
             return (
-              <TimeLineItem key={customStoryPost._id} userAttachmentId={currentUser.iconImageId} userId={customStoryPost.createdUserId}>
-                <DisplayStoryPostPaper currentUser={currentUser} storyPost={customStoryPost} storyId={storyId} page={page} />
+              <TimeLineItem
+                key={customStoryPost._id}
+                userAttachmentId={createdStoryPostUser?.iconImageId}
+                userId={customStoryPost.createdUserId}
+              >
+                <DisplayStoryPostPaper
+                  createdUserId={createdStoryPostUser?._id}
+                  createdUserName={createdStoryPostUser?.name}
+                  storyPost={customStoryPost}
+                  storyId={storyId}
+                  page={page}
+                />
               </TimeLineItem>
             );
           })}
