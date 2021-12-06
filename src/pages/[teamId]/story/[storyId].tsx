@@ -121,13 +121,14 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           )}
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
-          {customStoryPosts.map((customStoryPost) => {
+          {customStoryPosts.map((customStoryPost, i) => {
             const createdStoryPostUser = teamUsers.find((teamUser) => teamUser._id === customStoryPost.createdUserId);
             return (
               <TimeLineItem
                 key={customStoryPost._id}
                 userAttachmentId={createdStoryPostUser?.iconImageId}
                 userId={customStoryPost.createdUserId}
+                isConnect={i !== customStoryPosts.length - 1 || isBelongCurrentUser}
               >
                 <DisplayStoryPostPaper
                   createdUserId={createdStoryPostUser?._id}
