@@ -125,7 +125,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
                 userAttachmentId={createdStoryPostUser?.iconImageId}
                 userId={customStoryPost.createdUserId}
               >
-                <DisplayStoryPostPaper currentUser={createdStoryPostUser} storyPost={customStoryPost} storyId={storyId} page={page} />
+                <DisplayStoryPostPaper
+                  createdUserId={createdStoryPostUser?._id}
+                  createdUserName={createdStoryPostUser?.name}
+                  storyPost={customStoryPost}
+                  storyId={storyId}
+                  page={page}
+                />
               </TimeLineItem>
             );
           })}

@@ -26,7 +26,8 @@ const mockStoryPost = createMockStoryPost({
 
 export const Default = Template.bind({});
 Default.args = {
-  currentUser: mockUser,
+  createdUserId: mockUser._id,
+  createdUserName: mockUser.name,
   storyPost: mockStoryPost,
   storyId: 'story1',
   page: 1,
