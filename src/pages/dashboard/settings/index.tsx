@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
 import { Button, Icon, IconUpload, Paper, TextField, Typography } from '~/components/parts/commons';
-import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
+import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { User } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -121,7 +121,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
   );
 };
 
-const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>;
+const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 
 DashboardSettingsPage.getLayout = getLayout;
 export default DashboardSettingsPage;

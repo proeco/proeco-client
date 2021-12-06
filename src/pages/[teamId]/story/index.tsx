@@ -10,7 +10,7 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { useStories } from '~/stores/story';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
-import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
+import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
 
 const limit = 10;
@@ -72,7 +72,7 @@ const StyledPagination = styled(Pagination)`
   justify-content: center;
 `;
 
-const getLayout = (page: ReactNode) => <TeamDashboardLayout>{page}</TeamDashboardLayout>;
+const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 StoryList.getLayout = getLayout;
 
 export default StoryList;
