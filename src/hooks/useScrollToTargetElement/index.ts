@@ -1,0 +1,1 @@
+export { useScrollToTargetElement } from './useScrollToTargetElement';

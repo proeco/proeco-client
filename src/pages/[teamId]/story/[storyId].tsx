@@ -39,6 +39,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const [isOpenDeleteStoryModal, setIsOpenDeleteStoryModal] = useState(false);
   const teamId = router.query.teamId as string;
   const storyId = router.query.storyId as string;
+  const storyPostId = router.query.storyPostId as string;
 
   const { data: story } = useStory(storyId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
@@ -129,8 +130,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
                   createdUserId={createdStoryPostUser?._id}
                   createdUserName={createdStoryPostUser?.name}
                   storyPost={customStoryPost}
+                  teamId={teamId}
                   storyId={storyId}
                   page={page}
+                  isScrollTarget={storyPostId === customStoryPost._id}
                 />
               </TimeLineItem>
             );
