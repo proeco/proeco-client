@@ -15,8 +15,11 @@ import { Team } from '~/domains';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
 import { useStories } from '~/stores/story';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { extractHash } from '~/utils/extractHash/extractHash';
+import { TeamForm } from '~/components/domains/team/TeamForm';
 
 const TabTypes = { HOME: 'home', STORY: 'story', SETTINGS: 'settings' };
 type TabTypes = typeof TabTypes[keyof typeof TabTypes];
@@ -28,6 +31,7 @@ const limit = 10;
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const router = useRouter();
+  const { data: currentUser } = useCurrentUser();
   const [activeTab, setActiveTab] = useState<TabTypes>(TabTypes.HOME);
 
   useEffect(() => {
@@ -78,7 +82,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   return (
     <>
       <ProecoOgpHead title={`${team.name}のホーム`} />
-      <Box mx="auto">
+      <Box mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" gap={2}>
           <TeamIcon attachmentId={team.iconImageId} size={80} />
           <Typography variant="h1" maximum_lines={1}>
@@ -93,24 +97,17 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
           </StyledTabList>
           <TabPanel value={TabTypes.HOME}>HOME</TabPanel>
           <TabPanel value={TabTypes.STORY}>
-            <Box mx="auto">
-              <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-                <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
-                  <Icon icon="HistoryEdu" width={32} />
-                  ストーリーリスト
-                </Typography>
-                <Button
-                  variant="contained"
-                  bold
-                  onClick={handleClickCreateStoryButton}
-                  startIcon={<Icon icon="CreateOutlined" width="20px" />}
-                >
-                  ストーリーを追加する
-                </Button>
-              </Box>
-              <StoryListTable page={page} limit={limit} teamId={team._id} />
-              <StyledPagination count={count} page={page} onChange={handleChangePage} />
+            <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
+              <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+                <Icon icon="HistoryEdu" width={32} />
+                ストーリーリスト
+              </Typography>
+              <Button variant="contained" bold onClick={handleClickCreateStoryButton} startIcon={<Icon icon="CreateOutlined" width="20px" />}>
+                ストーリーを追加する
+              </Button>
             </Box>
+            <StoryListTable page={page} limit={limit} teamId={team._id} />
+            <StyledPagination count={count} page={page} onChange={handleChangePage} />
             <CreateNewStoryModal
               isOpen={isOpenCreateNewStoryModal}
               onCloseModal={() => setIsOpeCreateNewStoryModal(false)}
@@ -118,7 +115,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
               page={page}
             />
           </TabPanel>
-          <TabPanel value={TabTypes.SETTINGS}>SETTINGS</TabPanel>
+          <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamForm currentUser={currentUser} />}</TabPanel>
         </TabContext>
       </Box>
     </>
