@@ -28,7 +28,7 @@ import { useStoryPosts } from '~/stores/storyPost';
 import { COLORS } from '~/constants';
 
 type Props = {
-  currentUser: User;
+  currentUser?: User;
   storyPost: StoryPost & { currentUserReaction?: Reaction };
   emojiIds?: string[];
   storyId: string;
@@ -155,7 +155,11 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
       <Paper padding={0}>
         <Box p="12px">
           <StyledBox width="100%" display="flex" alignItems="center">
-            <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
+            {currentUser ? (
+              <Link href={'/user/' + currentUser._id}>{currentUser.name}</Link>
+            ) : (
+              <Typography variant="body1">undefined</Typography>
+            )}
             <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
             <WrapDropdown>
               <Dropdown
