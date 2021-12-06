@@ -5,7 +5,7 @@
 
 ## Storybook
 
-https://www.chromatic.com/library?appId=6155d2674d764a003a604326
+https://proeco.github.io/proeco-client
 
 ## Figma
 https://www.figma.com/file/TV4X2FZMvGLdZpOKVBxIWN/プロエコ?node-id=0%3A1
