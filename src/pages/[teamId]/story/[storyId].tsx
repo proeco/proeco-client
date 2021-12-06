@@ -34,6 +34,7 @@ type Props = {
 
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
+  console.log(router);
 
   const [isOpenUpdateStoryModal, setIsOpenUpdateStoryModal] = useState(false);
   const [isOpenDeleteStoryModal, setIsOpenDeleteStoryModal] = useState(false);
@@ -129,6 +130,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
                   createdUserId={createdStoryPostUser?._id}
                   createdUserName={createdStoryPostUser?.name}
                   storyPost={customStoryPost}
+                  teamId={teamId}
                   storyId={storyId}
                   page={page}
                 />

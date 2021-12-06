@@ -6,7 +6,8 @@ export const URLS = {
   DASHBOARD_SETTINGS: '/dashboard/settings',
   TEAMS: (teamId: string) => `/${teamId}`,
   TEAMS_STORIES: (teamId: string) => `/${teamId}/story`,
-  TEAMS_STORY: (teamId: string, storyId: string) => `/${teamId}/story/${storyId}`,
+  TEAMS_STORY: (teamId: string, storyId: string, storyPostId?: string) =>
+    `/${teamId}/story/${storyId}${storyPostId ? `#${storyPostId}` : ''}`,
   TEAMS_SETTING: (teamId: string) => `/${teamId}/settings`,
   TERMS: '#',
   PRIVACY_POLICY: '#',
