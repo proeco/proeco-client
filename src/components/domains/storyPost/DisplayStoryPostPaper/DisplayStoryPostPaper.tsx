@@ -170,6 +170,12 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
               >
+                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
+                  <ListItemIcon>
+                    <Icon icon="Link" width="20px" color={COLORS.TEXT} />
+                  </ListItemIcon>
+                  共有リンク
+                </MenuItem>
                 <MenuItem onClick={handleClickUpdate}>
                   <ListItemIcon>
                     <Icon icon="Update" width="20px" color="textColor.main" />
