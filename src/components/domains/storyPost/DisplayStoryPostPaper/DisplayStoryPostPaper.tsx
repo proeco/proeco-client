@@ -154,61 +154,59 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   return (
     <>
-      <Paper padding={0}>
-        <Box p="12px">
-          <StyledBox width="100%" display="flex" alignItems="center">
-            {createdUserId && createdUserName ? (
-              <Link href={'/user/' + createdUserId}>{createdUserName}</Link>
-            ) : (
-              <Typography variant="body1">undefined</Typography>
-            )}
-
-            <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
-            <WrapDropdown>
-              <Dropdown
-                toggle={<IconButton icon="MoreVert" width={20} />}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-              >
-                <MenuItem onClick={handleClickUpdate}>
-                  <ListItemIcon>
-                    <Icon icon="Update" width="20px" color="textColor.main" />
-                  </ListItemIcon>
-                  更新する
-                </MenuItem>
-                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
-                  <ListItemIcon>
-                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
-                  </ListItemIcon>
-                  削除する
-                </MenuItem>
-              </Dropdown>
-            </WrapDropdown>
-          </StyledBox>
-          {isUpdate && (
-            <Editor
-              isUpdateMode
-              content={content}
-              onChangeContent={setContent}
-              onCompleteEdit={handleCompleteEdit}
-              onClickCancelButton={handleClickCancelButton}
-            />
+      <Paper>
+        <StyledBox width="100%" display="flex" alignItems="center">
+          {createdUserId && createdUserName ? (
+            <Link href={'/user/' + createdUserId}>{createdUserName}</Link>
+          ) : (
+            <Typography variant="body1">undefined</Typography>
           )}
-        </Box>
+
+          <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
+          <WrapDropdown>
+            <Dropdown
+              toggle={<IconButton icon="MoreVert" width={20} />}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+              <MenuItem onClick={handleClickUpdate}>
+                <ListItemIcon>
+                  <Icon icon="Update" width="20px" color="textColor.main" />
+                </ListItemIcon>
+                更新する
+              </MenuItem>
+              <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
+                <ListItemIcon>
+                  <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
+                </ListItemIcon>
+                削除する
+              </MenuItem>
+            </Dropdown>
+          </WrapDropdown>
+        </StyledBox>
+        {isUpdate && (
+          <Editor
+            isUpdateMode
+            content={content}
+            onChangeContent={setContent}
+            onCompleteEdit={handleCompleteEdit}
+            onClickCancelButton={handleClickCancelButton}
+          />
+        )}
         {!isUpdate && (
           <>
-            <Box p="12px">
+            <Box p={2}>
               <MarkdownToHtmlBody content={content} />
             </Box>
-            <Divider margin={0} />
-            <Box p="12px" textAlign="center">
+            <Divider margin={20} />
+            <Box textAlign="center">
               <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
                 <Emoji emoji="bulb" size={12} />
                 リアクションを送信しましょう
               </Typography>
-              <Box display="flex" justifyContent="center">
-                <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
-              </Box>
+            </Box>
+            <Box display="flex" justifyContent="center">
+              <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
             </Box>
           </>
         )}
