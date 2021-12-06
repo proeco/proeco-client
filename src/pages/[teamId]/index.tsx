@@ -7,7 +7,7 @@ import { Box, styled } from '@mui/system';
 import { GetServerSideProps } from 'next';
 import { Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
+import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { restClient } from '~/utils/rest-client';
 import { Team } from '~/domains';
@@ -77,7 +77,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const getLayout = (page: ReactNode) => <TeamDashboardLayout>{page}</TeamDashboardLayout>;
+const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 
 Dashboard.getLayout = getLayout;
 export default Dashboard;
