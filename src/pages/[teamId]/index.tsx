@@ -69,8 +69,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   try {
     const { data: team } = await restClient.apiGet<Team>(`/teams/${teamId}`);
-    console.log(team);
-
     return { props: { team } };
   } catch (error) {
     return { props: {} };
