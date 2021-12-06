@@ -24,11 +24,18 @@ const mockStoryPost = createMockStoryPost({
   content: SAMPLE_MD,
 });
 
-export const Default = Template.bind({});
-Default.args = {
+export const EditModeDisplayStoryPostPaper = Template.bind({});
+EditModeDisplayStoryPostPaper.args = {
   createdUserId: mockUser._id,
   createdUserName: mockUser.name,
   storyPost: mockStoryPost,
   storyId: 'story1',
   page: 1,
+  isEditMode: true,
+};
+
+export const NotEditModeDisplayStoryPostPaper = Template.bind({});
+NotEditModeDisplayStoryPostPaper.args = {
+  ...EditModeDisplayStoryPostPaper.args,
+  isEditMode: false,
 };

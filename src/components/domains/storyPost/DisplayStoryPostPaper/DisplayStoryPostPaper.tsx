@@ -34,6 +34,7 @@ type Props = {
   emojiIds?: string[];
   storyId: string;
   page: number;
+  isEditMode?: boolean;
 };
 
 export const DisplayStoryPostPaper: VFC<Props> = ({
@@ -43,6 +44,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'],
   storyId,
   page,
+  isEditMode = true,
 }) => {
   const [currentStoryPost, setCurrentStoryPost] = useState(storyPost);
   const [content, setContent] = useState(currentStoryPost.content);
@@ -164,26 +166,28 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             )}
 
             <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
-            <WrapDropdown>
-              <Dropdown
-                toggle={<IconButton icon="MoreVert" width={20} />}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-              >
-                <MenuItem onClick={handleClickUpdate}>
-                  <ListItemIcon>
-                    <Icon icon="Update" width="20px" color="textColor.main" />
-                  </ListItemIcon>
-                  更新する
-                </MenuItem>
-                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
-                  <ListItemIcon>
-                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
-                  </ListItemIcon>
-                  削除する
-                </MenuItem>
-              </Dropdown>
-            </WrapDropdown>
+            {isEditMode && (
+              <WrapDropdown>
+                <Dropdown
+                  toggle={<IconButton icon="MoreVert" width={20} />}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                  <MenuItem onClick={handleClickUpdate}>
+                    <ListItemIcon>
+                      <Icon icon="Update" width="20px" color="textColor.main" />
+                    </ListItemIcon>
+                    更新する
+                  </MenuItem>
+                  <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
+                    <ListItemIcon>
+                      <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
+                    </ListItemIcon>
+                    削除する
+                  </MenuItem>
+                </Dropdown>
+              </WrapDropdown>
+            )}
           </StyledBox>
           {isUpdate && (
             <Editor

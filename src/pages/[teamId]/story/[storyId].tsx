@@ -44,6 +44,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId });
 
+  const isBelongCurrentUser = !!currentUser && !!teamUsers.find((teamUser) => teamUser._id === currentUser._id);
+
   const { data: reactions } = useReactionsByUserId(currentUser?._id);
 
   const page = router.query.page ? Number(router.query.page) : 1;
@@ -100,21 +102,23 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {story.title}
             </Typography>
           </Box>
-          <Dropdown
-            toggle={<Icon icon="MoreVert" width={24} />}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-            {menuItems.map((menuItem, i) => (
-              <MenuItem key={i} onClick={menuItem.onClick}>
-                <ListItemIcon>{menuItem.icon}</ListItemIcon>
-                {menuItem.text}
-              </MenuItem>
-            ))}
-          </Dropdown>
+          {isBelongCurrentUser && (
+            <Dropdown
+              toggle={<Icon icon="MoreVert" width={24} />}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              {menuItems.map((menuItem, i) => (
+                <MenuItem key={i} onClick={menuItem.onClick}>
+                  <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                  {menuItem.text}
+                </MenuItem>
+              ))}
+            </Dropdown>
+          )}
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
           {customStoryPosts.map((customStoryPost) => {
@@ -135,7 +139,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               </TimeLineItem>
             );
           })}
-          {currentUser && (
+          {isBelongCurrentUser && (
             <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
               <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
               <Box width="100%">
