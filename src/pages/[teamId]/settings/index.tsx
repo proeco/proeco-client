@@ -7,7 +7,7 @@ import { Icon, IconUpload, Paper, Typography } from '~/components/parts/commons'
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
-import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
+import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { Team } from '~/domains';
 import { useTeam } from '~/stores/team';
@@ -133,7 +133,7 @@ const TeamSettings: ProecoNextPage = () => {
   );
 };
 
-const getLayout = (page: ReactNode) => <TeamDashboardLayout>{page}</TeamDashboardLayout>;
+const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 TeamSettings.getLayout = getLayout;
 
 export default TeamSettings;

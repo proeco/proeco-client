@@ -18,7 +18,7 @@ import { useReactionsByUserId } from '~/stores/reaction';
 
 import { Emoji, Icon, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { TeamDashboardLayout } from '~/components/parts/layout/TeamDashboardLayout';
+import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
 import { Dropdown } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
@@ -174,7 +174,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const getLayout = (page: ReactNode) => <TeamDashboardLayout>{page}</TeamDashboardLayout>;
+const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 StoryPage.getLayout = getLayout;
 
 export default StoryPage;

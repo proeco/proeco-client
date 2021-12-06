@@ -6,7 +6,7 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { Typography, Icon } from '~/components/parts/commons';
-import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
+import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamForm } from '~/components/domains/team/TeamForm';
 
@@ -29,7 +29,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
   );
 };
 
-const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>;
+const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 
 DashboardTeamPage.getLayout = getLayout;
 export default DashboardTeamPage;
