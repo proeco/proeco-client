@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { Box } from '@mui/system';
 
-import { ListItemIcon, MenuItem } from '@mui/material';
+import { Grid, ListItemIcon, MenuItem } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
@@ -17,7 +17,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
-import { Emoji, Icon, TimeLineItem, Typography } from '~/components/parts/commons';
+import { Emoji, Icon, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
@@ -123,39 +123,44 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
             </Dropdown>
           )}
         </Box>
-        <Box my={4} maxWidth="600px" mx="auto">
-          {customStoryPosts.map((customStoryPost, i) => {
-            const createdStoryPostUser = teamUsers.find((teamUser) => teamUser._id === customStoryPost.createdUserId);
-            return (
-              <TimeLineItem
-                key={customStoryPost._id}
-                userAttachmentId={createdStoryPostUser?.iconImageId}
-                userId={customStoryPost.createdUserId}
-                // customStoryPostが最後の要素ではないか、またはCurrentUserがチームに属しているときにtrue
-                isConnect={i !== customStoryPosts.length - 1 || isMemberOfTeam}
-              >
-                <DisplayStoryPostPaper
-                  createdUserId={createdStoryPostUser?._id}
-                  createdUserName={createdStoryPostUser?.name}
-                  storyPost={customStoryPost}
-                  teamId={teamId}
-                  storyId={storyId}
-                  page={page}
-                  editable={isMemberOfTeam}
-                  isScrollTarget={storyPostId === customStoryPost._id}
-                />
-              </TimeLineItem>
-            );
-          })}
-          {isMemberOfTeam && (
-            <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
-              <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
-              <Box width="100%">
-                <CreateNewStoryPostPaper storyId={storyId} page={page} />
+        <Grid container>
+          <Grid xs={12} md={8} px={2} pb={3}>
+            {customStoryPosts.map((customStoryPost, i) => {
+              const createdStoryPostUser = teamUsers.find((teamUser) => teamUser._id === customStoryPost.createdUserId);
+              return (
+                <TimeLineItem
+                  key={customStoryPost._id}
+                  userAttachmentId={createdStoryPostUser?.iconImageId}
+                  userId={customStoryPost.createdUserId}
+                  // customStoryPostが最後の要素ではないか、またはCurrentUserがチームに属しているときにtrue
+                  isConnect={i !== customStoryPosts.length - 1 || isMemberOfTeam}
+                >
+                  <DisplayStoryPostPaper
+                    createdUserId={createdStoryPostUser?._id}
+                    createdUserName={createdStoryPostUser?.name}
+                    storyPost={customStoryPost}
+                    teamId={teamId}
+                    storyId={storyId}
+                    page={page}
+                    editable={isMemberOfTeam}
+                    isScrollTarget={storyPostId === customStoryPost._id}
+                  />
+                </TimeLineItem>
+              );
+            })}
+            {isMemberOfTeam && (
+              <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
+                <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
+                <Box width="100%">
+                  <CreateNewStoryPostPaper storyId={storyId} page={page} />
+                </Box>
               </Box>
-            </Box>
-          )}
-        </Box>
+            )}
+          </Grid>
+          <Grid xs={12} md={4} px={2} pb={3}>
+            <Paper>TODO</Paper>
+          </Grid>
+        </Grid>
       </Box>
       <UpdateStoryModal
         isOpen={isOpenUpdateStoryModal}
