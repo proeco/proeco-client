@@ -32,11 +32,11 @@ EditModeDisplayStoryPostPaper.args = {
   teamId: 'team1',
   storyId: 'story1',
   page: 1,
-  isEditMode: true,
+  editable: true,
 };
 
 export const NotEditModeDisplayStoryPostPaper = Template.bind({});
 NotEditModeDisplayStoryPostPaper.args = {
   ...EditModeDisplayStoryPostPaper.args,
-  isEditMode: false,
+  editable: false,
 };

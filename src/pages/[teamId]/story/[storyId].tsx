@@ -46,7 +46,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId });
 
-  const isBelongCurrentUser = !!(currentUser && teamUsers.find((teamUser) => teamUser._id === currentUser._id));
+  const isMemberOfTeam = !!(currentUser && teamUsers.find((teamUser) => teamUser._id === currentUser._id));
 
   const { data: reactions } = useReactionsByUserId(currentUser?._id);
 
@@ -105,7 +105,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {story.title}
             </Typography>
           </Box>
-          {isBelongCurrentUser && (
+          {isMemberOfTeam && (
             <Dropdown
               toggle={<Icon icon="MoreVert" width={24} />}
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -131,7 +131,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
                 key={customStoryPost._id}
                 userAttachmentId={createdStoryPostUser?.iconImageId}
                 userId={customStoryPost.createdUserId}
-                isConnect={i !== customStoryPosts.length - 1 || isBelongCurrentUser}
+                // customStoryPostが最後の要素ではないか、またはCurrentUserがチームに属しているときにtrue
+                isConnect={i !== customStoryPosts.length - 1 || isMemberOfTeam}
               >
                 <DisplayStoryPostPaper
                   createdUserId={createdStoryPostUser?._id}
@@ -140,13 +141,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
                   teamId={teamId}
                   storyId={storyId}
                   page={page}
-                  editable={isBelongCurrentUser}
+                  editable={isMemberOfTeam}
                   isScrollTarget={storyPostId === customStoryPost._id}
                 />
               </TimeLineItem>
             );
           })}
-          {isBelongCurrentUser && (
+          {isMemberOfTeam && (
             <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
               <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
               <Box width="100%">
