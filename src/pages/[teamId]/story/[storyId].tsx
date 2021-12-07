@@ -9,12 +9,13 @@ import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
-import { COLORS } from '~/constants';
+import { COLORS, URLS } from '~/constants';
 
 import { useStory } from '~/stores/story/useStory';
 import { useStoryPosts } from '~/stores/storyPost';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
+import { useTeamUsers } from '~/stores/team';
 
 import { Emoji, Icon, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -26,7 +27,7 @@ import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplaySto
 import { Reaction, StoryPost } from '~/domains';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
-import { useTeamUsers } from '~/stores/team';
+import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
 
 type Props = {
   storyFromServerSide?: Story;
@@ -94,7 +95,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     <>
       <ProecoOgpHead title={story.title} />
       <Box mx="auto" maxWidth="1200px">
-        <Box mb={4} display="flex" alignItems="center" justifyContent="space-between">
+        <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(teamId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
+        <Box mt={1} mb={4} display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center" gap="16px">
             <Emoji emojiId={story.emojiId} size={40} />
             <Typography variant="h2" bold>
