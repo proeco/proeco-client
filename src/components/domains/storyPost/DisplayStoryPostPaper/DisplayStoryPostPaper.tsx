@@ -37,6 +37,7 @@ type Props = {
   teamId: string;
   storyId: string;
   page: number;
+  editable?: boolean;
   isScrollTarget?: boolean;
 };
 
@@ -48,6 +49,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   teamId,
   storyId,
   page,
+  editable = false,
   isScrollTarget = false,
 }) => {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -175,39 +177,40 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
           ) : (
             <Typography variant="body1">undefined</Typography>
           )}
-
           <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
-          <WrapDropdown>
-            <Dropdown
-              toggle={<IconButton icon="MoreVert" width={20} />}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            >
-              <CopyToClipboard
-                text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(teamId, storyId, storyPost._id)}
-                onCopy={() => notifySuccessMessage('共有リンクをコピーしました')}
+          {editable && (
+            <WrapDropdown>
+              <Dropdown
+                toggle={<IconButton icon="MoreVert" width={20} />}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
               >
-                <MenuItem>
+                <CopyToClipboard
+                  text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(teamId, storyId, storyPost._id)}
+                  onCopy={() => notifySuccessMessage('共有リンクをコピーしました')}
+                >
+                  <MenuItem>
+                    <ListItemIcon>
+                      <Icon icon="Link" width="20px" color={COLORS.TEXT} />
+                    </ListItemIcon>
+                    共有リンク
+                  </MenuItem>
+                </CopyToClipboard>
+                <MenuItem onClick={handleClickUpdate}>
                   <ListItemIcon>
-                    <Icon icon="Link" width="20px" color={COLORS.TEXT} />
+                    <Icon icon="Update" width="20px" color="textColor.main" />
                   </ListItemIcon>
-                  共有リンク
+                  更新する
                 </MenuItem>
-              </CopyToClipboard>
-              <MenuItem onClick={handleClickUpdate}>
-                <ListItemIcon>
-                  <Icon icon="Update" width="20px" color="textColor.main" />
-                </ListItemIcon>
-                更新する
-              </MenuItem>
-              <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
-                <ListItemIcon>
-                  <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
-                </ListItemIcon>
-                削除する
-              </MenuItem>
-            </Dropdown>
-          </WrapDropdown>
+                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
+                  <ListItemIcon>
+                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
+                  </ListItemIcon>
+                  削除する
+                </MenuItem>
+              </Dropdown>
+            </WrapDropdown>
+          )}
         </StyledBox>
         {isUpdate && (
           <Editor

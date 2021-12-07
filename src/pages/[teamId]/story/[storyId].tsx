@@ -46,6 +46,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId });
 
+  const isMemberOfTeam = !!(currentUser && teamUsers.find((teamUser) => teamUser._id === currentUser._id));
+
   const { data: reactions } = useReactionsByUserId(currentUser?._id);
 
   const page = router.query.page ? Number(router.query.page) : 1;
@@ -103,30 +105,34 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               {story.title}
             </Typography>
           </Box>
-          <Dropdown
-            toggle={<Icon icon="MoreVert" width={24} />}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-            {menuItems.map((menuItem, i) => (
-              <MenuItem key={i} onClick={menuItem.onClick}>
-                <ListItemIcon>{menuItem.icon}</ListItemIcon>
-                {menuItem.text}
-              </MenuItem>
-            ))}
-          </Dropdown>
+          {isMemberOfTeam && (
+            <Dropdown
+              toggle={<Icon icon="MoreVert" width={24} />}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              {menuItems.map((menuItem, i) => (
+                <MenuItem key={i} onClick={menuItem.onClick}>
+                  <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                  {menuItem.text}
+                </MenuItem>
+              ))}
+            </Dropdown>
+          )}
         </Box>
         <Box my={4} maxWidth="600px" mx="auto">
-          {customStoryPosts.map((customStoryPost) => {
+          {customStoryPosts.map((customStoryPost, i) => {
             const createdStoryPostUser = teamUsers.find((teamUser) => teamUser._id === customStoryPost.createdUserId);
             return (
               <TimeLineItem
                 key={customStoryPost._id}
                 userAttachmentId={createdStoryPostUser?.iconImageId}
                 userId={customStoryPost.createdUserId}
+                // customStoryPostが最後の要素ではないか、またはCurrentUserがチームに属しているときにtrue
+                isConnect={i !== customStoryPosts.length - 1 || isMemberOfTeam}
               >
                 <DisplayStoryPostPaper
                   createdUserId={createdStoryPostUser?._id}
@@ -135,12 +141,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
                   teamId={teamId}
                   storyId={storyId}
                   page={page}
+                  editable={isMemberOfTeam}
                   isScrollTarget={storyPostId === customStoryPost._id}
                 />
               </TimeLineItem>
             );
           })}
-          {currentUser && (
+          {isMemberOfTeam && (
             <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
               <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
               <Box width="100%">
