@@ -178,39 +178,41 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             <Typography variant="body1">undefined</Typography>
           )}
           <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
-          {editable && (
-            <WrapDropdown>
-              <Dropdown
-                toggle={<IconButton icon="MoreVert" width={20} />}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          <WrapDropdown>
+            <Dropdown
+              toggle={<IconButton icon="MoreVert" width={20} />}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+              <CopyToClipboard
+                text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(teamId, storyId, storyPost._id)}
+                onCopy={() => notifySuccessMessage('共有リンクをコピーしました')}
               >
-                <CopyToClipboard
-                  text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(teamId, storyId, storyPost._id)}
-                  onCopy={() => notifySuccessMessage('共有リンクをコピーしました')}
-                >
-                  <MenuItem>
+                <MenuItem>
+                  <ListItemIcon>
+                    <Icon icon="Link" width="20px" color={COLORS.TEXT} />
+                  </ListItemIcon>
+                  共有リンク
+                </MenuItem>
+              </CopyToClipboard>
+              {editable && (
+                <>
+                  <MenuItem onClick={handleClickUpdate}>
                     <ListItemIcon>
-                      <Icon icon="Link" width="20px" color={COLORS.TEXT} />
+                      <Icon icon="Update" width="20px" color="textColor.main" />
                     </ListItemIcon>
-                    共有リンク
+                    更新する
                   </MenuItem>
-                </CopyToClipboard>
-                <MenuItem onClick={handleClickUpdate}>
-                  <ListItemIcon>
-                    <Icon icon="Update" width="20px" color="textColor.main" />
-                  </ListItemIcon>
-                  更新する
-                </MenuItem>
-                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
-                  <ListItemIcon>
-                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
-                  </ListItemIcon>
-                  削除する
-                </MenuItem>
-              </Dropdown>
-            </WrapDropdown>
-          )}
+                  <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
+                    <ListItemIcon>
+                      <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
+                    </ListItemIcon>
+                    削除する
+                  </MenuItem>
+                </>
+              )}
+            </Dropdown>
+          </WrapDropdown>
         </StyledBox>
         {isUpdate && (
           <Editor
