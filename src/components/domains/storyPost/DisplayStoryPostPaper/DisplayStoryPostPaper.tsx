@@ -168,6 +168,17 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     [currentStoryPost, SelectedEmojiId, handlePostReaction, handleDeleteReaction, handlePutReaction],
   );
 
+  const handleClickShareButton = useCallback(async () => {
+    if (window != null) {
+      const twitterUrl = new URL(
+        `https://twitter.com/intent/tweet?url=${
+          process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(teamId, storyId, storyPost._id)
+        }&hashtags=Proeco`,
+      );
+      window.open(twitterUrl.toString(), '_blank');
+    }
+  }, [storyId, storyPost._id, teamId]);
+
   return (
     <>
       <Paper>
@@ -195,6 +206,12 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
                   共有リンク
                 </MenuItem>
               </CopyToClipboard>
+              <MenuItem onClick={handleClickShareButton}>
+                <ListItemIcon>
+                  <Icon icon="Twitter" width="20px" color="textColor.main" />
+                </ListItemIcon>
+                共有
+              </MenuItem>
               {editable && (
                 <>
                   <MenuItem onClick={handleClickUpdate}>
