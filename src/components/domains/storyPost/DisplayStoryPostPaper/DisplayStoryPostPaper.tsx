@@ -1,4 +1,4 @@
-import React, { VFC, useState, useCallback } from 'react';
+import React, { VFC, useState, useCallback, useRef } from 'react';
 import { Box, styled } from '@mui/system';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
@@ -6,6 +6,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 
 import { Emoji } from 'emoji-mart';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
   Icon,
   IconButton,
@@ -25,16 +26,19 @@ import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
-import { COLORS } from '~/constants';
+import { COLORS, URLS } from '~/constants';
+import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
 
 type Props = {
   createdUserId?: string;
   createdUserName?: string;
   storyPost: StoryPost & { currentUserReaction?: Reaction };
   emojiIds?: string[];
+  teamId: string;
   storyId: string;
   page: number;
-  isEditMode?: boolean;
+  editable?: boolean;
+  isScrollTarget?: boolean;
 };
 
 export const DisplayStoryPostPaper: VFC<Props> = ({
@@ -42,10 +46,14 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   createdUserName,
   storyPost,
   emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'],
+  teamId,
   storyId,
   page,
-  isEditMode = true,
+  editable = false,
+  isScrollTarget = false,
 }) => {
+  const boxRef = useRef<HTMLDivElement>(null);
+
   const [currentStoryPost, setCurrentStoryPost] = useState(storyPost);
   const [content, setContent] = useState(currentStoryPost.content);
   const [isUpdate, setIsUpdate] = useState(false);
@@ -67,6 +75,12 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
+
+  useScrollToTargetElement({
+    enabled: isScrollTarget,
+    targetRef: boxRef,
+    scrollYOffset: 90,
+  });
 
   const handleCompleteEdit = async () => {
     try {
@@ -156,63 +170,71 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   return (
     <>
-      <Paper padding={0}>
-        <Box p="12px">
-          <StyledBox width="100%" display="flex" alignItems="center">
-            {createdUserId && createdUserName ? (
-              <Link href={'/user/' + createdUserId}>{createdUserName}</Link>
-            ) : (
-              <Typography variant="body1">undefined</Typography>
-            )}
-
-            <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
-            {isEditMode && (
-              <WrapDropdown>
-                <Dropdown
-                  toggle={<IconButton icon="MoreVert" width={20} />}
-                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                >
-                  <MenuItem onClick={handleClickUpdate}>
-                    <ListItemIcon>
-                      <Icon icon="Update" width="20px" color="textColor.main" />
-                    </ListItemIcon>
-                    更新する
-                  </MenuItem>
-                  <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
-                    <ListItemIcon>
-                      <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
-                    </ListItemIcon>
-                    削除する
-                  </MenuItem>
-                </Dropdown>
-              </WrapDropdown>
-            )}
-          </StyledBox>
-          {isUpdate && (
-            <Editor
-              isUpdateMode
-              content={content}
-              onChangeContent={setContent}
-              onCompleteEdit={handleCompleteEdit}
-              onClickCancelButton={handleClickCancelButton}
-            />
+      <Paper>
+        <StyledBox width="100%" display="flex" alignItems="center" ref={boxRef}>
+          {createdUserId && createdUserName ? (
+            <Link href={'/user/' + createdUserId}>{createdUserName}</Link>
+          ) : (
+            <Typography variant="body1">undefined</Typography>
           )}
-        </Box>
+          <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
+          {editable && (
+            <WrapDropdown>
+              <Dropdown
+                toggle={<IconButton icon="MoreVert" width={20} />}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              >
+                <CopyToClipboard
+                  text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(teamId, storyId, storyPost._id)}
+                  onCopy={() => notifySuccessMessage('共有リンクをコピーしました')}
+                >
+                  <MenuItem>
+                    <ListItemIcon>
+                      <Icon icon="Link" width="20px" color={COLORS.TEXT} />
+                    </ListItemIcon>
+                    共有リンク
+                  </MenuItem>
+                </CopyToClipboard>
+                <MenuItem onClick={handleClickUpdate}>
+                  <ListItemIcon>
+                    <Icon icon="Update" width="20px" color="textColor.main" />
+                  </ListItemIcon>
+                  更新する
+                </MenuItem>
+                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
+                  <ListItemIcon>
+                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
+                  </ListItemIcon>
+                  削除する
+                </MenuItem>
+              </Dropdown>
+            </WrapDropdown>
+          )}
+        </StyledBox>
+        {isUpdate && (
+          <Editor
+            isUpdateMode
+            content={content}
+            onChangeContent={setContent}
+            onCompleteEdit={handleCompleteEdit}
+            onClickCancelButton={handleClickCancelButton}
+          />
+        )}
         {!isUpdate && (
           <>
-            <Box p="12px">
+            <Box p={2}>
               <MarkdownToHtmlBody content={content} />
             </Box>
-            <Divider margin={0} />
-            <Box p="12px" textAlign="center">
+            <Divider margin={20} />
+            <Box textAlign="center">
               <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
                 <Emoji emoji="bulb" size={12} />
                 リアクションを送信しましょう
               </Typography>
-              <Box display="flex" justifyContent="center">
-                <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
-              </Box>
+            </Box>
+            <Box display="flex" justifyContent="center">
+              <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
             </Box>
           </>
         )}

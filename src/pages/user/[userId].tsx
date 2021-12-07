@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import { ReactNode } from 'react';
 import { Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
+import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const Dashboard: ProecoNextPage = () => {
@@ -21,7 +21,7 @@ const Dashboard: ProecoNextPage = () => {
   );
 };
 
-const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>;
+const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 
 Dashboard.getLayout = getLayout;
 export default Dashboard;

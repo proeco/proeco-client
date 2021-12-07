@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { UserSideBar } from '../../../domains/user/UserSideBar';
 import { LoginRequiredWrapper } from '~/components/parts/authentication/LoginRequiredWrapper';
 
-export const DashBoardLayout: FC = ({ children }) => {
+export const DashboardLayout: FC = ({ children }) => {
   return (
     <LoginRequiredWrapper>
       <Box display="flex">

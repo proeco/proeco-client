@@ -29,6 +29,7 @@ EditModeDisplayStoryPostPaper.args = {
   createdUserId: mockUser._id,
   createdUserName: mockUser.name,
   storyPost: mockStoryPost,
+  teamId: 'team1',
   storyId: 'story1',
   page: 1,
   isEditMode: true,
