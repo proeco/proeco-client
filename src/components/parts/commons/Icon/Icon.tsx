@@ -15,6 +15,7 @@ import {
   PersonOutline,
   Photo,
   Settings,
+  Twitter,
   Update,
 } from '@mui/icons-material';
 import { Box, styled } from '@mui/system';
@@ -35,6 +36,7 @@ export const IconMap = {
   PersonOutline: <PersonOutline />,
   Photo: <Photo />,
   Settings: <Settings />,
+  Twitter: <Twitter />,
   Update: <Update />,
 };
 
