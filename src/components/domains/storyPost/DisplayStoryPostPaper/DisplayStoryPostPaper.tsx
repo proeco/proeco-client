@@ -18,6 +18,7 @@ import {
   MarkdownToHtmlBody,
   Typography,
   Divider,
+  EmojiCountResult,
 } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { Reaction, StoryPost } from '~/domains';
@@ -246,15 +247,32 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
               <MarkdownToHtmlBody content={content} />
             </Box>
             <Divider margin={20} />
-            <Box textAlign="center">
-              <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
-                <Emoji emoji="bulb" size={12} />
-                リアクションを送信しましょう
-              </Typography>
-            </Box>
-            <Box display="flex" justifyContent="center">
-              <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
-            </Box>
+            {editable ? (
+              <>
+                <Box display="flex" justifyContent="center">
+                  <EmojiCountResult
+                    emojisInfo={[
+                      { emojiId: 'sob', count: 3 },
+                      { emojiId: 'confused', count: 10 },
+                      { emojiId: 'grinning', count: 6 },
+                      { emojiId: 'star-struck', count: 8 },
+                    ]}
+                  />
+                </Box>
+              </>
+            ) : (
+              <>
+                <Box textAlign="center">
+                  <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
+                    <Emoji emoji="bulb" size={12} />
+                    リアクションを送信しましょう
+                  </Typography>
+                </Box>
+                <Box display="flex" justifyContent="center">
+                  <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
+                </Box>
+              </>
+            )}
           </>
         )}
       </Paper>
