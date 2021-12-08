@@ -67,34 +67,20 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const emojisInfo: { emojiId: string; count: number }[] = useMemo(() => {
     // チーム外のメンバーの場合は表示しない
     if (!editable) return [];
-    const confusedReactions = [];
-    const disappointedRelievedReactions = [];
-    const slightlySmilingFace = [];
-    const smilingFaceWith3Hearts = [];
-    reactionsByStoryPostId.forEach((v) => {
-      if (v.emojiId === 'disappointed_relieved') disappointedRelievedReactions.push(v);
-      if (v.emojiId === 'confused') confusedReactions.push(v);
-      if (v.emojiId === 'slightly_smiling_face') slightlySmilingFace.push(v);
-      if (v.emojiId === 'smiling_face_with_3_hearts') smilingFaceWith3Hearts.push(v);
+    const countByEmojiId = reactionsByStoryPostId.reduce(
+      (acc: { [key: string]: number }, reaction) => {
+        // emojiId が存在する時だけCount
+        if (reaction.emojiId) {
+          acc[reaction.emojiId] = ++acc[reaction.emojiId];
+        }
+        return acc;
+      },
+      { disappointed_relieved: 0, confused: 0, slightly_smiling_face: 0, smiling_face_with_3_hearts: 0 } as { [key: string]: number },
+    );
+
+    return Object.entries(countByEmojiId).map(([emojiId, count]) => {
+      return { emojiId, count };
     });
-    return [
-      {
-        emojiId: 'disappointed_relieved',
-        count: disappointedRelievedReactions.length,
-      },
-      {
-        emojiId: 'confused',
-        count: confusedReactions.length,
-      },
-      {
-        emojiId: 'slightly_smiling_face',
-        count: confusedReactions.length,
-      },
-      {
-        emojiId: 'smiling_face_with_3_hearts',
-        count: smilingFaceWith3Hearts.length,
-      },
-    ];
   }, [editable, reactionsByStoryPostId]);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
