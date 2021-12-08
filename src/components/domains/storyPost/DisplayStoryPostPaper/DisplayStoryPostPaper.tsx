@@ -1,4 +1,4 @@
-import React, { VFC, useState, useCallback, useRef } from 'react';
+import React, { VFC, useState, useCallback, useMemo, useRef } from 'react';
 import { Box, styled } from '@mui/system';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
@@ -47,7 +47,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   createdUserId,
   createdUserName,
   storyPost,
-  emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'],
+  emojiIds = ['disappointed_relieved', 'confused', 'slightly_smiling_face', 'smiling_face_with_3_hearts'],
   teamId,
   storyId,
   page,
@@ -64,21 +64,38 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const { data: reactionsByStoryPostId = [] } = useReactionsByStoryPostId(storyPost._id);
 
-  const emojisInfo: { emojiId: string; count: number }[] = [];
-
-  editable &&
-    reactionsByStoryPostId.forEach((reaction) => {
-      if (!reaction.emojiId) return;
-      const index = emojisInfo.findIndex((emojiInfo) => emojiInfo.emojiId === reaction.emojiId);
-
-      if (index === -1) {
-        // reaction.emojiIdがemojisInfoにない場合、emojisInfoにcount１で新しく追加する
-        emojisInfo.push({ emojiId: reaction.emojiId, count: 1 });
-      } else {
-        // reaction.emojiIdがemojisInfoにある場合、そのemojiIdの要素のcountを１増やす
-        emojisInfo[index].count++;
-      }
+  const emojisInfo: { emojiId: string; count: number }[] = useMemo(() => {
+    // チーム外のメンバーの場合は表示しない
+    if (!editable) return [];
+    const confusedReactions = [];
+    const disappointedRelievedReactions = [];
+    const slightlySmilingFace = [];
+    const smilingFaceWith3Hearts = [];
+    reactionsByStoryPostId.forEach((v) => {
+      if (v.emojiId === 'confused') confusedReactions.push(v);
+      if (v.emojiId === 'disappointed_relieved') disappointedRelievedReactions.push(v);
+      if (v.emojiId === 'slightly_smiling_face') slightlySmilingFace.push(v);
+      if (v.emojiId === 'smiling_face_with_3_hearts') smilingFaceWith3Hearts.push(v);
     });
+    return [
+      {
+        emojiId: 'confused',
+        count: confusedReactions.length,
+      },
+      {
+        emojiId: 'disappointed_relieved',
+        count: disappointedRelievedReactions.length,
+      },
+      {
+        emojiId: 'slightly_smiling_face',
+        count: confusedReactions.length,
+      },
+      {
+        emojiId: 'smiling_face_with_3_hearts',
+        count: smilingFaceWith3Hearts.length,
+      },
+    ];
+  }, [editable, reactionsByStoryPostId]);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
