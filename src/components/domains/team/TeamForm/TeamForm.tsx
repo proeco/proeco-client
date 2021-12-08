@@ -57,9 +57,8 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
     setIsCreating(true);
     try {
       if (team) {
-        // await restClient.apiPut<Team>(`/teams/${team._id}`, { team: newTeam });
-        // notifySuccessMessage('チームを更新しました');
-        notifySuccessMessage('TODO');
+        await restClient.apiPut<Team>(`/teams/${team._id}`, { team: newTeam });
+        notifySuccessMessage('チームを更新しました');
       } else {
         await restClient.apiPost<Team>('/teams', { team: newTeam });
         notifySuccessMessage('チームを作成しました');
@@ -70,7 +69,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
       }
       setIsCreating(false);
     } catch (error) {
-      notifyErrorMessage('チームの作成に失敗しました');
+      notifyErrorMessage(`チームの${team ? '更新' : '作成'}に失敗しました`);
     }
   };
 
