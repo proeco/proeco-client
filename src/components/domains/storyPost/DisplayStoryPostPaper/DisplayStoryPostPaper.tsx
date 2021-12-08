@@ -1,4 +1,4 @@
-import React, { VFC, useState, useCallback, useRef } from 'react';
+import React, { VFC, useState, useCallback, useMemo, useRef } from 'react';
 import { Box, styled } from '@mui/system';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
@@ -18,6 +18,7 @@ import {
   MarkdownToHtmlBody,
   Typography,
   Divider,
+  EmojiCountResult,
 } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { Reaction, StoryPost } from '~/domains';
@@ -28,6 +29,7 @@ import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
 import { COLORS, URLS } from '~/constants';
 import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
+import { useReactionsByStoryPostId } from '~/stores/reaction';
 
 type Props = {
   createdUserId?: string;
@@ -45,7 +47,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   createdUserId,
   createdUserName,
   storyPost,
-  emojiIds = ['thumbsup', 'heart', 'laughing', 'partying_face'],
+  emojiIds = ['disappointed_relieved', 'confused', 'slightly_smiling_face', 'smiling_face_with_3_hearts'],
   teamId,
   storyId,
   page,
@@ -59,6 +61,27 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const [isUpdate, setIsUpdate] = useState(false);
   const [SelectedEmojiId, setSelectedEmojiId] = useState<string>(currentStoryPost.currentUserReaction?.emojiId || '');
   const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
+
+  const { data: reactionsByStoryPostId = [] } = useReactionsByStoryPostId(storyPost._id);
+
+  const emojisInfo: { emojiId: string; count: number }[] = useMemo(() => {
+    // チーム外のメンバーの場合は表示しない
+    if (!editable) return [];
+    const countByEmojiId = reactionsByStoryPostId.reduce(
+      (acc: { [key: string]: number }, reaction) => {
+        // emojiId が存在する時だけCount
+        if (reaction.emojiId) {
+          acc[reaction.emojiId] = ++acc[reaction.emojiId];
+        }
+        return acc;
+      },
+      { disappointed_relieved: 0, confused: 0, slightly_smiling_face: 0, smiling_face_with_3_hearts: 0 } as { [key: string]: number },
+    );
+
+    return Object.entries(countByEmojiId).map(([emojiId, count]) => {
+      return { emojiId, count };
+    });
+  }, [editable, reactionsByStoryPostId]);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
@@ -212,22 +235,20 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
                 </ListItemIcon>
                 共有
               </MenuItem>
-              {editable && (
-                <>
-                  <MenuItem onClick={handleClickUpdate}>
-                    <ListItemIcon>
-                      <Icon icon="Update" width="20px" color="textColor.main" />
-                    </ListItemIcon>
-                    更新する
-                  </MenuItem>
-                  <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
-                    <ListItemIcon>
-                      <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
-                    </ListItemIcon>
-                    削除する
-                  </MenuItem>
-                </>
-              )}
+              {editable && [
+                <MenuItem onClick={handleClickUpdate} key="update">
+                  <ListItemIcon>
+                    <Icon icon="Update" width="20px" color="textColor.main" />
+                  </ListItemIcon>
+                  更新する
+                </MenuItem>,
+                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)} key="delete">
+                  <ListItemIcon>
+                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
+                  </ListItemIcon>
+                  削除する
+                </MenuItem>,
+              ]}
             </Dropdown>
           </WrapDropdown>
         </StyledBox>
@@ -246,15 +267,23 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
               <MarkdownToHtmlBody content={content} />
             </Box>
             <Divider margin={20} />
-            <Box textAlign="center">
-              <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
-                <Emoji emoji="bulb" size={12} />
-                リアクションを送信しましょう
-              </Typography>
-            </Box>
-            <Box display="flex" justifyContent="center">
-              <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
-            </Box>
+            {editable ? (
+              <Box display="flex" justifyContent="center">
+                <EmojiCountResult emojisInfo={emojisInfo} />
+              </Box>
+            ) : (
+              <>
+                <Box textAlign="center">
+                  <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
+                    <Emoji emoji="bulb" size={12} />
+                    リアクションを送信しましょう
+                  </Typography>
+                </Box>
+                <Box display="flex" justifyContent="center">
+                  <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
+                </Box>
+              </>
+            )}
           </>
         )}
       </Paper>
