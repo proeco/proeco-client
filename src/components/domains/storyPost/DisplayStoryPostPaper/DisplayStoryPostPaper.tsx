@@ -72,8 +72,8 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     const slightlySmilingFace = [];
     const smilingFaceWith3Hearts = [];
     reactionsByStoryPostId.forEach((v) => {
-      if (v.emojiId === 'confused') confusedReactions.push(v);
       if (v.emojiId === 'disappointed_relieved') disappointedRelievedReactions.push(v);
+      if (v.emojiId === 'confused') confusedReactions.push(v);
       if (v.emojiId === 'slightly_smiling_face') slightlySmilingFace.push(v);
       if (v.emojiId === 'smiling_face_with_3_hearts') smilingFaceWith3Hearts.push(v);
     });
