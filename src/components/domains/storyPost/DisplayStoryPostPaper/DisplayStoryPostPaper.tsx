@@ -71,8 +71,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     const index = emojisInfo.findIndex((emojiInfo) => emojiInfo.emojiId === reaction.emojiId);
 
     if (index === -1) {
+      // reaction.emojiIdがemojisInfoにない場合、emojisInfoにcount１で新しく追加する
       emojisInfo.push({ emojiId: reaction.emojiId, count: 1 });
     } else {
+      // reaction.emojiIdがemojisInfoにある場合、そのemojiIdの要素のcountを１増やす
       emojisInfo[index].count++;
     }
   });
