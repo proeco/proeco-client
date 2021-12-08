@@ -79,12 +79,12 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     });
     return [
       {
-        emojiId: 'confused',
-        count: confusedReactions.length,
-      },
-      {
         emojiId: 'disappointed_relieved',
         count: disappointedRelievedReactions.length,
+      },
+      {
+        emojiId: 'confused',
+        count: confusedReactions.length,
       },
       {
         emojiId: 'slightly_smiling_face',
