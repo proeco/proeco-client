@@ -35,6 +35,7 @@ const TeamSettings: ProecoNextPage = () => {
       setNewTeam(team);
     }
   }, [team]);
+  console.log(team);
 
   const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {

@@ -115,7 +115,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
               page={page}
             />
           </TabPanel>
-          <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamForm currentUser={currentUser} />}</TabPanel>
+          <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamForm currentUser={currentUser} team={team} />}</TabPanel>
         </TabContext>
       </Box>
     </>
