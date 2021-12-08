@@ -249,22 +249,20 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
                 </ListItemIcon>
                 共有
               </MenuItem>
-              {editable && (
-                <>
-                  <MenuItem onClick={handleClickUpdate}>
-                    <ListItemIcon>
-                      <Icon icon="Update" width="20px" color="textColor.main" />
-                    </ListItemIcon>
-                    更新する
-                  </MenuItem>
-                  <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
-                    <ListItemIcon>
-                      <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
-                    </ListItemIcon>
-                    削除する
-                  </MenuItem>
-                </>
-              )}
+              {editable && [
+                <MenuItem onClick={handleClickUpdate} key="update">
+                  <ListItemIcon>
+                    <Icon icon="Update" width="20px" color="textColor.main" />
+                  </ListItemIcon>
+                  更新する
+                </MenuItem>,
+                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)} key="delete">
+                  <ListItemIcon>
+                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
+                  </ListItemIcon>
+                  削除する
+                </MenuItem>,
+              ]}
             </Dropdown>
           </WrapDropdown>
         </StyledBox>
@@ -284,11 +282,9 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             </Box>
             <Divider margin={20} />
             {editable ? (
-              <>
-                <Box display="flex" justifyContent="center">
-                  <EmojiCountResult emojisInfo={emojisInfo} />
-                </Box>
-              </>
+              <Box display="flex" justifyContent="center">
+                <EmojiCountResult emojisInfo={emojisInfo} />
+              </Box>
             ) : (
               <>
                 <Box textAlign="center">
