@@ -62,7 +62,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const [isOpenCreateNewStoryModal, setIsOpeCreateNewStoryModal] = useState(false);
   const [page, setPage] = useState(1);
   const { data: stories } = useStories({
-    teamId: team._id,
+    teamId: team?._id,
     page,
     limit,
   });
