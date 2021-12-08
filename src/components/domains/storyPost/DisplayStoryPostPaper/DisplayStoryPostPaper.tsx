@@ -66,18 +66,19 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const emojisInfo: { emojiId: string; count: number }[] = [];
 
-  reactionsByStoryPostId.forEach((reaction) => {
-    if (!reaction.emojiId) return;
-    const index = emojisInfo.findIndex((emojiInfo) => emojiInfo.emojiId === reaction.emojiId);
+  editable &&
+    reactionsByStoryPostId.forEach((reaction) => {
+      if (!reaction.emojiId) return;
+      const index = emojisInfo.findIndex((emojiInfo) => emojiInfo.emojiId === reaction.emojiId);
 
-    if (index === -1) {
-      // reaction.emojiIdがemojisInfoにない場合、emojisInfoにcount１で新しく追加する
-      emojisInfo.push({ emojiId: reaction.emojiId, count: 1 });
-    } else {
-      // reaction.emojiIdがemojisInfoにある場合、そのemojiIdの要素のcountを１増やす
-      emojisInfo[index].count++;
-    }
-  });
+      if (index === -1) {
+        // reaction.emojiIdがemojisInfoにない場合、emojisInfoにcount１で新しく追加する
+        emojisInfo.push({ emojiId: reaction.emojiId, count: 1 });
+      } else {
+        // reaction.emojiIdがemojisInfoにある場合、そのemojiIdの要素のcountを１増やす
+        emojisInfo[index].count++;
+      }
+    });
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
