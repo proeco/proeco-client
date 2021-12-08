@@ -104,7 +104,7 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
 
   return (
     <Grid container>
-      <Grid xs={12} md={6} px={2} pb={3}>
+      <Grid item xs={12} md={6} px={2} pb={3}>
         <Paper square>
           <Box display="flex" justifyContent="center">
             <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : undefined} />
@@ -149,7 +149,7 @@ export const TeamForm: VFC<Props> = ({ currentUser }) => {
           </Box>
         </Paper>
       </Grid>
-      <Grid xs={12} md={6} px={2} pb={3}>
+      <Grid item xs={12} md={6} px={2} pb={3}>
         <Typography variant="h4" align="center" color={COLORS.TEXT} mb={2}>
           プレビュー
         </Typography>
