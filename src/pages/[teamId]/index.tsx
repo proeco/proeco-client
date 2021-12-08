@@ -91,9 +91,9 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
         </Box>
         <TabContext value={activeTab}>
           <StyledTabList onChange={handleChange} aria-label="team tabs">
-            <StyledTab label="ホーム" value={TabTypes.HOME} />
-            <StyledTab label="ストーリー" value={TabTypes.STORY} />
-            <StyledTab label="設定" value={TabTypes.SETTINGS} />
+            <StyledTab label={<Typography bold>ホーム</Typography>} value={TabTypes.HOME} />
+            <StyledTab label={<Typography bold>ストーリー</Typography>} value={TabTypes.STORY} />
+            <StyledTab label={<Typography bold>設定</Typography>} value={TabTypes.SETTINGS} />
           </StyledTabList>
           <TabPanel value={TabTypes.HOME}>HOME</TabPanel>
           <TabPanel value={TabTypes.STORY}>

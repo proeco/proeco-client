@@ -124,7 +124,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           )}
         </Box>
         <Grid container>
-          <Grid xs={12} md={8} px={2} pb={3}>
+          <Grid item xs={12} md={8} px={2} pb={3}>
             {customStoryPosts.map((customStoryPost, i) => {
               const createdStoryPostUser = teamUsers.find((teamUser) => teamUser._id === customStoryPost.createdUserId);
               return (
@@ -157,7 +157,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
               </Box>
             )}
           </Grid>
-          <Grid xs={12} md={4} px={2} pb={3}>
+          <Grid item xs={12} md={4} px={2} pb={3}>
             <Paper>TODO</Paper>
           </Grid>
         </Grid>
