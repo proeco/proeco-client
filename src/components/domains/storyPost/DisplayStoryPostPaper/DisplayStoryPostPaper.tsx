@@ -29,6 +29,7 @@ import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
 import { COLORS, URLS } from '~/constants';
 import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
+import { useReactionsByStoryPostId } from '~/stores/reaction';
 
 type Props = {
   createdUserId?: string;
@@ -60,6 +61,21 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const [isUpdate, setIsUpdate] = useState(false);
   const [SelectedEmojiId, setSelectedEmojiId] = useState<string>(currentStoryPost.currentUserReaction?.emojiId || '');
   const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
+
+  const { data: reactionsByStoryPostId = [] } = useReactionsByStoryPostId(storyPost._id);
+
+  const emojisInfo: { emojiId: string; count: number }[] = [];
+
+  reactionsByStoryPostId.forEach((reaction) => {
+    if (!reaction.emojiId) return;
+    const index = emojisInfo.findIndex((emojiInfo) => emojiInfo.emojiId === reaction.emojiId);
+
+    if (index === -1) {
+      emojisInfo.push({ emojiId: reaction.emojiId, count: 1 });
+    } else {
+      emojisInfo[index].count++;
+    }
+  });
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
@@ -250,14 +266,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             {editable ? (
               <>
                 <Box display="flex" justifyContent="center">
-                  <EmojiCountResult
-                    emojisInfo={[
-                      { emojiId: 'sob', count: 3 },
-                      { emojiId: 'confused', count: 10 },
-                      { emojiId: 'grinning', count: 6 },
-                      { emojiId: 'star-struck', count: 8 },
-                    ]}
-                  />
+                  <EmojiCountResult emojisInfo={emojisInfo} />
                 </Box>
               </>
             ) : (
