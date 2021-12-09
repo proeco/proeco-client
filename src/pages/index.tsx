@@ -2,7 +2,6 @@ import { NextPage } from 'next';
 
 import { Grid } from '@mui/material';
 
-import { useRouter } from 'next/router';
 import { Box } from '@mui/system';
 import { useTeams } from '~/stores/team';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -17,8 +16,6 @@ import { useAuth } from '~/hooks/useAuth/useAuth';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 
 const Home: NextPage = () => {
-  const router = useRouter();
-
   const { data: currentUser } = useCurrentUser();
   const { login, logout } = useAuth();
   const { data: teamList } = useTeams({ page: 1 });
@@ -33,15 +30,16 @@ const Home: NextPage = () => {
         <Grid container maxWidth="900px" mx="auto">
           {teamList ? (
             teamList.docs.map((team) => (
-              <Grid item key={team._id} xs={12} sm={6} px={1} pb={2}>
-                <TeamCard
-                  name={team.name}
-                  productId={team.productId}
-                  description={team.description}
-                  attachmentId={team.iconImageId}
-                  url={team.url}
-                  onClick={() => router.push(URLS.TEAMS(team._id))}
-                />
+              <Grid item key={`top-${team._id}`} xs={12} sm={6} px={1} pb={2}>
+                <Link href={URLS.TEAMS(team.productId)}>
+                  <TeamCard
+                    name={team.name}
+                    productId={team.productId}
+                    description={team.description}
+                    attachmentId={team.iconImageId}
+                    url={team.url}
+                  />
+                </Link>
               </Grid>
             ))
           ) : (
