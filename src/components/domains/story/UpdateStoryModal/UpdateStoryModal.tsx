@@ -31,7 +31,7 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
-  const { mutate: mutateStory } = useStory(story?._id);
+  const { mutate: mutateStory } = useStory(story._id, story);
   const { mutate: mutateStories } = useStories({
     teamId,
     page,
