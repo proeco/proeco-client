@@ -1,4 +1,3 @@
-import { createMockReaction } from './createMockReaction';
 import { Story } from '~/domains';
 
 /**
@@ -17,6 +16,5 @@ export const createMockStory = (mock: Partial<Story> = {}): Story => {
     createdUserId: mock.createdUserId || 'mockCreatedUserId',
     createdAt: mock.createdAt || new Date(),
     updatedAt: mock.updatedAt || new Date(),
-    reactions: mock.reactions || [createMockReaction()],
   });
 };
