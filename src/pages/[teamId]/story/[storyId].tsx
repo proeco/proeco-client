@@ -17,7 +17,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
-import { Emoji, Icon, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
+import { Button, Emoji, Icon, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
@@ -29,6 +29,8 @@ import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
 import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
 
+import { useErrorNotification } from '~/hooks/useErrorNotification';
+
 type Props = {
   storyFromServerSide?: Story;
 };
@@ -36,13 +38,15 @@ type Props = {
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
   const router = useRouter();
 
+  const { notifyErrorMessage } = useErrorNotification();
+
   const [isOpenUpdateStoryModal, setIsOpenUpdateStoryModal] = useState(false);
   const [isOpenDeleteStoryModal, setIsOpenDeleteStoryModal] = useState(false);
   const teamId = router.query.teamId as string;
   const storyId = router.query.storyId as string;
   const storyPostId = router.query.storyPostId as string;
 
-  const { data: story } = useStory(storyId, storyFromServerSide);
+  const { data: story, mutate: mutateStory } = useStory(storyId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId });
 
@@ -74,6 +78,18 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 
   const handleClickDelete = () => {
     setIsOpenDeleteStoryModal(true);
+  };
+
+  const handleToggleCompleted = async () => {
+    try {
+      await restClient.apiPut<Story>(`/stories/${story?._id}`, {
+        newObject: { isCompleted: !story?.isCompleted },
+      });
+
+      mutateStory();
+    } catch (error) {
+      notifyErrorMessage('ストーリーのCloseに失敗しました!');
+    }
   };
 
   const menuItems = [
@@ -158,7 +174,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
             )}
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
-            <Paper>TODO</Paper>
+            <Paper>
+              <Button onClick={handleToggleCompleted}>{story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}</Button>
+            </Paper>
           </Grid>
         </Grid>
       </Box>
