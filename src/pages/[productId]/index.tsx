@@ -125,7 +125,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
                 ストーリーを追加する
               </Button>
             </Box>
-            <StoryListTable page={page} limit={limit} teamId={team._id} />
+            <StoryListTable page={page} limit={limit} teamId={team._id} productId={team.productId} />
             <StyledPagination count={count} page={page} onChange={handleChangePage} />
             <CreateNewStoryModal
               isOpen={isOpenCreateNewStoryModal}

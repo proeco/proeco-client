@@ -14,9 +14,10 @@ type Props = {
   page: number;
   limit: 10;
   teamId: string;
+  productId: string;
 };
 
-export const StoryListTable: VFC<Props> = ({ page, limit, teamId }) => {
+export const StoryListTable: VFC<Props> = ({ page, limit, teamId, productId }) => {
   const { data: stories } = useStories({
     teamId,
     page,
@@ -51,7 +52,7 @@ export const StoryListTable: VFC<Props> = ({ page, limit, teamId }) => {
               </StyledHeaderTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{stories && stories.docs.map((doc) => <StoryTableRow story={doc} key={doc._id} />)}</TableBody>
+          <TableBody>{stories && stories.docs.map((doc) => <StoryTableRow story={doc} key={doc._id} productId={productId} />)}</TableBody>
         </Table>
       </TableContainer>
     </>
