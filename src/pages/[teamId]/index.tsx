@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import { ReactNode, useState, useEffect, ChangeEvent } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Tab } from '@mui/material';
+import { Grid, Tab } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
-import { Button, Icon, Pagination, Typography } from '~/components/parts/commons';
+import { Button, Icon, Pagination, Paper, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
@@ -20,6 +20,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { extractHash } from '~/utils/extractHash/extractHash';
 import { TeamForm } from '~/components/domains/team/TeamForm';
+import { TeamCard } from '~/components/domains/team/TeamCard';
 
 const TabTypes = { HOME: 'home', STORY: 'story', SETTINGS: 'settings' };
 type TabTypes = typeof TabTypes[keyof typeof TabTypes];
@@ -62,7 +63,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const [isOpenCreateNewStoryModal, setIsOpeCreateNewStoryModal] = useState(false);
   const [page, setPage] = useState(1);
   const { data: stories } = useStories({
-    teamId: team._id,
+    teamId: team?._id,
     page,
     limit,
   });
@@ -95,7 +96,24 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
             <StyledTab label={<Typography bold>ストーリー</Typography>} value={TabTypes.STORY} />
             <StyledTab label={<Typography bold>設定</Typography>} value={TabTypes.SETTINGS} />
           </StyledTabList>
-          <TabPanel value={TabTypes.HOME}>HOME</TabPanel>
+          <TabPanel value={TabTypes.HOME}>
+            {currentUser && (
+              <Grid container>
+                <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
+                  <Paper>TODO</Paper>
+                </Grid>
+                <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
+                  <TeamCard
+                    name={team.name}
+                    productId={team.productId}
+                    description={team.description}
+                    attachmentId={team.iconImageId}
+                    url={team.url}
+                  />
+                </Grid>
+              </Grid>
+            )}
+          </TabPanel>
           <TabPanel value={TabTypes.STORY}>
             <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
               <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
@@ -115,7 +133,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
               page={page}
             />
           </TabPanel>
-          <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamForm currentUser={currentUser} />}</TabPanel>
+          <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamForm currentUser={currentUser} team={team} />}</TabPanel>
         </TabContext>
       </Box>
     </>
