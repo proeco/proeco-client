@@ -40,7 +40,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
 
   const [isOpenUpdateStoryModal, setIsOpenUpdateStoryModal] = useState(false);
   const [isOpenDeleteStoryModal, setIsOpenDeleteStoryModal] = useState(false);
-  const storyId = router.query.storyId as string;
+  const storyId = storyFromServerSide._id;
   const storyPostId = router.query.storyPostId as string;
 
   const { data: story } = useStory(storyId, storyFromServerSide);
