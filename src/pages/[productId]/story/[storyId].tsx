@@ -82,9 +82,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
   };
 
   const handleClickIsCompletedButton = async () => {
+    if (!story) return;
     try {
-      await restClient.apiPut<Story>(`/stories/${story?._id}`, {
-        newObject: { isCompleted: !story?.isCompleted },
+      await restClient.apiPut<Story>(`/stories/${story._id}`, {
+        newObject: { isCompleted: !story.isCompleted },
       });
 
       mutateStory();
@@ -176,9 +177,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
             <Paper>
-              <StyledButton variant="contained" onClick={handleClickIsCompletedButton}>
-                {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
-              </StyledButton>
+              {isMemberOfTeam && (
+                <StyledButton fullWidth variant={story.isCompleted ? 'outlined' : 'contained'} onClick={handleClickIsCompletedButton}>
+                  {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
+                </StyledButton>
+              )}
             </Paper>
           </Grid>
         </Grid>
@@ -202,8 +205,6 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
 };
 
 const StyledButton = styled(Button)`
-  margin: 0 auto;
-  display: block;
   text-transform: none;
 `;
 
