@@ -21,6 +21,7 @@ import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { extractHash } from '~/utils/extractHash/extractHash';
 import { TeamForm } from '~/components/domains/team/TeamForm';
 import { TeamCard } from '~/components/domains/team/TeamCard';
+import { PaginationResult } from '~/interfaces';
 
 const TabTypes = { HOME: 'home', STORY: 'story', SETTINGS: 'settings' };
 type TabTypes = typeof TabTypes[keyof typeof TabTypes];
@@ -160,10 +161,21 @@ const StyledPagination = styled(Pagination)`
 `;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { teamId } = context.query;
+  const { productId } = context.query;
 
   try {
-    const { data: team } = await restClient.apiGet<Team>(`/teams/${teamId}`);
+    const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`);
+    const team = pagination?.docs[0];
+
+    if (!team) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/404',
+        },
+      };
+    }
+
     return { props: { team } };
   } catch (error) {
     return { props: {} };
