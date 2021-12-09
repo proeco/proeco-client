@@ -4,11 +4,9 @@ export const URLS = {
   DASHBOARD_TEAMS: '/dashboard/teams',
   DASHBOARD_TEAMS_NEW: '/dashboard/teams/new',
   DASHBOARD_SETTINGS: '/dashboard/settings',
-  TEAMS: (teamId: string) => `/${teamId}`,
-  TEAMS_STORIES: (teamId: string) => `/${teamId}/story`,
-  TEAMS_STORY: (teamId: string, storyId: string, storyPostId?: string) =>
-    `/${teamId}/story/${storyId}${storyPostId ? `?storyPostId=${storyPostId}` : ''}`,
-  TEAMS_SETTING: (teamId: string) => `/${teamId}/settings`,
+  TEAMS: (productId: string) => `/${productId}`,
+  TEAMS_STORY: (productId: string, storyId: string, storyPostId?: string) =>
+    `/${productId}/story/${storyId}${storyPostId ? `?storyPostId=${storyPostId}` : ''}`,
   TERMS: '#',
   PRIVACY_POLICY: '#',
 };

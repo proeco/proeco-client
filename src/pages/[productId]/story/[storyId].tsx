@@ -24,27 +24,28 @@ import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNe
 import { Dropdown } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
-import { Reaction, StoryPost } from '~/domains';
+import { Reaction, StoryPost, Team } from '~/domains';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
 import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
+import { PaginationResult } from '~/interfaces';
 
 type Props = {
-  storyFromServerSide?: Story;
+  storyFromServerSide: Story;
+  team: Team;
 };
 
-const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
+const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
   const router = useRouter();
 
   const [isOpenUpdateStoryModal, setIsOpenUpdateStoryModal] = useState(false);
   const [isOpenDeleteStoryModal, setIsOpenDeleteStoryModal] = useState(false);
-  const teamId = router.query.teamId as string;
   const storyId = router.query.storyId as string;
   const storyPostId = router.query.storyPostId as string;
 
   const { data: story } = useStory(storyId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
-  const { data: teamUsers = [] } = useTeamUsers({ teamId });
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
 
   const isMemberOfTeam = !!(currentUser && teamUsers.find((teamUser) => teamUser._id === currentUser._id));
 
@@ -97,7 +98,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     <>
       <ProecoOgpHead title={story.title} />
       <Box mx="auto" maxWidth="1200px">
-        <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(teamId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
+        <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(team.productId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
         <Box mt={1} mb={4} display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center" gap="16px">
             <Emoji emojiId={story.emojiId} size={40} />
@@ -139,7 +140,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
                     createdUserId={createdStoryPostUser?._id}
                     createdUserName={createdStoryPostUser?.name}
                     storyPost={customStoryPost}
-                    teamId={teamId}
+                    teamId={team._id}
                     storyId={storyId}
                     page={page}
                     editable={isMemberOfTeam}
@@ -166,14 +167,14 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
         isOpen={isOpenUpdateStoryModal}
         onCloseModal={() => setIsOpenUpdateStoryModal(false)}
         story={story}
-        teamId={teamId}
+        teamId={team._id}
         page={page}
       />
       <DeleteStoryModal
         isOpen={isOpenDeleteStoryModal}
         onCloseModal={() => setIsOpenDeleteStoryModal(false)}
         page={page}
-        teamId={teamId}
+        teamId={team._id}
         story={story}
       />
     </>
@@ -181,13 +182,31 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
+  const { storyId, productId } = context.query;
 
   try {
-    const { data: story } = await restClient.apiGet(`/stories/${id}`);
-    return { props: { storyFromServerSide: story } };
+    const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`);
+    const team = pagination?.docs[0];
+
+    const { data: story } = await restClient.apiGet(`/stories/${storyId}`);
+
+    if (!team || !story) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/404',
+        },
+      };
+    }
+
+    return { props: { storyFromServerSide: story, team } };
   } catch (error) {
-    return { props: {} };
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404',
+      },
+    };
   }
 };
 
