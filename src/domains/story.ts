@@ -4,6 +4,7 @@ export class Story {
   emojiId: string;
   teamId: string;
   isPrivate: boolean;
+  isCompleted: boolean;
   createdUserId: string;
   createdAt: Date;
   updatedAt: Date;
@@ -14,6 +15,7 @@ export class Story {
     this.emojiId = init.emojiId;
     this.teamId = init.teamId;
     this.isPrivate = init.isPrivate;
+    this.isCompleted = init.isCompleted;
     this.createdUserId = init.createdUserId;
     this.createdAt = init.createdAt;
     this.updatedAt = init.updatedAt;

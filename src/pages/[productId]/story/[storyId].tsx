@@ -2,7 +2,7 @@ import React, { ReactNode, useMemo, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 
 import { Grid, ListItemIcon, MenuItem } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
@@ -17,7 +17,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
-import { Emoji, Icon, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
+import { Button, Emoji, Icon, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
@@ -30,6 +30,8 @@ import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
 import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
 import { PaginationResult } from '~/interfaces';
 
+import { useErrorNotification } from '~/hooks/useErrorNotification';
+
 type Props = {
   storyFromServerSide: Story;
   team: Team;
@@ -38,12 +40,14 @@ type Props = {
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
   const router = useRouter();
 
+  const { notifyErrorMessage } = useErrorNotification();
+
   const [isOpenUpdateStoryModal, setIsOpenUpdateStoryModal] = useState(false);
   const [isOpenDeleteStoryModal, setIsOpenDeleteStoryModal] = useState(false);
   const storyId = storyFromServerSide._id;
   const storyPostId = router.query.storyPostId as string;
 
-  const { data: story } = useStory(storyId, storyFromServerSide);
+  const { data: story, mutate: mutateStory } = useStory(storyId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
 
@@ -75,6 +79,19 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
 
   const handleClickDelete = () => {
     setIsOpenDeleteStoryModal(true);
+  };
+
+  const handleClickIsCompletedButton = async () => {
+    if (!story) return;
+    try {
+      await restClient.apiPut<Story>(`/stories/${story._id}`, {
+        newObject: { isCompleted: !story.isCompleted },
+      });
+
+      mutateStory();
+    } catch (error) {
+      notifyErrorMessage('ストーリーのCloseに失敗しました!');
+    }
   };
 
   const menuItems = [
@@ -159,7 +176,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
             )}
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
-            <Paper>TODO</Paper>
+            <Paper>
+              {isMemberOfTeam && (
+                <StyledButton fullWidth variant={story.isCompleted ? 'outlined' : 'contained'} onClick={handleClickIsCompletedButton}>
+                  {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
+                </StyledButton>
+              )}
+            </Paper>
           </Grid>
         </Grid>
       </Box>
@@ -180,6 +203,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
     </>
   );
 };
+
+const StyledButton = styled(Button)`
+  text-transform: none;
+`;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { storyId, productId } = context.query;
