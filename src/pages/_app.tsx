@@ -1,7 +1,10 @@
-import { SnackbarProvider } from 'notistack';
-import { GlobalStyles } from '@mui/material';
 import { ReactNode } from 'react';
+import { GlobalStyles } from '@mui/material';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
+import { SnackbarProvider } from 'notistack';
+
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 
 import 'modern-css-reset/dist/reset.min.css';
 
@@ -24,7 +27,7 @@ const inputGlobalStyles = (
   />
 );
 
-function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode } }): JSX.Element {
+function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { session: Session; children?: ReactNode } }): JSX.Element {
   const getLayout = Component.getLayout || ((page) => <>{page}</>);
 
   if (process.env.NEXT_PUBLIC_ENABLE_MOCK === 'TRUE') {
@@ -34,11 +37,13 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
 
   return (
     <MaterialThemeProvider theme={theme}>
-      <SnackbarProvider>
-        {inputGlobalStyles}
-        <NavigationBar />
-        {getLayout(<Component {...pageProps} />)}
-      </SnackbarProvider>
+      <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
+        <SnackbarProvider>
+          {inputGlobalStyles}
+          <NavigationBar />
+          {getLayout(<Component {...pageProps} />)}
+        </SnackbarProvider>
+      </SessionProvider>
     </MaterialThemeProvider>
   );
 }
