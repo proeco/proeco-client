@@ -1,5 +1,3 @@
-import { Reaction } from './reaction';
-
 export class Story {
   _id: string;
   title: string;
@@ -10,7 +8,6 @@ export class Story {
   createdUserId: string;
   createdAt: Date;
   updatedAt: Date;
-  reactions?: Reaction[];
 
   constructor(init: Story) {
     this._id = init._id;
