@@ -38,6 +38,8 @@ const StyledDiv = styled('div')`
 
 const StyledTimeLineContent = styled(TimelineContent)`
   padding: 0 0px 40px 8px;
+  flex: 1;
+  min-width: 0;
 `;
 
 const StyledTimeLineDot = styled(TimelineDot)`
