@@ -2,7 +2,7 @@ import React, { ReactNode, useMemo, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { Box } from '@mui/system';
+import { Box, styled } from '@mui/system';
 
 import { Grid, ListItemIcon, MenuItem } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
@@ -80,7 +80,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     setIsOpenDeleteStoryModal(true);
   };
 
-  const handleToggleCompleted = async () => {
+  const handleClickIsCompletedButton = async () => {
     try {
       await restClient.apiPut<Story>(`/stories/${story?._id}`, {
         newObject: { isCompleted: !story?.isCompleted },
@@ -175,7 +175,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
             <Paper>
-              <Button onClick={handleToggleCompleted}>{story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}</Button>
+              <StyledButton variant="contained" onClick={handleClickIsCompletedButton}>
+                {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
+              </StyledButton>
             </Paper>
           </Grid>
         </Grid>
@@ -197,6 +199,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide }) => {
     </>
   );
 };
+
+const StyledButton = styled(Button)`
+  margin: 0 auto;
+  display: block;
+  text-transform: none;
+`;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
