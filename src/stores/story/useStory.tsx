@@ -2,7 +2,7 @@ import { SWRResponse } from 'swr';
 import useImmutableSWR from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
-import { Story } from '~/domains';
+import { convertStoryFromServer, Story } from '~/domains';
 
 /**
  * ストーリーを取得するSWR
@@ -12,7 +12,11 @@ import { Story } from '~/domains';
  * @returns mutate データの更新関数
  */
 export const useStory = (id: string, fallbackData: Story): SWRResponse<Story, Error> => {
-  return useImmutableSWR(`/stories/${id}`, (endpoint: string) => restClient.apiGet<Story>(endpoint).then((result) => result.data), {
-    fallbackData,
-  });
+  return useImmutableSWR(
+    `/stories/${id}`,
+    (endpoint: string) => restClient.apiGet<Story>(endpoint).then((result) => convertStoryFromServer(result.data)),
+    {
+      fallbackData,
+    },
+  );
 };

@@ -2,7 +2,7 @@ import { SWRResponse } from 'swr';
 import useImmutableSWR from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
-import { Story } from '~/domains';
+import { convertStoryFromServer, Story } from '~/domains';
 import { PaginationResult } from '~/interfaces';
 
 /**
@@ -24,7 +24,7 @@ export const useStoriesForSideBar = ({
   const key = userId ? `/stories?userId=${userId}&page=${page}&limit=${limit}` : null;
   return useImmutableSWR(key, (endpoint: string) =>
     restClient.apiGet<PaginationResult<Story>>(endpoint).then((result) => {
-      return { totalDocs: result.data.totalDocs, stories: result.data.docs };
+      return { totalDocs: result.data.totalDocs, stories: result.data.docs.map((v) => convertStoryFromServer(v)) };
     }),
   );
 };
