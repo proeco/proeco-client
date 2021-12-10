@@ -1,12 +1,11 @@
 import React, { VFC } from 'react';
-import { Box, Card as MuiCard, Chip, Skeleton } from '@mui/material';
+import { Box, Chip, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { formatDistanceToNow } from 'date-fns';
-import { ja } from 'date-fns/locale';
 import { Story } from '~/domains';
-import { Emoji, Typography } from '~/components/parts/commons';
+import { Emoji, Typography, Card } from '~/components/parts/commons';
 import { useTeam } from '~/stores/team';
 import { TeamIcon, SkeltonTeamIcon } from '~/components/domains/team/TeamIcon';
+import { formatDistanceToNowHandler } from '~/utils/formatDistanceToNowHandler';
 
 type Props = {
   story: Story;
@@ -31,11 +30,7 @@ export const SkeltonStoryCard: VFC = () => {
 export const StoryCard: VFC<Props> = ({ story }) => {
   const { data: team } = useTeam({ teamId: story.teamId });
 
-  const displayDate = formatDistanceToNow(new Date(story.updatedAt), { addSuffix: true, locale: ja });
-
-  if (!team) {
-    return null;
-  }
+  const displayDate = formatDistanceToNowHandler(new Date(story.updatedAt));
 
   return (
     <StyledStoryCard>
@@ -51,18 +46,28 @@ export const StoryCard: VFC<Props> = ({ story }) => {
           {story.title}
         </Typography>
         <Box mt="12px" display="flex" alignItems="center" gap="8px">
-          <TeamIcon size={32} attachmentId={team.iconImageId} />
-          <Typography>{team.name}</Typography>
+          {team ? (
+            <>
+              <TeamIcon size={32} attachmentId={team.iconImageId} />
+              <Typography>{team.name}</Typography>
+            </>
+          ) : (
+            <>
+              <SkeltonTeamIcon size={32} />
+              <Skeleton variant="text" width="100px" />
+            </>
+          )}
         </Box>
       </Box>
     </StyledStoryCard>
   );
 };
 
-const StyledStoryCard = styled(MuiCard)`
+const StyledStoryCard = styled(Card)`
   padding: 0px;
   box-sizing: border-box;
   position: relative;
+  width: 100%;
 `;
 
 const StyledBox = styled(Box)`

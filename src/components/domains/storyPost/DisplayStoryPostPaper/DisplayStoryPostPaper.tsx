@@ -2,9 +2,6 @@ import React, { VFC, useState, useCallback, useMemo, useRef } from 'react';
 import { Box, styled } from '@mui/system';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
-import { formatDistanceToNow } from 'date-fns';
-import { ja } from 'date-fns/locale';
-
 import { Emoji } from 'emoji-mart';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
@@ -30,6 +27,7 @@ import { useStoryPosts } from '~/stores/storyPost';
 import { COLORS, URLS } from '~/constants';
 import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
 import { useReactionsByStoryPostId } from '~/stores/reaction';
+import { formatDistanceToNowHandler } from '~/utils/formatDistanceToNowHandler';
 
 type Props = {
   createdUserId?: string;
@@ -89,7 +87,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     limit: 10,
   });
 
-  const displayDate = formatDistanceToNow(new Date(currentStoryPost.createdAt), { addSuffix: true, locale: ja });
+  const displayDate = formatDistanceToNowHandler(new Date(currentStoryPost.createdAt));
 
   const handleClickCancelButton = () => {
     setContent(currentStoryPost.content);
