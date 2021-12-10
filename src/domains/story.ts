@@ -21,3 +21,12 @@ export class Story {
     this.updatedAt = init.updatedAt;
   }
 }
+
+/**
+ * サーバーから返ってくる日付データをDate型に変換する
+ * @param story
+ * @returns {Story}
+ */
+export const convertStoryFromServer = (story: Story) => {
+  return new Story({ ...story, createdAt: new Date(story.createdAt), updatedAt: new Date(story.updatedAt) });
+};

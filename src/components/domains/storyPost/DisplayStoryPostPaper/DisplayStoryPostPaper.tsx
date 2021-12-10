@@ -89,7 +89,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     limit: 10,
   });
 
-  const displayDate = formatDistanceToNow(new Date(currentStoryPost.createdAt), { addSuffix: true, locale: ja });
+  const displayDate = formatDistanceToNow(currentStoryPost.createdAt, { addSuffix: true, locale: ja });
 
   const handleClickCancelButton = () => {
     setContent(currentStoryPost.content);
@@ -211,7 +211,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
           ) : (
             <Typography variant="body1">undefined</Typography>
           )}
-          <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
+          <StyledTime dateTime={currentStoryPost.createdAt.toLocaleDateString()}>{displayDate}</StyledTime>
           <WrapDropdown>
             <Dropdown
               toggle={<IconButton icon="MoreVert" width={20} />}
