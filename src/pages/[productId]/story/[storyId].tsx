@@ -51,7 +51,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
 
-  const isMemberOfTeam = !!(currentUser && teamUsers.find((teamUser) => teamUser._id === currentUser._id));
+  const isMemberOfTeam = !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
 
   const { data: reactions } = useReactionsByUserId(currentUser?._id);
 
