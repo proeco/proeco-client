@@ -17,6 +17,11 @@ export class Reaction {
   }
 }
 
+/**
+ * サーバーから返ってくる日付データをDate型に変換する
+ * @param reaction
+ * @returns {Reaction}
+ */
 export const convertReactionFromServer = (reaction: Reaction) => {
   return new Reaction({ ...reaction, createdAt: new Date(reaction.createdAt), updatedAt: new Date(reaction.updatedAt) });
 };

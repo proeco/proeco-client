@@ -12,3 +12,16 @@ export class UserTeamRelation {
     this.updatedAt = updatedAt;
   }
 }
+
+/**
+ * サーバーから返ってくる日付データをDate型に変換する
+ * @param userTeamRelation
+ * @returns {UserTeamRelation}
+ */
+export const convertUserTeamRelationFromServer = (userTeamRelation: UserTeamRelation) => {
+  return new UserTeamRelation({
+    ...userTeamRelation,
+    createdAt: new Date(userTeamRelation.createdAt),
+    updatedAt: new Date(userTeamRelation.updatedAt),
+  });
+};
