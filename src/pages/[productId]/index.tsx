@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { ReactNode, useState, useEffect, ChangeEvent } from 'react';
+import { ReactNode, useState, useEffect, ChangeEvent, useMemo } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Grid, Tab } from '@mui/material';
@@ -38,7 +38,9 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const [activeTab, setActiveTab] = useState<TabTypes>(TabTypes.HOME);
   const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
 
-  const isMemberOfTeam = !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
+  const isMemberOfTeam = useMemo(() => {
+    return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
+  }, [currentUser, teamUsers]);
 
   useEffect(() => {
     switch (extractHash(router.asPath)) {

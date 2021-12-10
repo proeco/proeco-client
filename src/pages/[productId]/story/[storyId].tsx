@@ -51,7 +51,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
 
-  const isMemberOfTeam = !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
+  const isMemberOfTeam = useMemo(() => {
+    return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
+  }, [currentUser, teamUsers]);
 
   const { data: reactions } = useReactionsByUserId(currentUser?._id);
 
@@ -166,7 +168,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
                 </TimeLineItem>
               );
             })}
-            {isMemberOfTeam && (
+            {isMemberOfTeam && currentUser && (
               <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
                 <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
                 <Box width="100%">
