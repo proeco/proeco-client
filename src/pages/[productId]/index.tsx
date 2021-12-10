@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { ReactNode, useState, useEffect, ChangeEvent } from 'react';
+import { ReactNode, useState, useEffect, ChangeEvent, useMemo } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Grid, Tab } from '@mui/material';
@@ -22,6 +22,7 @@ import { extractHash } from '~/utils/extractHash/extractHash';
 import { TeamForm } from '~/components/domains/team/TeamForm';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { PaginationResult } from '~/interfaces';
+import { useTeamUsers } from '~/stores/team';
 
 const TabTypes = { HOME: 'home', STORY: 'story', SETTINGS: 'settings' };
 type TabTypes = typeof TabTypes[keyof typeof TabTypes];
@@ -35,6 +36,11 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const router = useRouter();
   const { data: currentUser } = useCurrentUser();
   const [activeTab, setActiveTab] = useState<TabTypes>(TabTypes.HOME);
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
+
+  const isMemberOfTeam = useMemo(() => {
+    return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
+  }, [currentUser, teamUsers]);
 
   useEffect(() => {
     switch (extractHash(router.asPath)) {
@@ -95,7 +101,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
           <StyledTabList onChange={handleChange} aria-label="team tabs">
             <StyledTab label={<Typography bold>ホーム</Typography>} value={TabTypes.HOME} />
             <StyledTab label={<Typography bold>ストーリー</Typography>} value={TabTypes.STORY} />
-            <StyledTab label={<Typography bold>設定</Typography>} value={TabTypes.SETTINGS} />
+            {isMemberOfTeam && <StyledTab label={<Typography bold>設定</Typography>} value={TabTypes.SETTINGS} />}
           </StyledTabList>
           <TabPanel value={TabTypes.HOME}>
             {currentUser && (
