@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 
-import { StoryCard } from './StoryCard';
+import { SkeltonStoryCard, StoryCard } from './StoryCard';
 import { createMockStory } from '~/mocks/domains';
 
 export default {
@@ -13,7 +13,7 @@ export default {
 
 const Template: ComponentStory<typeof StoryCard> = ({ ...rest }) => {
   return (
-    <Box p="20px">
+    <Box p="40px" bgcolor="#e5e5e5" width="400px">
       <StoryCard {...rest} />
     </Box>
   );
@@ -25,3 +25,13 @@ export const Default = Template.bind({});
 Default.args = {
   story: mockStory,
 };
+
+const SkeltonTemplate: ComponentStory<typeof SkeltonStoryCard> = ({ ...rest }) => {
+  return (
+    <Box p="40px" bgcolor="#e5e5e5" width="400px">
+      <SkeltonStoryCard {...rest} />
+    </Box>
+  );
+};
+
+export const Skelton = SkeltonTemplate.bind({});
