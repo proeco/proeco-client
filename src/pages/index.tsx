@@ -14,11 +14,15 @@ import { TeamCard } from '~/components/domains/team/TeamCard';
 
 import { useAuth } from '~/hooks/useAuth/useAuth';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
+import { useStories } from '~/stores/story';
+import { StoryCard } from '~/components/domains/story/StoryCard';
+import { SkeltonStoryCard } from '~/components/domains/story/StoryCard/StoryCard';
 
 const Home: NextPage = () => {
   const { data: currentUser } = useCurrentUser();
   const { login, logout } = useAuth();
   const { data: teamList } = useTeams({ page: 1 });
+  const { data: openStoryList } = useStories({ page: 1, limit: 10 });
 
   return (
     <>
@@ -49,6 +53,33 @@ const Home: NextPage = () => {
               </Grid>
               <Grid item xs={12} sm={6} px={1}>
                 <SkeltonTeamCard />
+              </Grid>
+            </>
+          )}
+        </Grid>
+      </Box>
+      <Typography variant="h2" align="center" bold my={1}>
+        進行中のストーリー一覧
+      </Typography>
+      <Box mb={5}>
+        <Grid container maxWidth="900px" mx="auto">
+          {openStoryList ? (
+            openStoryList.docs.map((story) => {
+              return (
+                <Grid item key={`top-${story._id}`} xs={12} sm={6} px={1} pb={2}>
+                  <Link href={URLS.TEAMS_STORY(story.teamId, story._id)}>
+                    <StoryCard story={story} />
+                  </Link>
+                </Grid>
+              );
+            })
+          ) : (
+            <>
+              <Grid item xs={12} sm={6} px={1}>
+                <SkeltonStoryCard />
+              </Grid>
+              <Grid item xs={12} sm={6} px={1}>
+                <SkeltonStoryCard />
               </Grid>
             </>
           )}

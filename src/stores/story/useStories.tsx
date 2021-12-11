@@ -21,7 +21,7 @@ export const useStories = ({
   page: number;
   limit: 10;
 }): SWRResponse<PaginationResult<Story>, Error> => {
-  const key = teamId ? `/stories?teamId=${teamId}&page=${page}&limit=${limit}` : null;
+  const key = teamId ? `/stories?teamId=${teamId}&page=${page}&limit=${limit}` : `/stories?page=${page}&limit=${limit}`;
   return useImmutableSWR(
     key,
     (endpoint: string) =>
