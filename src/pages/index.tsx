@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   const { data: currentUser } = useCurrentUser();
   const { login, logout } = useAuth();
   const { data: teamList } = useTeams({ page: 1 });
-  const { data: openStoryList } = useStories({ page: 1, limit: 10 });
+  const { data: openStoryList } = useStories({ page: 1, limit: 10, isCompleted: false });
 
   return (
     <>

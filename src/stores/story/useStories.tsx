@@ -16,12 +16,16 @@ export const useStories = ({
   teamId,
   page,
   limit,
+  isCompleted,
 }: {
   teamId?: string;
   page: number;
   limit: 10;
+  isCompleted?: boolean;
 }): SWRResponse<PaginationResult<Story>, Error> => {
-  const key = teamId ? `/stories?teamId=${teamId}&page=${page}&limit=${limit}` : `/stories?page=${page}&limit=${limit}`;
+  const key = `/stories?page=${page}&limit=${limit}${teamId ? '&teamId=' + teamId : ''}${
+    typeof isCompleted !== 'undefined' ? '&isCompleted=' + JSON.stringify(isCompleted) : ''
+  }`;
   return useImmutableSWR(
     key,
     (endpoint: string) =>
