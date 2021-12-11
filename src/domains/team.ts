@@ -20,3 +20,12 @@ export class Team {
     this.updatedAt = init.updatedAt;
   }
 }
+
+/**
+ * サーバーから返ってくる日付データをDate型に変換する
+ * @param team
+ * @returns {Team}
+ */
+export const convertTeamFromServer = (team: Team) => {
+  return new Team({ ...team, createdAt: new Date(team.createdAt), updatedAt: new Date(team.updatedAt) });
+};

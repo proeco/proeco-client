@@ -32,7 +32,7 @@ export const StoryTableRow: VFC<Props> = ({ story, productId }) => {
       </StyledBodyTableCell>
       <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
       <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
-      <StyledBodyTableCell align="right">{format(new Date(story.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
+      <StyledBodyTableCell align="right">{format(story.updatedAt, DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
     </StyledTableRow>
   );
 };

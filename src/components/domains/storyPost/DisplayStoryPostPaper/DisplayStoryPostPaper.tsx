@@ -209,7 +209,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
           ) : (
             <Typography variant="body1">undefined</Typography>
           )}
-          <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
+          <StyledTime dateTime={currentStoryPost.createdAt.toLocaleDateString()}>{displayDate}</StyledTime>
           <WrapDropdown>
             <Dropdown
               toggle={<IconButton icon="MoreVert" width={20} />}

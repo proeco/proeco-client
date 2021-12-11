@@ -16,3 +16,16 @@ export class Attachment {
     this.updatedAt = init.updatedAt;
   }
 }
+
+/**
+ * サーバーから返ってくる日付データをDate型に変換する
+ * @param attachment
+ * @returns {Attachment}
+ */
+export const convertAttachmentFromServer = (attachment: Attachment) => {
+  return new Attachment({
+    ...attachment,
+    createdAt: new Date(attachment.createdAt),
+    updatedAt: new Date(attachment.updatedAt),
+  });
+};

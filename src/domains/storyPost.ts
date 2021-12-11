@@ -21,3 +21,12 @@ export class StoryPost {
 }
 
 export type UpdatableKey = 'content';
+
+/**
+ * サーバーから返ってくる日付データをDate型に変換する
+ * @param storyPost
+ * @returns {StoryPost}
+ */
+export const convertStoryPostFromServer = (storyPost: StoryPost) => {
+  return new StoryPost({ ...storyPost, createdAt: new Date(storyPost.createdAt), updatedAt: new Date(storyPost.updatedAt) });
+};
