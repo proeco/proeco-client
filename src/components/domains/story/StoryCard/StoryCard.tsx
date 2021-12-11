@@ -4,8 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Story } from '~/domains';
 import { Emoji, Typography, Card } from '~/components/parts/commons';
 import { useTeam } from '~/stores/team';
-import { TeamIcon, SkeltonTeamIcon } from '~/components/domains/team/TeamIcon';
-import { formatDistanceToNowHandler } from '~/utils/formatDistanceToNowHandler';
+import { TeamIcon, SkeltonTeamIcon, GuestTeamIcon } from '~/components/domains/team/TeamIcon';
+import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
 
 type Props = {
   story: Story;
@@ -30,7 +30,7 @@ export const SkeltonStoryCard: VFC = () => {
 export const StoryCard: VFC<Props> = ({ story }) => {
   const { data: team } = useTeam({ teamId: story.teamId });
 
-  const displayDate = formatDistanceToNowHandler(new Date(story.updatedAt));
+  const displayDate = formatDistanceToNow(story.updatedAt);
 
   return (
     <StyledStoryCard>
@@ -49,12 +49,12 @@ export const StoryCard: VFC<Props> = ({ story }) => {
           {team ? (
             <>
               <TeamIcon size={32} attachmentId={team.iconImageId} />
-              <Typography>{team.name}</Typography>
+              <Typography variant="body2">{team.name}</Typography>
             </>
           ) : (
             <>
-              <SkeltonTeamIcon size={32} />
-              <Skeleton variant="text" width="100px" />
+              <GuestTeamIcon size={32} />
+              <Typography variant="body2">undefined</Typography>
             </>
           )}
         </Box>

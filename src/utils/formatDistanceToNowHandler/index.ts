@@ -1,1 +1,0 @@
-export { formatDistanceToNowHandler } from './formatDistanceToNow';

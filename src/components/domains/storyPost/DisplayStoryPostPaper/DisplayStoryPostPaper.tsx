@@ -27,7 +27,7 @@ import { useStoryPosts } from '~/stores/storyPost';
 import { COLORS, URLS } from '~/constants';
 import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
 import { useReactionsByStoryPostId } from '~/stores/reaction';
-import { formatDistanceToNowHandler } from '~/utils/formatDistanceToNowHandler';
+import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
 
 type Props = {
   createdUserId?: string;
@@ -87,7 +87,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     limit: 10,
   });
 
-  const displayDate = formatDistanceToNowHandler(new Date(currentStoryPost.createdAt));
+  const displayDate = formatDistanceToNow(currentStoryPost.createdAt);
 
   const handleClickCancelButton = () => {
     setContent(currentStoryPost.content);
