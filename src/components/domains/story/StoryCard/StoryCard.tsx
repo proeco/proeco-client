@@ -41,7 +41,7 @@ export const StoryCard: VFC<Props> = ({ story }) => {
         </StyledBox>
       </Box>
       <Box p="12px">
-        <StyledTime dateTime={new Date(story.updatedAt).toLocaleDateString()}>{displayDate}</StyledTime>
+        <StyledTime dateTime={story.updatedAt.toLocaleDateString()}>{displayDate}</StyledTime>
         <Typography variant="body1" bold>
           {story.title}
         </Typography>
