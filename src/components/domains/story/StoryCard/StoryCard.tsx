@@ -2,10 +2,11 @@ import React, { VFC } from 'react';
 import { Box, Chip, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Story } from '~/domains';
-import { Emoji, Typography, Card } from '~/components/parts/commons';
+import { Emoji, Typography, Card, Link } from '~/components/parts/commons';
 import { useTeam } from '~/stores/team';
 import { TeamIcon, SkeltonTeamIcon, GuestTeamIcon } from '~/components/domains/team/TeamIcon';
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
+import { URLS } from '~/constants';
 
 type Props = {
   story: Story;
@@ -61,6 +62,19 @@ export const StoryCard: VFC<Props> = ({ story }) => {
       </Box>
     </StyledStoryCard>
   );
+};
+
+export const LinkStoryCard: VFC<Props> = ({ story }) => {
+  const { data: team } = useTeam({ teamId: story.teamId });
+
+  if (team) {
+    return (
+      <Link href={URLS.TEAMS_STORY(team.productId, story._id)}>
+        <StoryCard story={story} />
+      </Link>
+    );
+  }
+  return <StoryCard story={story} />;
 };
 
 const StyledStoryCard = styled(Card)`
