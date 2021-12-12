@@ -1,6 +1,6 @@
 export const URLS = {
   TOP: '/',
-  API_LOGIN: '/api/auth/login',
+  API_LOGIN: '/api/auth/login?returnTo=/dashboard/settings',
   API_LOGOUT: '/api/auth/logout',
   DASHBOARD: '/dashboard',
   DASHBOARD_TEAMS: '/dashboard/teams',
