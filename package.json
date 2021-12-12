@@ -17,6 +17,7 @@
     "deploy:storybook": "gh-pages -d storybook-static"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.6.1",
     "@emotion/react": "11.6.0",
     "@emotion/styled": "11.6.0",
     "@firebase/app": "0.7.10",

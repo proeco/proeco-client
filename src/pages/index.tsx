@@ -12,12 +12,10 @@ import { URLS } from '~/constants';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 
-import { useAuth } from '~/hooks/useAuth/useAuth';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 
 const Home: NextPage = () => {
   const { data: currentUser } = useCurrentUser();
-  const { login, logout } = useAuth();
   const { data: teamList } = useTeams({ page: 1 });
 
   return (
@@ -66,14 +64,18 @@ const Home: NextPage = () => {
         <>
           <Typography variant="h3">Hello {currentUser.name}!</Typography>
           <UserIcon size={200} userId={currentUser._id} attachmentId={currentUser.iconImageId} />
-          <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={logout}>
-            Logout
-          </Button>
+          <Link href={URLS.API_LOGOUT}>
+            <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }}>
+              Logout
+            </Button>
+          </Link>
         </>
       ) : (
-        <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }} onClick={login}>
-          Login
-        </Button>
+        <Link href={URLS.API_LOGIN}>
+          <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }}>
+            Login
+          </Button>
+        </Link>
       )}
     </>
   );
