@@ -1,56 +1,16 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 
-import { Component } from '~/components/parts/layout/NavigationBar';
-import { Icon } from '~/components/parts/commons';
-
-import { createMockUser } from '~/mocks/domains';
+import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 
 export default {
   title: 'parts/layout/NavigationBar',
-  component: Component,
+  component: NavigationBar,
   argTypes: { onClose: { action: 'onClickLoginButton' } },
-} as ComponentMeta<typeof Component>;
+} as ComponentMeta<typeof NavigationBar>;
 
-const LOGO_URL = 'https://itizawa-tech.growi.cloud/attachment/615b8f0da86ba4005158b0e9';
-
-const Template: ComponentStory<typeof Component> = ({ currentUser, isValidating, onClickLoginButton, menuItems, logoImagePath }) => {
-  return (
-    <Component
-      currentUser={currentUser}
-      isValidating={isValidating}
-      onClickLoginButton={onClickLoginButton}
-      menuItems={menuItems}
-      logoImagePath={logoImagePath}
-    />
-  );
+const Template: ComponentStory<typeof NavigationBar> = () => {
+  return <NavigationBar />;
 };
 
-export const GuestUser = Template.bind({});
-GuestUser.args = {
-  currentUser: undefined,
-  isValidating: false,
-  logoImagePath: LOGO_URL,
-};
-
-export const LoadingUser = Template.bind({});
-LoadingUser.args = {
-  currentUser: undefined,
-  isValidating: true,
-  logoImagePath: LOGO_URL,
-};
-
-export const LoginUser = Template.bind({});
-LoginUser.args = {
-  currentUser: createMockUser(),
-  isValidating: false,
-  menuItems: [
-    {
-      icon: <Icon icon="Logout" width="20px" color="textColor.main" />,
-      text: 'Logout',
-      onClick: action('signOut'),
-    },
-  ],
-  logoImagePath: LOGO_URL,
-};
+export const Default = Template.bind({});
