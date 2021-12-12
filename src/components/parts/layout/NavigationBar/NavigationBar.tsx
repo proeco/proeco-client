@@ -4,7 +4,6 @@ import { AppBar, ListItemIcon, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { useRouter } from 'next/router';
-import { useUser } from '@auth0/nextjs-auth0';
 import { Dropdown } from '../../commons/Dropdown';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
@@ -18,10 +17,8 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 export const NavigationBar: VFC = memo(() => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const router = useRouter();
-  const { user, isLoading } = useUser();
 
-  const { data } = useCurrentUser();
-  console.log(user, data);
+  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
 
   const menuItems = useMemo(
     () => [
@@ -40,11 +37,11 @@ export const NavigationBar: VFC = memo(() => {
   );
 
   const Contents = useMemo(() => {
-    if (isLoading) return <SkeltonUserIcon size={40} />;
+    if (isValidatingCurrentUser) return <SkeltonUserIcon size={40} />;
 
-    if (user) {
+    if (currentUser) {
       return (
-        <Dropdown toggle={<StyledUserIcon size={40} attachmentId={user.iconImageId} userId={user.org_id} />}>
+        <Dropdown toggle={<StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />}>
           {menuItems.map((menuItem, i) => (
             <MenuItem key={i} onClick={menuItem.onClick}>
               <ListItemIcon>{menuItem.icon}</ListItemIcon>
@@ -60,7 +57,7 @@ export const NavigationBar: VFC = memo(() => {
         Login Button
       </StyledButton>
     );
-  }, [isLoading, user, menuItems]);
+  }, [isValidatingCurrentUser, currentUser, menuItems]);
 
   return (
     <>
