@@ -15,7 +15,7 @@ import { TeamCard } from '~/components/domains/team/TeamCard';
 import { useAuth } from '~/hooks/useAuth/useAuth';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 import { useStories } from '~/stores/story';
-import { LinkStoryCard, SkeltonStoryCard } from '~/components/domains/story/StoryCard';
+import { SkeltonStoryCard, StoryCard } from '~/components/domains/story/StoryCard';
 
 const Home: NextPage = () => {
   const { data: currentUser } = useCurrentUser();
@@ -66,7 +66,7 @@ const Home: NextPage = () => {
             openStoryList.docs.map((story) => {
               return (
                 <Grid item key={`top-${story._id}`} xs={12} sm={6} px={1} pb={2}>
-                  <LinkStoryCard story={story} />
+                  <StoryCard story={story} isLink />
                 </Grid>
               );
             })

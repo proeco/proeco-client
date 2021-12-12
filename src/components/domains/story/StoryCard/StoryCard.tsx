@@ -1,4 +1,4 @@
-import React, { VFC } from 'react';
+import React, { VFC, useMemo } from 'react';
 import { Box, Chip, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Story } from '~/domains';
@@ -10,6 +10,7 @@ import { URLS } from '~/constants';
 
 type Props = {
   story: Story;
+  isLink?: boolean;
 };
 
 export const SkeltonStoryCard: VFC = () => {
@@ -28,53 +29,46 @@ export const SkeltonStoryCard: VFC = () => {
   );
 };
 
-export const StoryCard: VFC<Props> = ({ story }) => {
+export const StoryCard: VFC<Props> = ({ story, isLink = false }) => {
   const { data: team } = useTeam({ teamId: story.teamId });
 
   const displayDate = formatDistanceToNow(story.updatedAt);
 
-  return (
-    <StyledStoryCard>
-      <StyledChip label={story.isCompleted ? 'Closed' : 'Open'} />
-      <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative">
-        <StyledBox>
-          <Emoji emojiId={story.emojiId} size={48} />
-        </StyledBox>
-      </Box>
-      <Box p="12px">
-        <StyledTime dateTime={story.updatedAt.toLocaleDateString()}>{displayDate}</StyledTime>
-        <Typography variant="body1" bold>
-          {story.title}
-        </Typography>
-        <Box mt="12px" display="flex" alignItems="center" gap="8px">
-          {team ? (
-            <>
-              <TeamIcon size={32} attachmentId={team.iconImageId} />
-              <Typography variant="body2">{team.name}</Typography>
-            </>
-          ) : (
-            <>
-              <GuestTeamIcon size={32} />
-              <Typography variant="body2">undefined</Typography>
-            </>
-          )}
-        </Box>
-      </Box>
-    </StyledStoryCard>
-  );
-};
-
-export const LinkStoryCard: VFC<Props> = ({ story }) => {
-  const { data: team } = useTeam({ teamId: story.teamId });
-
-  if (team) {
+  const StoryCardContent = useMemo(() => {
     return (
-      <Link href={URLS.TEAMS_STORY(team.productId, story._id)}>
-        <StoryCard story={story} />
-      </Link>
+      <StyledStoryCard>
+        <StyledChip label={story.isCompleted ? 'Closed' : 'Open'} />
+        <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative">
+          <StyledBox>
+            <Emoji emojiId={story.emojiId} size={48} />
+          </StyledBox>
+        </Box>
+        <Box p="12px">
+          <StyledTime dateTime={story.updatedAt.toLocaleDateString()}>{displayDate}</StyledTime>
+          <Typography variant="body1" bold>
+            {story.title}
+          </Typography>
+          <Box mt="12px" display="flex" alignItems="center" gap="8px">
+            {team ? (
+              <>
+                <TeamIcon size={32} attachmentId={team.iconImageId} />
+                <Typography variant="body2">{team.name}</Typography>
+              </>
+            ) : (
+              <>
+                <GuestTeamIcon size={32} />
+                <Typography variant="body2">undefined</Typography>
+              </>
+            )}
+          </Box>
+        </Box>
+      </StyledStoryCard>
     );
-  }
-  return <StoryCard story={story} />;
+  }, [displayDate, story, team]);
+
+  if (!isLink || !team) return StoryCardContent;
+
+  return <Link href={URLS.TEAMS_STORY(team.productId, story._id)}>{StoryCardContent}</Link>;
 };
 
 const StyledStoryCard = styled(Card)`

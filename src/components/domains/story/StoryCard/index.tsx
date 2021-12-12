@@ -1,1 +1,1 @@
-export { StoryCard, SkeltonStoryCard, LinkStoryCard } from './StoryCard';
+export { StoryCard, SkeltonStoryCard } from './StoryCard';
