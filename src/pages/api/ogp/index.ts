@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const viewport = { width: 1200, height: 630 };
 
   const browser = await playwright.launchChromium();
-  const page = await browser.newPage({ viewport, colorScheme: 'no-preference' });
+  const page = await browser.newPage({ viewport });
 
   const props = { title: title as string, teamName: teamName as string };
   const element = React.createElement(StoryOgpTemplate, props);
@@ -18,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   await page.setContent(html, { waitUntil: 'domcontentloaded' });
 
-  const image = await page.screenshot({ type: 'png' });
+  const image = await page.screenshot({ type: 'jpeg' });
   await browser.close();
 
   res.setHeader('Cache-Control', 's-maxage=31536000, stale-while-revalidate');
