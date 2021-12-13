@@ -1,0 +1,1 @@
+export { extractHash } from './extractHash';
