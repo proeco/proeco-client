@@ -1,5 +1,4 @@
 import React, { VFC } from 'react';
-import { Typography } from '~/components/parts/commons';
 
 type Props = {
   title: string;
@@ -48,9 +47,9 @@ export const StoryOgpTemplate: VFC<Props> = ({ title, teamName }) => {
           <div className="teamInfo">
             <p className="teamName">{teamName}</p>
           </div>
-          <Typography className="title" variant="h2" maximum_lines={4}>
-            {title}
-          </Typography>
+          {/* <Typography className="title" variant="h2" maximum_lines={4}> */}
+          {title}
+          {/* </Typography> */}
         </div>
       </body>
     </html>
