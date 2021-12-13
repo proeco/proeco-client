@@ -7,7 +7,7 @@ import { Grid, Tab } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
 import { Team } from '~/domains';
-import { Button, Emoji, Icon, Pagination, Paper, Typography } from '~/components/parts/commons';
+import { Button, Icon, MarkdownToHtmlBody, Pagination, Paper, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
@@ -23,7 +23,6 @@ import { TeamForm } from '~/components/domains/team/TeamForm';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { PaginationResult } from '~/interfaces';
 import { useTeamUsers } from '~/stores/team';
-import { IMAGE_PATH } from '~/constants';
 
 const TabTypes = { HOME: 'home', STORY: 'story', SETTINGS: 'settings' };
 type TabTypes = typeof TabTypes[keyof typeof TabTypes];
@@ -109,20 +108,8 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
               <Grid container>
                 <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
                   <Paper>
-                    <Box display="flex" justifyContent="center">
-                      <Emoji emojiId="sparkles" size={28} />
-                      <Typography variant="h3" textAlign="center" bold>
-                        プロダクトの説明を書きましょう
-                      </Typography>
-                      <Emoji emojiId="sparkles" size={28} />
-                    </Box>
-                    <Box my={3} display="flex" justifyContent="center">
-                      <img src={IMAGE_PATH.TEACH_404} alt="create-landing" width="50%" height="auto" />
-                    </Box>
-                    <Box display="flex" justifyContent="center">
-                      <Button variant="contained" startIcon={<Icon icon="CreateOutlined" width="20px" />}>
-                        書く！
-                      </Button>
+                    <Box p={2}>
+                      <MarkdownToHtmlBody content={team.homeContent} />
                     </Box>
                   </Paper>
                 </Grid>

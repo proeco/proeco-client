@@ -63,17 +63,17 @@ const Home: NextPage = () => {
           {openStoryList ? (
             openStoryList.docs.map((story) => {
               return (
-                <Grid item key={`top-${story._id}`} xs={12} sm={6} px={1} pb={2}>
+                <Grid item key={`top-${story._id}`} xs={12} sm={6} md={4} px={1} pb={2}>
                   <StoryCard story={story} isLink />
                 </Grid>
               );
             })
           ) : (
             <>
-              <Grid item xs={12} sm={6} px={1}>
+              <Grid item xs={12} sm={6} md={4} px={1}>
                 <SkeltonStoryCard />
               </Grid>
-              <Grid item xs={12} sm={6} px={1}>
+              <Grid item xs={12} sm={6} md={4} px={1}>
                 <SkeltonStoryCard />
               </Grid>
             </>
