@@ -16,7 +16,7 @@ export const TimeLineItem: VFC<Props> = ({ userAttachmentId, userId, children, i
       <TimelineItem>
         <TimelineSeparator>
           <StyledTimeLineDot>
-            {userAttachmentId ? <UserIcon size={40} attachmentId={userAttachmentId} userId={userId} /> : <GuestUserIcon size={40} />}
+            {userAttachmentId ? <UserIcon size={40} isLink attachmentId={userAttachmentId} userId={userId} /> : <GuestUserIcon size={40} />}
           </StyledTimeLineDot>
           {isConnect && <StyledTimeLineConnector />}
         </TimelineSeparator>

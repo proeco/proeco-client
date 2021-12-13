@@ -24,7 +24,7 @@ export const useStories = ({
   isCompleted?: boolean;
 }): SWRResponse<PaginationResult<Story>, Error> => {
   const key = `/stories?page=${page}&limit=${limit}${teamId ? '&teamId=' + teamId : ''}${
-    typeof isCompleted !== 'undefined' ? '&isCompleted=' + isCompleted : ''
+    isCompleted != null ? '&isCompleted=' + isCompleted : ''
   }`;
   return useImmutableSWR(
     key,
