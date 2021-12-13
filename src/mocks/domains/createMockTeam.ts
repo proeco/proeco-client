@@ -12,6 +12,7 @@ export const createMockTeam = (mock: Partial<Team> = {}): Team => {
     url: mock.url || 'https://github.com/proeco',
     name: mock.name || 'name',
     description: mock.description || 'description',
+    homeContent: mock.homeContent || '## Product',
     adminUserId: mock.adminUserId || 'adminUser1',
     iconImageId: mock.iconImageId || 'iconImage1',
     createdAt: mock.createdAt || new Date(),
