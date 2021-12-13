@@ -28,6 +28,7 @@
     "@mui/styled-engine-sc": "5.1.0",
     "@mui/types": "7.1.0",
     "axios": "0.24.0",
+    "canvas": "2.6.1",
     "date-fns": "2.27.0",
     "emoji-mart": "3.0.1",
     "github-markdown-css": "5.0.0",
