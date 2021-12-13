@@ -115,7 +115,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
 
   return (
     <>
-      <ProecoOgpHead title={story.title} />
+      <ProecoOgpHead title={story.title} image={`${process.env.NEXT_PUBLIC_ROOT_URL}/api/ogp?title=${story.title}`} />
       <Box mx="auto" maxWidth="1200px">
         <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(team.productId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
         <Box mt={1} mb={4} display="flex" alignItems="center" justifyContent="space-between">

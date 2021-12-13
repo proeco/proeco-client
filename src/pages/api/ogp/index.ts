@@ -1,5 +1,6 @@
+import path from 'path';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createCanvas } from 'canvas';
+import { createCanvas, loadImage } from 'canvas';
 
 const WIDTH = 1200 as const;
 const HEIGHT = 630 as const;
@@ -12,6 +13,10 @@ const createOgp = async (req: NextApiRequest, res: NextApiResponse): Promise<voi
 
   ctx.fillStyle = '#FFF';
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+  const backgroundImage = await loadImage(path.resolve('./public/images/story-ogp.png'));
+  ctx.drawImage(backgroundImage, 0, 0, WIDTH, HEIGHT);
+
   ctx.font = '60px ipagp';
   ctx.fillStyle = '#000000';
   ctx.textAlign = 'center';
