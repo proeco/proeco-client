@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const viewport = { width: 1200, height: 630 };
 
   const browser = await playwright.launchChromium();
-  const page = await browser.newPage({ viewport });
+  const page = await browser.newPage({ viewport, colorScheme: 'no-preference' });
 
   const props = { title: title as string, teamName: teamName as string };
   const element = React.createElement(StoryOgpTemplate, props);
