@@ -106,10 +106,10 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
           <TabPanel value={TabTypes.HOME}>
             {currentUser && (
               <Grid container>
-                <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
+                <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
                   <Paper>TODO</Paper>
                 </Grid>
-                <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
+                <Grid key={team._id} item xs={12} sm={4} px={1} pb={2}>
                   <TeamCard
                     name={team.name}
                     productId={team.productId}
