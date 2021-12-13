@@ -6,23 +6,24 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Grid, Tab } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
-import { Button, Icon, Pagination, Paper, Typography } from '~/components/parts/commons';
+import { Team } from '~/domains';
+import { Button, Emoji, Icon, Pagination, Paper, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { restClient } from '~/utils/rest-client';
-import { Team } from '~/domains';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
 import { useStories } from '~/stores/story';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
-import { extractHash } from '~/utils/extractHash/extractHash';
+import { extractHash } from '~/utils/extractHash';
 import { TeamForm } from '~/components/domains/team/TeamForm';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { PaginationResult } from '~/interfaces';
 import { useTeamUsers } from '~/stores/team';
+import { IMAGE_PATH } from '~/constants';
 
 const TabTypes = { HOME: 'home', STORY: 'story', SETTINGS: 'settings' };
 type TabTypes = typeof TabTypes[keyof typeof TabTypes];
@@ -107,7 +108,23 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
             {currentUser && (
               <Grid container>
                 <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
-                  <Paper>TODO</Paper>
+                  <Paper>
+                    <Box display="flex" justifyContent="center">
+                      <Emoji emojiId="sparkles" size={28} />
+                      <Typography variant="h3" textAlign="center" bold>
+                        プロダクトの説明を書きましょう
+                      </Typography>
+                      <Emoji emojiId="sparkles" size={28} />
+                    </Box>
+                    <Box my={3} display="flex" justifyContent="center">
+                      <img src={IMAGE_PATH.TEACH_404} alt="create-landing" width="50%" height="auto" />
+                    </Box>
+                    <Box display="flex" justifyContent="center">
+                      <Button variant="contained" startIcon={<Icon icon="CreateOutlined" width="20px" />}>
+                        書く！
+                      </Button>
+                    </Box>
+                  </Paper>
                 </Grid>
                 <Grid key={team._id} item xs={12} sm={4} px={1} pb={2}>
                   <TeamCard
