@@ -4,6 +4,7 @@ export class Team {
   url: string;
   name: string;
   description: string;
+  homeContent: string;
   adminUserId: string;
   iconImageId: string;
   createdAt: Date;
@@ -14,6 +15,7 @@ export class Team {
     this.url = init.url;
     this.name = init.name;
     this.description = init.description;
+    this.homeContent = init.homeContent;
     this.adminUserId = init.adminUserId;
     this.iconImageId = init.iconImageId;
     this.createdAt = init.createdAt;
