@@ -1797,10 +1797,10 @@
     "@firebase/util" "1.4.2"
     tslib "^2.1.0"
 
-"@firebase/auth@0.19.3":
-  version "0.19.3"
-  resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-0.19.3.tgz#cb22954b9cf46ed8a537163b13aaddfbd3f7ee11"
-  integrity sha512-asOJkmzBh38DgZ5fBt7cv8dNyU3r7kRVoXi9f1eCpQp/n+NagaiUM+YKXq0snjbchFJu7qPBiwrIg/xZinY4kg==
+"@firebase/auth@0.19.4":
+  version "0.19.4"
+  resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-0.19.4.tgz#7d4962e70578e915d1a887be3d662c1fb030471e"
+  integrity sha512-0FefLGnP0mbgvSSan7j2e25i3pllqF9+KYO5fwuAo3YcgjCyNMBJKaXPlz/J+z6jRHa2itjh4W48jD4Y/FCMqw==
   dependencies:
     "@firebase/component" "0.5.9"
     "@firebase/logger" "0.3.2"
