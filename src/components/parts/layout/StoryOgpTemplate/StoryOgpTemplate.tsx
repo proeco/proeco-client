@@ -1,43 +1,18 @@
 import React, { VFC } from 'react';
-import { styled } from '@mui/system';
-import { Box } from '@mui/material';
-import { Typography } from '~/components/parts/commons/Typography';
+import { Typography } from '~/components/parts/commons';
 
 type Props = {
   title: string;
   teamName: string;
 };
 
-export const StoryOgpTemplate: VFC<Props> = ({ title, teamName }) => {
-  return (
-    <StyledHtml>
-      <StyledBody>
-        <StyledWrapper>
-          <StyledTeamInfo>
-            <Typography variant="h3" bold>
-              {teamName}
-            </Typography>
-          </StyledTeamInfo>
-          <StyledTitle variant="h2" maximum_lines={4}>
-            {title}
-          </StyledTitle>
-        </StyledWrapper>
-      </StyledBody>
-    </StyledHtml>
-  );
-};
-
-const StyledHtml = styled('html')`
+const css = `
+html,
+body {
   margin: 0;
   padding: 0;
-`;
-
-const StyledBody = styled('body')`
-  margin: 0;
-  padding: 0;
-`;
-
-const StyledWrapper = styled(Box)`
+}
+.wrapper {
   width: 1200px;
   height: 630px;
   display: flex;
@@ -47,17 +22,37 @@ const StyledWrapper = styled(Box)`
   background-image: ${`url(${process.env.NEXT_PUBLIC_ROOT_URL}/images/story-ogp.png)`};
   background-size: cover;
   background-position: center center;
-`;
-
-const StyledTeamInfo = styled(Box)`
+}
+.teamInfo {
   position: absolute;
-  top: 60px;
+  top: 40px;
   left: 80px;
   display: flex;
   align-items: center;
-`;
-
-const StyledTitle = styled(Typography)`
+}
+.teamName {
+  font-size: 40px;
+}
+.title {
   padding-left: 80px;
   padding-right: 80px;
+}
 `;
+
+export const StoryOgpTemplate: VFC<Props> = ({ title, teamName }) => {
+  return (
+    <html>
+      <style dangerouslySetInnerHTML={{ __html: css }} />
+      <body>
+        <div className="wrapper">
+          <div className="teamInfo">
+            <p className="teamName">{teamName}</p>
+          </div>
+          <Typography className="title" variant="h2" maximum_lines={4}>
+            {title}
+          </Typography>
+        </div>
+      </body>
+    </html>
+  );
+};

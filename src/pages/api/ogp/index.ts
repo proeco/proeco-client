@@ -18,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   await page.setContent(html, { waitUntil: 'domcontentloaded' });
 
-  const image = await page.screenshot({ type: 'jpeg' });
+  const image = await page.screenshot({ type: 'png' });
   await browser.close();
 
   res.setHeader('Cache-Control', 's-maxage=31536000, stale-while-revalidate');
