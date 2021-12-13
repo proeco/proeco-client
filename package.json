@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.6.1",
-    "@emotion/react": "11.6.0",
+    "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",
     "@firebase/app": "0.7.10",
     "@firebase/auth": "0.19.3",
