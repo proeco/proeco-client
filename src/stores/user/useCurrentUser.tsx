@@ -11,8 +11,8 @@ import { User, convertUserFromServer } from '~/domains';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useCurrentUser = (): SWRResponse<User, Error> => {
+export const useCurrentUser = (): SWRResponse<User | null, Error> => {
   return useImmutableSWR('/users/me', (endpoint: string) =>
-    restClient.apiGet<User>(endpoint).then((result) => convertUserFromServer(result.data)),
+    restClient.apiGet<User | null>(endpoint).then((result) => (result.data ? convertUserFromServer(result.data) : null)),
   );
 };

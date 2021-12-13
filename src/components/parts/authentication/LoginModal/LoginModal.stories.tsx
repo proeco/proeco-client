@@ -2,20 +2,20 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { Component } from './LoginModal';
+import { LoginModal } from './LoginModal';
 
 export default {
   title: 'parts/authentication/LoginModal',
-  component: Component,
+  component: LoginModal,
   argTypes: {
     onClose: { action: 'onClose' },
   },
-} as ComponentMeta<typeof Component>;
+} as ComponentMeta<typeof LoginModal>;
 
-const Template: ComponentStory<typeof Component> = (args) => {
+const Template: ComponentStory<typeof LoginModal> = (args) => {
   return (
     <Box>
-      <Component {...args} />
+      <LoginModal {...args} />
     </Box>
   );
 };
@@ -23,6 +23,4 @@ const Template: ComponentStory<typeof Component> = (args) => {
 export const OpenModal = Template.bind({});
 OpenModal.args = {
   isOpen: true,
-  logoImagePath: 'https://proeco-client.vercel.app/_next/image?url=%2Fimages%2FOriginal.svg&w=1920&q=75',
-  signInGoogleImagePath: 'https://proeco-client.vercel.app/_next/image?url=%2Fimages%2Fsign_in_with_google.png&w=256&q=75',
 };
