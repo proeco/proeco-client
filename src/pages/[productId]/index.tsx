@@ -78,9 +78,9 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const count = stories ? stories.totalPages : 1;
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
+    event.preventDefault();
     if (!value) return;
     setPage(value);
-    router.push(`/story?page=${value}`);
   };
 
   const handleClickCreateStoryButton = () => {
