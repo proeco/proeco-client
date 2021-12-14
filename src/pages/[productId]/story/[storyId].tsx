@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo, useState, useRef } from 'react';
+import React, { ReactNode, useMemo, useState, useRef, useCallback } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
@@ -85,10 +85,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
     setIsOpenDeleteStoryModal(true);
   };
 
-  const handleClickIsCompletedButton = async () => {
+  const handleClickIsCompletedButton = useCallback(async () => {
     if (!story) return;
     try {
-      closeButtonRef.current?.rewardMe();
+      if (!story.isCompleted) {
+        closeButtonRef.current?.rewardMe();
+      }
 
       await restClient.apiPut<Story>(`/stories/${story._id}`, {
         newObject: { isCompleted: !story.isCompleted },
@@ -98,7 +100,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
     } catch (error) {
       notifyErrorMessage('ストーリーのCloseに失敗しました!');
     }
-  };
+  }, [mutateStory, notifyErrorMessage, story]);
 
   const menuItems = [
     {
