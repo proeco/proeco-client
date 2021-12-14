@@ -1,9 +1,10 @@
-import React, { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState, useRef } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { Box, styled } from '@mui/system';
+import Reward, { RewardElement } from 'react-rewards';
 
+import { Box, styled } from '@mui/system';
 import { Grid, ListItemIcon, MenuItem } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
@@ -39,6 +40,7 @@ type Props = {
 
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
   const router = useRouter();
+  const closeButtonRef = useRef<RewardElement>(null);
 
   const { notifyErrorMessage } = useErrorNotification();
 
@@ -86,6 +88,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
   const handleClickIsCompletedButton = async () => {
     if (!story) return;
     try {
+      closeButtonRef.current?.rewardMe();
+
       await restClient.apiPut<Story>(`/stories/${story._id}`, {
         newObject: { isCompleted: !story.isCompleted },
       });
@@ -180,9 +184,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
           <Grid item xs={12} md={4} px={2} pb={3}>
             <Paper>
               {isMemberOfTeam && (
-                <StyledButton fullWidth variant={story.isCompleted ? 'outlined' : 'contained'} onClick={handleClickIsCompletedButton}>
-                  {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
-                </StyledButton>
+                <Box textAlign="center">
+                  <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
+                    <StyledButton fullWidth variant={story.isCompleted ? 'outlined' : 'contained'} onClick={handleClickIsCompletedButton}>
+                      {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
+                    </StyledButton>
+                  </Reward>
+                </Box>
               )}
             </Paper>
           </Grid>
