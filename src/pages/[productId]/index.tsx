@@ -6,19 +6,19 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Grid, Tab } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
-import { Button, Icon, Pagination, Paper, Typography } from '~/components/parts/commons';
+import { Team } from '~/domains';
+import { Button, Icon, MarkdownToHtmlBody, Pagination, Paper, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { restClient } from '~/utils/rest-client';
-import { Team } from '~/domains';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
 import { useStories } from '~/stores/story';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
-import { extractHash } from '~/utils/extractHash/extractHash';
+import { extractHash } from '~/utils/extractHash';
 import { TeamForm } from '~/components/domains/team/TeamForm';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { PaginationResult } from '~/interfaces';
@@ -78,9 +78,9 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const count = stories ? stories.totalPages : 1;
 
   const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
+    event.preventDefault();
     if (!value) return;
     setPage(value);
-    router.push(`/story?page=${value}`);
   };
 
   const handleClickCreateStoryButton = () => {
@@ -106,10 +106,14 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
           <TabPanel value={TabTypes.HOME}>
             {currentUser && (
               <Grid container>
-                <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
-                  <Paper>TODO</Paper>
+                <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
+                  <Paper>
+                    <Box p={2}>
+                      <MarkdownToHtmlBody content={team.homeContent} />
+                    </Box>
+                  </Paper>
                 </Grid>
-                <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
+                <Grid key={team._id} item xs={12} sm={4} px={1} pb={2}>
                   <TeamCard
                     name={team.name}
                     productId={team.productId}

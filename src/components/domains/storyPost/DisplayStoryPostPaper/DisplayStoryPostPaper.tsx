@@ -2,9 +2,6 @@ import React, { VFC, useState, useCallback, useMemo, useRef } from 'react';
 import { Box, styled } from '@mui/system';
 import { ListItemIcon, MenuItem } from '@mui/material';
 
-import { formatDistanceToNow } from 'date-fns';
-import { ja } from 'date-fns/locale';
-
 import { Emoji } from 'emoji-mart';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
@@ -30,6 +27,7 @@ import { useStoryPosts } from '~/stores/storyPost';
 import { COLORS, URLS } from '~/constants';
 import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
 import { useReactionsByStoryPostId } from '~/stores/reaction';
+import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
 
 type Props = {
   createdUserId?: string;
@@ -89,7 +87,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     limit: 10,
   });
 
-  const displayDate = formatDistanceToNow(new Date(currentStoryPost.createdAt), { addSuffix: true, locale: ja });
+  const displayDate = formatDistanceToNow(currentStoryPost.createdAt);
 
   const handleClickCancelButton = () => {
     setContent(currentStoryPost.content);
@@ -211,7 +209,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
           ) : (
             <Typography variant="body1">undefined</Typography>
           )}
-          <StyledTime dateTime={new Date(currentStoryPost.createdAt).toLocaleDateString()}>{displayDate}</StyledTime>
+          <StyledTime dateTime={currentStoryPost.createdAt.toLocaleDateString()}>{displayDate}</StyledTime>
           <WrapDropdown>
             <Dropdown
               toggle={<IconButton icon="MoreVert" width={20} />}

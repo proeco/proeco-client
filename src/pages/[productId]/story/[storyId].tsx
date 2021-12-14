@@ -170,7 +170,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
             })}
             {isMemberOfTeam && currentUser && (
               <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
-                <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
+                <UserIcon size={40} isLink attachmentId={currentUser.iconImageId} userId={currentUser._id} />
                 <Box width="100%">
                   <CreateNewStoryPostPaper storyId={storyId} page={page} />
                 </Box>

@@ -2,7 +2,7 @@ import { SWRResponse } from 'swr';
 import useImmutableSWR from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
-import { StoryPost } from '~/domains';
+import { convertStoryPostFromServer, StoryPost } from '~/domains';
 import { PaginationResult } from '~/interfaces';
 
 /**
@@ -16,7 +16,8 @@ export const useStoryPosts = ({ storyId, page, limit }: { storyId?: string; page
   const key = storyId ? `/story-posts?storyId=${storyId}&page=${page}&limit=${limit}` : null;
   return useImmutableSWR(
     key,
-    (endpoint: string) => restClient.apiGet<PaginationResult<StoryPost>>(endpoint).then((result) => result.data.docs),
+    (endpoint: string) =>
+      restClient.apiGet<PaginationResult<StoryPost>>(endpoint).then((result) => result.data.docs.map((v) => convertStoryPostFromServer(v))),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: true,

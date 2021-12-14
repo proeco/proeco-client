@@ -2,7 +2,7 @@ import { SWRResponse } from 'swr';
 import useImmutableSWR from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
-import { User } from '~/domains/user';
+import { User, convertUserFromServer } from '~/domains';
 
 /**
  * 現在ログイン中のユーザーを取得するSWR
@@ -11,6 +11,8 @@ import { User } from '~/domains/user';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useCurrentUser = (): SWRResponse<User, Error> => {
-  return useImmutableSWR('/users/me', (endpoint: string) => restClient.apiGet<User>(endpoint).then((result) => result.data));
+export const useCurrentUser = (): SWRResponse<User | null, Error> => {
+  return useImmutableSWR('/users/me', (endpoint: string) =>
+    restClient.apiGet<User | null>(endpoint).then((result) => (result.data ? convertUserFromServer(result.data) : null)),
+  );
 };

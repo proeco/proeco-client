@@ -45,10 +45,10 @@ export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentI
       <Box position="relative" p={2}>
         <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">
           <TeamIcon size={50} attachmentId={attachmentId} />
-          <Typography variant="body1" bold>
+          <Typography variant="body1" bold maximum_lines={1}>
             {name}
           </Typography>
-          <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
+          <Typography variant="caption" color={COLORS.TEXT_LIGHT} maximum_lines={1}>
             @{productId}
           </Typography>
         </Box>

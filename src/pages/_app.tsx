@@ -2,12 +2,14 @@ import { SnackbarProvider } from 'notistack';
 import { GlobalStyles } from '@mui/material';
 import { ReactNode } from 'react';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
+import { UserProvider } from '@auth0/nextjs-auth0';
 
 import 'modern-css-reset/dist/reset.min.css';
 
 import { theme } from '../theme';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
+import { CurrentUserProvider } from '~/hooks/CurrentUserProvider';
 
 const inputGlobalStyles = (
   <GlobalStyles
@@ -33,13 +35,17 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
   }
 
   return (
-    <MaterialThemeProvider theme={theme}>
-      <SnackbarProvider>
-        {inputGlobalStyles}
-        <NavigationBar />
-        {getLayout(<Component {...pageProps} />)}
-      </SnackbarProvider>
-    </MaterialThemeProvider>
+    <UserProvider>
+      <CurrentUserProvider>
+        <MaterialThemeProvider theme={theme}>
+          <SnackbarProvider>
+            {inputGlobalStyles}
+            <NavigationBar />
+            {getLayout(<Component {...pageProps} />)}
+          </SnackbarProvider>
+        </MaterialThemeProvider>
+      </CurrentUserProvider>
+    </UserProvider>
   );
 }
 

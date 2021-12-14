@@ -2,7 +2,7 @@ import { SWRResponse } from 'swr';
 import useImmutableSWR from 'swr/immutable';
 
 import { restClient } from '~/utils/rest-client';
-import { Story } from '~/domains';
+import { convertStoryFromServer, Story } from '~/domains';
 import { PaginationResult } from '~/interfaces';
 
 /**
@@ -16,14 +16,30 @@ export const useStories = ({
   teamId,
   page,
   limit,
+  isCompleted,
 }: {
   teamId?: string;
   page: number;
   limit: 10;
+  isCompleted?: boolean;
 }): SWRResponse<PaginationResult<Story>, Error> => {
-  const key = teamId ? `/stories?teamId=${teamId}&page=${page}&limit=${limit}` : null;
-  return useImmutableSWR(key, (endpoint: string) => restClient.apiGet<PaginationResult<Story>>(endpoint).then((result) => result.data), {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-  });
+  const key = `/stories?page=${page}&limit=${limit}${teamId ? '&teamId=' + teamId : ''}${
+    isCompleted != null ? '&isCompleted=' + isCompleted : ''
+  }`;
+  return useImmutableSWR(
+    key,
+    (endpoint: string) =>
+      restClient.apiGet<PaginationResult<Story>>(endpoint).then((result) => {
+        return {
+          ...result.data,
+          docs: result.data.docs.map((doc) => {
+            return convertStoryFromServer(doc);
+          }),
+        };
+      }),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+    },
+  );
 };

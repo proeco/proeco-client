@@ -1,4 +1,5 @@
 import React, { VFC } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { Box, styled } from '@mui/system';
 import { Modal, Typography, Link } from '~/components/parts/commons';
@@ -7,16 +8,14 @@ import { URLS, IMAGE_PATH } from '~/constants';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onClickSignInButton: () => void;
-  logoImagePath: string;
-  signInGoogleImagePath: string;
 };
 
-export const Component: VFC<Props> = ({ isOpen, onClose, onClickSignInButton, logoImagePath, signInGoogleImagePath }) => {
+export const LoginModal: VFC<Props> = ({ isOpen, onClose }) => {
+  const router = useRouter();
   const content = (
     <Box>
       <Box width="400px" height="80px" mx="auto" position="relative">
-        <Image src={logoImagePath} width="400px" height="80px" />
+        <Image src={IMAGE_PATH.LOGO} width="400px" height="80px" />
       </Box>
 
       <Box my="20px">
@@ -24,8 +23,8 @@ export const Component: VFC<Props> = ({ isOpen, onClose, onClickSignInButton, lo
         <Typography color="textColor.light">あなたの素敵なアイデアを実現しましょう</Typography>
       </Box>
 
-      <StyledLoginButtonWrapper my="20px" display="flex" justifyContent="center" role="button" onClick={onClickSignInButton}>
-        <Image src={signInGoogleImagePath} height={50} width={190} />
+      <StyledLoginButtonWrapper my="20px" display="flex" justifyContent="center" role="button" onClick={() => router.push(URLS.API_LOGIN)}>
+        <Image src={IMAGE_PATH.SIGN_IN_GOOGLE} height={50} width={190} />
       </StyledLoginButtonWrapper>
 
       <Typography my="20px" color="textColor.light">
@@ -50,15 +49,3 @@ const StyledLoginButtonWrapper = styled(Box)`
     opacity: 0.8;
   }
 `;
-
-export const LoginModal: VFC<Omit<Props, 'logoImagePath' | 'signInGoogleImagePath'>> = ({ isOpen, onClose, onClickSignInButton }) => {
-  return (
-    <Component
-      isOpen={isOpen}
-      onClose={onClose}
-      onClickSignInButton={onClickSignInButton}
-      logoImagePath={IMAGE_PATH.LOGO}
-      signInGoogleImagePath={IMAGE_PATH.SIGN_IN_GOOGLE}
-    />
-  );
-};
