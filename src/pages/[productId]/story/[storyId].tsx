@@ -32,6 +32,7 @@ import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
 import { PaginationResult } from '~/interfaces';
 
 import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { useSignedUrl } from '~/stores/attachment';
 
 type Props = {
   storyFromServerSide: Story;
@@ -41,6 +42,8 @@ type Props = {
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
   const router = useRouter();
   const closeButtonRef = useRef<RewardElement>(null);
+
+  const { data: signedUrl } = useSignedUrl(team.iconImageId);
 
   const { notifyErrorMessage } = useErrorNotification();
 
@@ -121,7 +124,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
 
   return (
     <>
-      <ProecoOgpHead title={story.title} />
+      <ProecoOgpHead
+        title={story.title}
+        image={`https://proeco-ogp.vercel.app/api/ogp?title=${story.title}&teamName=${team.name}&teamIconUrl=${signedUrl}`}
+      />
       <Box mx="auto" maxWidth="1200px">
         <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(team.productId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
         <Box mt={1} mb={4} display="flex" alignItems="center" justifyContent="space-between">
