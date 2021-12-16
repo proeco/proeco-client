@@ -1,4 +1,4 @@
-const BUCKET_URL = 'https://storage.googleapis.com/proeco/';
+import { URLS } from '~/constants/urls';
 
 /**
  * filePathからBucketUrlを生成する
@@ -6,5 +6,5 @@ const BUCKET_URL = 'https://storage.googleapis.com/proeco/';
  * @returns string
  */
 export const generateBucketUrl = (filePath: string) => {
-  return `${BUCKET_URL}/${filePath}`;
+  return `${URLS.BUCKET_URL}/${filePath}`;
 };
