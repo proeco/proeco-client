@@ -11,4 +11,5 @@ export const URLS = {
     `/${productId}/story/${storyId}${storyPostId ? `?storyPostId=${storyPostId}` : ''}`,
   TERMS: '#',
   PRIVACY_POLICY: '#',
+  BUCKET_URL: 'https://storage.googleapis.com/proeco',
 };

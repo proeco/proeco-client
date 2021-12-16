@@ -25,22 +25,26 @@ import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNe
 import { Dropdown } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
-import { Reaction, StoryPost, Team } from '~/domains';
+import { Attachment, Reaction, StoryPost, Team } from '~/domains';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
 import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
 import { PaginationResult } from '~/interfaces';
 
 import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { generateBucketUrl } from '~/utils/generateBucketUrl';
 
 type Props = {
   storyFromServerSide: Story;
   team: Team;
+  teamIconAttachment: Attachment;
 };
 
-const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
+const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconAttachment }) => {
   const router = useRouter();
   const closeButtonRef = useRef<RewardElement>(null);
+
+  const teamIconUrl = generateBucketUrl(teamIconAttachment.filePath);
 
   const { notifyErrorMessage } = useErrorNotification();
 
@@ -121,7 +125,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
 
   return (
     <>
-      <ProecoOgpHead title={story.title} />
+      <ProecoOgpHead
+        title={story.title}
+        image={`https://proeco-ogp.vercel.app/api/ogp?title=${story.title}&teamName=${team.name}&teamIconUrl=${teamIconUrl}`}
+        url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/story/${story._id}`}
+      />
       <Box mx="auto" maxWidth="1200px">
         <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(team.productId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
         <Box mt={1} mb={4} display="flex" alignItems="center" justifyContent="space-between">
@@ -229,7 +237,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const { data: story } = await restClient.apiGet(`/stories/${storyId}`);
 
-    if (!team || !story) {
+    const { data: teamIconAttachment } = await restClient.apiGet(`/attachments/${team.iconImageId}`);
+
+    if (!team || !story || !teamIconAttachment) {
       return {
         redirect: {
           permanent: false,
@@ -238,7 +248,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       };
     }
 
-    return { props: { storyFromServerSide: story, team } };
+    return { props: { storyFromServerSide: story, team, teamIconAttachment } };
   } catch (error) {
     return {
       redirect: {
