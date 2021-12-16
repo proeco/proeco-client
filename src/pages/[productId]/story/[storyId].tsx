@@ -174,6 +174,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                     createdUserName={createdStoryPostUser?.name}
                     storyPost={customStoryPost}
                     teamId={team._id}
+                    productId={team.productId}
                     storyId={storyId}
                     page={page}
                     editable={isMemberOfTeam}

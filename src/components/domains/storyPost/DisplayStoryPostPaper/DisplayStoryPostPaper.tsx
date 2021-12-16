@@ -35,6 +35,7 @@ type Props = {
   storyPost: StoryPost & { currentUserReaction?: Reaction };
   emojiIds?: string[];
   teamId: string;
+  productId: string;
   storyId: string;
   page: number;
   editable?: boolean;
@@ -47,6 +48,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   storyPost,
   emojiIds = ['disappointed_relieved', 'confused', 'slightly_smiling_face', 'smiling_face_with_3_hearts'],
   teamId,
+  productId,
   storyId,
   page,
   editable = false,
@@ -217,7 +219,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
               transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
               <CopyToClipboard
-                text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(teamId, storyId, storyPost._id)}
+                text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(productId, storyId, storyPost._id)}
                 onCopy={() => notifySuccessMessage('共有リンクをコピーしました')}
               >
                 <MenuItem>
