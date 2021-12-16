@@ -25,27 +25,26 @@ import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNe
 import { Dropdown } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
-import { Reaction, StoryPost, Team } from '~/domains';
+import { Attachment, Reaction, StoryPost, Team } from '~/domains';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
 import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
 import { PaginationResult } from '~/interfaces';
 
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { useAttachment } from '~/stores/attachment';
 import { generateBucketUrl } from '~/utils/generateBucketUrl';
 
 type Props = {
   storyFromServerSide: Story;
   team: Team;
+  teamIconAttachment: Attachment;
 };
 
-const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team }) => {
+const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconAttachment }) => {
   const router = useRouter();
   const closeButtonRef = useRef<RewardElement>(null);
 
-  const { data: teamIconAttachment } = useAttachment(team.iconImageId);
-  const teamIconUrl = generateBucketUrl(teamIconAttachment ? teamIconAttachment.filePath : '');
+  const teamIconUrl = generateBucketUrl(teamIconAttachment.filePath);
 
   const { notifyErrorMessage } = useErrorNotification();
 
@@ -238,7 +237,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const { data: story } = await restClient.apiGet(`/stories/${storyId}`);
 
-    if (!team || !story) {
+    const { data: teamIconAttachment } = await restClient.apiGet(`/attachments/${team.iconImageId}`);
+
+    if (!team || !story || !teamIconAttachment) {
       return {
         redirect: {
           permanent: false,
@@ -247,7 +248,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       };
     }
 
-    return { props: { storyFromServerSide: story, team } };
+    return { props: { storyFromServerSide: story, team, teamIconAttachment } };
   } catch (error) {
     return {
       redirect: {
