@@ -15,7 +15,10 @@ import { Attachment } from '~/domains';
 export const useSignedUrl = (attachmentId?: Attachment['_id']): SWRResponse<string, Error> => {
   const key = attachmentId ? `/attachments/${attachmentId}/signedUrl` : null;
 
-  return useImmutableSWR(key, (endpoint: string) =>
-    restClient.apiGet<{ signedUrl: string }>(endpoint).then((result) => result.data.signedUrl),
+  return useImmutableSWR(
+    key,
+    (endpoint: string) => restClient.apiGet<{ signedUrl: string }>(endpoint).then((result) => result.data.signedUrl),
+    // SignedUrlが1hで期限切れになるため再取得する
+    { refreshInterval: 1000 * 60 * 60 },
   );
 };

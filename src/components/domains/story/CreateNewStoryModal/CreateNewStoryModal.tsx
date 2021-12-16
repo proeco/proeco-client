@@ -36,7 +36,7 @@ export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, 
   const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'teamId'>>({
     emojiId: 'open_file_folder',
     title: '',
-    teamId: teamId as string,
+    teamId,
   });
 
   useEffect(() => {

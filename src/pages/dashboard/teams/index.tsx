@@ -1,9 +1,8 @@
-import { useRouter } from 'next/router';
 import { Box } from '@mui/system';
 import { ReactNode } from 'react';
 import { Grid } from '@mui/material';
 import { Button, Icon, Link, Typography } from '~/components/parts/commons';
-import { DashBoardLayout } from '~/components/parts/layout/DashboardLayout';
+import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { URLS } from '~/constants';
@@ -16,7 +15,6 @@ import { TeamCard } from '~/components/domains/team/TeamCard';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 
 const DashboardTeamPage: ProecoNextPage = () => {
-  const router = useRouter();
   const { data: currentUser } = useCurrentUser();
   const { data: teams } = useTeamsRelatedUser({
     userId: currentUser?._id,
@@ -40,23 +38,24 @@ const DashboardTeamPage: ProecoNextPage = () => {
         <Grid container>
           {teams ? (
             teams.map((team) => (
-              <Grid key={team._id} item xs={12} sm={6} px={1} pb={2}>
-                <TeamCard
-                  name={team.name}
-                  productId={team.productId}
-                  description={team.description}
-                  attachmentId={team.iconImageId}
-                  url={team.url}
-                  onClick={() => router.push(URLS.TEAMS(team._id))}
-                />
+              <Grid key={`my-teams-${team._id}`} item xs={12} sm={6} md={4} px={1} pb={2}>
+                <Link href={URLS.TEAMS(team.productId)}>
+                  <TeamCard
+                    name={team.name}
+                    productId={team.productId}
+                    description={team.description}
+                    attachmentId={team.iconImageId}
+                    url={team.url}
+                  />
+                </Link>
               </Grid>
             ))
           ) : (
             <>
-              <Grid item xs={12} sm={6} px={1}>
+              <Grid item xs={12} sm={6} md={4} px={1}>
                 <SkeltonTeamCard />
               </Grid>
-              <Grid item xs={12} sm={6} px={1}>
+              <Grid item xs={12} sm={6} md={4} px={1}>
                 <SkeltonTeamCard />
               </Grid>
             </>
@@ -67,7 +66,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
   );
 };
 
-const getLayout = (page: ReactNode) => <DashBoardLayout>{page}</DashBoardLayout>;
+const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 
 DashboardTeamPage.getLayout = getLayout;
 export default DashboardTeamPage;

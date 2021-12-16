@@ -3,14 +3,14 @@ import { FC } from 'react';
 import { UserSideBar } from '../../../domains/user/UserSideBar';
 import { LoginRequiredWrapper } from '~/components/parts/authentication/LoginRequiredWrapper';
 
-export const DashBoardLayout: FC = ({ children }) => {
+export const DashboardLayout: FC = ({ children }) => {
   return (
     <LoginRequiredWrapper>
       <Box display="flex">
         <Box flexShrink={1}>
           <UserSideBar />
         </Box>
-        <StyledBox width="100%" p={5}>
+        <StyledBox width="100%" minWidth="0" p={5}>
           {children}
         </StyledBox>
       </Box>

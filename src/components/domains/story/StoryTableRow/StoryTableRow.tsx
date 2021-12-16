@@ -12,14 +12,15 @@ import { Story } from '~/domains';
 
 type Props = {
   story: Story;
+  productId: string;
 };
 
-export const StoryTableRow: VFC<Props> = ({ story }) => {
+export const StoryTableRow: VFC<Props> = ({ story, productId }) => {
   const router = useRouter();
 
   const handleClickRow = useCallback(() => {
-    router.push(URLS.TEAMS_STORY(story.teamId, story._id));
-  }, [router, story._id, story.teamId]);
+    router.push(URLS.TEAMS_STORY(productId, story._id));
+  }, [router, story._id, productId]);
 
   return (
     <StyledTableRow hover onClick={handleClickRow}>
@@ -31,7 +32,7 @@ export const StoryTableRow: VFC<Props> = ({ story }) => {
       </StyledBodyTableCell>
       <StyledBodyTableCell align="right">完了</StyledBodyTableCell>
       <StyledBodyTableCell align="right">TBD</StyledBodyTableCell>
-      <StyledBodyTableCell align="right">{format(new Date(story.updatedAt), DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
+      <StyledBodyTableCell align="right">{format(story.updatedAt, DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
     </StyledTableRow>
   );
 };

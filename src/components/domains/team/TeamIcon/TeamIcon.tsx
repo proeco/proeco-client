@@ -1,11 +1,21 @@
 import { Avatar, Skeleton } from '@mui/material';
 import { styled } from '@mui/system';
 import React, { VFC } from 'react';
+import { Icon } from '~/components/parts/commons';
 import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
 
 type Props = {
   attachmentId: string;
   size: number;
+};
+
+// ログインしていない状態の TeamIcon
+export const GuestTeamIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
+  return (
+    <StyledAvatar size={size}>
+      <Icon icon="Group" color="#ccc" width="100%" />
+    </StyledAvatar>
+  );
 };
 
 // ローディング状態の TeamIcon

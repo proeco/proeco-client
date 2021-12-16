@@ -9,11 +9,13 @@ import {
   Group,
   HistoryEdu,
   KeyboardArrowDown,
+  Link,
   Logout,
   MoreVert,
   PersonOutline,
   Photo,
   Settings,
+  Twitter,
   Update,
 } from '@mui/icons-material';
 import { Box, styled } from '@mui/system';
@@ -28,11 +30,13 @@ export const IconMap = {
   Group: <Group />,
   HistoryEdu: <HistoryEdu />,
   KeyboardArrowDown: <KeyboardArrowDown />,
+  Link: <Link />,
   Logout: <Logout />,
   MoreVert: <MoreVert />,
   PersonOutline: <PersonOutline />,
   Photo: <Photo />,
   Settings: <Settings />,
+  Twitter: <Twitter />,
   Update: <Update />,
 };
 
