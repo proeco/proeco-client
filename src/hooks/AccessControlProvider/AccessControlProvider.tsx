@@ -20,11 +20,12 @@ export const AccessControlProvider: FC<{ getAccessControl?: GetAccessControl }> 
     const control = async () => {
       if (isLoading) return;
       const accessControl = getAccessControl();
+      if (accessControl.loginRequired == null) return;
 
       if (accessControl.loginRequired === true && !user) {
-        router[accessControl.type](accessControl.destination);
+        router.push(accessControl.destination);
       } else if (accessControl.loginRequired === false && user) {
-        router[accessControl.type](accessControl.destination);
+        router.push(accessControl.destination);
       }
     };
     control();
