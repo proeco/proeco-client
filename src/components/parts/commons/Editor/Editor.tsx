@@ -42,7 +42,9 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
       });
       const attachmentUrl = generateBucketUrl(attachment.filePath);
 
-      if (!inputRef.current) return;
+      if (!inputRef.current) {
+        return;
+      }
       const selectionStart = inputRef.current.selectionStart;
       const before = content.substring(0, selectionStart);
       const after = content.substring(selectionStart, content.length);
@@ -70,10 +72,6 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
               onChange={(e) => onChangeContent(e.target.value)}
             />
           </Box>
-          <StyledLabel htmlFor="image">
-            <Icon icon="Photo" />
-            <StyledInput type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
-          </StyledLabel>
         </StyledTabPanel>
         <StyledTabPanel value="preview">
           {content === '' ? (
@@ -87,15 +85,22 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
           )}
         </StyledTabPanel>
       </TabContext>
-      <Box display="flex" alignItems="center" justifyContent="flex-end" gap="4px">
-        {isUpdateMode && (
-          <Button variant="text" onClick={onClickCancelButton}>
-            キャンセル
+      <Box display="flex" alignItems="center" justifyContent="space-between" gap="4px">
+        <StyledLabel htmlFor="image">
+          <Icon icon="Photo" width="24px" />
+          <Typography variant="body1">ファイルをアップロード</Typography>
+          <StyledInput type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
+        </StyledLabel>
+        <Box>
+          {isUpdateMode && (
+            <Button variant="text" onClick={onClickCancelButton}>
+              キャンセル
+            </Button>
+          )}
+          <Button variant="contained" onClick={onCompleteEdit} disabled={content.trim() === ''}>
+            {isUpdateMode ? '更新する' : '投稿する'}
           </Button>
-        )}
-        <Button variant="contained" onClick={onCompleteEdit} disabled={content.trim() === ''}>
-          {isUpdateMode ? '更新する' : '投稿する'}
-        </Button>
+        </Box>
       </Box>
     </Box>
   );
@@ -117,9 +122,18 @@ const StyledTab = styled(Tab)`
 
 const StyledLabel = styled('label')`
   position: relative;
-  display: block;
-  width: 30px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
   cursor: pointer;
+  &:hover {
+    .MuiTypography-root {
+      color: ${(props) => props.theme.palette.primary.main};
+    }
+    .MuiSvgIcon-root {
+      color: ${(props) => props.theme.palette.primary.main};
+    }
+  }
 `;
 
 const StyledInput = styled('input')`
