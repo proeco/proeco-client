@@ -1,9 +1,9 @@
-import React, { VFC, useState } from 'react';
+import React, { VFC, useState, ChangeEvent } from 'react';
 import { Box, styled } from '@mui/system';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-import { TextField, Button, Typography, MarkdownToHtmlBody, IconButton } from '~/components/parts/commons';
+import { TextField, Button, Typography, MarkdownToHtmlBody, Icon } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { Attachment } from '~/domains';
@@ -28,9 +28,17 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
     setValue(newValue);
   };
 
-  const handleUploadFile = async () => {
+  const onSelectImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+    const file = e.target.files[0];
+    const params = new FormData();
     try {
-      await restClient.apiPost<Attachment>(`/attachments?path=${currentUser?._id}/stories/`);
+      params.append('file', file);
+      await restClient.apiPost<Attachment>(`/attachments?path=${currentUser?._id}/stories/`, params, {
+        'Content-Type': 'multipart/form-data',
+      });
     } catch (error) {
       notifyErrorMessage('画像のアップロードに失敗しました!');
     }
@@ -47,7 +55,10 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
           <Box my="16px">
             <TextField fullWidth multiline minRows={4} value={content} onChange={(e) => onChangeContent(e.target.value)} />
           </Box>
-          <IconButton icon="Photo" width={24} onClick={handleUploadFile} />
+          <StyledLabel htmlFor="image">
+            <Icon icon="Photo" />
+            <StyledInput type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
+          </StyledLabel>
         </StyledTabPanel>
         <StyledTabPanel value="preview">
           {content === '' ? (
@@ -87,4 +98,15 @@ const StyledTab = styled(Tab)`
   padding: 8px;
   min-height: unset;
   min-width: unset;
+`;
+
+const StyledLabel = styled('label')`
+  position: relative;
+  display: block;
+  width: 30px;
+  cursor: pointer;
+`;
+
+const StyledInput = styled('input')`
+  display: none;
 `;
