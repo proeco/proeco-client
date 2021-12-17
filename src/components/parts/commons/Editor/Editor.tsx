@@ -29,22 +29,19 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
     setValue(newValue);
   };
 
-  const onSelectImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
+  const handleUploadFile = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !currentUser || !inputRef.current) {
       return;
     }
     const file = e.target.files[0];
     const params = new FormData();
+    params.append('file', file);
     try {
-      params.append('file', file);
-      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser?._id}/stories/`, params, {
+      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/stories/`, params, {
         'Content-Type': 'multipart/form-data',
       });
       const attachmentUrl = generateBucketUrl(attachment.filePath);
 
-      if (!inputRef.current) {
-        return;
-      }
       const selectionStart = inputRef.current.selectionStart;
       const before = content.substring(0, selectionStart);
       const after = content.substring(selectionStart, content.length);
@@ -90,7 +87,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
         <StyledLabel htmlFor="image">
           <Icon icon="Photo" width="24px" />
           <Typography variant="body1">ファイルをアップロード</Typography>
-          <StyledInput type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
+          <StyledInput type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
         </StyledLabel>
         <Box>
           {isUpdateMode && (
