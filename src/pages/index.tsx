@@ -1,8 +1,7 @@
-import { NextPage } from 'next';
-
 import { Grid } from '@mui/material';
-
+import { ReactNode } from 'react';
 import { Box } from '@mui/system';
+
 import { useTeams } from '~/stores/team';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
@@ -15,8 +14,9 @@ import { TeamCard } from '~/components/domains/team/TeamCard';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 import { useStories } from '~/stores/story';
 import { SkeltonStoryCard, StoryCard } from '~/components/domains/story/StoryCard';
+import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
-const Home: NextPage = () => {
+const Home: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
   const { data: teamList } = useTeams({ page: 1 });
   const { data: openStoryList } = useStories({ page: 1, limit: 10, isCompleted: false });
@@ -107,6 +107,12 @@ const Home: NextPage = () => {
       )}
     </>
   );
+};
+
+Home.getLayout = (page: ReactNode) => <>{page}</>;
+
+Home.getAccessControl = () => {
+  return { loginRequired: null };
 };
 
 export default Home;

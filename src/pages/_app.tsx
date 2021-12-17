@@ -37,17 +37,17 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
 
   return (
     <UserProvider>
-      <CurrentUserProvider>
-        <AccessControlProvider getAccessControl={Component.getAccessControl}>
-          <MaterialThemeProvider theme={theme}>
-            <SnackbarProvider>
+      <MaterialThemeProvider theme={theme}>
+        <SnackbarProvider>
+          <CurrentUserProvider>
+            <AccessControlProvider getAccessControl={Component.getAccessControl}>
               {inputGlobalStyles}
               <NavigationBar />
               {getLayout(<Component {...pageProps} />)}
-            </SnackbarProvider>
-          </MaterialThemeProvider>
-        </AccessControlProvider>
-      </CurrentUserProvider>
+            </AccessControlProvider>
+          </CurrentUserProvider>
+        </SnackbarProvider>
+      </MaterialThemeProvider>
     </UserProvider>
   );
 }
