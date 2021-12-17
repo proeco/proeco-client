@@ -15,3 +15,7 @@ export const getAttachmentById = (req: any, res: any, ctx: any) => {
 
   return res(ctx.status(200), ctx.json({ signedUrl: attachment?.filePath }));
 };
+
+export const postAttachment = (req: any, res: any, ctx: any) => {
+  return res(ctx.status(200));
+};
