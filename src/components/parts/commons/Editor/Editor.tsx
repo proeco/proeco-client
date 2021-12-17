@@ -1,4 +1,4 @@
-import React, { VFC, useState, ChangeEvent } from 'react';
+import React, { VFC, useState, ChangeEvent, useRef } from 'react';
 import { Box, styled } from '@mui/system';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
@@ -8,6 +8,7 @@ import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { Attachment } from '~/domains';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { generateBucketUrl } from '~/utils/generateBucketUrl';
 
 type Props = {
   content: string;
@@ -19,7 +20,7 @@ type Props = {
 
 export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeContent, onCompleteEdit, onClickCancelButton }) => {
   const { data: currentUser } = useCurrentUser();
-
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<'editor' | 'preview'>('editor');
 
   const { notifyErrorMessage } = useErrorNotification();
@@ -36,14 +37,21 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
     const params = new FormData();
     try {
       params.append('file', file);
-      await restClient.apiPost<Attachment>(`/attachments?path=${currentUser?._id}/stories/`, params, {
+      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser?._id}/stories/`, params, {
         'Content-Type': 'multipart/form-data',
       });
+      const attachmentUrl = generateBucketUrl(attachment.filePath);
+
+      if (!inputRef.current) return;
+      const selectionStart = inputRef.current.selectionStart;
+      const before = content.substring(0, selectionStart);
+      const after = content.substring(selectionStart, content.length);
+
+      onChangeContent(`${before}![](${attachmentUrl})${after}`);
     } catch (error) {
       notifyErrorMessage('画像のアップロードに失敗しました!');
     }
   };
-
   return (
     <Box>
       <TabContext value={value}>
@@ -53,7 +61,14 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
         </StyledTabList>
         <StyledTabPanel value="editor">
           <Box my="16px">
-            <TextField fullWidth multiline minRows={4} value={content} onChange={(e) => onChangeContent(e.target.value)} />
+            <TextField
+              inputRef={inputRef}
+              fullWidth
+              multiline
+              minRows={4}
+              value={content}
+              onChange={(e) => onChangeContent(e.target.value)}
+            />
           </Box>
           <StyledLabel htmlFor="image">
             <Icon icon="Photo" />
