@@ -3,7 +3,11 @@ import { Box, styled } from '@mui/system';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-import { TextField, Button, Typography, MarkdownToHtmlBody } from '~/components/parts/commons';
+import { TextField, Button, Typography, MarkdownToHtmlBody, IconButton } from '~/components/parts/commons';
+import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { restClient } from '~/utils/rest-client';
+import { Attachment } from '~/domains';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 type Props = {
   content: string;
@@ -14,10 +18,22 @@ type Props = {
 };
 
 export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeContent, onCompleteEdit, onClickCancelButton }) => {
+  const { data: currentUser } = useCurrentUser();
+
   const [value, setValue] = useState<'editor' | 'preview'>('editor');
+
+  const { notifyErrorMessage } = useErrorNotification();
 
   const handleChange = (_event: React.SyntheticEvent, newValue: 'editor' | 'preview') => {
     setValue(newValue);
+  };
+
+  const handleUploadFile = async () => {
+    try {
+      await restClient.apiPost<Attachment>(`/attachments?path=${currentUser?._id}/stories/`);
+    } catch (error) {
+      notifyErrorMessage('画像のアップロードに失敗しました!');
+    }
   };
 
   return (
@@ -31,6 +47,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
           <Box my="16px">
             <TextField fullWidth multiline minRows={4} value={content} onChange={(e) => onChangeContent(e.target.value)} />
           </Box>
+          <IconButton icon="Photo" width={24} onClick={handleUploadFile} />
         </StyledTabPanel>
         <StyledTabPanel value="preview">
           {content === '' ? (
