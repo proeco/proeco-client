@@ -9,6 +9,7 @@ import { Typography, Icon } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamForm } from '~/components/domains/team/TeamForm';
+import { URLS } from '~/constants';
 
 const DashboardTeamPage: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
@@ -29,7 +30,8 @@ const DashboardTeamPage: ProecoNextPage = () => {
   );
 };
 
-const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
-
-DashboardTeamPage.getLayout = getLayout;
+DashboardTeamPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
+DashboardTeamPage.getAccessControl = () => {
+  return { destination: URLS.TOP, loginRequired: true };
+};
 export default DashboardTeamPage;

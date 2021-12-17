@@ -1,6 +1,4 @@
-export type AccessControlType = 'replace' | 'push';
-export type AccessControlFallback = { type: AccessControlType; destination: string };
-export type GetAccessControl = () => null | AccessControlFallback | Promise<null | AccessControlFallback>;
+export type GetAccessControl = () => { destination: string; loginRequired: boolean } | { loginRequired: null };
 export type WithGetAccessControl<P> = P & {
   getAccessControl?: GetAccessControl;
 };

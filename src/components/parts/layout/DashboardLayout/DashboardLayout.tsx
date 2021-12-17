@@ -1,20 +1,21 @@
 import { Box, styled } from '@mui/system';
 import { FC } from 'react';
 import { UserSideBar } from '../../../domains/user/UserSideBar';
-import { LoginRequiredWrapper } from '~/components/parts/authentication/LoginRequiredWrapper';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 export const DashboardLayout: FC = ({ children }) => {
+  const { data: currentUser } = useCurrentUser();
   return (
-    <LoginRequiredWrapper>
-      <Box display="flex">
+    <Box display="flex">
+      {currentUser && (
         <Box flexShrink={1}>
           <UserSideBar />
         </Box>
-        <StyledBox width="100%" minWidth="0" p={5}>
-          {children}
-        </StyledBox>
-      </Box>
-    </LoginRequiredWrapper>
+      )}
+      <StyledBox width="100%" minWidth="0" p={5}>
+        {children}
+      </StyledBox>
+    </Box>
   );
 };
 

@@ -260,7 +260,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
-StoryPage.getLayout = getLayout;
-
+StoryPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
+StoryPage.getAccessControl = () => {
+  return { loginRequired: null };
+};
 export default StoryPage;

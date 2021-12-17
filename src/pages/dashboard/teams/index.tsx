@@ -66,7 +66,8 @@ const DashboardTeamPage: ProecoNextPage = () => {
   );
 };
 
-const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
-
-DashboardTeamPage.getLayout = getLayout;
+DashboardTeamPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
+DashboardTeamPage.getAccessControl = () => {
+  return { destination: URLS.TOP, loginRequired: true };
+};
 export default DashboardTeamPage;
