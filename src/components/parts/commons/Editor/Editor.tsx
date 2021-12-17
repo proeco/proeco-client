@@ -50,6 +50,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
       const after = content.substring(selectionStart, content.length);
 
       onChangeContent(`${before}![](${attachmentUrl})${after}`);
+      e.target.value = '';
     } catch (error) {
       notifyErrorMessage('画像のアップロードに失敗しました!');
     }
