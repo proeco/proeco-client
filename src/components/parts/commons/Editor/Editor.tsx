@@ -83,22 +83,22 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
           )}
         </StyledTabPanel>
       </TabContext>
-      <Box display="flex" alignItems="center" justifyContent="space-between" gap="4px">
-        <StyledLabel htmlFor="image">
-          <Icon icon="Photo" width="24px" />
-          <Typography variant="body1">ファイルをアップロード</Typography>
-          <StyledInput type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
-        </StyledLabel>
-        <Box>
-          {isUpdateMode && (
-            <Button variant="text" onClick={onClickCancelButton}>
-              キャンセル
-            </Button>
-          )}
-          <Button variant="contained" onClick={onCompleteEdit} disabled={content.trim() === ''}>
-            {isUpdateMode ? '更新する' : '投稿する'}
+      <Box display="flex" alignItems="center" justifyContent="flex-end" gap="4px">
+        {value === 'editor' && (
+          <StyledLabel htmlFor="image">
+            <Icon icon="Photo" width="24px" />
+            <Typography variant="body1">ファイルをアップロード</Typography>
+            <StyledInput type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
+          </StyledLabel>
+        )}
+        {isUpdateMode && (
+          <Button variant="text" onClick={onClickCancelButton}>
+            キャンセル
           </Button>
-        </Box>
+        )}
+        <Button variant="contained" onClick={onCompleteEdit} disabled={content.trim() === ''}>
+          {isUpdateMode ? '更新する' : '投稿する'}
+        </Button>
       </Box>
     </Box>
   );
@@ -123,6 +123,7 @@ const StyledLabel = styled('label')`
   display: flex;
   align-items: center;
   width: fit-content;
+  margin-right: auto;
   cursor: pointer;
   &:hover {
     .MuiTypography-root {
