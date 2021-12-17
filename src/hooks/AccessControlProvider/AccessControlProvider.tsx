@@ -24,6 +24,7 @@ export const AccessControlProvider: FC<{ getAccessControl?: GetAccessControl }> 
     const control = async () => {
       if (isLoading) return;
       const accessControl = getAccessControl();
+
       if (accessControl.loginRequired == null) return;
 
       if (accessControl.loginRequired === true && !user) {
