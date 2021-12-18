@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { getAttachmentById } from './api/attachment';
+import { getAttachmentById, postAttachment } from './api/attachment';
 import { getCurrentUser } from './api/user';
 import { getStories, postStories } from './api/stories';
 import { getStoryPosts, postStoryPost, deleteStoryPost } from './api/storyPost';
@@ -14,6 +14,7 @@ export const handlers = [
   rest.get(generateRoute('/users/me'), getCurrentUser),
 
   rest.get(generateRoute('/attachments/:id/signedUrl'), getAttachmentById),
+  rest.post(generateRoute('/attachments'), postAttachment),
 
   rest.get(generateRoute('/stories'), getStories),
   rest.post(generateRoute('/stories'), postStories),

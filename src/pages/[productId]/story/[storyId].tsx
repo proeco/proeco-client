@@ -179,6 +179,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                     page={page}
                     editable={isMemberOfTeam}
                     isScrollTarget={storyPostId === customStoryPost._id}
+                    currentUser={currentUser}
                   />
                 </TimeLineItem>
               );
@@ -187,7 +188,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
               <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
                 <UserIcon size={40} isLink attachmentId={currentUser.iconImageId} userId={currentUser._id} />
                 <Box width="100%">
-                  <CreateNewStoryPostPaper storyId={storyId} page={page} />
+                  <CreateNewStoryPostPaper storyId={storyId} page={page} currentUser={currentUser} />
                 </Box>
               </Box>
             )}

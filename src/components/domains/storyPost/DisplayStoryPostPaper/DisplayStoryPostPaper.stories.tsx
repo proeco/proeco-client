@@ -19,20 +19,22 @@ const Template: ComponentStory<typeof DisplayStoryPostPaper> = ({ ...rest }) => 
   );
 };
 
-const mockUser = createMockUser({ name: 'user' });
+const mockCreatedUser = createMockUser({ name: 'CreatedUser' });
+const mockCurrentUser = createMockUser({ name: 'CurrentUser' });
 const mockStoryPost = createMockStoryPost({
   content: SAMPLE_MD,
 });
 
 export const EditModeDisplayStoryPostPaper = Template.bind({});
 EditModeDisplayStoryPostPaper.args = {
-  createdUserId: mockUser._id,
-  createdUserName: mockUser.name,
+  createdUserId: mockCreatedUser._id,
+  createdUserName: mockCreatedUser.name,
   storyPost: mockStoryPost,
   teamId: 'team1',
   storyId: 'story1',
   page: 1,
   editable: true,
+  currentUser: mockCurrentUser,
 };
 
 export const NotEditModeDisplayStoryPostPaper = Template.bind({});
