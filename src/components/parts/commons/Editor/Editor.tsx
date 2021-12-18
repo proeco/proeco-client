@@ -6,8 +6,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { TextField, Button, Typography, MarkdownToHtmlBody, Icon } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
-import { Attachment } from '~/domains';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { Attachment, User } from '~/domains';
 import { generateBucketUrl } from '~/utils/generateBucketUrl';
 
 type Props = {
@@ -16,10 +15,10 @@ type Props = {
   onChangeContent: (content: string) => void;
   onCompleteEdit: () => void;
   onClickCancelButton?: () => void;
+  currentUser: User;
 };
 
-export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeContent, onCompleteEdit, onClickCancelButton }) => {
-  const { data: currentUser } = useCurrentUser();
+export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeContent, onCompleteEdit, onClickCancelButton, currentUser }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<'editor' | 'preview'>('editor');
 
@@ -30,14 +29,14 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
   };
 
   const handleUploadFile = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files || !currentUser || !inputRef.current) {
+    if (!e.target.files || !inputRef.current) {
       return;
     }
     const file = e.target.files[0];
     const params = new FormData();
     params.append('file', file);
     try {
-      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/stories/`, params, {
+      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/stories`, params, {
         'Content-Type': 'multipart/form-data',
       });
       const attachmentUrl = generateBucketUrl(attachment.filePath);
@@ -86,8 +85,10 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
       <Box display="flex" alignItems="center" justifyContent="flex-end" gap="4px">
         {value === 'editor' && (
           <StyledLabel htmlFor="image">
-            <Icon icon="Photo" width="24px" />
-            <Typography variant="body1">ファイルをアップロード</Typography>
+            <Icon icon="Photo" width="20px" />
+            <Typography variant="body2" color="textColor.light">
+              画像をアップロード
+            </Typography>
             <StyledInput type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
           </StyledLabel>
         )}
