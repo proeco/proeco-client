@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 
 import { Editor } from './Editor';
 import { Paper } from '~/components/parts/commons';
-import { SAMPLE_MD } from '~/constants';
+import { MDS } from '~/constants';
 import { createMockUser } from '~/mocks/domains';
 
 export default {
@@ -40,13 +40,13 @@ const mockUser = createMockUser();
 
 export const DefaultEditor = Template.bind({});
 DefaultEditor.args = {
-  content: SAMPLE_MD,
+  content: MDS.SAMPLE_MD,
   currentUser: mockUser,
 };
 
 export const UpdateEditor = Template.bind({});
 UpdateEditor.args = {
-  content: SAMPLE_MD,
+  content: MDS.SAMPLE_MD,
   isUpdateMode: true,
   currentUser: mockUser,
 };

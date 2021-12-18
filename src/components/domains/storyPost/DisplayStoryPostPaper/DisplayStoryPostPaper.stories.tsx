@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 import { DisplayStoryPostPaper } from './DisplayStoryPostPaper';
 import { createMockStoryPost, createMockUser } from '~/mocks/domains';
-import { SAMPLE_MD } from '~/constants';
+import { MDS } from '~/constants';
 
 export default {
   title: 'domains/storyPost/DisplayStoryPostPaper',
@@ -22,7 +22,7 @@ const Template: ComponentStory<typeof DisplayStoryPostPaper> = ({ ...rest }) => 
 const mockCreatedUser = createMockUser({ name: 'CreatedUser' });
 const mockCurrentUser = createMockUser({ name: 'CurrentUser' });
 const mockStoryPost = createMockStoryPost({
-  content: SAMPLE_MD,
+  content: MDS.SAMPLE_MD,
 });
 
 export const EditModeDisplayStoryPostPaper = Template.bind({});
