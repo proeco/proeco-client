@@ -28,13 +28,13 @@ export const LoginModal: VFC<Props> = ({ isOpen, onClose }) => {
       </StyledLoginButtonWrapper>
 
       <Typography my="20px" color="textColor.light">
-        <Link href={URLS.TERMS} underline="always">
+        <Link href={URLS.TERM} underline="always" target="_blank">
           利用規約
         </Link>
-        、
+        {/* 、
         <Link href={URLS.PRIVACY_POLICY} underline="always">
           プライバシーポリシー
-        </Link>
+        </Link> */}
         に同意したうえでログインしてください
       </Typography>
     </Box>

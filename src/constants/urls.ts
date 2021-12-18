@@ -9,7 +9,7 @@ export const URLS = {
   TEAMS: (productId: string) => `/${productId}`,
   TEAMS_STORY: (productId: string, storyId: string, storyPostId?: string) =>
     `/${productId}/story/${storyId}${storyPostId ? `?storyPostId=${storyPostId}` : ''}`,
-  TERMS: '#',
+  TERM: '/term',
   PRIVACY_POLICY: '#',
   BUCKET_URL: 'https://storage.googleapis.com/proeco',
 };
