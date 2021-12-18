@@ -3,6 +3,7 @@ import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
 import { Button, Icon, IconUpload, Paper, TextField, Typography } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
+import { URLS } from '~/constants';
 import { User } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
@@ -121,7 +122,8 @@ const DashboardSettingsPage: ProecoNextPage = () => {
   );
 };
 
-const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
-
-DashboardSettingsPage.getLayout = getLayout;
+DashboardSettingsPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
+DashboardSettingsPage.getAccessControl = () => {
+  return { destination: URLS.TOP, loginRequired: true };
+};
 export default DashboardSettingsPage;

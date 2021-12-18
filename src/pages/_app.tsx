@@ -10,6 +10,7 @@ import { theme } from '../theme';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 import { CurrentUserProvider } from '~/hooks/CurrentUserProvider';
+import { AccessControlProvider } from '~/hooks/AccessControlProvider';
 
 const inputGlobalStyles = (
   <GlobalStyles
@@ -36,15 +37,17 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
 
   return (
     <UserProvider>
-      <CurrentUserProvider>
-        <MaterialThemeProvider theme={theme}>
-          <SnackbarProvider>
-            {inputGlobalStyles}
-            <NavigationBar />
-            {getLayout(<Component {...pageProps} />)}
-          </SnackbarProvider>
-        </MaterialThemeProvider>
-      </CurrentUserProvider>
+      <MaterialThemeProvider theme={theme}>
+        <SnackbarProvider>
+          <CurrentUserProvider>
+            <AccessControlProvider getAccessControl={Component.getAccessControl}>
+              {inputGlobalStyles}
+              <NavigationBar />
+              {getLayout(<Component {...pageProps} />)}
+            </AccessControlProvider>
+          </CurrentUserProvider>
+        </SnackbarProvider>
+      </MaterialThemeProvider>
     </UserProvider>
   );
 }

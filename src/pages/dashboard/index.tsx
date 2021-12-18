@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { Icon, Typography } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
+import { URLS } from '~/constants';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const Dashboard: ProecoNextPage = () => {
@@ -21,7 +22,8 @@ const Dashboard: ProecoNextPage = () => {
   );
 };
 
-const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
-
-Dashboard.getLayout = getLayout;
+Dashboard.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
+Dashboard.getAccessControl = () => {
+  return { destination: URLS.TOP, loginRequired: true };
+};
 export default Dashboard;

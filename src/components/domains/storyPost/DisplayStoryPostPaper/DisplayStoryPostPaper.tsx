@@ -18,7 +18,7 @@ import {
   EmojiCountResult,
 } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
-import { Reaction, StoryPost } from '~/domains';
+import { Reaction, StoryPost, User } from '~/domains';
 import 'github-markdown-css';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -35,10 +35,12 @@ type Props = {
   storyPost: StoryPost & { currentUserReaction?: Reaction };
   emojiIds?: string[];
   teamId: string;
+  productId: string;
   storyId: string;
   page: number;
   editable?: boolean;
   isScrollTarget?: boolean;
+  currentUser?: User | null;
 };
 
 export const DisplayStoryPostPaper: VFC<Props> = ({
@@ -47,10 +49,12 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   storyPost,
   emojiIds = ['disappointed_relieved', 'confused', 'slightly_smiling_face', 'smiling_face_with_3_hearts'],
   teamId,
+  productId,
   storyId,
   page,
   editable = false,
   isScrollTarget = false,
+  currentUser,
 }) => {
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -217,7 +221,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
               transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
               <CopyToClipboard
-                text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(teamId, storyId, storyPost._id)}
+                text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(productId, storyId, storyPost._id)}
                 onCopy={() => notifySuccessMessage('共有リンクをコピーしました')}
               >
                 <MenuItem>
@@ -250,13 +254,14 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             </Dropdown>
           </WrapDropdown>
         </StyledBox>
-        {isUpdate && (
+        {isUpdate && currentUser && (
           <Editor
             isUpdateMode
             content={content}
             onChangeContent={setContent}
             onCompleteEdit={handleCompleteEdit}
             onClickCancelButton={handleClickCancelButton}
+            currentUser={currentUser}
           />
         )}
         {!isUpdate && (

@@ -6,6 +6,7 @@ import { Box } from '@mui/system';
 import { Editor } from './Editor';
 import { Paper } from '~/components/parts/commons';
 import { SAMPLE_MD } from '~/constants';
+import { createMockUser } from '~/mocks/domains';
 
 export default {
   title: 'parts/commons/Editor',
@@ -16,7 +17,7 @@ export default {
   },
 } as ComponentMeta<typeof Editor>;
 
-const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onCompleteEdit, onClickCancelButton }) => {
+const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onCompleteEdit, onClickCancelButton, currentUser }) => {
   const [markdownContent, setMarkdownContent] = useState(content);
 
   return (
@@ -28,24 +29,30 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onComp
           isUpdateMode={isUpdateMode}
           onCompleteEdit={onCompleteEdit}
           onClickCancelButton={onClickCancelButton}
+          currentUser={currentUser}
         />
       </Paper>
     </Box>
   );
 };
 
+const mockUser = createMockUser();
+
 export const DefaultEditor = Template.bind({});
 DefaultEditor.args = {
   content: SAMPLE_MD,
+  currentUser: mockUser,
 };
 
 export const UpdateEditor = Template.bind({});
 UpdateEditor.args = {
   content: SAMPLE_MD,
   isUpdateMode: true,
+  currentUser: mockUser,
 };
 
 export const disabledEditor = Template.bind({});
 disabledEditor.args = {
   content: '',
+  currentUser: mockUser,
 };

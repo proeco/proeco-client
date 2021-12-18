@@ -174,10 +174,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                     createdUserName={createdStoryPostUser?.name}
                     storyPost={customStoryPost}
                     teamId={team._id}
+                    productId={team.productId}
                     storyId={storyId}
                     page={page}
                     editable={isMemberOfTeam}
                     isScrollTarget={storyPostId === customStoryPost._id}
+                    currentUser={currentUser}
                   />
                 </TimeLineItem>
               );
@@ -186,7 +188,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
               <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
                 <UserIcon size={40} isLink attachmentId={currentUser.iconImageId} userId={currentUser._id} />
                 <Box width="100%">
-                  <CreateNewStoryPostPaper storyId={storyId} page={page} />
+                  <CreateNewStoryPostPaper storyId={storyId} page={page} currentUser={currentUser} />
                 </Box>
               </Box>
             )}
@@ -259,7 +261,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-const getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
-StoryPage.getLayout = getLayout;
-
+StoryPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
+StoryPage.getAccessControl = () => {
+  return { loginRequired: null };
+};
 export default StoryPage;
