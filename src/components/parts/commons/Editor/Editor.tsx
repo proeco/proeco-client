@@ -85,7 +85,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
       <Box display="flex" alignItems="center" justifyContent="flex-end" gap="4px">
         {value === 'editor' && (
           <StyledLabel htmlFor="image">
-            <Icon icon="Photo" width="20px" />
+            <Icon icon="Photo" width="20px" color="textColor.light" />
             <Typography variant="body2" color="textColor.light">
               画像をアップロード
             </Typography>
@@ -123,6 +123,7 @@ const StyledLabel = styled('label')`
   position: relative;
   display: flex;
   align-items: center;
+  gap: 4px;
   width: fit-content;
   margin-right: auto;
   cursor: pointer;
