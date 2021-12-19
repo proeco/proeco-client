@@ -16,41 +16,39 @@ type Props = {
 
 export const StoryListTable: VFC<Props> = ({ stories, productId }) => {
   return (
-    <>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <StyledHeaderTableCell>
-                <Typography color={COLORS.TEXT_LIGHT} variant="caption">
-                  ストーリー名
-                </Typography>
-              </StyledHeaderTableCell>
-              <StyledHeaderTableCell align="right">
-                <Typography color={COLORS.TEXT_LIGHT} variant="caption">
-                  ステータス
-                </Typography>
-              </StyledHeaderTableCell>
-              <StyledHeaderTableCell align="right">
-                <Typography color={COLORS.TEXT_LIGHT} variant="caption">
-                  応援者
-                </Typography>
-              </StyledHeaderTableCell>
-              <StyledHeaderTableCell align="right">
-                <Typography color={COLORS.TEXT_LIGHT} variant="caption">
-                  最終更新日
-                </Typography>
-              </StyledHeaderTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {stories.map((doc) => (
-              <StoryTableRow story={doc} key={doc._id} productId={productId} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+    <TableContainer component={Paper}>
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <StyledHeaderTableCell>
+              <Typography color={COLORS.TEXT_LIGHT} variant="caption">
+                ストーリー名
+              </Typography>
+            </StyledHeaderTableCell>
+            <StyledHeaderTableCell align="right">
+              <Typography color={COLORS.TEXT_LIGHT} variant="caption">
+                ステータス
+              </Typography>
+            </StyledHeaderTableCell>
+            <StyledHeaderTableCell align="right">
+              <Typography color={COLORS.TEXT_LIGHT} variant="caption">
+                応援者
+              </Typography>
+            </StyledHeaderTableCell>
+            <StyledHeaderTableCell align="right">
+              <Typography color={COLORS.TEXT_LIGHT} variant="caption">
+                最終更新日
+              </Typography>
+            </StyledHeaderTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {stories.map((doc) => (
+            <StoryTableRow story={doc} key={doc._id} productId={productId} />
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

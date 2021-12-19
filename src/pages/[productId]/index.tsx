@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { ReactNode, useState, useEffect, ChangeEvent, useMemo } from 'react';
+import { ReactNode, useState, useEffect, useMemo } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Grid, Tab } from '@mui/material';
@@ -16,7 +16,6 @@ import { StoryTab } from '~/components/domains/story/StoryTab';
 import { TeamForm } from '~/components/domains/team/TeamForm';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 
-import { useStories } from '~/stores/story';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeamUsers } from '~/stores/team';
 
@@ -32,7 +31,6 @@ type TabTypes = typeof TabTypes[keyof typeof TabTypes];
 type Props = {
   team: Team;
 };
-const limit = 10;
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const router = useRouter();
@@ -67,21 +65,6 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const handleChange = (_event: React.SyntheticEvent, newValue: TabTypes) => {
     router.push(`#${newValue}`);
     setActiveTab(newValue);
-  };
-
-  const [page, setPage] = useState(1);
-  const { data: stories } = useStories({
-    teamId: team?._id,
-    page,
-    limit,
-  });
-
-  const count = stories ? stories.totalPages : 1;
-
-  const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
-    event.preventDefault();
-    if (!value) return;
-    setPage(value);
   };
 
   return (
@@ -123,7 +106,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
             )}
           </TabPanel>
           <TabPanel value={TabTypes.STORY}>
-            <StoryTab page={page} limit={limit} team={team} count={count} onChangePage={handleChangePage} editable={isMemberOfTeam} />
+            <StoryTab team={team} editable={isMemberOfTeam} />
           </TabPanel>
           <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamForm currentUser={currentUser} team={team} />}</TabPanel>
         </TabContext>

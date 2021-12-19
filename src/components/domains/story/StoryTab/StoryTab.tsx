@@ -8,22 +8,30 @@ import { Team } from '~/domains';
 import { useStories } from '~/stores/story';
 
 type Props = {
-  page: number;
-  limit: 10;
   team: Team;
-  count: number;
   editable: boolean;
-  onChangePage: (event: ChangeEvent<unknown>, value: number | null) => void;
 };
 
-export const StoryTab: VFC<Props> = ({ page, limit, team, count, editable, onChangePage }) => {
+const limit = 10;
+
+export const StoryTab: VFC<Props> = ({ team, editable }) => {
   const [isOpenCreateNewStoryModal, setIsOpeCreateNewStoryModal] = useState(false);
 
-  const { data: openStoryList } = useStories({ page, limit, teamId: team._id, isCompleted: false });
-  const { data: closeStoryList } = useStories({ page, limit, teamId: team._id, isCompleted: true });
+  const [closeStoryPage, setCloseStoryPage] = useState(1);
+
+  const { data: openStoryList } = useStories({ page: 1, limit, teamId: team._id, isCompleted: false });
+  const { data: closeStoryList } = useStories({ page: closeStoryPage, limit, teamId: team._id, isCompleted: true });
+
+  const count = closeStoryList ? closeStoryList.totalPages : 1;
 
   const handleClickCreateStoryButton = () => {
     setIsOpeCreateNewStoryModal(true);
+  };
+
+  const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
+    event.preventDefault();
+    if (!value) return;
+    setCloseStoryPage(value);
   };
 
   return (
@@ -39,9 +47,11 @@ export const StoryTab: VFC<Props> = ({ page, limit, team, count, editable, onCha
           </Button>
         )}
       </Box>
-      <Typography variant="h4" bold align="center" mb={3}>
-        進行中のストーリー
-      </Typography>
+      {openStoryList && openStoryList.docs.length !== 0 && (
+        <Typography variant="h4" bold align="center" mb={3}>
+          進行中のストーリー
+        </Typography>
+      )}
       <Box mb={5}>
         <Grid container maxWidth="900px" mx="auto">
           {openStoryList ? (
@@ -64,20 +74,20 @@ export const StoryTab: VFC<Props> = ({ page, limit, team, count, editable, onCha
           )}
         </Grid>
       </Box>
-      <Typography variant="h4" bold align="center" mb={3}>
-        完了したストーリー
-      </Typography>
-      {closeStoryList && (
+      {closeStoryList && closeStoryList.docs.length !== 0 && (
         <>
+          <Typography variant="h4" bold align="center" mb={3}>
+            完了したストーリー
+          </Typography>
           <StoryListTable stories={closeStoryList.docs} productId={team.productId} />
-          <StyledPagination count={count} page={page} onChange={onChangePage} />
+          <StyledPagination count={count} page={closeStoryPage} onChange={handleChangePage} />
         </>
       )}
       <CreateNewStoryModal
         isOpen={isOpenCreateNewStoryModal}
         onCloseModal={() => setIsOpeCreateNewStoryModal(false)}
         teamId={team._id}
-        page={page}
+        page={closeStoryPage}
       />
     </>
   );
