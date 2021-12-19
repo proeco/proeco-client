@@ -122,7 +122,9 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
               </Grid>
             )}
           </TabPanel>
-          <StoryTab page={page} limit={limit} team={team} count={count} onChangePage={handleChangePage} isMemberOfTeam={isMemberOfTeam} />
+          <TabPanel value={TabTypes.STORY}>
+            <StoryTab page={page} limit={limit} team={team} count={count} onChangePage={handleChangePage} editable={isMemberOfTeam} />
+          </TabPanel>
           <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamForm currentUser={currentUser} team={team} />}</TabPanel>
         </TabContext>
       </Box>
