@@ -10,3 +10,5 @@ export const COLORS = {
   BORDER: '#eaecf1',
   BACKGROUND: '#e5e5e5',
 };
+
+export type ColorVariables = 'primary' | 'info' | 'warning' | 'danger';

@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
+import { ColorVariables } from '~/constants/colors';
 
 type Props = {
   disabled?: boolean;
   size?: 'sm' | 'lg';
-  color: 'primary' | 'info';
+  color: ColorVariables;
   outlined?: boolean;
 };
 
