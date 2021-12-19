@@ -10,6 +10,18 @@
   );
 }
 
+.btn-danger {
+  // 指定の orange だと文字色が黒色になってしまうので修正
+  @include button-variant(
+    $background: $danger,
+    $border: $danger,
+    $color: $white,
+    $hover-color: $white,
+    $active-color: $white,
+    $disabled-color: $white
+  );
+}
+
 .btn-orange {
   // 指定の orange だと文字色が黒色になってしまうので修正
   @include button-variant(
