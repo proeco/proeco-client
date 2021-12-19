@@ -5,8 +5,6 @@ import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 import { Emoji } from '~/components/parts/commons/Emoji';
 
-import 'emoji-mart/css/emoji-mart.css';
-
 type Props = {
   emojiId: string;
   size: number;

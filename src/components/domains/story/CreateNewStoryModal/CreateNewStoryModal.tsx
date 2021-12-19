@@ -1,7 +1,5 @@
 import React, { VFC, useState, useEffect } from 'react';
 
-import 'emoji-mart/css/emoji-mart.css';
-
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 
