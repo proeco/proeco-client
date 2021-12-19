@@ -1,4 +1,9 @@
 .btn-primary {
   // 指定の primary だと文字色が黒色になってしまうので修正
-  @include button-variant($color: $white, $disabled-color: $white);
+  @include button-variant(
+    $background: $primary,
+    $border: $primary,
+    $color: $white,
+    $disabled-color: $white
+  );
 }

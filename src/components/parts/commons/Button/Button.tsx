@@ -1,30 +1,25 @@
-import React, { FC, ComponentProps } from 'react';
-import { styled } from '@mui/material/styles';
-import { Button as MuiButton } from '@mui/material';
+import React, { FC } from 'react';
 
-type Bold = {
-  bold?: boolean;
+type Props = {
+  disabled?: boolean;
+  size?: 'sm' | 'lg';
+  color: 'primary' | 'info';
+  outlined?: boolean;
 };
 
-type Props = ComponentProps<typeof MuiButton> & Bold;
+export const Button: FC<Props> = ({ children, disabled, size, color, outlined }) => {
+  const classNames = ['btn'];
+  if (disabled) classNames.push('disabled');
+  if (size) classNames.push(`btn-${size}`);
+  if (outlined) {
+    classNames.push(`btn-${color}`);
+  } else {
+    classNames.push(`btn-outline-${color}`);
+  }
 
-export const Button: FC<Props> = ({ bold, children, ...rest }) => {
   return (
-    <>
-      <StyledButton {...rest} bold={bold ? 1 : 0}>
-        children
-      </StyledButton>
-      <button className="btn btn-primary bg-primary">{children}</button>
-    </>
+    <button type="button" className={classNames.join(' ')}>
+      {children}
+    </button>
   );
 };
-
-const StyledButton = styled(MuiButton)<{ bold: number }>`
-  &.MuiButton-containedSecondary,
-  &.MuiButton-containedPrimary,
-  &.MuiButton-containedError,
-  &.MuiButton-containedGreen {
-    color: white;
-  }
-  font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
-`;
