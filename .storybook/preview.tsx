@@ -4,6 +4,8 @@ import { SnackbarProvider } from 'notistack';
 import { addDecorator} from '@storybook/react';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 
+import '../src/styles/global.scss';
+
 import { theme } from '../src/theme';
 const { worker } = require('../src/mocks/browser');
 worker.start()
