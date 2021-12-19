@@ -6,24 +6,15 @@ import { styled } from '@mui/system';
 import { Typography } from '~/components/parts/commons';
 import { StoryTableRow } from '~/components/domains/story/StoryTableRow';
 
-import { useStories } from '~/stores/story/useStories';
-
 import { COLORS } from '~/constants';
+import { Story } from '~/domains';
 
 type Props = {
-  page: number;
-  limit: 10;
-  teamId: string;
+  stories: Story[];
   productId: string;
 };
 
-export const StoryListTable: VFC<Props> = ({ page, limit, teamId, productId }) => {
-  const { data: stories } = useStories({
-    teamId,
-    page,
-    limit,
-  });
-
+export const StoryListTable: VFC<Props> = ({ stories, productId }) => {
   return (
     <>
       <TableContainer component={Paper}>
@@ -52,7 +43,11 @@ export const StoryListTable: VFC<Props> = ({ page, limit, teamId, productId }) =
               </StyledHeaderTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{stories && stories.docs.map((doc) => <StoryTableRow story={doc} key={doc._id} productId={productId} />)}</TableBody>
+          <TableBody>
+            {stories.map((doc) => (
+              <StoryTableRow story={doc} key={doc._id} productId={productId} />
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
     </>
