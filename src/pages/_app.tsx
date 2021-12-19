@@ -5,6 +5,7 @@ import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import { UserProvider } from '@auth0/nextjs-auth0';
 
 import 'modern-css-reset/dist/reset.min.css';
+import '~/styles/global.scss';
 
 import { theme } from '../theme';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
