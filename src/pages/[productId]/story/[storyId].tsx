@@ -198,7 +198,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
               {isMemberOfTeam && (
                 <Box textAlign="center">
                   <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
-                    <StyledButton fullWidth variant={story.isCompleted ? 'outlined' : 'contained'} onClick={handleClickIsCompletedButton}>
+                    <StyledButton color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
                       {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
                     </StyledButton>
                   </Reward>
