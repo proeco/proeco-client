@@ -6,20 +6,21 @@ type Props = {
   size?: 'sm' | 'lg';
   color: ColorVariables;
   outlined?: boolean;
+  onClick: () => void;
 };
 
-export const Button: FC<Props> = ({ children, disabled, size, color, outlined }) => {
+export const Button: FC<Props> = ({ children, disabled, size, color, outlined, onClick }) => {
   const classNames = ['btn'];
   if (disabled) classNames.push('disabled');
   if (size) classNames.push(`btn-${size}`);
   if (outlined) {
-    classNames.push(`btn-${color}`);
-  } else {
     classNames.push(`btn-outline-${color}`);
+  } else {
+    classNames.push(`btn-${color}`);
   }
 
   return (
-    <button type="button" className={classNames.join(' ')}>
+    <button type="button" className={classNames.join(' ')} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );
