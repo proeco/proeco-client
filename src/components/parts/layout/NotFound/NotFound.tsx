@@ -23,7 +23,7 @@ export const Component: VFC<Props> = ({ message = 'ページが見つかりま�
       <Box>
         <Image src={ErrorImagePath} alt="NotFound" width={500} height={315} />
       </Box>
-      <Button variant="contained" bold onClick={onClickReturnTopButton}>
+      <Button color="primary" onClick={onClickReturnTopButton}>
         Topページに戻る
       </Button>
     </StyledStack>

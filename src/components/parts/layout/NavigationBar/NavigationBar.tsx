@@ -53,8 +53,8 @@ export const NavigationBar: VFC = memo(() => {
     }
 
     return (
-      <StyledButton bold onClick={() => setIsLoginModalOpen(true)}>
-        Login Button
+      <StyledButton color="orange" onClick={() => setIsLoginModalOpen(true)}>
+        ログイン
       </StyledButton>
     );
   }, [isValidatingCurrentUser, currentUser, menuItems]);

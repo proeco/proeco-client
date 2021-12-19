@@ -92,12 +92,12 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             <StyledInput type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
           </StyledLabel>
         )}
-        {isUpdateMode && (
-          <Button variant="text" onClick={onClickCancelButton}>
+        {isUpdateMode && onClickCancelButton && (
+          <Button outlined color="secondary" onClick={onClickCancelButton}>
             キャンセル
           </Button>
         )}
-        <Button variant="contained" onClick={onCompleteEdit} disabled={content.trim() === ''}>
+        <Button color="primary" onClick={onCompleteEdit} disabled={content.trim() === ''}>
           {isUpdateMode ? '更新する' : '投稿する'}
         </Button>
       </Box>

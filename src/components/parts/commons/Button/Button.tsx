@@ -6,11 +6,11 @@ type Props = {
   size?: 'sm' | 'lg';
   color: ColorVariables;
   outlined?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export const Button: FC<Props> = ({ children, disabled, size, color, outlined, onClick }) => {
-  const classNames = ['btn'];
+  const classNames = ['btn text-nowrap d-inline-flex align-items-center gap-1'];
   if (disabled) classNames.push('disabled');
   if (size) classNames.push(`btn-${size}`);
   if (outlined) {
