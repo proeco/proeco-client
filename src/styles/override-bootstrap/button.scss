@@ -1,4 +1,4 @@
-.btn-primary,
-.btn-primary.disabled {
-  color: $white;
+.btn-primary {
+  // 指定の primary だと文字色が黒色になってしまうので修正
+  @include button-variant($color: $white, $disabled-color: $white);
 }
