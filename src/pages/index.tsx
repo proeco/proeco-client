@@ -6,7 +6,7 @@ import { useTeams } from '~/stores/team';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { Button, Link, Typography } from '~/components/parts/commons';
+import { Link, Typography } from '~/components/parts/commons';
 import { URLS } from '~/constants';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { TeamCard } from '~/components/domains/team/TeamCard';
@@ -83,27 +83,15 @@ const Home: ProecoNextPage = () => {
       <Typography variant="h1" bold>
         Top Page
       </Typography>
-      <Link href={URLS.DASHBOARD}>
-        <Button color="primary" variant="contained">
-          ホームへ
-        </Button>
-      </Link>
+      <Link href={URLS.DASHBOARD}>ホームへ</Link>
       {currentUser ? (
         <>
           <Typography variant="h3">Hello {currentUser.name}!</Typography>
           <UserIcon size={200} userId={currentUser._id} attachmentId={currentUser.iconImageId} />
-          <Link href={URLS.API_LOGOUT}>
-            <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }}>
-              Logout
-            </Button>
-          </Link>
+          <Link href={URLS.API_LOGOUT}>Logout</Link>
         </>
       ) : (
-        <Link href={URLS.API_LOGIN}>
-          <Button color="primary" variant="contained" sx={{ textTransform: 'none', marginTop: '160px' }}>
-            Login
-          </Button>
-        </Link>
+        <Link href={URLS.API_LOGIN}>Login</Link>
       )}
     </>
   );

@@ -106,13 +106,8 @@ const DashboardSettingsPage: ProecoNextPage = () => {
             />
           </Box>
           <Box mt={4} textAlign="center">
-            <Button
-              disabled={isUpdating || !isValidForm}
-              color="primary"
-              variant="contained"
-              startIcon={<Icon icon="Update" width="20px" />}
-              onClick={handleClickCreateNewTeam}
-            >
+            <Button disabled={isUpdating || !isValidForm} color="primary" onClick={handleClickCreateNewTeam}>
+              <Icon icon="Update" width="20px" />
               更新する
             </Button>
           </Box>
