@@ -10,16 +10,12 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials"
   ],
-  "webpackFinal": async (config) => {
-    config.module.rules = [
-      // デフォルトのrulesに入っているCSS用の設定が悪さをするのでお帰りいただく
-      ...config.module.rules.filter(rule => rule.test.source !== (/\.css$/).source),
-      // css-loader を設定しなおす
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
+  webpackFinal: async (config) => {
+    config.module.rules.push({
+      test: /\.scss$/,
+      use: ['style-loader', 'css-loader', 'sass-loader'],
+      include: path.resolve(__dirname, '../'),
+    });
     config.resolve.alias = {
       "~": path.resolve(__dirname, "../src")
     }
