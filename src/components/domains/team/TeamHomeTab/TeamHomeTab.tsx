@@ -10,10 +10,11 @@ import { useTeam } from '~/stores/team';
 
 type Props = {
   team: Team;
+  editable: boolean;
   currentUser?: User | null;
 };
 
-export const TeamHomeTab: VFC<Props> = ({ team, currentUser }) => {
+export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [content, setContent] = useState(team.homeContent);
 
@@ -50,20 +51,22 @@ export const TeamHomeTab: VFC<Props> = ({ team, currentUser }) => {
     <Grid container>
       <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
         <Paper>
-          <WrapDropdown>
-            <Dropdown
-              toggle={<IconButton icon="MoreVert" width={20} />}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            >
-              <MenuItem onClick={handleClickUpdate} key="update">
-                <ListItemIcon>
-                  <Icon icon="Update" width="20px" color="textColor.main" />
-                </ListItemIcon>
-                更新する
-              </MenuItem>
-            </Dropdown>
-          </WrapDropdown>
+          {editable && (
+            <WrapDropdown>
+              <Dropdown
+                toggle={<IconButton icon="MoreVert" width={20} />}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              >
+                <MenuItem onClick={handleClickUpdate} key="update">
+                  <ListItemIcon>
+                    <Icon icon="Update" width="20px" color="textColor.main" />
+                  </ListItemIcon>
+                  更新する
+                </MenuItem>
+              </Dropdown>
+            </WrapDropdown>
+          )}
           {isUpdate && currentUser && (
             <Editor
               isUpdateMode

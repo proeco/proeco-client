@@ -26,5 +26,6 @@ const mockUser = createMockUser();
 export const EditModeTeamHomeTab = Template.bind({});
 EditModeTeamHomeTab.args = {
   team: mockTeam,
+  editable: true,
   currentUser: mockUser,
 };
