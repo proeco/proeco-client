@@ -17,7 +17,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
-import { Button, Emoji, Icon, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
+import { Button, Emoji, FixedImage, Icon, IconButton, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
@@ -118,17 +118,27 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     },
   ];
 
+  const ogpUrl = useMemo(
+    () => (story ? `https://proeco-ogp.vercel.app/api/ogp?title=${story.title}&teamName=${team.name}&teamIconUrl=${teamIconUrl}` : ''),
+    [story, team.name, teamIconUrl],
+  );
+
+  const handleClickShareButton = useCallback(async () => {
+    if (window != null) {
+      const twitterUrl = new URL(
+        `https://twitter.com/intent/tweet?url=${process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(team._id, storyId)}&hashtags=Proeco`,
+      );
+      window.open(twitterUrl.toString(), '_blank');
+    }
+  }, [storyId, team._id]);
+
   if (!story || !storyPosts) {
     return null;
   }
 
   return (
     <>
-      <ProecoOgpHead
-        title={story.title}
-        image={`https://proeco-ogp.vercel.app/api/ogp?title=${story.title}&teamName=${team.name}&teamIconUrl=${teamIconUrl}`}
-        url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/story/${story._id}`}
-      />
+      <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/story/${story._id}`} />
       <Box mx="auto" maxWidth="1200px">
         <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(team.productId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
         <Box mt={1} mb={4} display="flex" alignItems="center" justifyContent="space-between">
@@ -194,8 +204,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
             <Paper>
+              <Box mb="12px">
+                <FixedImage imageUrl={ogpUrl} />
+              </Box>
               {isMemberOfTeam && (
-                <Box textAlign="center">
+                <Box textAlign="center" mb="12px">
                   <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
                     <StyledButton color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
                       {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
@@ -203,6 +216,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                   </Reward>
                 </Box>
               )}
+              <IconButton icon="Twitter" width={30} color="primary" onClick={handleClickShareButton} />
             </Paper>
           </Grid>
         </Grid>
