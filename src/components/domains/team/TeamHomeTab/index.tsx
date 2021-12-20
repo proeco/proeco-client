@@ -1,0 +1,1 @@
+export { TeamHomeTab } from './TeamHomeTab';
