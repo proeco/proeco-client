@@ -4,7 +4,8 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
 import { TeamHomeTab } from './TeamHomeTab';
-import { createMockTeam } from '~/mocks/domains';
+import { createMockTeam, createMockUser } from '~/mocks/domains';
+import { MDS } from '~/constants';
 
 export default {
   title: 'domains/team/TeamHomeTab',
@@ -19,9 +20,11 @@ const Template: ComponentStory<typeof TeamHomeTab> = ({ ...rest }) => {
   );
 };
 
-const mockTeam = createMockTeam();
+const mockTeam = createMockTeam({ homeContent: MDS.SAMPLE_MD });
+const mockUser = createMockUser();
 
-export const Default = Template.bind({});
-Default.args = {
+export const EditModeTeamHomeTab = Template.bind({});
+EditModeTeamHomeTab.args = {
   team: mockTeam,
+  currentUser: mockUser,
 };

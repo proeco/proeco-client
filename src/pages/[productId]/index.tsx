@@ -84,7 +84,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
             {isMemberOfTeam && <StyledTab label={<Typography bold>設定</Typography>} value={TabTypes.SETTINGS} />}
           </StyledTabList>
           <TabPanel value={TabTypes.HOME}>
-            <TeamHomeTab team={team} />
+            <TeamHomeTab team={team} currentUser={currentUser} />
           </TabPanel>
           <TabPanel value={TabTypes.STORY}>
             <StoryTab team={team} editable={isMemberOfTeam} />
