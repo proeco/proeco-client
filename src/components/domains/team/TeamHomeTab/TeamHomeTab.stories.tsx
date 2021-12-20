@@ -29,3 +29,9 @@ EditModeTeamHomeTab.args = {
   editable: true,
   currentUser: mockUser,
 };
+
+export const NotEditModeTeamHomeTab = Template.bind({});
+NotEditModeTeamHomeTab.args = {
+  ...EditModeTeamHomeTab.args,
+  editable: false,
+};
