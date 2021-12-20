@@ -25,7 +25,7 @@ export const NavigationBar: VFC = memo(() => {
       {
         icon: <Icon icon="PersonOutline" color="textColor.main" width="20px" />,
         text: 'ダッシュボード',
-        onClick: () => router.push(URLS.DASHBOARD),
+        onClick: () => router.push(URLS.DASHBOARD_TEAMS),
       },
       {
         icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
