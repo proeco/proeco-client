@@ -1,5 +1,4 @@
 import React, { ReactNode, useMemo, useState, useRef, useCallback } from 'react';
-import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 import Reward, { RewardElement } from 'react-rewards';
@@ -230,28 +229,18 @@ const StyledButton = styled(Button)`
   text-transform: none;
 `;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { storyId, productId } = context.query;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getStaticProps: any = async (context: any) => {
+  const { storyId, productId } = context.params;
 
-  try {
-    const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`);
-    const team = pagination?.docs[0];
+  const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`);
+  const team = pagination?.docs[0];
 
-    const { data: story } = await restClient.apiGet(`/stories/${storyId}`);
+  const { data: story } = await restClient.apiGet(`/stories/${storyId}`);
 
-    const { data: teamIconAttachment } = await restClient.apiGet(`/attachments/${team.iconImageId}`);
+  const { data: teamIconAttachment } = await restClient.apiGet(`/attachments/${team.iconImageId}`);
 
-    if (!team || !story || !teamIconAttachment) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: '/404',
-        },
-      };
-    }
-
-    return { props: { storyFromServerSide: story, team, teamIconAttachment } };
-  } catch (error) {
+  if (!team || !story || !teamIconAttachment) {
     return {
       redirect: {
         permanent: false,
@@ -259,7 +248,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+
+  return { props: { storyFromServerSide: story, team, teamIconAttachment }, revalidate: 60 };
 };
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 StoryPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 StoryPage.getAccessControl = () => {
