@@ -10,6 +10,15 @@
   );
 }
 
+.btn-outline-primary {
+  // 指定の primary だと文字色が黒色になってしまうので修正
+  @include button-outline-variant(
+    $primary,
+    $color-hover: $white,
+    $active-color: $white
+  );
+}
+
 .btn-danger {
   // 指定の orange だと文字色が黒色になってしまうので修正
   @include button-variant(

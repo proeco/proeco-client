@@ -16,11 +16,11 @@ const sidebarItems: {
   url: string;
   text: string;
 }[] = [
-  {
-    icon: 'DashboardOutlined',
-    url: URLS.DASHBOARD,
-    text: 'ホーム',
-  },
+  // {
+  //   icon: 'DashboardOutlined',
+  //   url: URLS.DASHBOARD,
+  //   text: 'ホーム',
+  // },
   {
     icon: 'Group',
     url: URLS.DASHBOARD_TEAMS,
