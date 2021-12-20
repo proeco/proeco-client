@@ -51,5 +51,17 @@ const StyledMarkdownBody = styled(Box)`
     code {
       color: #fff;
     }
+    p::selection,
+    li::selection,
+    h1::selection,
+    h2::selection,
+    h3::selection,
+    h4::selection,
+    h5::selection,
+    h6::selection,
+    code::selection {
+      background-color: #b4d5fe;
+      color: #333;
+    }
   }
 `;
