@@ -21,11 +21,7 @@ type Props = {
 const limit = 10;
 
 export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, page }) => {
-  const { mutate: mutateStories } = useStories({
-    teamId,
-    page,
-    limit,
-  });
+  const { mutate: mutateOpenTeamStories } = useStories({ page, limit, teamId, isCompleted: false });
 
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
@@ -48,7 +44,7 @@ export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, 
         teamId,
       });
 
-      mutateStories();
+      mutateOpenTeamStories();
 
       notifySuccessMessage('ストーリーの作成に成功しました!');
 

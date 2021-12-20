@@ -1,28 +1,29 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { ReactNode, useState, useEffect, ChangeEvent, useMemo } from 'react';
+import { ReactNode, useState, useEffect, useMemo } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Grid, Tab } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
 import { Team } from '~/domains';
-import { Button, Icon, MarkdownToHtmlBody, Pagination, Paper, Typography } from '~/components/parts/commons';
+
+import { MarkdownToHtmlBody, Paper, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
-import { ProecoNextPage } from '~/interfaces/proecoNextPage';
-import { restClient } from '~/utils/rest-client';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
-import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
-import { useStories } from '~/stores/story';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
-
-import { StoryListTable } from '~/components/domains/story/StoryListTable';
-import { extractHash } from '~/utils/extractHash';
+import { StoryTab } from '~/components/domains/story/StoryTab';
 import { TeamForm } from '~/components/domains/team/TeamForm';
 import { TeamCard } from '~/components/domains/team/TeamCard';
-import { PaginationResult } from '~/interfaces';
+
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeamUsers } from '~/stores/team';
+
+import { restClient } from '~/utils/rest-client';
+import { extractHash } from '~/utils/extractHash';
+
+import { PaginationResult } from '~/interfaces';
+import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const TabTypes = { HOME: 'home', STORY: 'story', SETTINGS: 'settings' };
 type TabTypes = typeof TabTypes[keyof typeof TabTypes];
@@ -30,7 +31,6 @@ type TabTypes = typeof TabTypes[keyof typeof TabTypes];
 type Props = {
   team: Team;
 };
-const limit = 10;
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const router = useRouter();
@@ -65,26 +65,6 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const handleChange = (_event: React.SyntheticEvent, newValue: TabTypes) => {
     router.push(`#${newValue}`);
     setActiveTab(newValue);
-  };
-
-  const [isOpenCreateNewStoryModal, setIsOpeCreateNewStoryModal] = useState(false);
-  const [page, setPage] = useState(1);
-  const { data: stories } = useStories({
-    teamId: team?._id,
-    page,
-    limit,
-  });
-
-  const count = stories ? stories.totalPages : 1;
-
-  const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
-    event.preventDefault();
-    if (!value) return;
-    setPage(value);
-  };
-
-  const handleClickCreateStoryButton = () => {
-    setIsOpeCreateNewStoryModal(true);
   };
 
   return (
@@ -126,24 +106,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
             )}
           </TabPanel>
           <TabPanel value={TabTypes.STORY}>
-            <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-              <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
-                <Icon icon="HistoryEdu" width={32} />
-                ストーリーリスト
-              </Typography>
-              <Button color="primary" onClick={handleClickCreateStoryButton}>
-                <Icon icon="CreateOutlined" width="20px" />
-                ストーリーを追加する
-              </Button>
-            </Box>
-            <StoryListTable page={page} limit={limit} teamId={team._id} productId={team.productId} />
-            <StyledPagination count={count} page={page} onChange={handleChangePage} />
-            <CreateNewStoryModal
-              isOpen={isOpenCreateNewStoryModal}
-              onCloseModal={() => setIsOpeCreateNewStoryModal(false)}
-              teamId={team._id}
-              page={page}
-            />
+            <StoryTab team={team} editable={isMemberOfTeam} />
           </TabPanel>
           <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamForm currentUser={currentUser} team={team} />}</TabPanel>
         </TabContext>
@@ -162,13 +125,6 @@ const StyledTabList = styled(TabList)`
 const StyledTab = styled(Tab)`
   padding: 8px;
   min-height: unset;
-`;
-
-const StyledPagination = styled(Pagination)`
-  margin-top: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
