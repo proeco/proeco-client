@@ -1,6 +1,7 @@
 import { SWRResponse } from 'swr';
 import useImmutableSWR from 'swr/immutable';
 import { Ogp } from '~/interfaces/ogp';
+import { joinUrl } from '~/utils/joinUrl';
 
 import { restClient } from '~/utils/rest-client';
 
@@ -13,7 +14,7 @@ import { restClient } from '~/utils/rest-client';
  * @returns mutate データの更新関数
  */
 export const useOgp = (url: string): SWRResponse<Ogp, Error> => {
-  const key = `/ogps?url=${url}`;
+  const key = joinUrl('/ogps', [`url=${url}`]);
 
   return useImmutableSWR(key, (endpoint: string) => restClient.apiGet<{ ogp: Ogp }>(endpoint).then((result) => result.data.ogp));
 };
