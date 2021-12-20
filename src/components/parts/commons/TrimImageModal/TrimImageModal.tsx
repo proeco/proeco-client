@@ -36,7 +36,7 @@ export const TrimImageModal: VFC<Props> = ({ isOpen, imagePath, crop, onChangeIm
           })
         }
       />
-      <Button variant="contained" onClick={onTrimImage}>
+      <Button color="primary" onClick={onTrimImage}>
         決定する
       </Button>
     </Box>

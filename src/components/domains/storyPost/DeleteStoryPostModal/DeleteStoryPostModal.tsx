@@ -46,7 +46,7 @@ export const DeleteStoryPostModal: VFC<Props> = ({ isOpen, storyPostId, storyId,
         </Typography>
       </Box>
       <Box width="100%" textAlign="center">
-        <Button color="error" variant="contained" onClick={handleClickDeleteStoryPostButton}>
+        <Button color="danger" onClick={handleClickDeleteStoryPostButton}>
           削除する
         </Button>
       </Box>

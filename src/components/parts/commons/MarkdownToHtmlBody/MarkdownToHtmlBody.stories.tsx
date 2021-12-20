@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
 import { MarkdownToHtmlBody } from './MarkdownToHtmlBody';
-import { SAMPLE_MD } from '~/constants';
+import { MDS } from '~/constants';
 
 export default {
   title: 'parts/commons/MarkdownToHtmlBody',
@@ -21,5 +21,5 @@ const Template: ComponentStory<typeof MarkdownToHtmlBody> = ({ ...rest }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  content: SAMPLE_MD,
+  content: MDS.SAMPLE_MD,
 };

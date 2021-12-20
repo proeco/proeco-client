@@ -123,13 +123,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
           </Typography>
           <Box display="flex" alignItems="center" gap={1}>
             <TextField fullWidth multiline value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
-            <StyledButton
-              color="primary"
-              variant="contained"
-              size="medium"
-              disabled={!isValidUrl(newTeam.url)}
-              onClick={handleClickFetchByUrl}
-            >
+            <StyledButton color="primary" disabled={!isValidUrl(newTeam.url)} onClick={handleClickFetchByUrl}>
               データ取得
             </StyledButton>
           </Box>
@@ -152,13 +146,8 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
             onChange={(e) => updateStoryForm({ description: e.target.value })}
           />
           <Box mt={4} textAlign="center">
-            <Button
-              disabled={isCreating || !isValidForm}
-              color="primary"
-              variant="contained"
-              startIcon={<Icon icon="CreateOutlined" width="20px" />}
-              onClick={handleClickCreateNewTeam}
-            >
+            <Button disabled={isCreating || !isValidForm} color="primary" onClick={handleClickCreateNewTeam}>
+              <Icon icon="CreateOutlined" width="20px" />
               新規チームを作成する
             </Button>
           </Box>

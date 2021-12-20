@@ -131,7 +131,8 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
                 <Icon icon="HistoryEdu" width={32} />
                 ストーリーリスト
               </Typography>
-              <Button variant="contained" bold onClick={handleClickCreateStoryButton} startIcon={<Icon icon="CreateOutlined" width="20px" />}>
+              <Button color="primary" onClick={handleClickCreateStoryButton}>
+                <Icon icon="CreateOutlined" width="20px" />
                 ストーリーを追加する
               </Button>
             </Box>

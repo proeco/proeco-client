@@ -1,7 +1,5 @@
 import React, { VFC, useState, useEffect } from 'react';
 
-import 'emoji-mart/css/emoji-mart.css';
-
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 
@@ -101,7 +99,7 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
         </Box>
       </Box>
       <Box width="100%" textAlign="center">
-        <Button variant="contained" onClick={handleClickUpdateStoryButton} disabled={isDisabled}>
+        <Button color="primary" onClick={handleClickUpdateStoryButton} disabled={isDisabled}>
           更新する！
         </Button>
       </Box>
