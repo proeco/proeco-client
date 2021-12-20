@@ -204,9 +204,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
             <Paper>
-              <FixedImage imageUrl={ogpUrl} />
+              <Box mb="12px">
+                <FixedImage imageUrl={ogpUrl} />
+              </Box>
               {isMemberOfTeam && (
-                <Box textAlign="center" my="12px">
+                <Box textAlign="center" mb="12px">
                   <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
                     <StyledButton color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
                       {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
