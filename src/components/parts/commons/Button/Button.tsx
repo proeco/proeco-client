@@ -1,23 +1,29 @@
-import React, { VFC, ComponentProps } from 'react';
-import { styled } from '@mui/material/styles';
-import { Button as MuiButton } from '@mui/material';
+import React, { FC } from 'react';
+import { ColorVariables } from '~/constants/colors';
 
-type Bold = {
-  bold?: boolean;
+type Props = {
+  disabled?: boolean;
+  size?: 'sm' | 'lg';
+  color: ColorVariables;
+  outlined?: boolean;
+  fullWidth?: boolean;
+  onClick?: () => void;
 };
 
-type Props = ComponentProps<typeof MuiButton> & Bold;
-
-export const Button: VFC<Props> = ({ bold, ...rest }) => {
-  return <StyledButton {...rest} bold={bold ? 1 : 0} />;
-};
-
-const StyledButton = styled(MuiButton)<{ bold: number }>`
-  &.MuiButton-containedSecondary,
-  &.MuiButton-containedPrimary,
-  &.MuiButton-containedError,
-  &.MuiButton-containedGreen {
-    color: white;
+export const Button: FC<Props> = ({ children, disabled, size, color, outlined, fullWidth, onClick }) => {
+  const classNames = ['btn text-nowrap '];
+  if (disabled) classNames.push('disabled');
+  if (size) classNames.push(`btn-${size}`);
+  if (outlined) {
+    classNames.push(`btn-outline-${color}`);
+  } else {
+    classNames.push(`btn-${color}`);
   }
-  font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
-`;
+  fullWidth ? classNames.push('w-100 text-center') : classNames.push('d-inline-flex align-items-center gap-1');
+
+  return (
+    <button type="button" className={classNames.join(' ')} onClick={onClick} disabled={disabled}>
+      {children}
+    </button>
+  );
+};

@@ -45,7 +45,8 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
           ストーリーリスト
         </Typography>
         {editable && (
-          <Button variant="contained" bold onClick={handleClickCreateStoryButton} startIcon={<Icon icon="CreateOutlined" width="20px" />}>
+          <Button onClick={handleClickCreateStoryButton} color="primary">
+            <Icon icon="CreateOutlined" width="20px" />
             ストーリーを追加する
           </Button>
         )}
