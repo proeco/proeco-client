@@ -20,9 +20,12 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
   const [closeStoryPage, setCloseStoryPage] = useState(1);
 
   const { data: openStoryList } = useStories({ page: 1, limit, teamId: team._id, isCompleted: false });
-  const { data: closeStoryList } = useStories({ page: closeStoryPage, limit, teamId: team._id, isCompleted: true });
-
-  const count = closeStoryList ? closeStoryList.totalPages : 1;
+  const { data: closeStoriesPagination } = useStories({
+    page: closeStoryPage,
+    limit,
+    teamId: team._id,
+    isCompleted: true,
+  });
 
   const handleClickCreateStoryButton = () => {
     setIsOpeCreateNewStoryModal(true);
@@ -74,20 +77,20 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
           )}
         </Grid>
       </Box>
-      {closeStoryList && closeStoryList.docs.length !== 0 && (
+      {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
         <>
           <Typography variant="h4" bold align="center" mb={3}>
             完了したストーリー
           </Typography>
-          <StoryListTable stories={closeStoryList.docs} productId={team.productId} />
-          <StyledPagination count={count} page={closeStoryPage} onChange={handleChangePage} />
+          <StoryListTable stories={closeStoriesPagination.docs} productId={team.productId} />
+          <StyledPagination count={closeStoriesPagination.totalPages} page={closeStoryPage} onChange={handleChangePage} />
         </>
       )}
       <CreateNewStoryModal
         isOpen={isOpenCreateNewStoryModal}
         onCloseModal={() => setIsOpeCreateNewStoryModal(false)}
         teamId={team._id}
-        page={closeStoryPage}
+        page={1}
       />
     </>
   );
