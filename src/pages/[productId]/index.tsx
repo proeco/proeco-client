@@ -3,18 +3,18 @@ import { useRouter } from 'next/router';
 import { ReactNode, useState, useEffect, useMemo } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Grid, Tab } from '@mui/material';
+import { Tab } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
 import { Team } from '~/domains';
 
-import { MarkdownToHtmlBody, Paper, Typography } from '~/components/parts/commons';
+import { Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { StoryTab } from '~/components/domains/story/StoryTab';
 import { TeamForm } from '~/components/domains/team/TeamForm';
-import { TeamCard } from '~/components/domains/team/TeamCard';
+import { TeamHomeTab } from '~/components/domains/team/TeamHomeTab';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeamUsers } from '~/stores/team';
@@ -84,26 +84,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
             {isMemberOfTeam && <StyledTab label={<Typography bold>設定</Typography>} value={TabTypes.SETTINGS} />}
           </StyledTabList>
           <TabPanel value={TabTypes.HOME}>
-            {currentUser && (
-              <Grid container>
-                <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
-                  <Paper>
-                    <Box p={2}>
-                      <MarkdownToHtmlBody content={team.homeContent} />
-                    </Box>
-                  </Paper>
-                </Grid>
-                <Grid key={team._id} item xs={12} sm={4} px={1} pb={2}>
-                  <TeamCard
-                    name={team.name}
-                    productId={team.productId}
-                    description={team.description}
-                    attachmentId={team.iconImageId}
-                    url={team.url}
-                  />
-                </Grid>
-              </Grid>
-            )}
+            <TeamHomeTab team={team} currentUser={currentUser} editable={isMemberOfTeam} />
           </TabPanel>
           <TabPanel value={TabTypes.STORY}>
             <StoryTab team={team} editable={isMemberOfTeam} />

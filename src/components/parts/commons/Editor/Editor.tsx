@@ -64,7 +64,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
               inputRef={inputRef}
               fullWidth
               multiline
-              minRows={4}
+              minRows={10}
               value={content}
               onChange={(e) => onChangeContent(e.target.value)}
             />
