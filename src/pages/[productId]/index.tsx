@@ -13,7 +13,6 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { StoryTab } from '~/components/domains/story/StoryTab';
-import { TeamForm } from '~/components/domains/team/TeamForm';
 import { TeamHomeTab } from '~/components/domains/team/TeamHomeTab';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -24,6 +23,7 @@ import { extractHash } from '~/utils/extractHash';
 
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { TeamSettingTab } from '~/components/domains/team/TeamSettingTab';
 
 const TabTypes = { HOME: 'home', STORY: 'story', SETTINGS: 'settings' };
 type TabTypes = typeof TabTypes[keyof typeof TabTypes];
@@ -89,7 +89,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
           <TabPanel value={TabTypes.STORY}>
             <StoryTab team={team} editable={isMemberOfTeam} />
           </TabPanel>
-          <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamForm currentUser={currentUser} team={team} />}</TabPanel>
+          <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}</TabPanel>
         </TabContext>
       </Box>
     </>
