@@ -17,7 +17,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
-import { Button, Emoji, FixedImage, Icon, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
+import { Button, Emoji, FixedImage, Icon, IconButton, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
@@ -123,6 +123,15 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     [story, team.name, teamIconUrl],
   );
 
+  const handleClickShareButton = useCallback(async () => {
+    if (window != null) {
+      const twitterUrl = new URL(
+        `https://twitter.com/intent/tweet?url=${process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(team._id, storyId)}&hashtags=Proeco`,
+      );
+      window.open(twitterUrl.toString(), '_blank');
+    }
+  }, [storyId, team._id]);
+
   if (!story || !storyPosts) {
     return null;
   }
@@ -197,7 +206,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
             <Paper>
               <FixedImage imageUrl={ogpUrl} />
               {isMemberOfTeam && (
-                <Box textAlign="center" mt="12px">
+                <Box textAlign="center" my="12px">
                   <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
                     <StyledButton color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
                       {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
@@ -205,6 +214,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                   </Reward>
                 </Box>
               )}
+              <IconButton icon="Twitter" width={30} color="primary" onClick={handleClickShareButton} />
             </Paper>
           </Grid>
         </Grid>
