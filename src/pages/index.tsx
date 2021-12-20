@@ -83,7 +83,7 @@ const Home: ProecoNextPage = () => {
       <Typography variant="h1" bold>
         Top Page
       </Typography>
-      <Link href={URLS.DASHBOARD}>ホームへ</Link>
+      <Link href={URLS.DASHBOARD_TEAMS}>所属チーム一覧</Link>
       {currentUser ? (
         <>
           <Typography variant="h3">Hello {currentUser.name}!</Typography>
