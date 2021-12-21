@@ -274,9 +274,17 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             </Box>
             <Divider margin={20} />
             {editable ? (
-              <Box display="flex" justifyContent="center">
-                <EmojiCountResult emojisInfo={emojisInfo} />
-              </Box>
+              <>
+                <Box textAlign="center">
+                  <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
+                    <Emoji emoji="bulb" size={12} />
+                    ユーザーからリアクションが届いています
+                  </Typography>
+                </Box>
+                <Box display="flex" justifyContent="center">
+                  <EmojiCountResult emojisInfo={emojisInfo} />
+                </Box>
+              </>
             ) : (
               <>
                 <Box textAlign="center">
