@@ -182,7 +182,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const handleClickEmoji = useCallback(
     (emojiId: string) => {
-      if (!currentUser) return setIsLoginModalOpen(true);
+      if (!currentUser) {
+        notifySuccessMessage('ログインが必要です！');
+        return setIsLoginModalOpen(true);
+      }
       if (!currentStoryPost.currentUserReaction) {
         return handlePostReaction(emojiId);
       }
@@ -193,7 +196,15 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
       handlePutReaction(emojiId, currentStoryPost.currentUserReaction._id);
     },
-    [currentUser, currentStoryPost.currentUserReaction, SelectedEmojiId, handlePutReaction, handlePostReaction, handleDeleteReaction],
+    [
+      currentUser,
+      currentStoryPost.currentUserReaction,
+      SelectedEmojiId,
+      handlePutReaction,
+      notifySuccessMessage,
+      handlePostReaction,
+      handleDeleteReaction,
+    ],
   );
 
   const handleClickShareButton = useCallback(async () => {
