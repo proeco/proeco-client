@@ -12,17 +12,15 @@ type Props = {
   editable: boolean;
 };
 
-const limit = 10;
-
 export const StoryTab: VFC<Props> = ({ team, editable }) => {
   const [isOpenCreateNewStoryModal, setIsOpeCreateNewStoryModal] = useState(false);
 
   const [closeStoryPage, setCloseStoryPage] = useState(1);
 
-  const { data: openStoryList } = useStories({ page: 1, limit, teamId: team._id, isCompleted: false });
+  const { data: openStoryList } = useStories({ page: 1, limit: 100, teamId: team._id, isCompleted: false });
   const { data: closeStoriesPagination } = useStories({
     page: closeStoryPage,
-    limit,
+    limit: 10,
     teamId: team._id,
     isCompleted: true,
   });

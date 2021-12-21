@@ -19,7 +19,7 @@ export const useStories = ({
 }: {
   teamId?: string;
   page: number;
-  limit: 10;
+  limit: number;
   isCompleted?: boolean;
 }): SWRResponse<PaginationResult<Story>, Error> => {
   const key = `/stories?page=${page}&limit=${limit}${teamId ? '&teamId=' + teamId : ''}${
