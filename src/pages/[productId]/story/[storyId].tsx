@@ -60,19 +60,18 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
   }, [currentUser, teamUsers]);
 
-  const { data: reactions } = useReactionsByUserId(currentUser?._id);
+  const { data: reactions = [] } = useReactionsByUserId(currentUser?._id);
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { data: storyPosts } = useStoryPosts({
+  const { data: storyPosts = [] } = useStoryPosts({
     storyId,
     page,
     limit: 10,
   });
 
   const customStoryPosts: Array<StoryPost & { currentUserReaction?: Reaction }> = useMemo(() => {
-    if (!storyPosts || !reactions) return [];
-    return storyPosts?.map((s) => {
+    return storyPosts.map((s) => {
       return {
         ...s,
         currentUserReaction: reactions.find((r) => r.targetId === s._id),
