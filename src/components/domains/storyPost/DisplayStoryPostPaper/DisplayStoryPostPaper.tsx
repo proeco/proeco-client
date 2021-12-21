@@ -28,6 +28,7 @@ import { COLORS, URLS } from '~/constants';
 import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
 import { useReactionsByStoryPostId } from '~/stores/reaction';
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
+import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 type Props = {
   createdUserId?: string;
@@ -63,6 +64,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const [isUpdate, setIsUpdate] = useState(false);
   const [SelectedEmojiId, setSelectedEmojiId] = useState<string>(currentStoryPost.currentUserReaction?.emojiId || '');
   const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const { data: reactionsByStoryPostId = [] } = useReactionsByStoryPostId(storyPost._id);
 
@@ -180,6 +182,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   const handleClickEmoji = useCallback(
     (emojiId: string) => {
+      if (!currentUser) return setIsLoginModalOpen(true);
       if (!currentStoryPost.currentUserReaction) {
         return handlePostReaction(emojiId);
       }
@@ -190,7 +193,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
       handlePutReaction(emojiId, currentStoryPost.currentUserReaction._id);
     },
-    [currentStoryPost, SelectedEmojiId, handlePostReaction, handleDeleteReaction, handlePutReaction],
+    [currentUser, currentStoryPost.currentUserReaction, SelectedEmojiId, handlePutReaction, handlePostReaction, handleDeleteReaction],
   );
 
   const handleClickShareButton = useCallback(async () => {
@@ -297,6 +300,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
         page={page}
         storyPostId={currentStoryPost._id}
       />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </>
   );
 };
