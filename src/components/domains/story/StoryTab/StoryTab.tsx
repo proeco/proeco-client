@@ -73,7 +73,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
         </Typography>
       )}
       <Box mb={5}>
-        <StyledCarousel responsive={responsive} infinite showDots arrows={false}>
+        <StyledCarousel responsive={responsive} showDots arrows={false}>
           {openStoryList ? (
             openStoryList.docs.map((story) => {
               return (
