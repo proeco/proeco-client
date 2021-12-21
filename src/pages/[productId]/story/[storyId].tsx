@@ -125,11 +125,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   const handleClickShareButton = useCallback(async () => {
     if (window != null) {
       const twitterUrl = new URL(
-        `https://twitter.com/intent/tweet?url=${process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(team._id, storyId)}&hashtags=Proeco`,
+        `https://twitter.com/intent/tweet?url=${
+          process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(team.productId, storyId)
+        }&hashtags=Proeco`,
       );
       window.open(twitterUrl.toString(), '_blank');
     }
-  }, [storyId, team._id]);
+  }, [storyId, team.productId]);
 
   if (!story || !storyPosts) {
     return null;
