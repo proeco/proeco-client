@@ -49,7 +49,7 @@ const StyledMarkdownBody = styled(Box)`
       background-color: rgb(30, 30, 30);
     }
     code {
-      color: #fff;
+      color: #white;
     }
     p::selection,
     li::selection,
