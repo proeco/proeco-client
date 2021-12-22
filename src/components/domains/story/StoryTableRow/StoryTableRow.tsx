@@ -29,7 +29,7 @@ export const StoryTableRow: VFC<Props> = ({ story, productId }) => {
 
   return (
     <StyledTableRow hover onClick={handleClickRow}>
-      <StyledBodyTableCell component="th" scope="row">
+      <StyledBodyTableCell component="th" scope="row" width={40}>
         {createdStoryUser ? (
           <UserIcon attachmentId={createdStoryUser.iconImageId} size={40} userId={story.createdUserId} isLink />
         ) : (
@@ -47,8 +47,9 @@ export const StoryTableRow: VFC<Props> = ({ story, productId }) => {
   );
 };
 
-const StyledBodyTableCell = styled(TableCell)`
+const StyledBodyTableCell = styled(TableCell)<{ width?: number }>`
   &.MuiTableCell-root {
+    ${(props) => props.width && `width: ${props.width}px;`}
     padding: 20px 16px;
     font-size: 14px;
   }
