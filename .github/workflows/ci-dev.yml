@@ -58,16 +58,6 @@ jobs:
         run: |
           yarn build
 
-      - name: Slack Notification
-        uses: weseek/ghaction-slack-notification@master
-        if: always()
-        with:
-          type: ${{ job.status }}
-          job_name: '*build proeco front*'
-          channel: '#proeco-ci'
-          isCompactMode: true
-          url: ${{ secrets.SLACK_WEBHOOK_URL }}
-
   run-linters:
     name: Run lint
     runs-on: ubuntu-latest
@@ -120,16 +110,6 @@ jobs:
         run: |
           yarn lint
       
-      - name: Slack Notification
-        uses: weseek/ghaction-slack-notification@master
-        if: always()
-        with:
-          type: ${{ job.status }}
-          job_name: '*lint proeco front*'
-          channel: '#proeco-ci'
-          isCompactMode: true
-          url: ${{ secrets.SLACK_WEBHOOK_URL }}
-
   run-tests:
     name: Run test
     runs-on: ubuntu-latest
@@ -181,13 +161,3 @@ jobs:
       - name: yarn test
         run: |
           yarn test
-      
-      - name: Slack Notification
-        uses: weseek/ghaction-slack-notification@master
-        if: always()
-        with:
-          type: ${{ job.status }}
-          job_name: '*test proeco front*'
-          channel: '#proeco-ci'
-          isCompactMode: true
-          url: ${{ secrets.SLACK_WEBHOOK_URL }}
