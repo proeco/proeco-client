@@ -46,6 +46,9 @@ const StyledTimeLineDot = styled(TimelineDot)`
   padding: 0;
   margin: 0;
   border: none;
+  .MuiTypography-root {
+    height: fit-content;
+  }
 `;
 
 const StyledTimeLineConnector = styled(TimelineConnector)`
