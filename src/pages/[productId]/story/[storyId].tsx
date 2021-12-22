@@ -60,19 +60,18 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
   }, [currentUser, teamUsers]);
 
-  const { data: reactions } = useReactionsByUserId(currentUser?._id);
+  const { data: reactions = [] } = useReactionsByUserId(currentUser?._id);
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { data: storyPosts } = useStoryPosts({
+  const { data: storyPosts = [] } = useStoryPosts({
     storyId,
     page,
     limit: 10,
   });
 
   const customStoryPosts: Array<StoryPost & { currentUserReaction?: Reaction }> = useMemo(() => {
-    if (!storyPosts || !reactions) return [];
-    return storyPosts?.map((s) => {
+    return storyPosts.map((s) => {
       return {
         ...s,
         currentUserReaction: reactions.find((r) => r.targetId === s._id),
@@ -126,11 +125,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   const handleClickShareButton = useCallback(async () => {
     if (window != null) {
       const twitterUrl = new URL(
-        `https://twitter.com/intent/tweet?url=${process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(team._id, storyId)}&hashtags=Proeco`,
+        `https://twitter.com/intent/tweet?url=${
+          process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(team.productId, storyId)
+        }&hashtags=Proeco`,
       );
       window.open(twitterUrl.toString(), '_blank');
     }
-  }, [storyId, team._id]);
+  }, [storyId, team.productId]);
 
   if (!story || !storyPosts) {
     return null;

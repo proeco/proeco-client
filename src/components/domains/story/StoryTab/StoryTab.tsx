@@ -1,5 +1,6 @@
 import React, { VFC, useState, ChangeEvent } from 'react';
-import { Box, Grid, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
+import Carousel from 'react-multi-carousel';
 import { Button, Icon, Typography, Pagination } from '~/components/parts/commons';
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
@@ -7,22 +8,37 @@ import { StoryCard, SkeltonStoryCard } from '~/components/domains/story/StoryCar
 import { Team } from '~/domains';
 import { useStories } from '~/stores/story';
 
+import 'react-multi-carousel/lib/styles.css';
+
 type Props = {
   team: Team;
   editable: boolean;
 };
 
-const limit = 10;
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 960 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 960, min: 600 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 600, min: 0 },
+    items: 1,
+  },
+};
 
 export const StoryTab: VFC<Props> = ({ team, editable }) => {
   const [isOpenCreateNewStoryModal, setIsOpeCreateNewStoryModal] = useState(false);
 
   const [closeStoryPage, setCloseStoryPage] = useState(1);
 
-  const { data: openStoryList } = useStories({ page: 1, limit, teamId: team._id, isCompleted: false });
+  const { data: openStoryList } = useStories({ page: 1, limit: 100, teamId: team._id, isCompleted: false });
   const { data: closeStoriesPagination } = useStories({
     page: closeStoryPage,
-    limit,
+    limit: 10,
     teamId: team._id,
     isCompleted: true,
   });
@@ -57,26 +73,22 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
         </Typography>
       )}
       <Box mb={5}>
-        <Grid container maxWidth="900px" mx="auto">
+        <StyledCarousel responsive={responsive} showDots arrows={false}>
           {openStoryList ? (
             openStoryList.docs.map((story) => {
               return (
-                <Grid item key={`top-${story._id}`} xs={12} sm={6} md={4} px={1} pb={2}>
+                <Box px={2} key={`top-${story._id}`}>
                   <StoryCard story={story} isLink />
-                </Grid>
+                </Box>
               );
             })
           ) : (
             <>
-              <Grid item xs={12} sm={6} md={4} px={1}>
-                <SkeltonStoryCard />
-              </Grid>
-              <Grid item xs={12} sm={6} md={4} px={1}>
-                <SkeltonStoryCard />
-              </Grid>
+              <SkeltonStoryCard />
+              <SkeltonStoryCard />
             </>
           )}
-        </Grid>
+        </StyledCarousel>
       </Box>
       {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
         <>
@@ -102,4 +114,25 @@ const StyledPagination = styled(Pagination)`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const StyledCarousel = styled(Carousel)`
+  &.react-multi-carousel-list {
+    padding-bottom: 48px;
+  }
+  .react-multi-carousel-dot-list {
+    gap: 4px;
+  }
+  .react-multi-carousel-dot {
+    > button {
+      border: none;
+      background-color: #ced7fd;
+    }
+  }
+  .react-multi-carousel-dot--active {
+    > button {
+      background-color: ${(props) => props.theme.palette.primary.main};
+      transform: scale(1.6);
+    }
+  }
 `;
