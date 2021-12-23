@@ -10,7 +10,7 @@ import { UserIcon, GuestUserIcon } from '~/components/domains/user/UserIcon';
 import { DATE_FORMAT, URLS } from '~/constants';
 
 import { Story } from '~/domains';
-import { useTeamUsers } from '~/stores/team';
+import { useUser } from '~/stores/user/useUser';
 
 type Props = {
   story: Story;
@@ -20,8 +20,7 @@ type Props = {
 export const StoryTableRow: VFC<Props> = ({ story, productId }) => {
   const router = useRouter();
 
-  const { data: teamUsers = [] } = useTeamUsers({ teamId: story.teamId });
-  const createdStoryUser = teamUsers.find((teamUser) => teamUser._id === story.createdUserId);
+  const { data: createdStoryUser } = useUser({ userId: story.createdUserId });
 
   const handleClickRow = useCallback(() => {
     router.push(URLS.TEAMS_STORY(productId, story._id));
