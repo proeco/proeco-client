@@ -3,9 +3,10 @@ import { ReactNode } from 'react';
 import { GetServerSideProps } from 'next';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
+import { Typography } from '~/components/parts/commons';
+import { UserIcon } from '~/components/domains/user/UserIcon';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { User } from '~/domains';
-import { UserIcon } from '~/components/domains/user/UserIcon';
 import { restClient } from '~/utils/rest-client';
 
 type Props = {
@@ -17,8 +18,14 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
     <>
       <ProecoOgpHead />
       <Box mx="auto" maxWidth="1200px">
-        <Box>
-          <UserIcon attachmentId={user.iconImageId} size={60} userId={user._id} />
+        <Box display="flex" alignItems="flex-start" gap="16px">
+          <UserIcon attachmentId={user.iconImageId} size={120} userId={user._id} />
+          <Box pt="8px">
+            <Typography variant="h3" marginBottom="16px" bold>
+              {user.name}
+            </Typography>
+            <Typography>{user.description}</Typography>
+          </Box>
         </Box>
       </Box>
     </>
