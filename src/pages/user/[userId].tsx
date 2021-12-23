@@ -1,10 +1,10 @@
 import { GetServerSideProps } from 'next';
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
-import { Link, Typography } from '~/components/parts/commons';
+import { Icon, Link, Typography } from '~/components/parts/commons';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { User } from '~/domains';
@@ -20,6 +20,42 @@ type Props = {
 const Dashboard: ProecoNextPage<Props> = ({ user }) => {
   const { data: teamsRelatedUser } = useTeamsRelatedUser({ userId: user._id });
 
+  const teamsContent = useMemo(() => {
+    if (!teamsRelatedUser) {
+      return (
+        <>
+          <Grid item xs={12} sm={6} px={1}>
+            <SkeltonTeamCard />
+          </Grid>
+          <Grid item xs={12} sm={6} px={1}>
+            <SkeltonTeamCard />
+          </Grid>
+        </>
+      );
+    }
+
+    if (teamsRelatedUser.length === 0)
+      return (
+        <Grid item xs={24} textAlign="center" pt="20px">
+          <Typography variant="h3">所属しているチームがありません</Typography>
+        </Grid>
+      );
+
+    return teamsRelatedUser.map((team) => (
+      <Grid item key={`top-${team._id}`} xs={12} sm={6} px={1} pb={2}>
+        <Link href={URLS.TEAMS(team.productId)}>
+          <TeamCard
+            name={team.name}
+            productId={team.productId}
+            description={team.description}
+            attachmentId={team.iconImageId}
+            url={team.url}
+          />
+        </Link>
+      </Grid>
+    ));
+  }, [teamsRelatedUser]);
+
   return (
     <>
       <ProecoOgpHead />
@@ -33,34 +69,12 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
             <Typography>{user.description}</Typography>
           </Box>
         </Box>
-        <Typography variant="h4" bold textAlign="center" mb="20px">
-          所属チームリスト
+        <Typography variant="h4" bold display="flex" alignItems="center" gap="8px" mb="20px">
+          <Icon icon="Group" width={32} />
+          チームリスト
         </Typography>
         <Grid container maxWidth="900px" mx="auto">
-          {teamsRelatedUser ? (
-            teamsRelatedUser.map((team) => (
-              <Grid item key={`top-${team._id}`} xs={12} sm={6} px={1} pb={2}>
-                <Link href={URLS.TEAMS(team.productId)}>
-                  <TeamCard
-                    name={team.name}
-                    productId={team.productId}
-                    description={team.description}
-                    attachmentId={team.iconImageId}
-                    url={team.url}
-                  />
-                </Link>
-              </Grid>
-            ))
-          ) : (
-            <>
-              <Grid item xs={12} sm={6} px={1}>
-                <SkeltonTeamCard />
-              </Grid>
-              <Grid item xs={12} sm={6} px={1}>
-                <SkeltonTeamCard />
-              </Grid>
-            </>
-          )}
+          {teamsContent}
         </Grid>
       </Box>
     </>
