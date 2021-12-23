@@ -1,24 +1,49 @@
 import { Box } from '@mui/system';
 import { ReactNode } from 'react';
-import { Typography } from '~/components/parts/commons';
+import { GetServerSideProps } from 'next';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { User } from '~/domains';
+import { UserIcon } from '~/components/domains/user/UserIcon';
+import { restClient } from '~/utils/rest-client';
 
-const Dashboard: ProecoNextPage = () => {
+type Props = {
+  user: User;
+};
+
+const Dashboard: ProecoNextPage<Props> = ({ user }) => {
   return (
     <>
       <ProecoOgpHead />
       <Box mx="auto" maxWidth="1200px">
-        <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h3" bold>
-            ユーザーページ
-          </Typography>
+        <Box>
+          <UserIcon attachmentId={user.iconImageId} size={60} userId={user._id} />
         </Box>
-        TBD
       </Box>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { userId } = context.query;
+
+  try {
+    const { data: user } = await restClient.apiGet<User>(`/users/${userId}`);
+
+    if (!user) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/404',
+        },
+      };
+    }
+
+    return { props: { user } };
+  } catch (error) {
+    return { props: {} };
+  }
 };
 
 Dashboard.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
