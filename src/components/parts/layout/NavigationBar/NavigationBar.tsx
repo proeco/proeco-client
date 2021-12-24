@@ -23,7 +23,7 @@ export const NavigationBar: VFC = memo(() => {
   const menuItems = useCallback(
     (user: User) => [
       {
-        icon: <UserIcon size={20} userId={user._id} attachmentId={user.iconImageId} />,
+        icon: <UserIcon size={24} userId={user._id} attachmentId={user.iconImageId} />,
         text: 'ダッシュボード',
         onClick: () => router.push(URLS.DASHBOARD_TEAMS),
       },
