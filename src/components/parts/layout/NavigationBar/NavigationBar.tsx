@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { memo, VFC, useState, useMemo } from 'react';
+import { memo, VFC, useState, useMemo, useCallback } from 'react';
 import { AppBar, ListItemIcon, MenuItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -7,12 +7,12 @@ import { useRouter } from 'next/router';
 import { Dropdown } from '../../commons/Dropdown';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
-import { UserIcon } from '~/components/domains/user/UserIcon';
+import { UserIcon, SkeltonUserIcon } from '~/components/domains/user/UserIcon';
 import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 import { IMAGE_PATH, URLS } from '~/constants';
-import { SkeltonUserIcon } from '~/components/domains/user/UserIcon/UserIcon';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { User } from '~/domains';
 
 export const NavigationBar: VFC = memo(() => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -20,10 +20,10 @@ export const NavigationBar: VFC = memo(() => {
 
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
 
-  const menuItems = useMemo(
-    () => [
+  const menuItems = useCallback(
+    (user: User) => [
       {
-        icon: <Icon icon="PersonOutline" color="textColor.main" width="20px" />,
+        icon: <UserIcon size={24} userId={user._id} attachmentId={user.iconImageId} />,
         text: 'ダッシュボード',
         onClick: () => router.push(URLS.DASHBOARD_TEAMS),
       },
@@ -42,7 +42,7 @@ export const NavigationBar: VFC = memo(() => {
     if (currentUser) {
       return (
         <Dropdown toggle={<StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />}>
-          {menuItems.map((menuItem, i) => (
+          {menuItems(currentUser).map((menuItem, i) => (
             <MenuItem key={i} onClick={menuItem.onClick}>
               <ListItemIcon>{menuItem.icon}</ListItemIcon>
               {menuItem.text}
