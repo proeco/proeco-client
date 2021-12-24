@@ -2,7 +2,7 @@ import { Avatar, Skeleton } from '@mui/material';
 import { styled } from '@mui/system';
 import React, { VFC } from 'react';
 import { Icon } from '~/components/parts/commons';
-import { useSignedUrl } from '~/stores/attachment/useSignedUrl';
+import { useAttachment } from '~/stores/attachment';
 
 type Props = {
   attachmentId: string;
@@ -25,9 +25,9 @@ export const SkeltonTeamIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
 
 // 通常状態の TeamIcon
 export const TeamIcon: VFC<Props> = ({ attachmentId, size }) => {
-  const { data: signedUrl } = useSignedUrl(attachmentId);
+  const { data: attachment } = useAttachment(attachmentId);
 
-  return <StyledAvatar size={size} src={signedUrl} />;
+  return <StyledAvatar size={size} src={attachment?.filePath} />;
 };
 
 const StyledAvatar = styled(Avatar)<{ size: number }>`

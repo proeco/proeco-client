@@ -17,7 +17,7 @@ import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
 import { TextField, Typography, Button, Icon, Paper, IconUpload } from '~/components/parts/commons';
-import { useSignedUrl } from '~/stores/attachment';
+import { useAttachment } from '~/stores/attachment';
 
 type Props = {
   currentUser: User;
@@ -29,7 +29,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
   const { mutate: mutateTeamsRelatedUser } = useTeamsRelatedUser({ userId: currentUser._id });
-  const { data: signedUrl } = useSignedUrl(team?.iconImageId);
+  const { data: attachment } = useAttachment(team?.iconImageId);
 
   const [isCreating, setIsCreating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
@@ -116,7 +116,10 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
       <Grid item xs={12} md={6} px={2} pb={3}>
         <Paper square>
           <Box display="flex" justifyContent="center">
-            <IconUpload onSelectImage={handleChangeFile} currentImagePath={iconImage ? URL.createObjectURL(iconImage) : signedUrl} />
+            <IconUpload
+              onSelectImage={handleChangeFile}
+              currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachment?.filePath}
+            />
           </Box>
           <Typography mb={1} variant="body1" color="textColor.light">
             プロダクトの url
