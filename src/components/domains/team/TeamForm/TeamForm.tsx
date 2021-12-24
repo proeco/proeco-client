@@ -122,7 +122,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
             プロダクトの url
           </Typography>
           <Box display="flex" alignItems="center" gap={1}>
-            <TextField fullWidth multiline value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
+            <StyledUrlTextField fullWidth value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
             <StyledButton color="primary" disabled={!isValidUrl(newTeam.url)} onClick={handleClickFetchByUrl}>
               データ取得
             </StyledButton>
@@ -130,11 +130,11 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             Product Id
           </Typography>
-          <TextField fullWidth multiline value={newTeam.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
+          <TextField fullWidth value={newTeam.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             名前
           </Typography>
-          <TextField fullWidth multiline value={newTeam.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
+          <TextField fullWidth value={newTeam.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
           <Typography mt={2} mb={1} variant="body1" color="textColor.light">
             どんなプロダクト？
           </Typography>
@@ -168,6 +168,10 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
     </Grid>
   );
 };
+
+const StyledUrlTextField = styled(TextField)`
+  flex: 1;
+`;
 
 const StyledButton = styled(Button)`
   white-space: nowrap;
