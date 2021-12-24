@@ -234,6 +234,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
         onCloseModal={() => setIsOpenDeleteStoryModal(false)}
         page={page}
         teamId={team._id}
+        productId={team.productId}
         story={story}
       />
     </>

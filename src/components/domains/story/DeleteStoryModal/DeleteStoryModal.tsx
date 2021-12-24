@@ -16,11 +16,12 @@ type Props = {
   isOpen: boolean;
   onCloseModal: () => void;
   teamId: string;
+  productId: string;
   page: number;
   story: Story;
 };
 
-export const DeleteStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, page, story }) => {
+export const DeleteStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, productId, page, story }) => {
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
@@ -38,7 +39,7 @@ export const DeleteStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, pag
       mutateStories();
       notifySuccessMessage('ストーリーを削除しました!');
       onCloseModal();
-      router.push(URLS.TEAMS(teamId));
+      router.push(URLS.TEAMS(productId));
     } catch (error) {
       notifyErrorMessage('ストーリーの削除に失敗しました!');
     }
