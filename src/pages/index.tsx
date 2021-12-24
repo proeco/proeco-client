@@ -19,7 +19,7 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 const Home: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
   const { data: teamList } = useTeams({ page: 1 });
-  const { data: openStoryList } = useStories({ page: 1, limit: 10, isCompleted: false });
+  const { data: openStoryList } = useStories({ page: 1, limit: 100, isCompleted: false });
 
   return (
     <>

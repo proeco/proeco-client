@@ -6,10 +6,9 @@ export const URLS = {
   DASHBOARD_TEAMS: '/dashboard/teams',
   DASHBOARD_TEAMS_NEW: '/dashboard/teams/new',
   DASHBOARD_SETTINGS: '/dashboard/settings',
-  TEAMS: (productId: string) => `/${productId}`,
+  TEAMS: (productId: string, hash?: string) => `/${productId}${hash ? hash : ''}`,
   TEAMS_STORY: (productId: string, storyId: string, storyPostId?: string) =>
     `/${productId}/story/${storyId}${storyPostId ? `?storyPostId=${storyPostId}` : ''}`,
   TERM: '/term',
   PRIVACY_POLICY: '#',
-  BUCKET_URL: 'https://storage.googleapis.com/proeco',
 };

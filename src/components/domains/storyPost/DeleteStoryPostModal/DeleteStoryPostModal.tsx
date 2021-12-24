@@ -18,7 +18,7 @@ export const DeleteStoryPostModal: VFC<Props> = ({ isOpen, storyPostId, storyId,
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
     page,
-    limit: 10,
+    limit: 100,
   });
 
   const { notifySuccessMessage } = useSuccessNotification();

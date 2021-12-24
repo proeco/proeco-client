@@ -18,7 +18,7 @@ export const CreateNewStoryPostPaper: VFC<Props> = ({ storyId, page, currentUser
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
     page,
-    limit: 10,
+    limit: 100,
   });
 
   const { notifySuccessMessage } = useSuccessNotification();

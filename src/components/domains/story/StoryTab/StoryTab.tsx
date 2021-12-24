@@ -38,7 +38,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
   const { data: openStoryList } = useStories({ page: 1, limit: 100, teamId: team._id, isCompleted: false });
   const { data: closeStoriesPagination } = useStories({
     page: closeStoryPage,
-    limit: 10,
+    limit: 100,
     teamId: team._id,
     isCompleted: true,
   });
@@ -74,20 +74,22 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
       )}
       <Box mb={5}>
         <StyledCarousel responsive={responsive} showDots arrows={false}>
-          {openStoryList ? (
-            openStoryList.docs.map((story) => {
-              return (
-                <Box px={2} key={`top-${story._id}`}>
-                  <StoryCard story={story} isLink />
-                </Box>
-              );
-            })
-          ) : (
-            <>
-              <SkeltonStoryCard />
-              <SkeltonStoryCard />
-            </>
-          )}
+          {openStoryList
+            ? openStoryList.docs.map((story) => {
+                return (
+                  <Box px={2} key={`top-${story._id}`}>
+                    <StoryCard story={story} isLink />
+                  </Box>
+                );
+              })
+            : [
+                <Box px={2} key="first">
+                  <SkeltonStoryCard />
+                </Box>,
+                <Box px={2} key="second">
+                  <SkeltonStoryCard />
+                </Box>,
+              ]}
         </StyledCarousel>
       </Box>
       {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
