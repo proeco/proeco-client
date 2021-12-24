@@ -7,7 +7,6 @@ import { TextField, Button, Typography, MarkdownToHtmlBody, Icon } from '~/compo
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { Attachment, User } from '~/domains';
-import { generateBucketUrl } from '~/utils/generateBucketUrl';
 
 type Props = {
   content: string;
@@ -39,13 +38,11 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
       const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/stories`, params, {
         'Content-Type': 'multipart/form-data',
       });
-      const attachmentUrl = generateBucketUrl(attachment.filePath);
-
       const selectionStart = inputRef.current.selectionStart;
       const before = content.substring(0, selectionStart);
       const after = content.substring(selectionStart, content.length);
 
-      onChangeContent(`${before}![](${attachmentUrl})${after}`);
+      onChangeContent(`${before}![](${attachment.filePath})${after}`);
       e.target.value = '';
     } catch (error) {
       notifyErrorMessage('画像のアップロードに失敗しました!');

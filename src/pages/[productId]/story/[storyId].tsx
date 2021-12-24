@@ -31,7 +31,6 @@ import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
 import { PaginationResult } from '~/interfaces';
 
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { generateBucketUrl } from '~/utils/generateBucketUrl';
 
 type Props = {
   storyFromServerSide: Story;
@@ -42,8 +41,6 @@ type Props = {
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconAttachment }) => {
   const router = useRouter();
   const closeButtonRef = useRef<RewardElement>(null);
-
-  const teamIconUrl = generateBucketUrl(teamIconAttachment.filePath);
 
   const { notifyErrorMessage } = useErrorNotification();
 
@@ -118,8 +115,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   ];
 
   const ogpUrl = useMemo(
-    () => (story ? `https://proeco-ogp.vercel.app/api/ogp?title=${story.title}&teamName=${team.name}&teamIconUrl=${teamIconUrl}` : ''),
-    [story, team.name, teamIconUrl],
+    () =>
+      story
+        ? `https://proeco-ogp.vercel.app/api/ogp?title=${story.title}&teamName=${team.name}&teamIconUrl=${teamIconAttachment.filePath}`
+        : '',
+    [story, team.name, teamIconAttachment],
   );
 
   const handleClickShareButton = useCallback(async () => {
