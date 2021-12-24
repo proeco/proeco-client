@@ -38,7 +38,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
   const { data: openStoryList } = useStories({ page: 1, limit: 100, teamId: team._id, isCompleted: false });
   const { data: closeStoriesPagination } = useStories({
     page: closeStoryPage,
-    limit: 10,
+    limit: 100,
     teamId: team._id,
     isCompleted: true,
   });

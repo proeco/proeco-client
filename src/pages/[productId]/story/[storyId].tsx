@@ -67,7 +67,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   const { data: storyPosts = [] } = useStoryPosts({
     storyId,
     page,
-    limit: 10,
+    limit: 100,
   });
 
   const customStoryPosts: Array<StoryPost & { currentUserReaction?: Reaction }> = useMemo(() => {

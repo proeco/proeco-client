@@ -12,7 +12,15 @@ import { PaginationResult } from '~/interfaces';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useStoryPosts = ({ storyId, page, limit }: { storyId?: string; page: number; limit: 10 }): SWRResponse<StoryPost[], Error> => {
+export const useStoryPosts = ({
+  storyId,
+  page,
+  limit,
+}: {
+  storyId?: string;
+  page: number;
+  limit: number;
+}): SWRResponse<StoryPost[], Error> => {
   const key = storyId ? `/story-posts?storyId=${storyId}&page=${page}&limit=${limit}` : null;
   return useImmutableSWR(
     key,

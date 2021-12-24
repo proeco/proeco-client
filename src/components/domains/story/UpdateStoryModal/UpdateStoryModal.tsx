@@ -33,7 +33,7 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
   const { mutate: mutateStories } = useStories({
     teamId,
     page,
-    limit: 10,
+    limit: 100,
   });
 
   const [isDisabled, setIsDisabled] = useState(true);

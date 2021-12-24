@@ -90,7 +90,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
     page,
-    limit: 10,
+    limit: 100,
   });
 
   const displayDate = formatDistanceToNow(currentStoryPost.createdAt);

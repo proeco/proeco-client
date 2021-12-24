@@ -18,7 +18,7 @@ type Props = {
   page: number;
 };
 
-const limit = 10;
+const limit = 100;
 
 export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, page }) => {
   const { mutate: mutateOpenTeamStories } = useStories({ page, limit, teamId, isCompleted: false });

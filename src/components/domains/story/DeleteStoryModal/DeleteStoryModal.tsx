@@ -30,7 +30,7 @@ export const DeleteStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, pro
   const { mutate: mutateStories } = useStories({
     teamId,
     page,
-    limit: 10,
+    limit: 100,
   });
 
   const handleClickDeleteStoryButton = async () => {
