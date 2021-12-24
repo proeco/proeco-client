@@ -39,7 +39,7 @@ export const DeleteStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, pro
       mutateStories();
       notifySuccessMessage('ストーリーを削除しました!');
       onCloseModal();
-      router.push(URLS.TEAMS(productId));
+      router.push(URLS.TEAMS(`${productId}#story`));
     } catch (error) {
       notifyErrorMessage('ストーリーの削除に失敗しました!');
     }
