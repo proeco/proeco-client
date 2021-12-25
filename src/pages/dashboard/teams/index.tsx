@@ -26,12 +26,12 @@ const DashboardTeamPage: ProecoNextPage = () => {
       <Box mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
           <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-            <Icon icon="Group" width={32} />
+            <Icon icon="PEOPLE" size={32} />
             チームリスト
           </h2>
           <Link href={URLS.DASHBOARD_TEAMS_NEW}>
             <Button color="primary">
-              <Icon icon="CreateOutlined" width="20px" />
+              <Icon icon="PENCIL" size={20} color="WHITE" />
               新規チームを作成する
             </Button>
           </Link>

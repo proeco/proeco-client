@@ -69,7 +69,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
           </Box>
         </Box>
         <h2 className="fw-bold mb-4 d-flex text-center align-items-center gap-2">
-          <Icon icon="Group" width={32} />
+          <Icon icon="PEOPLE" size={32} />
           チームリスト
         </h2>
         <Grid container maxWidth="900px" mx="auto">
