@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const Button: FC<Props> = ({ children, disabled, size, color, outlined, fullWidth, onClick }) => {
-  const classNames = ['btn text-nowrap text-truncate'];
+  const classNames = ['btn text-nowrap text-truncate fw-bold'];
   if (disabled) classNames.push('disabled');
   if (size) classNames.push(`btn-${size}`);
   if (outlined) {
