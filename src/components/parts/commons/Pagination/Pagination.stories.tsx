@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Stack } from '@mui/material';
-import { Pagination, Typography } from '~/components/parts/commons';
+import { Pagination } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/Pagination',
@@ -17,7 +17,7 @@ const Template: ComponentStory<typeof Pagination> = ({ count, ...rest }) => {
   };
   return (
     <Stack spacing={2}>
-      <Typography>page: {page}</Typography>
+      <p>page: {page}</p>
       <Pagination count={count} page={page} onChange={handleChangePage} {...rest} />
     </Stack>
   );
