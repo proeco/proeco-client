@@ -1,5 +1,4 @@
-import { SWRResponse } from 'swr';
-import useImmutableSWR from 'swr/immutable';
+import useSWR, { SWRResponse } from 'swr';
 
 import { restClient } from '~/utils/rest-client';
 import { convertStoryFromServer, Story } from '~/domains';
@@ -12,7 +11,7 @@ import { convertStoryFromServer, Story } from '~/domains';
  * @returns mutate データの更新関数
  */
 export const useStory = (id: string, fallbackData: Story): SWRResponse<Story, Error> => {
-  return useImmutableSWR(
+  return useSWR(
     `/stories/${id}`,
     (endpoint: string) => restClient.apiGet<Story>(endpoint).then((result) => convertStoryFromServer(result.data)),
     {

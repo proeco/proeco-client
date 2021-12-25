@@ -23,12 +23,12 @@ export const Default = Template.bind({});
 Default.args = {
   actions: [
     {
-      icon: 'Delete',
+      icon: 'TRASH',
       name: '削除',
       onClick: action('clickDeleteButton'),
     },
     {
-      icon: 'Update',
+      icon: 'CLOCKWISE',
       name: '更新',
       onClick: action('clickUpdateButton'),
     },

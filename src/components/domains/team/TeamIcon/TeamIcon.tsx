@@ -13,7 +13,7 @@ type Props = {
 export const GuestTeamIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
   return (
     <StyledAvatar size={size}>
-      <Icon icon="Group" color="#ccc" width="100%" />
+      <Icon icon="PEOPLE" size={size} />
     </StyledAvatar>
   );
 };

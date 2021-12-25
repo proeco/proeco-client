@@ -1,7 +1,6 @@
 export { Button } from './Button';
 export { Card } from './Card';
 export { CircularProgress } from './CircularProgress';
-export { Divider } from './Divider';
 export { Dropdown } from './Dropdown';
 export { EditableText } from './EditableText';
 export { Editor } from './Editor';
@@ -11,7 +10,6 @@ export { EmojiRadioGroup } from './EmojiRadioGroup';
 export { FirstLetterIcon } from './FirstLetterIcon';
 export { FixedImage } from './FixedImage';
 export { Icon } from './Icon';
-export { IconButton } from './IconButton';
 export { IconUpload } from './IconUpload';
 export { Link } from './Link';
 export { MarkdownToHtmlBody } from './MarkdownToHtmlBody';

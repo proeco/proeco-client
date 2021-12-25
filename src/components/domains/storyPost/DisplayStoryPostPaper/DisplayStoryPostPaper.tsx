@@ -4,18 +4,7 @@ import { ListItemIcon, MenuItem } from '@mui/material';
 
 import { Emoji } from 'emoji-mart';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import {
-  Icon,
-  IconButton,
-  Link,
-  Dropdown,
-  Editor,
-  EmojiRadioGroup,
-  Paper,
-  MarkdownToHtmlBody,
-  Divider,
-  EmojiCountResult,
-} from '~/components/parts/commons';
+import { Icon, Link, Dropdown, Editor, EmojiRadioGroup, Paper, MarkdownToHtmlBody, EmojiCountResult } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { Reaction, StoryPost, User } from '~/domains';
 import 'github-markdown-css';
@@ -23,7 +12,7 @@ import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
-import { COLORS, URLS } from '~/constants';
+import { URLS } from '~/constants';
 import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
 import { useReactionsByStoryPostId } from '~/stores/reaction';
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
@@ -222,10 +211,12 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
       <Paper>
         <StyledBox width="100%" display="flex" alignItems="center" ref={boxRef}>
           {createdUserId && createdUserName ? <Link href={'/user/' + createdUserId}>{createdUserName}</Link> : <span>undefined</span>}
-          <StyledTime dateTime={currentStoryPost.createdAt.toLocaleDateString()}>{displayDate}</StyledTime>
+          <StyledTime className="ms-1" dateTime={currentStoryPost.createdAt.toLocaleDateString()}>
+            {displayDate}
+          </StyledTime>
           <WrapDropdown>
             <Dropdown
-              toggle={<IconButton icon="MoreVert" width={20} />}
+              toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
@@ -235,27 +226,27 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
               >
                 <MenuItem>
                   <ListItemIcon>
-                    <Icon icon="Link" width="20px" color={COLORS.TEXT} />
+                    <Icon icon="LINK" size={20} />
                   </ListItemIcon>
                   共有リンク
                 </MenuItem>
               </CopyToClipboard>
               <MenuItem onClick={handleClickShareButton}>
                 <ListItemIcon>
-                  <Icon icon="Twitter" width="20px" color="textColor.main" />
+                  <Icon icon="TWITTER" size={20} />
                 </ListItemIcon>
                 共有
               </MenuItem>
               {editable && [
                 <MenuItem onClick={handleClickUpdate} key="update">
                   <ListItemIcon>
-                    <Icon icon="Update" width="20px" color="textColor.main" />
+                    <Icon icon="CLOCKWISE" size={20} />
                   </ListItemIcon>
                   更新する
                 </MenuItem>,
                 <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)} key="delete">
                   <ListItemIcon>
-                    <Icon icon="Delete" width="20px" color={COLORS.ERROR} />
+                    <Icon icon="TRASH" size={20} color="DANGER" />
                   </ListItemIcon>
                   削除する
                 </MenuItem>,
@@ -278,7 +269,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             <Box p={2}>
               <MarkdownToHtmlBody content={content} />
             </Box>
-            <Divider margin={20} />
+            <hr className="my-3 text-light" />
             {editable ? (
               <>
                 <Box textAlign="center">

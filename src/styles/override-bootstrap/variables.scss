@@ -4,6 +4,7 @@ $light: #757575;
 $danger: #ff6868;
 $orange: #f59033;
 $black: #333;
+$white: whitesmoke;
 
 $theme-colors: (
   "primary": $primary,
@@ -11,6 +12,7 @@ $theme-colors: (
   "light": $light,
   "danger": $danger,
   "orange": $orange,
+  "white": $white,
   "black": $black,
 );
 
@@ -25,3 +27,9 @@ $h1-font-size: 32px;
 $h2-font-size: 24px;
 $h3-font-size: 20px;
 $h4-font-size: 16px;
+
+$border-radius: 4px;
+$border-radius-sm: 8px;
+$border-radius-lg: 16px;
+
+$box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
