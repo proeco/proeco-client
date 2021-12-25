@@ -1,3 +1,11 @@
 .modal-content {
   border-radius: $border-radius-sm;
 }
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: $light;
+  svg {
+    color: $white !important;
+  }
+}
