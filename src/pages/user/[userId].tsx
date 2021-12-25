@@ -65,13 +65,13 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
           <UserIcon attachmentId={user.iconImageId} size={120} userId={user._id} />
           <Box pt="8px">
             <h3 className="mb-3 fw-bold">{user.name}</h3>
-            {/* <Typography>{user.description}</Typography> */}
+            <p className="mb-0">{user.description}</p>
           </Box>
         </Box>
-        {/* <Typography variant="h4" bold display="flex" alignItems="center" gap="8px" mb="20px">
+        <h2 className="fw-bold mb-4 d-flex text-center align-items-center gap-2">
           <Icon icon="Group" width={32} />
           チームリスト
-        </Typography> */}
+        </h2>
         <Grid container maxWidth="900px" mx="auto">
           {teamsContent}
         </Grid>
