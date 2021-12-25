@@ -16,11 +16,11 @@ export const IconUpload: VFC<Props> = ({ onSelectImage, currentImagePath, size =
         <StyledAvatar size={size} src={currentImagePath} />
       ) : (
         <StyledAvatar size={size}>
-          <Icon icon="Group" color="#ccc" width="100%" />
+          <Icon icon="PEOPLE" color="WHITE" size={size} />
         </StyledAvatar>
       )}
       <StyledOverlay>
-        <StyledIcon icon="Photo" width="25%" color="white" size={size} />
+        <StyledIcon icon="IMAGE" color="WHITE" size={size} />
         <StyledTypography variant="overline" color="white" size={size}>
           写真を変更
         </StyledTypography>
