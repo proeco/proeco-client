@@ -2,7 +2,7 @@ import React, { VFC, useMemo } from 'react';
 import { Box, Chip, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Story } from '~/domains';
-import { Emoji, Typography, Card, Link } from '~/components/parts/commons';
+import { Emoji, Card, Link } from '~/components/parts/commons';
 import { useTeam } from '~/stores/team';
 import { TeamIcon, SkeltonTeamIcon, GuestTeamIcon } from '~/components/domains/team/TeamIcon';
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
@@ -45,19 +45,17 @@ export const StoryCard: VFC<Props> = ({ story, isLink = false }) => {
         </Box>
         <Box p="12px">
           <StyledTime dateTime={story.updatedAt.toLocaleDateString()}>{displayDate}</StyledTime>
-          <Typography variant="body1" bold>
-            {story.title}
-          </Typography>
+          <p className="fw-bold mb-0">{story.title}</p>
           <Box mt="12px" display="flex" alignItems="center" gap="8px">
             {team ? (
               <>
                 <TeamIcon size={32} attachmentId={team.iconImageId} />
-                <Typography variant="body2">{team.name}</Typography>
+                <span className="fs-2">{team.name}</span>
               </>
             ) : (
               <>
                 <GuestTeamIcon size={32} />
-                <Typography variant="body2">undefined</Typography>
+                <span className="fs-2">undefined</span>
               </>
             )}
           </Box>
