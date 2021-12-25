@@ -19,13 +19,13 @@ const Template: ComponentStory<typeof Dropdown> = ({ ...rest }) => {
       <Dropdown {...rest}>
         <MenuItem onClick={action('clickSettings')}>
           <ListItemIcon>
-            <Icon icon="Settings" width="20px" color="textColor.main" />
+            <Icon icon="GEAR" size={20} />
           </ListItemIcon>
           Settings
         </MenuItem>
         <MenuItem onClick={action('clickLogout')}>
           <ListItemIcon>
-            <Icon icon="Logout" width="20px" color="textColor.main" />
+            <Icon icon="REPLY" size={20} />
           </ListItemIcon>
           Logout
         </MenuItem>
@@ -36,5 +36,5 @@ const Template: ComponentStory<typeof Dropdown> = ({ ...rest }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  toggle: <Icon icon="MoreVert" width={24} />,
+  toggle: <Icon icon="THREE_DOTS_VERTICAL" size={24} />,
 };

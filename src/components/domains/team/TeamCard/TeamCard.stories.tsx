@@ -23,7 +23,6 @@ DefaultTeamCard.args = {
   name: 'Proeco',
   description: 'description',
   attachmentId: 'attachmentId1',
-  isLink: true,
 };
 
 export const LongTextTeamCard = Template.bind({});
