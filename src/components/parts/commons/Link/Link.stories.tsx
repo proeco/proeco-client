@@ -22,4 +22,5 @@ const Template: ComponentStory<typeof Link> = ({ ...rest }) => {
 export const Default = Template.bind({});
 Default.args = {
   href: '/',
+  isShowUnderLine: true,
 };

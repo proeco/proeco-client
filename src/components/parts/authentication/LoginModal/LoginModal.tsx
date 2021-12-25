@@ -27,7 +27,7 @@ export const LoginModal: VFC<Props> = ({ isOpen, onClose }) => {
       </StyledLoginButtonWrapper>
 
       <p className="text-light">
-        <Link href={URLS.TERM} underline="always" target="_blank">
+        <Link href={URLS.TERM} isShowUnderLine target="_blank">
           利用規約
         </Link>
         {/* 、
