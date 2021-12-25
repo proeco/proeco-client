@@ -13,12 +13,12 @@ type Props = {
   description: string;
   attachmentId: string;
   url: string;
-  onClick?: () => void;
+  isLink?: boolean;
 };
 
 export const SkeltonTeamCard: VFC = () => {
   return (
-    <StyledTeamCard>
+    <StyledTeamCard isLink={false}>
       <FixedImage />
       <Box p={2}>
         <Box display="flex" alignItems="center" p={2}>
@@ -36,11 +36,11 @@ export const SkeltonTeamCard: VFC = () => {
   );
 };
 
-export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentId, url, onClick }) => {
+export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentId, url, isLink = false }) => {
   const { data: ogp } = useOgp(url);
 
   return (
-    <StyledTeamCard onClick={onClick}>
+    <StyledTeamCard isLink={isLink}>
       <FixedImage imageUrl={ogp?.image} />
       <Box position="relative" p={2}>
         <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">
@@ -60,7 +60,7 @@ export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentI
   );
 };
 
-const StyledTeamCard = styled(Card)`
+const StyledTeamCard = styled(Card)<{ isLink: boolean }>`
   padding: 0px;
   box-sizing: border-box;
   position: relative;
@@ -68,7 +68,7 @@ const StyledTeamCard = styled(Card)`
   width: 100%;
   transition: all 0.3s;
   ${(props) =>
-    props.onClick &&
+    props.isLink &&
     `cursor: pointer;
       &:hover {
     top: -4px;

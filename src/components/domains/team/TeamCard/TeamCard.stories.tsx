@@ -3,7 +3,6 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 
-import { action } from '@storybook/addon-actions';
 import { SkeltonTeamCard, TeamCard } from './TeamCard';
 
 export default {
@@ -24,7 +23,7 @@ DefaultTeamCard.args = {
   name: 'Proeco',
   description: 'description',
   attachmentId: 'attachmentId1',
-  onClick: action('clickTeamCard'),
+  isLink: true,
 };
 
 export const LongTextTeamCard = Template.bind({});
