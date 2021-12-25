@@ -82,7 +82,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
       <Box display="flex" alignItems="center" justifyContent="flex-end" gap="4px">
         {value === 'editor' && (
           <StyledLabel htmlFor="image">
-            <Icon icon="CLOUD_UPLOAD" size={20} />
+            <Icon icon="CLOUD_UPLOAD" size={16} color="LIGHT" />
             <span className="fs-2 text-light">画像をアップロード</span>
             <StyledInput type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
           </StyledLabel>
