@@ -18,9 +18,6 @@ export const useTeamUsers = ({ teamId }: { teamId?: string }): SWRResponse<User[
     key,
     (endpoint: string) =>
       restClient.apiGet<PaginationResult<User>>(endpoint).then((result) => result.data.docs.map((v) => convertUserFromServer(v))),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: true,
-    },
+    { revalidateOnReconnect: true },
   );
 };

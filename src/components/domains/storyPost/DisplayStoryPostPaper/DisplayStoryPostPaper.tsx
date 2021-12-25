@@ -13,7 +13,6 @@ import {
   EmojiRadioGroup,
   Paper,
   MarkdownToHtmlBody,
-  Divider,
   EmojiCountResult,
 } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
@@ -278,7 +277,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             <Box p={2}>
               <MarkdownToHtmlBody content={content} />
             </Box>
-            <Divider margin={20} />
+            <hr className="my-3 text-light" />
             {editable ? (
               <>
                 <Box textAlign="center">
