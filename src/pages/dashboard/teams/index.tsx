@@ -47,7 +47,6 @@ const DashboardTeamPage: ProecoNextPage = () => {
                     description={team.description}
                     attachmentId={team.iconImageId}
                     url={team.url}
-                    isLink
                   />
                 </Link>
               </Grid>

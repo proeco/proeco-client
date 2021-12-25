@@ -37,7 +37,6 @@ const Home: ProecoNextPage = () => {
                     description={team.description}
                     attachmentId={team.iconImageId}
                     url={team.url}
-                    isLink
                   />
                 </Link>
               </Grid>
@@ -61,7 +60,7 @@ const Home: ProecoNextPage = () => {
             openStoryList.docs.map((story) => {
               return (
                 <Grid item key={`top-${story._id}`} xs={12} sm={6} md={4} px={1} pb={2}>
-                  <StoryCard story={story} isLink />
+                  <StoryCard story={story} />
                 </Grid>
               );
             })

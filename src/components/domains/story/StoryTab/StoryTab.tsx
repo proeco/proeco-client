@@ -73,7 +73,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
           ? openStoryList.docs.map((story) => {
               return (
                 <Box px={2} key={`top-${story._id}`}>
-                  <StoryCard story={story} isLink />
+                  <StoryCard story={story} />
                 </Box>
               );
             })
