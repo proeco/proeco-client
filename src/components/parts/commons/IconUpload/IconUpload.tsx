@@ -16,7 +16,7 @@ export const IconUpload: VFC<Props> = ({ onSelectImage, currentImagePath, size =
         <StyledAvatar size={size} src={currentImagePath} />
       ) : (
         <StyledAvatar size={size}>
-          <Icon icon="PEOPLE" color="WHITE" size={size} />
+          <Icon icon="PEOPLE" color="SECONDARY" size={size} />
         </StyledAvatar>
       )}
       <StyledOverlay className="d-flex gap-2 align-items-center">

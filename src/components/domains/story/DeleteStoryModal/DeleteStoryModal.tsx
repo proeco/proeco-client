@@ -51,7 +51,7 @@ export const DeleteStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, pro
         <span className="mb-2">ストーリー名</span>
         <Box display="flex" alignItems="center">
           <Box mr="8px">
-            <Emoji emojiId={story.emojiId} size={32} />
+            <Emoji emojiId={story.emojiId} size={28} />
           </Box>
           <h2 className="fw-bold mb-2">{story.title}</h2>
         </Box>
