@@ -4,7 +4,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { Box } from '@mui/system';
 import { useErrorNotification } from '../useErrorNotification';
 import { GetAccessControl } from '~/interfaces/accessControl';
-import { CircularProgress } from '~/components/parts/commons';
+import { Spinner } from '~/components/parts/commons';
 
 const accessControl = () => {
   throw new Error('getAccessControl が定義されていません。');
@@ -40,7 +40,7 @@ export const AccessControlProvider: FC<{ getAccessControl?: GetAccessControl }> 
   if (isLoading) {
     return (
       <Box textAlign="center" pt="40px">
-        <CircularProgress />
+        <Spinner />
       </Box>
     );
   }

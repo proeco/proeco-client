@@ -3,6 +3,7 @@ import { Box, styled } from '@mui/system';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
+import { Spinner } from '../Spinner';
 import { TextField, Button, MarkdownToHtmlBody, Icon } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
@@ -20,6 +21,7 @@ type Props = {
 export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeContent, onCompleteEdit, onClickCancelButton, currentUser }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<'editor' | 'preview'>('editor');
+  const [isUploading, setIsUploading] = useState(false);
 
   const { notifyErrorMessage } = useErrorNotification();
 
@@ -31,6 +33,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
     if (!e.target.files || !inputRef.current) {
       return;
     }
+    setIsUploading(true);
     const file = e.target.files[0];
     const params = new FormData();
     params.append('file', file);
@@ -46,6 +49,8 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
       e.target.value = '';
     } catch (error) {
       notifyErrorMessage('画像のアップロードに失敗しました!');
+    } finally {
+      setIsUploading(false);
     }
   };
   return (
@@ -85,6 +90,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             <Icon icon="CLOUD_UPLOAD" size={16} color="LIGHT" />
             <span className="fs-2 text-light">画像をアップロード</span>
             <StyledInput type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
+            {isUploading && <Spinner isSmall color="secondary" />}
           </StyledLabel>
         )}
         {isUpdateMode && onClickCancelButton && (
