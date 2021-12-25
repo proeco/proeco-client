@@ -57,12 +57,12 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
     <>
       <Box mb={6} display="flex" alignItems="center" justifyContent="space-between">
         <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-          <Icon icon="HistoryEdu" width={32} />
+          <Icon icon="LIST" size={32} />
           ストーリーリスト
         </h2>
         {editable && (
           <Button onClick={handleClickCreateStoryButton} color="primary">
-            <Icon icon="CreateOutlined" width="20px" />
+            <Icon icon="PENCIL" size={20} color="WHITE" />
             ストーリーを追加する
           </Button>
         )}
@@ -73,7 +73,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
           ? openStoryList.docs.map((story) => {
               return (
                 <Box px={2} key={`top-${story._id}`}>
-                  <StoryCard story={story} isLink />
+                  <StoryCard story={story} />
                 </Box>
               );
             })

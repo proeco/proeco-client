@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { styled } from '@mui/system';
 import { List } from '@mui/material';
 
-import { Icon, SideBarListItem } from '~/components/parts/commons';
+import { SideBarListItem } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/SideBarListItem',
@@ -26,12 +26,10 @@ const StyledList = styled(List)`
 
 export const Default = Template.bind({});
 Default.args = {
-  icon: <Icon icon="DashboardOutlined" width="20px" color="textColor.main" />,
   selected: false,
 };
 
 export const Selected = Template.bind({});
 Selected.args = {
-  icon: <Icon icon="DashboardOutlined" width="20px" color="#fff" />,
   selected: true,
 };

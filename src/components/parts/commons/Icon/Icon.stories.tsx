@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { Icon, IconMap } from './Icon';
 
 export default {
@@ -11,15 +10,20 @@ export default {
 
 const Template: ComponentStory<typeof Icon> = ({ ...rest }) => {
   return (
-    <Box display="flex" gap="8px">
+    <div className="d-flex flex-wrap">
       {Object.keys(IconMap).map((v, index) => {
-        return <Icon key={index} {...rest} icon={v as keyof typeof IconMap} />;
+        return (
+          <div key={index} className="d-flex align-items-center mb-2 p-2">
+            <Icon {...rest} icon={v as keyof typeof IconMap} />
+            <span className="fs-4 ms-2">{v}</span>
+          </div>
+        );
       })}
-    </Box>
+    </div>
   );
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  width: 24,
+  size: 24,
 };

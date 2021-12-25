@@ -1,12 +1,11 @@
 import React, { ComponentProps, memo, VFC, useMemo } from 'react';
 
 import { Box } from '@mui/system';
-import { Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { User } from '~/domains';
 
 import { Icon } from '~/components/parts/commons';
-import { SkeltonUserIcon, UserIcon } from '~/components/domains/user/UserIcon';
+import { UserIcon } from '~/components/domains/user/UserIcon';
 import { SideBar } from '~/components/parts/layout/SideBar';
 
 import { URLS } from '~/constants/urls';
@@ -22,71 +21,34 @@ const sidebarItems: {
   //   text: 'ホーム',
   // },
   {
-    icon: 'Group',
+    icon: 'PEOPLE',
     url: URLS.DASHBOARD_TEAMS,
     text: 'チーム',
   },
   {
-    icon: 'Settings',
+    icon: 'GEAR',
     url: URLS.DASHBOARD_SETTINGS,
     text: '設定',
   },
 ];
 
-export const UserSideBar: VFC = memo(() => {
-  const { data: currentUser, isValidating: isValidatingUser } = useCurrentUser();
-
+export const UserSideBar: VFC<{ currentUser: User }> = memo(({ currentUser }) => {
   const openContent = useMemo(() => {
-    if (isValidatingUser) {
-      return (
-        <StyledUserIconWrapper pb="16px">
-          <SkeltonUserIcon size={80} />
-          <Skeleton variant="text" width="100px" />
-        </StyledUserIconWrapper>
-      );
-    }
-
-    if (currentUser) {
-      return (
-        <StyledUserIconWrapper pb="16px">
-          <UserIcon size={80} attachmentId={currentUser.iconImageId} userId={currentUser._id} isLink />
-          <h2 className="mb-0">{currentUser.name}</h2>
-        </StyledUserIconWrapper>
-      );
-    }
-
     return (
       <StyledUserIconWrapper pb="16px">
-        <Icon width={40} icon="PersonOutline" />
-        <h2 className="mb-0">undefined</h2>
+        <UserIcon size={80} attachmentId={currentUser.iconImageId} userId={currentUser._id} isLink />
+        <h2 className="mb-0">{currentUser.name}</h2>
       </StyledUserIconWrapper>
     );
-  }, [isValidatingUser, currentUser]);
+  }, [currentUser._id, currentUser.iconImageId, currentUser.name]);
 
   const closeContent = useMemo(() => {
-    if (isValidatingUser) {
-      return (
-        <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-          <SkeltonUserIcon size={40} />
-          <Skeleton variant="circular" width={40} height={40} />
-        </StyledUserIconWrapper>
-      );
-    }
-
-    if (currentUser) {
-      return (
-        <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-          <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} isLink />
-        </StyledUserIconWrapper>
-      );
-    }
-
     return (
       <StyledUserIconWrapper width="fit-content" pb="16px" pt="46px">
-        <Icon width={40} icon="PersonOutline" />
+        <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} isLink />
       </StyledUserIconWrapper>
     );
-  }, [currentUser, isValidatingUser]);
+  }, [currentUser._id, currentUser.iconImageId]);
 
   return <SideBar openContent={openContent} closeContent={closeContent} sidebarItems={sidebarItems} />;
 });

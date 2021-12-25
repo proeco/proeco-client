@@ -51,12 +51,12 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
     <>
       <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
         <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-          <Icon icon="Description" width={32} />
+          <Icon icon="FILE_WITH_EARMARK" size={32} />
           プロダクトについて
         </h2>
         {editable && (
           <Button onClick={handleClickUpdate} color="primary">
-            <Icon icon="CreateOutlined" width="20px" />
+            <Icon icon="PENCIL" size={20} color="WHITE" />
             説明を更新する
           </Button>
         )}

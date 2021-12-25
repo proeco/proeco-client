@@ -9,7 +9,7 @@ export const DashboardLayout: FC = ({ children }) => {
     <Box display="flex">
       {currentUser && (
         <Box flexShrink={1}>
-          <UserSideBar />
+          <UserSideBar currentUser={currentUser} />
         </Box>
       )}
       <StyledBox width="100%" minWidth="0" p={5}>

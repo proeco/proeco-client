@@ -10,12 +10,11 @@ import { URLS } from '~/constants';
 
 type Props = {
   story: Story;
-  isLink?: boolean;
 };
 
 export const SkeltonStoryCard: VFC = () => {
   return (
-    <StyledStoryCard isLink={false}>
+    <StyledStoryCard>
       <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative"></Box>
       <Box p="12px">
         <Skeleton variant="text" width="50px" />
@@ -29,14 +28,14 @@ export const SkeltonStoryCard: VFC = () => {
   );
 };
 
-export const StoryCard: VFC<Props> = ({ story, isLink = false }) => {
+export const StoryCard: VFC<Props> = ({ story }) => {
   const { data: team } = useTeam({ teamId: story.teamId });
 
   const displayDate = formatDistanceToNow(story.updatedAt);
 
   const StoryCardContent = useMemo(() => {
     return (
-      <StyledStoryCard isLink={isLink}>
+      <StyledStoryCard>
         <StyledChip label={story.isCompleted ? 'Closed' : 'Open'} />
         <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative">
           <StyledBox>
@@ -62,27 +61,20 @@ export const StoryCard: VFC<Props> = ({ story, isLink = false }) => {
         </Box>
       </StyledStoryCard>
     );
-  }, [displayDate, story, team, isLink]);
+  }, [displayDate, story, team]);
 
-  if (!isLink || !team) return StoryCardContent;
+  if (!team) return StoryCardContent;
 
   return <Link href={URLS.TEAMS_STORY(team.productId, story._id)}>{StoryCardContent}</Link>;
 };
 
-const StyledStoryCard = styled(Card)<{ isLink: boolean }>`
+const StyledStoryCard = styled(Card)`
   padding: 0px;
   box-sizing: border-box;
   position: relative;
   width: 100%;
   top: 0;
   transition: all 0.3s;
-  ${(props) =>
-    props.isLink &&
-    `cursor: pointer;
-      &:hover {
-    top: -4px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    }`}
 `;
 
 const StyledBox = styled(Box)`

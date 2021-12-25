@@ -9,7 +9,7 @@ import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
-import { COLORS, URLS } from '~/constants';
+import { URLS } from '~/constants';
 
 import { useStory } from '~/stores/story/useStory';
 import { useStoryPosts } from '~/stores/storyPost';
@@ -17,7 +17,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
-import { Button, Emoji, FixedImage, Icon, IconButton, Paper, TimeLineItem } from '~/components/parts/commons';
+import { Button, Emoji, FixedImage, Icon, Paper, TimeLineItem } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
@@ -103,12 +103,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 
   const menuItems = [
     {
-      icon: <Icon icon="Update" width="20px" color="textColor.main" />,
+      icon: <Icon icon="CLOCKWISE" size={16} />,
       text: '更新する',
       onClick: handleClickUpdate,
     },
     {
-      icon: <Icon icon="Delete" width="20px" color={COLORS.ERROR} />,
+      icon: <Icon icon="TRASH" size={16} color="DANGER" />,
       text: '削除する',
       onClick: handleClickDelete,
     },
@@ -149,7 +149,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
           </Box>
           {isMemberOfTeam && (
             <Dropdown
-              toggle={<Icon icon="MoreVert" width={24} />}
+              toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               transformOrigin={{
                 vertical: 'top',
@@ -215,7 +215,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                   </Reward>
                 </Box>
               )}
-              <IconButton icon="Twitter" width={30} color="primary" onClick={handleClickShareButton} />
+              <Button color="primary" onClick={handleClickShareButton}>
+                <Icon icon="TWITTER" size={16} color="WHITE" />
+              </Button>
             </Paper>
           </Grid>
         </Grid>
