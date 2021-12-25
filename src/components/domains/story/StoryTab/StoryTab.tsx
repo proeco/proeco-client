@@ -70,9 +70,9 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
       <h3 className="fw-bold mb-4 text-center">進行中のストーリー</h3>
       <StyledCarousel responsive={responsive} showDots arrows={false}>
         {openStoryList
-          ? openStoryList.docs.map((story) => {
+          ? openStoryList.docs.map((story, index) => {
               return (
-                <Box px={2} key={`top-${story._id}`}>
+                <Box px={2} key={index}>
                   <StoryCard story={story} />
                 </Box>
               );
