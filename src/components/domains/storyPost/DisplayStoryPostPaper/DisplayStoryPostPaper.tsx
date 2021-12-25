@@ -1,10 +1,19 @@
 import React, { VFC, useState, useCallback, useMemo, useRef } from 'react';
 import { Box, styled } from '@mui/system';
-import { ListItemIcon, MenuItem } from '@mui/material';
 
 import { Emoji } from 'emoji-mart';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Icon, Link, Dropdown, Editor, EmojiRadioGroup, Paper, MarkdownToHtmlBody, EmojiCountResult } from '~/components/parts/commons';
+import {
+  Icon,
+  Link,
+  Dropdown,
+  DropdownItem,
+  Editor,
+  EmojiRadioGroup,
+  Paper,
+  MarkdownToHtmlBody,
+  EmojiCountResult,
+} from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { Reaction, StoryPost, User } from '~/domains';
 import 'github-markdown-css';
@@ -215,42 +224,32 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             {displayDate}
           </StyledTime>
           <WrapDropdown>
-            <Dropdown
-              toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            >
+            <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
               <CopyToClipboard
                 text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(productId, storyId, storyPost._id)}
                 onCopy={() => notifySuccessMessage('共有リンクをコピーしました')}
               >
-                <MenuItem>
-                  <ListItemIcon>
-                    <Icon icon="LINK" size={20} />
-                  </ListItemIcon>
-                  共有リンク
-                </MenuItem>
+                <DropdownItem>
+                  <Icon icon="LINK" size={20} />
+                  <span className="ms-2">共有リンク</span>
+                </DropdownItem>
               </CopyToClipboard>
-              <MenuItem onClick={handleClickShareButton}>
-                <ListItemIcon>
-                  <Icon icon="TWITTER" size={20} />
-                </ListItemIcon>
-                共有
-              </MenuItem>
-              {editable && [
-                <MenuItem onClick={handleClickUpdate} key="update">
-                  <ListItemIcon>
-                    <Icon icon="CLOCKWISE" size={20} />
-                  </ListItemIcon>
-                  更新する
-                </MenuItem>,
-                <MenuItem onClick={() => setIsOpenDeleteStoryPostModal(true)} key="delete">
-                  <ListItemIcon>
-                    <Icon icon="TRASH" size={20} color="DANGER" />
-                  </ListItemIcon>
-                  削除する
-                </MenuItem>,
-              ]}
+              <DropdownItem onClick={handleClickShareButton}>
+                <Icon icon="TWITTER" size={20} color="PRIMARY" />
+                <span className="ms-2">共有</span>
+              </DropdownItem>
+              {editable && (
+                <DropdownItem onClick={handleClickUpdate}>
+                  <Icon icon="CLOCKWISE" size={20} />
+                  <span className="ms-2">更新する</span>
+                </DropdownItem>
+              )}
+              {editable && (
+                <DropdownItem onClick={() => setIsOpenDeleteStoryPostModal(true)}>
+                  <Icon icon="TRASH" size={20} color="DANGER" />
+                  <span className="ms-2">削除する</span>
+                </DropdownItem>
+              )}
             </Dropdown>
           </WrapDropdown>
         </StyledBox>

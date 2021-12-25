@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { memo, VFC, useState, useMemo, useCallback } from 'react';
-import { AppBar, ListItemIcon, MenuItem } from '@mui/material';
+import { AppBar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { useRouter } from 'next/router';
-import { Dropdown } from '../../commons/Dropdown';
+import { Dropdown, DropdownItem } from '~/components/parts/commons/Dropdown';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
 import { UserIcon, SkeltonUserIcon } from '~/components/domains/user/UserIcon';
@@ -23,7 +23,7 @@ export const NavigationBar: VFC = memo(() => {
   const menuItems = useCallback(
     (user: User) => [
       {
-        icon: <UserIcon size={24} userId={user._id} attachmentId={user.iconImageId} />,
+        icon: <UserIcon size={20} userId={user._id} attachmentId={user.iconImageId} />,
         text: 'ダッシュボード',
         onClick: () => router.push(URLS.DASHBOARD_TEAMS),
       },
@@ -41,12 +41,12 @@ export const NavigationBar: VFC = memo(() => {
 
     if (currentUser) {
       return (
-        <Dropdown toggle={<StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />}>
+        <Dropdown toggle={<StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="span">
           {menuItems(currentUser).map((menuItem, i) => (
-            <MenuItem key={i} onClick={menuItem.onClick}>
-              <ListItemIcon>{menuItem.icon}</ListItemIcon>
-              {menuItem.text}
-            </MenuItem>
+            <DropdownItem key={i} onClick={menuItem.onClick}>
+              {menuItem.icon}
+              <span className="ms-2">{menuItem.text}</span>
+            </DropdownItem>
           ))}
         </Dropdown>
       );

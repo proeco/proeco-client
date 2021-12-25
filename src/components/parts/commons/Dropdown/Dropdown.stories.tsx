@@ -2,9 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { Box } from '@mui/system';
-import { ListItemIcon, MenuItem } from '@mui/material';
-import { Dropdown } from './Dropdown';
+import { Dropdown, DropdownItem } from './Dropdown';
 
 import { Icon } from '~/components/parts/commons';
 
@@ -15,22 +13,18 @@ export default {
 
 const Template: ComponentStory<typeof Dropdown> = ({ ...rest }) => {
   return (
-    <Box p="40px">
+    <div className="p-4">
       <Dropdown {...rest}>
-        <MenuItem onClick={action('clickSettings')}>
-          <ListItemIcon>
-            <Icon icon="GEAR" size={20} />
-          </ListItemIcon>
+        <DropdownItem onClick={action('clickSettings')}>
+          <Icon icon="GEAR" size={20} />
           Settings
-        </MenuItem>
-        <MenuItem onClick={action('clickLogout')}>
-          <ListItemIcon>
-            <Icon icon="REPLY" size={20} />
-          </ListItemIcon>
+        </DropdownItem>
+        <DropdownItem onClick={action('clickLogout')}>
+          <Icon icon="REPLY" size={20} />
           Logout
-        </MenuItem>
+        </DropdownItem>
       </Dropdown>
-    </Box>
+    </div>
   );
 };
 
