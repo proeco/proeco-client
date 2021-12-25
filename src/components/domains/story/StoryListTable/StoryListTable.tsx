@@ -22,14 +22,10 @@ export const StoryListTable: VFC<Props> = ({ stories, productId }) => {
               <span className="text-light fs-3">作成者</span>
             </StyledHeaderTableCell>
             <StyledHeaderTableCell>
-              {/* <Typography color={COLORS.TEXT_LIGHT} variant="caption">
-                ストーリー名
-              </Typography> */}
+              <span className="text-light fs-3">ストーリー名</span>
             </StyledHeaderTableCell>
             <StyledHeaderTableCell align="right">
-              {/* <Typography color={COLORS.TEXT_LIGHT} variant="caption">
-                最終更新日
-              </Typography> */}
+              <span className="text-light fs-3">最終更新日</span>
             </StyledHeaderTableCell>
           </TableRow>
         </TableHead>
