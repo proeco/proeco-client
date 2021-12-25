@@ -19,7 +19,6 @@ export { Paper } from './Paper';
 export { SelectableEmoji } from './SelectableEmoji';
 export { SideBarListItem } from './SideBarListItem';
 export { SpeedDial } from './SpeedDial';
-export { Stepper } from './Stepper';
 export { TextField } from './TextField';
 export { TimeLineItem } from './TimeLineItem';
 export { TrimImageModal } from './TrimImageModal';
