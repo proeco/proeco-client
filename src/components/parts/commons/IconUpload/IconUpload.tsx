@@ -1,6 +1,6 @@
 import React, { VFC, ChangeEvent } from 'react';
 import { Box, styled } from '@mui/system';
-import { Avatar, Typography } from '@mui/material';
+import { Avatar } from '@mui/material';
 import { Icon } from '../Icon/Icon';
 
 type Props = {
@@ -19,11 +19,9 @@ export const IconUpload: VFC<Props> = ({ onSelectImage, currentImagePath, size =
           <Icon icon="PEOPLE" color="WHITE" size={size} />
         </StyledAvatar>
       )}
-      <StyledOverlay>
-        <StyledIcon icon="IMAGE" color="WHITE" size={size} />
-        <StyledTypography variant="overline" color="white" size={size}>
-          写真を変更
-        </StyledTypography>
+      <StyledOverlay className="d-flex gap-2 align-items-center">
+        <StyledIcon icon="IMAGE" color="WHITE" size={20} />
+        <p className="fs-4 mb-0 text-white">写真を変更</p>
       </StyledOverlay>
       <StyledInput type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
     </StyledLabel>
@@ -69,9 +67,5 @@ const StyledOverlay = styled(Box)`
 `;
 
 const StyledIcon = styled(Icon)<{ size: number }>`
-  display: ${(props) => (props.size < 100 ? 'none' : 'block')};
-`;
-
-const StyledTypography = styled(Typography)<{ size: number }>`
   display: ${(props) => (props.size < 100 ? 'none' : 'block')};
 `;
