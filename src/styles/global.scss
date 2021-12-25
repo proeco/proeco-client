@@ -21,3 +21,14 @@
 
 // customize
 @import "./custom-utility.scss";
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+body {
+  background-color: #e5e5e5;
+}
