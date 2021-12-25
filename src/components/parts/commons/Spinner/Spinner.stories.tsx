@@ -2,17 +2,17 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
-import { CircularProgress } from '~/components/parts/commons';
+import { Spinner } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/CircularProgress',
-  component: CircularProgress,
-} as ComponentMeta<typeof CircularProgress>;
+  component: Spinner,
+} as ComponentMeta<typeof Spinner>;
 
-export const Template: ComponentStory<typeof CircularProgress> = ({ color }) => {
+export const Template: ComponentStory<typeof Spinner> = ({ color }) => {
   return (
     <Box>
-      <CircularProgress color={color} />
+      <Spinner color={color} />
     </Box>
   );
 };
