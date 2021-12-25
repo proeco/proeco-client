@@ -43,7 +43,7 @@ export const CreateNewStoryPostPaper: VFC<Props> = ({ storyId, page, currentUser
   };
 
   return (
-    <Paper padding={16}>
+    <Paper>
       <Editor content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEdit} currentUser={currentUser} />
     </Paper>
   );
