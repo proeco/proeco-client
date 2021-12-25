@@ -19,6 +19,8 @@
 // 5. override
 @import "./override-bootstrap/button.scss";
 
+@import "./override-reactstrap.scss";
+
 // customize
 @import "./custom-utility.scss";
 
