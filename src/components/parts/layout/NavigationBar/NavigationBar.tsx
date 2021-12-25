@@ -28,7 +28,7 @@ export const NavigationBar: VFC = memo(() => {
         onClick: () => router.push(URLS.DASHBOARD_TEAMS),
       },
       {
-        icon: <Icon icon="Logout" color="textColor.main" width="20px" />,
+        icon: <Icon icon="REPLY" size={20} />,
         text: 'Logout',
         onClick: () => router.push(URLS.API_LOGOUT),
       },
