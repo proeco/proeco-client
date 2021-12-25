@@ -36,9 +36,6 @@ export const useStories = ({
           }),
         };
       }),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: true,
-    },
+    { revalidateOnReconnect: true },
   );
 };

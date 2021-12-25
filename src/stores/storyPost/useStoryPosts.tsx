@@ -26,7 +26,6 @@ export const useStoryPosts = ({
     (endpoint: string) =>
       restClient.apiGet<PaginationResult<StoryPost>>(endpoint).then((result) => result.data.docs.map((v) => convertStoryPostFromServer(v))),
     {
-      revalidateOnFocus: false,
       revalidateOnReconnect: true,
     },
   );
