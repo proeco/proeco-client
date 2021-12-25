@@ -28,8 +28,8 @@ const Home: ProecoNextPage = () => {
       <Box mb={5}>
         <Grid container maxWidth="900px" mx="auto">
           {teamList ? (
-            teamList.docs.map((team) => (
-              <Grid item key={`top-${team._id}`} xs={12} sm={6} px={1} pb={2}>
+            teamList.docs.map((team, index) => (
+              <Grid item key={index} xs={12} sm={6} px={1} pb={2}>
                 <Link href={URLS.TEAMS(team.productId)}>
                   <TeamCard
                     name={team.name}
@@ -57,9 +57,9 @@ const Home: ProecoNextPage = () => {
       <Box mb={5}>
         <Grid container maxWidth="900px" mx="auto">
           {openStoryList ? (
-            openStoryList.docs.map((story) => {
+            openStoryList.docs.map((story, index) => {
               return (
-                <Grid item key={`top-${story._id}`} xs={12} sm={6} md={4} px={1} pb={2}>
+                <Grid item key={index} xs={12} sm={6} md={4} px={1} pb={2}>
                   <StoryCard story={story} />
                 </Grid>
               );

@@ -17,7 +17,7 @@ export const CurrentUserProvider: FC<{ children: ReactNode }> = ({ children }) =
   const { data: accessToken, isValidating } = useImmutableSWR<string>(isLoading ? null : user?.email, () =>
     axios.get('/api/access-token').then((res) => res.data.accessToken),
   );
-  const { data: currentUser, isValidating: isValidatingUser, mutate } = useCurrentUser();
+  const { data: currentUser, mutate } = useCurrentUser();
 
   useEffect(() => {
     if (isValidating) return;
@@ -35,8 +35,6 @@ export const CurrentUserProvider: FC<{ children: ReactNode }> = ({ children }) =
     });
     mutate();
   }, [user, accessToken, isValidating, mutate]);
-
-  if (isLoading || isValidating || isValidatingUser) return null;
 
   return <CurrentUserContext.Provider value={{ currentUser }}>{children}</CurrentUserContext.Provider>;
 };

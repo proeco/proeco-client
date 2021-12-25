@@ -51,18 +51,18 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
     <>
       <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
         <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-          <Icon icon="FILE_WITH_EARMARK" size={32} />
+          <Icon icon="FILE_WITH_EARMARK" size={28} />
           プロダクトについて
         </h2>
         {editable && (
           <Button onClick={handleClickUpdate} color="primary">
-            <Icon icon="PENCIL" size={20} color="WHITE" />
+            <Icon icon="PENCIL" size={16} color="WHITE" />
             説明を更新する
           </Button>
         )}
       </Box>
       <Grid container>
-        <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
+        <Grid item xs={12} sm={8} px={1} pb={2}>
           <Paper>
             {isUpdate && currentUser && (
               <Editor
@@ -81,7 +81,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
             )}
           </Paper>
         </Grid>
-        <Grid key={team._id} item xs={12} sm={4} px={1} pb={2}>
+        <Grid item xs={12} sm={4} px={1} pb={2}>
           <TeamCard
             name={team.name}
             productId={team.productId}

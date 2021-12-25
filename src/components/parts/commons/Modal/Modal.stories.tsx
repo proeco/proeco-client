@@ -30,7 +30,7 @@ export const LargeModal = Template.bind({});
 export const ModalWithoutTitle = Template.bind({});
 
 SmallModal.args = {
-  size: 'small',
+  size: 'sm',
   open: true,
   content: Content,
   title: 'ここにタイトルが入る',
@@ -38,12 +38,12 @@ SmallModal.args = {
 
 MediumModal.args = {
   ...SmallModal.args,
-  size: 'medium',
+  size: 'lg',
 };
 
 LargeModal.args = {
   ...SmallModal.args,
-  size: 'large',
+  size: 'xl',
 };
 
 ModalWithoutTitle.args = {

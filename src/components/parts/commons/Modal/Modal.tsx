@@ -1,11 +1,9 @@
 import React, { VFC } from 'react';
-import { styled } from '@mui/material/styles';
-import { Modal as MuiModal } from '@mui/material';
-import { Box } from '@mui/system';
+import { Modal as ModalOriginal, ModalHeader } from 'reactstrap';
 
 import { Emoji } from '~/components/parts/commons';
 
-type Size = 'small' | 'medium' | 'large';
+type Size = 'sm' | 'lg' | 'xl';
 
 type Props = {
   open: boolean;
@@ -16,36 +14,18 @@ type Props = {
   size?: Size;
 };
 
-const sizeMap: { [key in Size]: string } = {
-  small: '500px',
-  medium: '600px',
-  large: '700px',
-};
-
-export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size = 'medium' }) => {
+export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size = 'lg' }) => {
   return (
-    <MuiModal open={open} onClose={onClose}>
-      <StyledBox width={sizeMap[size]}>
-        {title && (
-          <>
-            <Box py="8px" display="flex" alignItems="center" justifyContent="center" alignContent="center" gap="8px">
-              {emojiId && <Emoji emojiId={emojiId} size={size === 'small' ? 20 : 24} />}
-              {size === 'small' ? <h4 className="mb-0">{title}</h4> : <h3 className="mb-0">{title}</h3>}
-            </Box>
-            <hr className="my-0 text-light" />
-          </>
-        )}
-        <Box p="20px">{content}</Box>
-      </StyledBox>
-    </MuiModal>
+    <ModalOriginal isOpen={open} toggle={onClose} centered zIndex={1400} size={size}>
+      {title && (
+        <ModalHeader className="text-center" toggle={onClose}>
+          <div className="d-flex align-items-center gap-2">
+            {emojiId && <Emoji emojiId={emojiId} size={size === 'sm' ? 20 : 24} />}
+            {size === 'sm' ? <h4 className="mb-0">{title}</h4> : <h3 className="mb-0">{title}</h3>}
+          </div>
+        </ModalHeader>
+      )}
+      <div className="p-4">{content}</div>
+    </ModalOriginal>
   );
 };
-
-const StyledBox = styled(Box)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  border-radius: 4px;
-`;

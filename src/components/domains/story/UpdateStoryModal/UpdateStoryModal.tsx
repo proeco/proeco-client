@@ -7,7 +7,7 @@ import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
 
-import { Modal, SelectableEmoji, Button, TextField } from '~/components/parts/commons';
+import { Modal, SelectableEmoji, Button, TextField, Icon } from '~/components/parts/commons';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -98,7 +98,8 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
       </Box>
       <Box width="100%" textAlign="center">
         <Button color="primary" onClick={handleClickUpdateStoryButton} disabled={isDisabled}>
-          更新する！
+          <Icon icon="CLOCKWISE" size={20} color="WHITE" />
+          更新する
         </Button>
       </Box>
     </>

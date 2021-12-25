@@ -57,12 +57,12 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
     <>
       <Box mb={6} display="flex" alignItems="center" justifyContent="space-between">
         <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-          <Icon icon="LIST" size={32} />
+          <Icon icon="LIST" size={28} />
           ストーリーリスト
         </h2>
         {editable && (
           <Button onClick={handleClickCreateStoryButton} color="primary">
-            <Icon icon="PENCIL" size={20} color="WHITE" />
+            <Icon icon="PENCIL" size={16} color="WHITE" />
             ストーリーを追加する
           </Button>
         )}
@@ -70,9 +70,9 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
       <h3 className="fw-bold mb-4 text-center">進行中のストーリー</h3>
       <StyledCarousel responsive={responsive} showDots arrows={false}>
         {openStoryList
-          ? openStoryList.docs.map((story) => {
+          ? openStoryList.docs.map((story, index) => {
               return (
-                <Box px={2} key={`top-${story._id}`}>
+                <Box px={2} key={index}>
                   <StoryCard story={story} />
                 </Box>
               );
@@ -86,7 +86,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
               </Box>,
             ]}
       </StyledCarousel>
-      <h3 className="fw-bold mb-4 text-center">完了したストーリー</h3>
+      <h3 className="fw-bold my-4 text-center">完了したストーリー</h3>
       {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
         <>
           <StoryListTable stories={closeStoriesPagination.docs} productId={team.productId} />

@@ -1,6 +1,6 @@
 {
   "name": "proeco-client",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "private": false,
   "author": "itizawa <itizawa.pen@gmail.com>",
   "homepage": "https://github.com/proeco/proeco#readme",
@@ -44,7 +44,7 @@
     "react-multi-carousel": "2.6.5",
     "react-rewards": "1.1.2",
     "react-syntax-highlighter": "15.4.5",
-    "reactstrap": "^9.0.1",
+    "reactstrap": "9.0.1",
     "remark-gfm": "3.0.1",
     "swr": "1.1.1"
   },
