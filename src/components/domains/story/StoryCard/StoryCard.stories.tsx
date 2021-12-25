@@ -24,6 +24,7 @@ const mockStory = createMockStory();
 export const Default = Template.bind({});
 Default.args = {
   story: mockStory,
+  isLink: true,
 };
 
 const SkeltonTemplate: ComponentStory<typeof SkeltonStoryCard> = ({ ...rest }) => {
