@@ -3,6 +3,7 @@ import { GlobalStyles } from '@mui/material';
 import { ReactNode } from 'react';
 import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import { UserProvider } from '@auth0/nextjs-auth0';
+import { SWRConfig } from 'swr';
 
 import 'modern-css-reset/dist/reset.min.css';
 import '~/styles/global.scss';
@@ -40,13 +41,15 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
     <UserProvider>
       <MaterialThemeProvider theme={theme}>
         <SnackbarProvider>
-          <CurrentUserProvider>
-            <AccessControlProvider getAccessControl={Component.getAccessControl}>
-              {inputGlobalStyles}
-              <NavigationBar />
-              {getLayout(<Component {...pageProps} />)}
-            </AccessControlProvider>
-          </CurrentUserProvider>
+          <SWRConfig value={{ revalidateOnFocus: false }}>
+            <CurrentUserProvider>
+              <AccessControlProvider getAccessControl={Component.getAccessControl}>
+                {inputGlobalStyles}
+                <NavigationBar />
+                {getLayout(<Component {...pageProps} />)}
+              </AccessControlProvider>
+            </CurrentUserProvider>
+          </SWRConfig>
         </SnackbarProvider>
       </MaterialThemeProvider>
     </UserProvider>

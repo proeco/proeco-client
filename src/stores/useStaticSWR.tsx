@@ -6,7 +6,6 @@ export const useStaticSWR = <Data, Error>(key: Key, updateData?: Data | Fetcher<
   }
 
   return useSWR(key, null, {
-    revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
 };

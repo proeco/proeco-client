@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Modal as MuiModal } from '@mui/material';
 import { Box } from '@mui/system';
 
-import { Emoji, Divider } from '~/components/parts/commons';
+import { Emoji } from '~/components/parts/commons';
 
 type Size = 'small' | 'medium' | 'large';
 
@@ -32,7 +32,7 @@ export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size
               {emojiId && <Emoji emojiId={emojiId} size={size === 'small' ? 20 : 24} />}
               {size === 'small' ? <h4 className="mb-0">{title}</h4> : <h3 className="mb-0">{title}</h3>}
             </Box>
-            <Divider />
+            <hr className="my-0 text-light" />
           </>
         )}
         <Box p="20px">{content}</Box>
