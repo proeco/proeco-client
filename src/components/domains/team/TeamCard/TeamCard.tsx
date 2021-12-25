@@ -45,9 +45,9 @@ export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentI
         <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">
           <TeamIcon size={50} attachmentId={attachmentId} />
           <span className="fw-bold maximum_lines_1">{name}</span>
-          <span className="text-light fs-6 maximum_lines_1">@{productId}</span>
+          <span className="text-light fs-3 maximum_lines_1">@{productId}</span>
         </Box>
-        <span className="mt-3 fs-6 maximum_lines_2">{description}</span>
+        <span className="mt-3 fs-3 maximum_lines_2">{description}</span>
       </Box>
     </StyledTeamCard>
   );
