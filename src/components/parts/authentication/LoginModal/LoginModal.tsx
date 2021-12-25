@@ -39,7 +39,7 @@ export const LoginModal: VFC<Props> = ({ isOpen, onClose }) => {
     </Box>
   );
 
-  return <Modal open={isOpen} size="small" emojiId="tada" title="Proecoへようこそ" content={content} onClose={onClose} />;
+  return <Modal open={isOpen} emojiId="tada" title="Proecoへようこそ" content={content} onClose={onClose} />;
 };
 
 const StyledLoginButtonWrapper = styled(Box)`
