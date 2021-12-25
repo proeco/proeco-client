@@ -25,4 +25,3 @@ export { Stepper } from './Stepper';
 export { TextField } from './TextField';
 export { TimeLineItem } from './TimeLineItem';
 export { TrimImageModal } from './TrimImageModal';
-export { Typography } from './Typography';
