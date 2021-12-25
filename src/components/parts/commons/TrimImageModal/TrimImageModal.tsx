@@ -42,7 +42,7 @@ export const TrimImageModal: VFC<Props> = ({ isOpen, imagePath, crop, onChangeIm
     </Box>
   );
 
-  return <Modal title="画像をトリミングする" content={content} size="small" open={isOpen} emojiId="scissors" onClose={onCloseModal} />;
+  return <Modal title="画像をトリミングする" content={content} open={isOpen} emojiId="scissors" onClose={onCloseModal} />;
 };
 
 const StyledInput = styled('input')`

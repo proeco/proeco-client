@@ -79,7 +79,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
       <Box mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
           <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-            <Icon icon="GEAR" size={32} />
+            <Icon icon="GEAR" size={28} />
             設定
           </h2>
         </Box>
