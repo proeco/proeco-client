@@ -5,7 +5,7 @@ import { Drawer as MuiDrawer } from '@mui/material';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 
 import { useRouter } from 'next/router';
-import { Typography, SideBarListItem, Icon, Link, IconButton } from '~/components/parts/commons';
+import { SideBarListItem, Icon, Link, IconButton } from '~/components/parts/commons';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 
 import { useLocalStorage } from '~/hooks/useLocalStorage';
@@ -63,7 +63,7 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
                     icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === router.asPath ? '#fff' : 'textColor.main'} />}
                     selected={sidebarItem.url === router.asPath}
                   >
-                    <Typography variant="body1">{sidebarItem.text}</Typography>
+                    <span className={sidebarItem.url === router.asPath ? 'text-white' : 'text-black'}>{sidebarItem.text}</span>
                   </SideBarListItem>
                 </Link>
               );
@@ -72,9 +72,7 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
               <Link href={sidebarItem.url} key={index}>
                 <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
                   <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === router.asPath ? 'primary.main' : 'textColor.main'} />
-                  <Typography variant="overline" color={sidebarItem.url === router.asPath ? 'primary.main' : 'textColor.main'}>
-                    {sidebarItem.text}
-                  </Typography>
+                  <span className={`fs-4 ${sidebarItem.url === router.asPath ? 'text-primary' : 'text-black'}`}>{sidebarItem.text}</span>
                 </Box>
               </Link>
             );
@@ -84,7 +82,7 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
           <Box mt="auto">
             <Box display="flex" alignItems="center" gap="8px">
               <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
-              {open && <Typography variant="body1">{currentUser.name}</Typography>}
+              {open && <span>{currentUser.name}</span>}
             </Box>
           </Box>
         )}

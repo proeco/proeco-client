@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
-import { Modal, SelectableEmoji, Button, Typography, TextField } from '~/components/parts/commons';
+import { Modal, SelectableEmoji, Button, TextField } from '~/components/parts/commons';
 import { useStories } from '~/stores/story';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -73,9 +73,7 @@ export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, 
   const content = (
     <>
       <Box mb="16px">
-        <Typography mb="4px" variant="body1" color="textColor.light">
-          ストーリー名
-        </Typography>
+        <p className="mb-1 text-light">ストーリー名</p>
         <Box display="flex" alignItems="center">
           <Box mr="8px">
             <SelectableEmoji emojiId={newStory.emojiId} size={40} onSelectEmoji={(emojiId) => updateStoryForm({ emojiId })} />

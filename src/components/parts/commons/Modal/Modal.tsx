@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Modal as MuiModal } from '@mui/material';
 import { Box } from '@mui/system';
 
-import { Emoji, Typography, Divider } from '~/components/parts/commons';
+import { Emoji, Divider } from '~/components/parts/commons';
 
 type Size = 'small' | 'medium' | 'large';
 
@@ -30,9 +30,7 @@ export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size
           <>
             <Box py="8px" display="flex" alignItems="center" justifyContent="center" alignContent="center" gap="8px">
               {emojiId && <Emoji emojiId={emojiId} size={size === 'small' ? 20 : 24} />}
-              <Typography display="block" variant={size === 'small' ? 'body1' : 'h4'}>
-                {title}
-              </Typography>
+              {size === 'small' ? <h4 className="mb-0">{title}</h4> : <h3 className="mb-0">{title}</h3>}
             </Box>
             <Divider />
           </>

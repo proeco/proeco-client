@@ -45,6 +45,7 @@
     "react-rewards": "1.1.2",
     "react-syntax-highlighter": "15.4.5",
     "remark-gfm": "3.0.1",
+    "styled-component": "^2.8.0",
     "swr": "1.1.1"
   },
   "devDependencies": {

@@ -3,7 +3,6 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 import { Modal } from './Modal';
-import { Typography } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/Modal',
@@ -13,7 +12,7 @@ export default {
 
 const Content = (
   <Box>
-    <Typography>ここにコンテンツが入る</Typography>
+    <p>ここにコンテンツが入る</p>
   </Box>
 );
 

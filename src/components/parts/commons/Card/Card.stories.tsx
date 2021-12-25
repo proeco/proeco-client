@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 
-import { Typography, Card } from '~/components/parts/commons';
+import { Card } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/Card',
@@ -14,7 +14,7 @@ const Template: ComponentStory<typeof Card> = ({ padding, square, ...rest }) => 
   return (
     <Box p="40px" bgcolor="gray">
       <Card padding={padding} square={square} {...rest}>
-        <Typography>Cardのコンテンツ</Typography>
+        <p>Cardのコンテンツ</p>
       </Card>
     </Box>
   );

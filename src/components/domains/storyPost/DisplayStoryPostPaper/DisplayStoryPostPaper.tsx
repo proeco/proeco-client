@@ -13,7 +13,6 @@ import {
   EmojiRadioGroup,
   Paper,
   MarkdownToHtmlBody,
-  Typography,
   Divider,
   EmojiCountResult,
 } from '~/components/parts/commons';
@@ -222,11 +221,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
     <>
       <Paper>
         <StyledBox width="100%" display="flex" alignItems="center" ref={boxRef}>
-          {createdUserId && createdUserName ? (
-            <Link href={'/user/' + createdUserId}>{createdUserName}</Link>
-          ) : (
-            <Typography variant="body1">undefined</Typography>
-          )}
+          {createdUserId && createdUserName ? <Link href={'/user/' + createdUserId}>{createdUserName}</Link> : <span>undefined</span>}
           <StyledTime dateTime={currentStoryPost.createdAt.toLocaleDateString()}>{displayDate}</StyledTime>
           <WrapDropdown>
             <Dropdown
@@ -287,10 +282,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             {editable ? (
               <>
                 <Box textAlign="center">
-                  <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
+                  <span className="fs-3 text-light">
                     <Emoji emoji="bulb" size={12} />
                     ユーザーからリアクションが届いています
-                  </Typography>
+                  </span>
                 </Box>
                 <Box display="flex" justifyContent="center">
                   <EmojiCountResult emojisInfo={emojisInfo} />
@@ -299,10 +294,10 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             ) : (
               <>
                 <Box textAlign="center">
-                  <Typography variant="caption" color={COLORS.TEXT_LIGHT}>
+                  <span className="fs-3 text-light">
                     <Emoji emoji="bulb" size={12} />
                     リアクションを送信しましょう
-                  </Typography>
+                  </span>
                 </Box>
                 <Box display="flex" justifyContent="center">
                   <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />

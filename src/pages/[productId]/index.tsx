@@ -8,7 +8,6 @@ import { Box, styled } from '@mui/system';
 
 import { Team } from '~/domains';
 
-import { Typography } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
@@ -73,15 +72,13 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
       <Box mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" gap={2}>
           <TeamIcon attachmentId={team.iconImageId} size={80} />
-          <Typography variant="h1" maximum_lines={1}>
-            {team.name}
-          </Typography>
+          <h1 className="mb-0 maximum_lines_1">{team.name}</h1>
         </Box>
         <TabContext value={activeTab}>
           <StyledTabList onChange={handleChange} aria-label="team tabs">
-            <StyledTab label={<Typography bold>ホーム</Typography>} value={TabTypes.HOME} />
-            <StyledTab label={<Typography bold>ストーリー</Typography>} value={TabTypes.STORY} />
-            {isMemberOfTeam && <StyledTab label={<Typography bold>設定</Typography>} value={TabTypes.SETTINGS} />}
+            <StyledTab label={<span className="fw-bold fs-1">ホーム</span>} value={TabTypes.HOME} />
+            <StyledTab label={<span className="fw-bold fs-1">ストーリー</span>} value={TabTypes.STORY} />
+            {isMemberOfTeam && <StyledTab label={<span className="fw-bold fs-1">設定</span>} value={TabTypes.SETTINGS} />}
           </StyledTabList>
           <TabPanel value={TabTypes.HOME}>
             <TeamHomeTab team={team} currentUser={currentUser} editable={isMemberOfTeam} />

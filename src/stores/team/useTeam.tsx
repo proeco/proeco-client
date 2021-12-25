@@ -1,5 +1,4 @@
-import { SWRResponse } from 'swr';
-import useImmutableSWR from 'swr/immutable';
+import useSWR, { SWRResponse } from 'swr';
 
 import { restClient } from '~/utils/rest-client';
 import { convertTeamFromServer, Team } from '~/domains';
@@ -13,5 +12,5 @@ import { convertTeamFromServer, Team } from '~/domains';
  */
 export const useTeam = ({ teamId }: { teamId?: string }): SWRResponse<Team, Error> => {
   const key = teamId ? `/teams/${teamId}` : null;
-  return useImmutableSWR(key, (endpoint: string) => restClient.apiGet<Team>(endpoint).then((result) => convertTeamFromServer(result.data)));
+  return useSWR(key, (endpoint: string) => restClient.apiGet<Team>(endpoint).then((result) => convertTeamFromServer(result.data)));
 };

@@ -1,6 +1,6 @@
 import React, { VFC, useState } from 'react';
 import { Box, Grid } from '@mui/material';
-import { Button, Editor, Icon, MarkdownToHtmlBody, Paper, Typography } from '~/components/parts/commons';
+import { Button, Editor, Icon, MarkdownToHtmlBody, Paper } from '~/components/parts/commons';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { Team, User } from '~/domains';
 import { restClient } from '~/utils/rest-client';
@@ -49,11 +49,11 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
 
   return (
     <>
-      <Box mb={6} display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+      <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
+        <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
           <Icon icon="Description" width={32} />
           プロダクトについて
-        </Typography>
+        </h2>
         {editable && (
           <Button onClick={handleClickUpdate} color="primary">
             <Icon icon="CreateOutlined" width="20px" />

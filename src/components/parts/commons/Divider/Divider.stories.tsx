@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
-import { Divider, Typography, Card } from '~/components/parts/commons';
+import { Divider, Card } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/Divider',
@@ -12,17 +12,17 @@ export default {
 const Template: ComponentStory<typeof Divider> = ({ margin, ...rest }) => {
   return (
     <Box>
-      <Typography>Horizontal</Typography>
+      <p>Horizontal</p>
       <Card sx={{ width: '300px' }}>
-        <Typography textAlign="center">Text on the ine</Typography>
+        <p className="text-center">Text on the ine</p>
         <Divider {...rest} margin={margin} orientation="horizontal" />
-        <Typography textAlign="center">Text under the ine</Typography>
+        <p className="text-center">Text under the ine</p>
       </Card>
-      <Typography>Vertical</Typography>
+      <p>Vertical</p>
       <Card sx={{ width: '300px', display: 'flex' }}>
-        <Typography>Left Text</Typography>
+        <p>Left Text</p>
         <Divider {...rest} margin={margin} orientation="vertical" />
-        <Typography>Right Text</Typography>
+        <p>Right Text</p>
       </Card>
     </Box>
   );

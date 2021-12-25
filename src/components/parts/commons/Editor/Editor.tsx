@@ -3,7 +3,7 @@ import { Box, styled } from '@mui/system';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-import { TextField, Button, Typography, MarkdownToHtmlBody, Icon } from '~/components/parts/commons';
+import { TextField, Button, MarkdownToHtmlBody, Icon } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { Attachment, User } from '~/domains';
@@ -70,7 +70,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
         <StyledTabPanel value="preview">
           {content === '' ? (
             <Box minHeight="112px" display="flex" p="16px" my="16px" alignItems="center" justifyContent="center">
-              <Typography variant="body1">本文がありません</Typography>
+              <p className="mb-0">本文がありません</p>
             </Box>
           ) : (
             <Box minHeight="112px" p="16px" mt="8px" mb="24px">
@@ -83,9 +83,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
         {value === 'editor' && (
           <StyledLabel htmlFor="image">
             <Icon icon="Photo" width="20px" color="textColor.light" />
-            <Typography variant="body2" color="textColor.light">
-              画像をアップロード
-            </Typography>
+            <span className="fs-2 text-light">画像をアップロード</span>
             <StyledInput type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
           </StyledLabel>
         )}
@@ -125,7 +123,7 @@ const StyledLabel = styled('label')`
   margin-right: auto;
   cursor: pointer;
   &:hover {
-    .MuiTypography-root {
+    span {
       color: ${(props) => props.theme.palette.primary.main};
     }
     .MuiSvgIcon-root {

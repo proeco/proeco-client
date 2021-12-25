@@ -5,7 +5,7 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { Typography, Icon } from '~/components/parts/commons';
+import { Icon } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamForm } from '~/components/domains/team/TeamForm';
@@ -19,10 +19,10 @@ const DashboardTeamPage: ProecoNextPage = () => {
       <ProecoOgpHead />
       <Box mx="auto" maxWidth="1200px">
         <Box mb={3} display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+          <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
             <Icon icon="CreateOutlined" width={32} />
             新規チームを作成する
-          </Typography>
+          </h2>
         </Box>
         {currentUser && <TeamForm currentUser={currentUser} />}
       </Box>

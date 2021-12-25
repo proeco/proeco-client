@@ -2,10 +2,9 @@ import React, { VFC } from 'react';
 import { Skeleton } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
-import { Typography, Card } from '~/components/parts/commons';
+import { Card } from '~/components/parts/commons';
 import { useOgp } from '~/stores/ogp';
 import { FixedImage } from '~/components/parts/commons/FixedImage';
-import { COLORS } from '~/constants';
 
 type Props = {
   name: string;
@@ -45,16 +44,10 @@ export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentI
       <Box position="relative" p={2}>
         <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">
           <TeamIcon size={50} attachmentId={attachmentId} />
-          <Typography variant="body1" bold maximum_lines={1}>
-            {name}
-          </Typography>
-          <Typography variant="caption" color={COLORS.TEXT_LIGHT} maximum_lines={1}>
-            @{productId}
-          </Typography>
+          <span className="fw-bold maximum_lines_1">{name}</span>
+          <span className="text-light fs-3 maximum_lines_1">@{productId}</span>
         </Box>
-        <StyledDescription mt={2} variant="caption" maximum_lines={2}>
-          {description}
-        </StyledDescription>
+        <span className="mt-3 fs-3 maximum_lines_2">{description}</span>
       </Box>
     </StyledTeamCard>
   );
@@ -74,9 +67,4 @@ const StyledTeamCard = styled(Card)<{ isLink: boolean }>`
     top: -4px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }`}
-`;
-
-const StyledDescription = styled(Typography)`
-  line-height: 1.5;
-  letter-spacing: 0;
 `;
