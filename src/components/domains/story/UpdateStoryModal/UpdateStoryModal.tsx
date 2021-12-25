@@ -7,7 +7,7 @@ import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
 
-import { Modal, SelectableEmoji, Button, Typography, TextField } from '~/components/parts/commons';
+import { Modal, SelectableEmoji, Button, TextField } from '~/components/parts/commons';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -88,9 +88,7 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
   const content = (
     <>
       <Box mb="16px">
-        <Typography mb="4px" variant="body1" color="textColor.light">
-          ストーリー名
-        </Typography>
+        <p className="text-light mb-1">ストーリー名</p>
         <Box display="flex" alignItems="center">
           <Box mr="8px">
             <SelectableEmoji emojiId={newStory.emojiId} size={40} onSelectEmoji={(emojiId) => updateStoryForm({ emojiId })} />

@@ -1,0 +1,27 @@
+$primary: #6684f7;
+$secondary: #6c757d;
+$light: #757575;
+$danger: #ff6868;
+$orange: #f59033;
+$black: #333;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "light": $light,
+  "danger": $danger,
+  "orange": $orange,
+  "black": $black,
+);
+
+$font-sizes: (
+  1: 16px,
+  2: 14px,
+  3: 12px,
+  4: 10px,
+);
+
+$h1-font-size: 32px;
+$h2-font-size: 24px;
+$h3-font-size: 20px;
+$h4-font-size: 16px;

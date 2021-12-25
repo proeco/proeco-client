@@ -2,7 +2,7 @@ import React, { VFC, useMemo } from 'react';
 import { Box, Chip, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Story } from '~/domains';
-import { Emoji, Typography, Card, Link } from '~/components/parts/commons';
+import { Emoji, Card, Link } from '~/components/parts/commons';
 import { useTeam } from '~/stores/team';
 import { TeamIcon, SkeltonTeamIcon, GuestTeamIcon } from '~/components/domains/team/TeamIcon';
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
@@ -15,7 +15,7 @@ type Props = {
 
 export const SkeltonStoryCard: VFC = () => {
   return (
-    <StyledStoryCard>
+    <StyledStoryCard isLink={false}>
       <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative"></Box>
       <Box p="12px">
         <Skeleton variant="text" width="50px" />
@@ -36,7 +36,7 @@ export const StoryCard: VFC<Props> = ({ story, isLink = false }) => {
 
   const StoryCardContent = useMemo(() => {
     return (
-      <StyledStoryCard>
+      <StyledStoryCard isLink={isLink}>
         <StyledChip label={story.isCompleted ? 'Closed' : 'Open'} />
         <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative">
           <StyledBox>
@@ -45,37 +45,44 @@ export const StoryCard: VFC<Props> = ({ story, isLink = false }) => {
         </Box>
         <Box p="12px">
           <StyledTime dateTime={story.updatedAt.toLocaleDateString()}>{displayDate}</StyledTime>
-          <Typography variant="body1" bold>
-            {story.title}
-          </Typography>
+          <p className="fw-bold mb-0">{story.title}</p>
           <Box mt="12px" display="flex" alignItems="center" gap="8px">
             {team ? (
               <>
                 <TeamIcon size={32} attachmentId={team.iconImageId} />
-                <Typography variant="body2">{team.name}</Typography>
+                <span className="fs-2">{team.name}</span>
               </>
             ) : (
               <>
                 <GuestTeamIcon size={32} />
-                <Typography variant="body2">undefined</Typography>
+                <span className="fs-2">undefined</span>
               </>
             )}
           </Box>
         </Box>
       </StyledStoryCard>
     );
-  }, [displayDate, story, team]);
+  }, [displayDate, story, team, isLink]);
 
   if (!isLink || !team) return StoryCardContent;
 
   return <Link href={URLS.TEAMS_STORY(team.productId, story._id)}>{StoryCardContent}</Link>;
 };
 
-const StyledStoryCard = styled(Card)`
+const StyledStoryCard = styled(Card)<{ isLink: boolean }>`
   padding: 0px;
   box-sizing: border-box;
   position: relative;
   width: 100%;
+  top: 0;
+  transition: all 0.3s;
+  ${(props) =>
+    props.isLink &&
+    `cursor: pointer;
+      &:hover {
+    top: -4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }`}
 `;
 
 const StyledBox = styled(Box)`

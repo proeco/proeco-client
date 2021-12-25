@@ -1,6 +1,6 @@
 import React, { VFC, useState } from 'react';
-import { Box, Grid, MenuItem, ListItemIcon, styled } from '@mui/material';
-import { Dropdown, Editor, Icon, IconButton, MarkdownToHtmlBody, Paper } from '~/components/parts/commons';
+import { Box, Grid } from '@mui/material';
+import { Button, Editor, Icon, MarkdownToHtmlBody, Paper } from '~/components/parts/commons';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { Team, User } from '~/domains';
 import { restClient } from '~/utils/rest-client';
@@ -48,50 +48,49 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
   };
 
   return (
-    <Grid container>
-      <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
-        <Paper>
-          {editable && (
-            <WrapDropdown>
-              <Dropdown
-                toggle={<IconButton icon="MoreVert" width={20} />}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-              >
-                <MenuItem onClick={handleClickUpdate} key="update">
-                  <ListItemIcon>
-                    <Icon icon="Update" width="20px" color="textColor.main" />
-                  </ListItemIcon>
-                  更新する
-                </MenuItem>
-              </Dropdown>
-            </WrapDropdown>
-          )}
-          {isUpdate && currentUser && (
-            <Editor
-              isUpdateMode
-              content={content}
-              onChangeContent={setContent}
-              onCompleteEdit={handleCompleteEdit}
-              onClickCancelButton={handleClickCancelButton}
-              currentUser={currentUser}
-            />
-          )}
-          {!isUpdate && (
-            <Box p={2}>
-              <MarkdownToHtmlBody content={content} />
-            </Box>
-          )}
-        </Paper>
+    <>
+      <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
+        <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
+          <Icon icon="Description" width={32} />
+          プロダクトについて
+        </h2>
+        {editable && (
+          <Button onClick={handleClickUpdate} color="primary">
+            <Icon icon="CreateOutlined" width="20px" />
+            説明を更新する
+          </Button>
+        )}
+      </Box>
+      <Grid container>
+        <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
+          <Paper>
+            {isUpdate && currentUser && (
+              <Editor
+                isUpdateMode
+                content={content}
+                onChangeContent={setContent}
+                onCompleteEdit={handleCompleteEdit}
+                onClickCancelButton={handleClickCancelButton}
+                currentUser={currentUser}
+              />
+            )}
+            {!isUpdate && (
+              <Box p={2}>
+                <MarkdownToHtmlBody content={content} />
+              </Box>
+            )}
+          </Paper>
+        </Grid>
+        <Grid key={team._id} item xs={12} sm={4} px={1} pb={2}>
+          <TeamCard
+            name={team.name}
+            productId={team.productId}
+            description={team.description}
+            attachmentId={team.iconImageId}
+            url={team.url}
+          />
+        </Grid>
       </Grid>
-      <Grid key={team._id} item xs={12} sm={4} px={1} pb={2}>
-        <TeamCard name={team.name} productId={team.productId} description={team.description} attachmentId={team.iconImageId} url={team.url} />
-      </Grid>
-    </Grid>
+    </>
   );
 };
-
-const WrapDropdown = styled(Box)`
-  margin-left: auto;
-  width: fit-content;
-`;

@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 import { ReactNode } from 'react';
 import { Grid } from '@mui/material';
-import { Button, Icon, Link, Typography } from '~/components/parts/commons';
+import { Button, Icon, Link } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
@@ -25,10 +25,10 @@ const DashboardTeamPage: ProecoNextPage = () => {
       <ProecoOgpHead />
       <Box mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+          <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
             <Icon icon="Group" width={32} />
             チームリスト
-          </Typography>
+          </h2>
           <Link href={URLS.DASHBOARD_TEAMS_NEW}>
             <Button color="primary">
               <Icon icon="CreateOutlined" width="20px" />
@@ -47,6 +47,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
                     description={team.description}
                     attachmentId={team.iconImageId}
                     url={team.url}
+                    isLink
                   />
                 </Link>
               </Grid>

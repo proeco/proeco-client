@@ -4,7 +4,7 @@ import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
-import { Icon, Link, Typography } from '~/components/parts/commons';
+import { Icon, Link } from '~/components/parts/commons';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { User } from '~/domains';
@@ -37,7 +37,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
     if (teamsRelatedUser.length === 0)
       return (
         <Grid item xs={24} textAlign="center" pt="20px">
-          <Typography variant="h3">所属しているチームがありません</Typography>
+          <h3>所属しているチームがありません</h3>
         </Grid>
       );
 
@@ -50,6 +50,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
             description={team.description}
             attachmentId={team.iconImageId}
             url={team.url}
+            isLink
           />
         </Link>
       </Grid>
@@ -63,16 +64,14 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
         <Box display="flex" alignItems="flex-start" gap="16px" mb="48px">
           <UserIcon attachmentId={user.iconImageId} size={120} userId={user._id} />
           <Box pt="8px">
-            <Typography variant="h3" marginBottom="16px" bold>
-              {user.name}
-            </Typography>
-            <Typography>{user.description}</Typography>
+            <h3 className="mb-3 fw-bold">{user.name}</h3>
+            <p className="mb-0">{user.description}</p>
           </Box>
         </Box>
-        <Typography variant="h4" bold display="flex" alignItems="center" gap="8px" mb="20px">
+        <h2 className="fw-bold mb-4 d-flex text-center align-items-center gap-2">
           <Icon icon="Group" width={32} />
           チームリスト
-        </Typography>
+        </h2>
         <Grid container maxWidth="900px" mx="auto">
           {teamsContent}
         </Grid>

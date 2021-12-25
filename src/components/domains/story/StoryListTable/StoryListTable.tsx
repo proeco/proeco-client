@@ -3,10 +3,8 @@ import { VFC } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { styled } from '@mui/system';
 
-import { Typography } from '~/components/parts/commons';
 import { StoryTableRow } from '~/components/domains/story/StoryTableRow';
 
-import { COLORS } from '~/constants';
 import { Story } from '~/domains';
 
 type Props = {
@@ -21,19 +19,13 @@ export const StoryListTable: VFC<Props> = ({ stories, productId }) => {
         <TableHead>
           <TableRow>
             <StyledHeaderTableCell>
-              <Typography color={COLORS.TEXT_LIGHT} variant="caption">
-                作成者
-              </Typography>
+              <span className="text-light fs-3">作成者</span>
             </StyledHeaderTableCell>
             <StyledHeaderTableCell>
-              <Typography color={COLORS.TEXT_LIGHT} variant="caption">
-                ストーリー名
-              </Typography>
+              <span className="text-light fs-3">ストーリー名</span>
             </StyledHeaderTableCell>
             <StyledHeaderTableCell align="right">
-              <Typography color={COLORS.TEXT_LIGHT} variant="caption">
-                最終更新日
-              </Typography>
+              <span className="text-light fs-3">最終更新日</span>
             </StyledHeaderTableCell>
           </TableRow>
         </TableHead>

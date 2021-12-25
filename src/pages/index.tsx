@@ -6,7 +6,7 @@ import { useTeams } from '~/stores/team';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { Link, Typography } from '~/components/parts/commons';
+import { Link } from '~/components/parts/commons';
 import { URLS } from '~/constants';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { TeamCard } from '~/components/domains/team/TeamCard';
@@ -24,9 +24,7 @@ const Home: ProecoNextPage = () => {
   return (
     <>
       <ProecoOgpHead />
-      <Typography variant="h1" align="center" bold my={1}>
-        プロダクト一覧
-      </Typography>
+      <h1 className="text-center fw-bold my-3">プロダクト一覧</h1>
       <Box mb={5}>
         <Grid container maxWidth="900px" mx="auto">
           {teamList ? (
@@ -39,6 +37,7 @@ const Home: ProecoNextPage = () => {
                     description={team.description}
                     attachmentId={team.iconImageId}
                     url={team.url}
+                    isLink
                   />
                 </Link>
               </Grid>
@@ -55,9 +54,7 @@ const Home: ProecoNextPage = () => {
           )}
         </Grid>
       </Box>
-      <Typography variant="h2" align="center" bold my={1}>
-        進行中のストーリー一覧
-      </Typography>
+      <h2 className="text-center fw-bold my-3">進行中のストーリー一覧</h2>
       <Box mb={5}>
         <Grid container maxWidth="900px" mx="auto">
           {openStoryList ? (
@@ -80,13 +77,11 @@ const Home: ProecoNextPage = () => {
           )}
         </Grid>
       </Box>
-      <Typography variant="h1" bold>
-        Top Page
-      </Typography>
+      <h1 className="text-center fw-bold">Top Page</h1>
       <Link href={URLS.DASHBOARD_TEAMS}>所属チーム一覧</Link>
       {currentUser ? (
         <>
-          <Typography variant="h3">Hello {currentUser.name}!</Typography>
+          <h3>Hello {currentUser.name}!</h3>
           <UserIcon size={200} userId={currentUser._id} attachmentId={currentUser.iconImageId} />
           <Link href={URLS.API_LOGOUT}>Logout</Link>
         </>

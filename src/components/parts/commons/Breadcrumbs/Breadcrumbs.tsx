@@ -1,7 +1,7 @@
 import React, { VFC } from 'react';
 import { Breadcrumbs as MuiBreadcrumbs } from '@mui/material';
 
-import { Link, Typography } from '~/components/parts/commons';
+import { Link } from '~/components/parts/commons';
 
 type Props = {
   breadcrumbsItems: Array<{
@@ -17,16 +17,14 @@ export const Breadcrumbs: VFC<Props> = ({ breadcrumbsItems }) => {
         if (breadcrumbsItem.url) {
           return (
             <Link href={breadcrumbsItem.url} key={i}>
-              <Typography variant="caption" color="primary.main">
-                {breadcrumbsItem.label}
-              </Typography>
+              <span className="text-primary fs-4">{breadcrumbsItem.label}</span>
             </Link>
           );
         }
         return (
-          <Typography variant="caption" key={i}>
+          <span className="fs-4" key={i}>
             {breadcrumbsItem.label}
-          </Typography>
+          </span>
         );
       })}
     </MuiBreadcrumbs>

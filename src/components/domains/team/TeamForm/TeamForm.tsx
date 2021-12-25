@@ -8,7 +8,7 @@ import { TeamCard } from '../TeamCard';
 import { Ogp } from '~/interfaces/ogp';
 import { Attachment, Team, User } from '~/domains';
 
-import { COLORS, URLS } from '~/constants';
+import { URLS } from '~/constants';
 import { useTeamsRelatedUser } from '~/stores/team';
 import { isValidUrl } from '~/utils/isValidUrl';
 import { restClient } from '~/utils/rest-client';
@@ -16,7 +16,7 @@ import { restClient } from '~/utils/rest-client';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
-import { TextField, Typography, Button, Icon, Paper, IconUpload } from '~/components/parts/commons';
+import { TextField, Button, Icon, Paper, IconUpload } from '~/components/parts/commons';
 import { useAttachment } from '~/stores/attachment';
 
 type Props = {
@@ -121,26 +121,18 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
               currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachment?.filePath}
             />
           </Box>
-          <Typography mb={1} variant="body1" color="textColor.light">
-            プロダクトの url
-          </Typography>
+          <span className="mb-1 d-inline-block text-light">プロダクトの url</span>
           <Box display="flex" alignItems="center" gap={1}>
             <StyledUrlTextField fullWidth value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
             <StyledButton color="primary" disabled={!isValidUrl(newTeam.url)} onClick={handleClickFetchByUrl}>
               データ取得
             </StyledButton>
           </Box>
-          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
-            Product Id
-          </Typography>
+          <span className="mt-3 mb-1 d-inline-block text-light">Product Id</span>
           <TextField fullWidth value={newTeam.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
-          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
-            名前
-          </Typography>
+          <span className="mt-3 mb-1 d-inline-block text-light">名前</span>
           <TextField fullWidth value={newTeam.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
-          <Typography mt={2} mb={1} variant="body1" color="textColor.light">
-            どんなプロダクト？
-          </Typography>
+          <span className="mt-3 mb-1 d-inline-block text-light">どんなプロダクト？</span>
           <TextField
             fullWidth
             multiline
@@ -157,9 +149,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
         </Paper>
       </Grid>
       <Grid item xs={12} md={6} px={2} pb={3}>
-        <Typography variant="h4" align="center" color={COLORS.TEXT} mb={2}>
-          プレビュー
-        </Typography>
+        <h3 className="mb-3 text-center">プレビュー</h3>
         <TeamCard
           name={newTeam.name}
           productId={newTeam.productId}

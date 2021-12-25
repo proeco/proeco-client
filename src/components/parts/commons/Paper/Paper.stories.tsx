@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 
-import { Typography, Paper } from '~/components/parts/commons';
+import { Paper } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/Paper',
@@ -14,7 +14,7 @@ const Template: ComponentStory<typeof Paper> = ({ ...rest }) => {
   return (
     <Box p="40px" width="300px" bgcolor="gray">
       <Paper {...rest}>
-        <Typography variant="body1">Paperのコンテンツ</Typography>
+        <p>Paperのコンテンツ</p>
       </Paper>
     </Box>
   );

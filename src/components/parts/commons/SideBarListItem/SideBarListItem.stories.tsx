@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { styled } from '@mui/system';
 import { List } from '@mui/material';
 
-import { Typography, Icon, SideBarListItem } from '~/components/parts/commons';
+import { Icon, SideBarListItem } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/SideBarListItem',
@@ -14,7 +14,7 @@ const Template: ComponentStory<typeof SideBarListItem> = ({ icon, selected }) =>
   return (
     <StyledList>
       <SideBarListItem icon={icon} selected={selected}>
-        <Typography variant="body1">ホーム</Typography>
+        <p>ホーム</p>
       </SideBarListItem>
     </StyledList>
   );
