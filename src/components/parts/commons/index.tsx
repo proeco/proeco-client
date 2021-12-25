@@ -1,7 +1,6 @@
 export { Button } from './Button';
 export { Card } from './Card';
-export { Spinner } from './Spinner';
-export { Dropdown } from './Dropdown';
+export { Dropdown, DropdownItem } from './Dropdown';
 export { EditableText } from './EditableText';
 export { Editor } from './Editor';
 export { Emoji } from './Emoji';
@@ -18,7 +17,7 @@ export { Pagination } from './Pagination';
 export { Paper } from './Paper';
 export { SelectableEmoji } from './SelectableEmoji';
 export { SideBarListItem } from './SideBarListItem';
-export { Stepper } from './Stepper';
+export { Spinner } from './Spinner';
 export { TextField } from './TextField';
 export { TimeLineItem } from './TimeLineItem';
 export { TrimImageModal } from './TrimImageModal';

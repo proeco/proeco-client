@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Reward, { RewardElement } from 'react-rewards';
 
 import { Box, styled } from '@mui/system';
-import { Grid, ListItemIcon, MenuItem } from '@mui/material';
+import { Grid } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
@@ -21,7 +21,7 @@ import { Button, Emoji, FixedImage, Icon, Paper, TimeLineItem } from '~/componen
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
-import { Dropdown } from '~/components/parts/commons/Dropdown';
+import { Dropdown, DropdownItem } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
 import { Attachment, Reaction, StoryPost, Team } from '~/domains';
@@ -148,19 +148,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
             <h1 className="fw-bold mb-0 d-flex align-items-center gap-2">{story.title}</h1>
           </Box>
           {isMemberOfTeam && (
-            <Dropdown
-              toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
+            <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
               {menuItems.map((menuItem, i) => (
-                <MenuItem key={i} onClick={menuItem.onClick}>
-                  <ListItemIcon>{menuItem.icon}</ListItemIcon>
-                  {menuItem.text}
-                </MenuItem>
+                <DropdownItem key={i} onClick={menuItem.onClick}>
+                  {menuItem.icon}
+                  <span className="ms-2">{menuItem.text}</span>
+                </DropdownItem>
               ))}
             </Dropdown>
           )}
