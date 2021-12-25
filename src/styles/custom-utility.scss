@@ -1,0 +1,15 @@
+.maximum_lines {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.maximum_lines_1 {
+  @extend .maximum_lines;
+  -webkit-line-clamp: 1;
+}
+
+.maximum_lines_2 {
+  @extend .maximum_lines;
+  -webkit-line-clamp: 2;
+}
