@@ -4,7 +4,7 @@ import { BootstrapIcon, BootstrapColor } from '~/interfaces/variables';
 type Props = {
   size?: number;
   icon: BootstrapIcon;
-  color: BootstrapColor;
+  color?: BootstrapColor;
 };
 
 const HomeIcon: VFC = () => {
@@ -259,7 +259,7 @@ export const IconMap = {
   TWITTER: <Twitter />,
 };
 
-export const Icon: VFC<Props> = ({ size = 24, icon, color }) => {
+export const Icon: VFC<Props> = ({ size = 24, icon, color = 'BLACK' }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

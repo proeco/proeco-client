@@ -4,6 +4,7 @@ export const BootstrapColor = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
   WHITE: 'white',
+  BLACK: 'black',
   WARNING: 'warning',
   DANGER: 'danger',
   LIGHT: 'light',
