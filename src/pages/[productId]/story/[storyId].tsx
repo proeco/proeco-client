@@ -220,13 +220,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
           </Grid>
         </Grid>
       </Box>
-      {/* {/* <UpdateStoryModal
+      <UpdateStoryModal
         isOpen={isOpenUpdateStoryModal}
         onCloseModal={() => setIsOpenUpdateStoryModal(false)}
         story={story}
         teamId={team._id}
         page={page}
-      /> */}
+      />
       <DeleteStoryModal
         isOpen={isOpenDeleteStoryModal}
         onCloseModal={() => setIsOpenDeleteStoryModal(false)}
