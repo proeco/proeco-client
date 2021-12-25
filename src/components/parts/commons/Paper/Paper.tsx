@@ -1,20 +1,12 @@
-import React, { VFC, ComponentProps } from 'react';
-import { Paper as MuiPaper } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React, { FC } from 'react';
 
-type Paper = {
-  padding?: number;
+type Props = {
+  square?: boolean;
 };
 
-type Props = ComponentProps<typeof MuiPaper> & Paper;
+export const Paper: FC<Props> = ({ children, square }) => {
+  const classNames = ['p-3', 'bg-white', 'shadow'];
+  if (square) classNames.push('rounded-2');
 
-export const Paper: VFC<Props> = ({ padding = 20, ...rest }) => {
-  return <StyledMuiPaper padding={padding} {...rest} />;
+  return <div className={classNames.join(' ')}>{children}</div>;
 };
-
-const StyledMuiPaper = styled(MuiPaper)<{ padding: number }>`
-  background-color: whitesmoke;
-  padding: ${(props) => props.padding}px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  border-radius: 8px;
-`;
