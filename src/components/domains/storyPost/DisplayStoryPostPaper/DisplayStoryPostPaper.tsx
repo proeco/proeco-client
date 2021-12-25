@@ -211,7 +211,9 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
       <Paper>
         <StyledBox width="100%" display="flex" alignItems="center" ref={boxRef}>
           {createdUserId && createdUserName ? <Link href={'/user/' + createdUserId}>{createdUserName}</Link> : <span>undefined</span>}
-          <StyledTime dateTime={currentStoryPost.createdAt.toLocaleDateString()}>{displayDate}</StyledTime>
+          <StyledTime className="ms-1" dateTime={currentStoryPost.createdAt.toLocaleDateString()}>
+            {displayDate}
+          </StyledTime>
           <WrapDropdown>
             <Dropdown
               toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}
