@@ -67,30 +67,28 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
           </Button>
         )}
       </Box>
-      {openStoryList && openStoryList.docs.length !== 0 && <h3 className="fw-bold mb-4 text-center ">進行中のストーリー</h3>}
-      <Box mb={5}>
-        <StyledCarousel responsive={responsive} showDots arrows={false}>
-          {openStoryList
-            ? openStoryList.docs.map((story) => {
-                return (
-                  <Box px={2} key={`top-${story._id}`}>
-                    <StoryCard story={story} isLink />
-                  </Box>
-                );
-              })
-            : [
-                <Box px={2} key="first">
-                  <SkeltonStoryCard />
-                </Box>,
-                <Box px={2} key="second">
-                  <SkeltonStoryCard />
-                </Box>,
-              ]}
-        </StyledCarousel>
-      </Box>
+      <h3 className="fw-bold mb-4 text-center">進行中のストーリー</h3>
+      <StyledCarousel responsive={responsive} showDots arrows={false}>
+        {openStoryList
+          ? openStoryList.docs.map((story) => {
+              return (
+                <Box px={2} key={`top-${story._id}`}>
+                  <StoryCard story={story} isLink />
+                </Box>
+              );
+            })
+          : [
+              <Box px={2} key="first">
+                <SkeltonStoryCard />
+              </Box>,
+              <Box px={2} key="second">
+                <SkeltonStoryCard />
+              </Box>,
+            ]}
+      </StyledCarousel>
+      <h3 className="fw-bold mb-4 text-center">完了したストーリー</h3>
       {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
         <>
-          <h3 className="fw-bold mb-0 d-flex align-items-center gap-2">完了したストーリー</h3>
           <StoryListTable stories={closeStoriesPagination.docs} productId={team.productId} />
           <StyledPagination count={closeStoriesPagination.totalPages} page={closeStoryPage} onChange={handleChangePage} />
         </>
