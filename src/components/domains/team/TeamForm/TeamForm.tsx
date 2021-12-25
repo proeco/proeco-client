@@ -142,7 +142,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
           />
           <Box mt={4} textAlign="center">
             <Button disabled={isCreating || !isValidForm} color="primary" onClick={handleClickCreateNewTeam}>
-              <Icon icon="CreateOutlined" width="20px" />
+              <Icon icon="PENCIL" size={20} color="WHITE" />
               新規チームを作成する
             </Button>
           </Box>
