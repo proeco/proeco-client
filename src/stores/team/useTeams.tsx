@@ -1,5 +1,4 @@
-import { SWRResponse } from 'swr';
-import useImmutableSWR from 'swr/immutable';
+import useSWR, { SWRResponse } from 'swr';
 
 import { restClient } from '~/utils/rest-client';
 import { convertTeamFromServer, Team } from '~/domains';
@@ -13,7 +12,7 @@ import { PaginationResult } from '~/interfaces';
  * @returns mutate データの更新関数
  */
 export const useTeams = ({ page = 1, limit = 10 }: { page: number; limit?: 10 }): SWRResponse<PaginationResult<Team>, Error> => {
-  return useImmutableSWR(`/teams?page=${page}&limit=${limit}`, (endpoint: string) =>
+  return useSWR(`/teams?page=${page}&limit=${limit}`, (endpoint: string) =>
     restClient.apiGet<PaginationResult<Team>>(endpoint).then((result) => {
       return {
         ...result.data,

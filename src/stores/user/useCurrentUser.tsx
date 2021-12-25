@@ -1,5 +1,4 @@
-import { SWRResponse } from 'swr';
-import useImmutableSWR from 'swr/immutable';
+import useSWR, { SWRResponse } from 'swr';
 
 import { restClient } from '~/utils/rest-client';
 import { User, convertUserFromServer } from '~/domains';
@@ -12,7 +11,7 @@ import { User, convertUserFromServer } from '~/domains';
  * @returns mutate データの更新関数
  */
 export const useCurrentUser = (): SWRResponse<User | null, Error> => {
-  return useImmutableSWR('/users/me', (endpoint: string) =>
+  return useSWR('/users/me', (endpoint: string) =>
     restClient.apiGet<User | null>(endpoint).then((result) => (result.data ? convertUserFromServer(result.data) : null)),
   );
 };

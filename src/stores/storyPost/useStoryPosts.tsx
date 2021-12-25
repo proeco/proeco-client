@@ -1,5 +1,4 @@
-import { SWRResponse } from 'swr';
-import useImmutableSWR from 'swr/immutable';
+import useSWR, { SWRResponse } from 'swr';
 
 import { restClient } from '~/utils/rest-client';
 import { convertStoryPostFromServer, StoryPost } from '~/domains';
@@ -22,7 +21,7 @@ export const useStoryPosts = ({
   limit: number;
 }): SWRResponse<StoryPost[], Error> => {
   const key = storyId ? `/story-posts?storyId=${storyId}&page=${page}&limit=${limit}` : null;
-  return useImmutableSWR(
+  return useSWR(
     key,
     (endpoint: string) =>
       restClient.apiGet<PaginationResult<StoryPost>>(endpoint).then((result) => result.data.docs.map((v) => convertStoryPostFromServer(v))),
