@@ -5,7 +5,7 @@ import { Drawer as MuiDrawer } from '@mui/material';
 import { styled, Theme, CSSObject } from '@mui/material/styles';
 
 import { useRouter } from 'next/router';
-import { SideBarListItem, Icon, Link, IconButton } from '~/components/parts/commons';
+import { SideBarListItem, Icon, Link } from '~/components/parts/commons';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 
 import { useLocalStorage } from '~/hooks/useLocalStorage';
@@ -50,7 +50,9 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
         alignItems="center"
         justifyContent={open ? 'flex-end' : 'center'}
       >
-        <IconButton icon={open ? 'ChevronLeft' : 'ChevronRight'} width={30} onClick={handleClickChevronButton} />
+        <button className="btn" onClick={handleClickChevronButton}>
+          <Icon icon={open ? 'CHEVRON_LEFT' : 'CHEVRON_RIGHT'} size={30} />
+        </button>
       </Box>
       <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke" height="100%" display="flex" flexDirection="column">
         {open ? openContent : closeContent}
@@ -60,7 +62,7 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
               return (
                 <Link href={sidebarItem.url} key={index}>
                   <SideBarListItem
-                    icon={<Icon icon={sidebarItem.icon} width="20px" color={sidebarItem.url === router.asPath ? '#fff' : 'textColor.main'} />}
+                    icon={<Icon icon={sidebarItem.icon} size={20} color={sidebarItem.url === router.asPath ? 'WHITE' : 'BLACK'} />}
                     selected={sidebarItem.url === router.asPath}
                   >
                     <span className={sidebarItem.url === router.asPath ? 'text-white' : 'text-black'}>{sidebarItem.text}</span>
@@ -71,7 +73,7 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
             return (
               <Link href={sidebarItem.url} key={index}>
                 <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
-                  <Icon icon={sidebarItem.icon} width="32px" color={sidebarItem.url === router.asPath ? 'primary.main' : 'textColor.main'} />
+                  <Icon icon={sidebarItem.icon} size={24} color={sidebarItem.url === router.asPath ? 'PRIMARY' : 'BLACK'} />
                   <span className={`fs-4 ${sidebarItem.url === router.asPath ? 'text-primary' : 'text-black'}`}>{sidebarItem.text}</span>
                 </Box>
               </Link>
