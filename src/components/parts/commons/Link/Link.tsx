@@ -10,7 +10,7 @@ type Props = {
 
 export const Link: VFC<Props> = ({ href, target, children, isShowUnderLine = false }) => (
   <NextLink href={href} passHref>
-    <a className={isShowUnderLine ? '' : 'text-decoration-none'} target={target || '_self'} rel="noopener noreferrer">
+    <a className={isShowUnderLine ? '' : 'text-decoration-none'} target={target || '_self'} rel={target ? 'opener noreferrer' : ''}>
       {children}
     </a>
   </NextLink>
