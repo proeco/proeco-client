@@ -5,7 +5,7 @@ import { Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
-import { Typography, Icon } from '~/components/parts/commons';
+import { Icon } from '~/components/parts/commons';
 import { SkeltonUserIcon, UserIcon } from '~/components/domains/user/UserIcon';
 import { SideBar } from '~/components/parts/layout/SideBar';
 
@@ -50,7 +50,7 @@ export const UserSideBar: VFC = memo(() => {
       return (
         <StyledUserIconWrapper pb="16px">
           <UserIcon size={80} attachmentId={currentUser.iconImageId} userId={currentUser._id} isLink />
-          <Typography variant="h3">{currentUser.name}</Typography>
+          <h2 className="mb-0">{currentUser.name}</h2>
         </StyledUserIconWrapper>
       );
     }
@@ -58,7 +58,7 @@ export const UserSideBar: VFC = memo(() => {
     return (
       <StyledUserIconWrapper pb="16px">
         <Icon width={40} icon="PersonOutline" />
-        <Typography variant="h3">undefined</Typography>
+        <h2 className="mb-0">undefined</h2>
       </StyledUserIconWrapper>
     );
   }, [isValidatingUser, currentUser]);
