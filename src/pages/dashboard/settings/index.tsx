@@ -1,6 +1,6 @@
 import { Box } from '@mui/system';
 import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
-import { Button, Icon, IconUpload, Paper, TextField, Typography } from '~/components/parts/commons';
+import { Button, Icon, IconUpload, Paper, TextField } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { URLS } from '~/constants';
@@ -78,10 +78,10 @@ const DashboardSettingsPage: ProecoNextPage = () => {
       <ProecoOgpHead />
       <Box mx="auto" maxWidth="1200px">
         <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="h3" bold display="flex" alignItems="center" gap="8px">
+          <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
             <Icon icon="Settings" width={32} />
             設定
-          </Typography>
+          </h2>
         </Box>
         <Paper>
           <Box display="flex" justifyContent="center">
@@ -91,15 +91,11 @@ const DashboardSettingsPage: ProecoNextPage = () => {
             />
           </Box>
           <Box mb="16px">
-            <Typography mb="4px" variant="body1" color="textColor.light">
-              ユーザー名
-            </Typography>
+            <span className="mb-1 d-inline-block text-light">ユーザー名</span>
             <TextField fullWidth value={newUser?.name} onChange={(e) => updateUserForm({ name: e.target.value })} />
           </Box>
           <Box mb="16px">
-            <Typography mb="4px" variant="body1" color="textColor.light">
-              自己紹介
-            </Typography>
+            <span className="mb-1 d-inline-block text-light">自己紹介</span>
             <TextField
               fullWidth
               multiline
