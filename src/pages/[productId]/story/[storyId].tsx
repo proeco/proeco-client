@@ -17,7 +17,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
-import { Button, Emoji, FixedImage, Icon, IconButton, Paper, TimeLineItem, Typography } from '~/components/parts/commons';
+import { Button, Emoji, FixedImage, Icon, IconButton, Paper, TimeLineItem } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
@@ -145,9 +145,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
         <Box mt={1} mb={4} display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center" gap="16px">
             <Emoji emojiId={story.emojiId} size={40} />
-            <Typography variant="h2" bold>
-              {story.title}
-            </Typography>
+            <h1 className="fw-bold mb-0 d-flex align-items-center gap-2">{story.title}</h1>
           </Box>
           {isMemberOfTeam && (
             <Dropdown
@@ -222,13 +220,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
           </Grid>
         </Grid>
       </Box>
-      <UpdateStoryModal
+      {/* {/* <UpdateStoryModal
         isOpen={isOpenUpdateStoryModal}
         onCloseModal={() => setIsOpenUpdateStoryModal(false)}
         story={story}
         teamId={team._id}
         page={page}
-      />
+      /> */}
       <DeleteStoryModal
         isOpen={isOpenDeleteStoryModal}
         onCloseModal={() => setIsOpenDeleteStoryModal(false)}
