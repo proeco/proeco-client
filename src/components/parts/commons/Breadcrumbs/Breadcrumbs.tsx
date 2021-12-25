@@ -1,5 +1,4 @@
 import React, { VFC } from 'react';
-import { Breadcrumbs as MuiBreadcrumbs } from '@mui/material';
 
 import { Link } from '~/components/parts/commons';
 
@@ -12,21 +11,25 @@ type Props = {
 
 export const Breadcrumbs: VFC<Props> = ({ breadcrumbsItems }) => {
   return (
-    <MuiBreadcrumbs separator="›" aria-label="breadcrumb">
-      {breadcrumbsItems.map((breadcrumbsItem, i) => {
-        if (breadcrumbsItem.url) {
+    <nav aria-label="breadcrumb">
+      <ol className="breadcrumb">
+        {breadcrumbsItems.map((breadcrumbsItem, i) => {
+          if (breadcrumbsItem.url) {
+            return (
+              <li className="breadcrumb-item" key={i}>
+                <Link href={breadcrumbsItem.url}>
+                  <span className="text-primary fs-3">{breadcrumbsItem.label}</span>
+                </Link>
+              </li>
+            );
+          }
           return (
-            <Link href={breadcrumbsItem.url} key={i}>
-              <span className="text-primary fs-4">{breadcrumbsItem.label}</span>
-            </Link>
+            <li className="breadcrumb-item" key={i}>
+              <span className="fs-3">{breadcrumbsItem.label}</span>
+            </li>
           );
-        }
-        return (
-          <span className="fs-4" key={i}>
-            {breadcrumbsItem.label}
-          </span>
-        );
-      })}
-    </MuiBreadcrumbs>
+        })}
+      </ol>
+    </nav>
   );
 };
