@@ -98,7 +98,7 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
       </Box>
       <Box width="100%" textAlign="center">
         <Button color="primary" onClick={handleClickUpdateStoryButton} disabled={isDisabled}>
-          更新する！
+          更新する
         </Button>
       </Box>
     </>

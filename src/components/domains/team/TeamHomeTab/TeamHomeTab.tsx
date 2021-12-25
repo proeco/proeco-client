@@ -62,7 +62,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
         )}
       </Box>
       <Grid container>
-        <Grid key={team._id} item xs={12} sm={8} px={1} pb={2}>
+        <Grid item xs={12} sm={8} px={1} pb={2}>
           <Paper>
             {isUpdate && currentUser && (
               <Editor
@@ -81,7 +81,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
             )}
           </Paper>
         </Grid>
-        <Grid key={team._id} item xs={12} sm={4} px={1} pb={2}>
+        <Grid item xs={12} sm={4} px={1} pb={2}>
           <TeamCard
             name={team.name}
             productId={team.productId}

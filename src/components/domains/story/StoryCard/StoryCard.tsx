@@ -1,5 +1,5 @@
 import React, { VFC, useMemo } from 'react';
-import { Box, Chip, Skeleton } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Story } from '~/domains';
 import { Emoji, Card, Link } from '~/components/parts/commons';
@@ -36,7 +36,6 @@ export const StoryCard: VFC<Props> = ({ story }) => {
   const StoryCardContent = useMemo(() => {
     return (
       <StyledStoryCard>
-        <StyledChip label={story.isCompleted ? 'Closed' : 'Open'} />
         <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative">
           <StyledBox>
             <Emoji emojiId={story.emojiId} size={48} />
@@ -87,13 +86,4 @@ const StyledBox = styled(Box)`
 const StyledTime = styled('time')`
   font-size: 10px;
   color: ${(props) => props.theme.palette.textColor.light};
-`;
-
-const StyledChip = styled(Chip)`
-  position: absolute;
-  z-index: 2;
-  top: 8px;
-  left: 8px;
-  color: #fff;
-  background-color: ${(props) => props.theme.palette.secondary.main};
 `;

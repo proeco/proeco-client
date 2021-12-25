@@ -106,7 +106,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
           </Box>
           <Box mt={4} textAlign="center">
             <Button disabled={isUpdating || !isValidForm} color="primary" onClick={handleClickCreateNewTeam}>
-              <Icon icon="CLOCKWISE" size={20} />
+              <Icon icon="CLOCKWISE" size={16} color="WHITE" />
               更新する
             </Button>
           </Box>
