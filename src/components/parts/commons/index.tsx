@@ -10,7 +10,6 @@ export { EmojiRadioGroup } from './EmojiRadioGroup';
 export { FirstLetterIcon } from './FirstLetterIcon';
 export { FixedImage } from './FixedImage';
 export { Icon } from './Icon';
-export { IconButton } from './IconButton';
 export { IconUpload } from './IconUpload';
 export { Link } from './Link';
 export { MarkdownToHtmlBody } from './MarkdownToHtmlBody';
