@@ -1,44 +1,21 @@
-import React, { ReactNode, FC, useState, ComponentProps } from 'react';
-import { Menu as MuiMenu } from '@mui/material';
-import { Box, styled } from '@mui/system';
+import React, { ReactNode, FC, useState } from 'react';
+import { Dropdown as DropdownOriginal, DropdownMenu, DropdownToggle, DropdownItem as DropdownItemOOriginal } from 'reactstrap';
 
-type CustomProps = {
+type Props = {
   toggle: ReactNode;
 };
 
-type Props = Omit<ComponentProps<typeof MuiMenu>, 'open' | 'onClose'> & CustomProps;
-
-export const Dropdown: FC<Props> = ({
-  toggle,
-  anchorOrigin = { vertical: 'bottom', horizontal: 'left' },
-  transformOrigin = {
-    vertical: 'top',
-    horizontal: 'left',
-  },
-  children,
-}) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+export const Dropdown: FC<Props> = ({ toggle, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <>
-      <StyledBox onClick={(e) => setAnchorEl(e.currentTarget)} width="fit-content">
-        {toggle}
-      </StyledBox>
-      <MuiMenu
-        anchorOrigin={anchorOrigin}
-        transformOrigin={transformOrigin}
-        anchorEl={anchorEl}
-        open={open}
-        onClick={() => setAnchorEl(null)}
-        onClose={() => setAnchorEl(null)}
-      >
-        {children}
-      </MuiMenu>
-    </>
+    <DropdownOriginal toggle={() => setIsOpen((prev) => !prev)} isOpen={isOpen}>
+      <DropdownToggle color="transparent">{toggle}</DropdownToggle>
+      <DropdownMenu>{children}</DropdownMenu>
+    </DropdownOriginal>
   );
 };
 
-const StyledBox = styled(Box)`
-  cursor: pointer;
-`;
+export const DropdownItem: FC<{ onClick?: () => void }> = ({ onClick, children }) => {
+  return <DropdownItemOOriginal onClick={onClick}>{children}</DropdownItemOOriginal>;
+};

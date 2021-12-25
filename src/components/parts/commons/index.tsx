@@ -1,7 +1,7 @@
 export { Button } from './Button';
 export { Card } from './Card';
 export { CircularProgress } from './CircularProgress';
-export { Dropdown } from './Dropdown';
+export { Dropdown, DropdownItem } from './Dropdown';
 export { EditableText } from './EditableText';
 export { Editor } from './Editor';
 export { Emoji } from './Emoji';
