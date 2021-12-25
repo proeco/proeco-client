@@ -1,7 +1,7 @@
 import React, { VFC } from 'react';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
-import { Modal, Button, Emoji } from '~/components/parts/commons';
+import { Modal, Button, Emoji, Icon } from '~/components/parts/commons';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -59,7 +59,8 @@ export const DeleteStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, pro
 
       <Box mt={3} width="100%" textAlign="center">
         <Button color="danger" onClick={handleClickDeleteStoryButton}>
-          削除
+          <Icon icon="TRASH" size={20} color="WHITE" />
+          削除する
         </Button>
       </Box>
     </>
