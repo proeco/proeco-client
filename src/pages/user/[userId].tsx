@@ -50,6 +50,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
             description={team.description}
             attachmentId={team.iconImageId}
             url={team.url}
+            isLink
           />
         </Link>
       </Grid>
