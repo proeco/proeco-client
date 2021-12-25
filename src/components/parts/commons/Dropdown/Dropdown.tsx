@@ -14,7 +14,7 @@ export const Dropdown: FC<Props> = ({ toggle, tag, children }) => {
       <DropdownToggle color="transparent" tag={tag} className="c-pointer">
         {toggle}
       </DropdownToggle>
-      <DropdownMenu>{children}</DropdownMenu>
+      <DropdownMenu end>{children}</DropdownMenu>
     </DropdownOriginal>
   );
 };
