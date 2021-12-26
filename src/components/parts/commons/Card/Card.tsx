@@ -8,7 +8,11 @@ type Props = {
 };
 
 export const Card: FC<Props> = ({ padding = 3, square = false, children }) => {
-  const classNames = [`card border-0 shadow p-${padding}`];
+  const classNames = ['card border-0 shadow'];
   if (square) classNames.push('rounded-0');
-  return <div className={classNames.join(' ')}>{children}</div>;
+  return (
+    <div className={classNames.join(' ')}>
+      <div className={`card-body p-${padding}`}>{children}</div>
+    </div>
+  );
 };
