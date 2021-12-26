@@ -195,23 +195,25 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
             )}
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
-            <Paper>
-              <Box mb="12px">
-                <FixedImage imageUrl={ogpUrl} />
-              </Box>
-              {isMemberOfTeam && (
-                <Box textAlign="center" mb="12px">
-                  <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
-                    <StyledButton color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
-                      {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
-                    </StyledButton>
-                  </Reward>
+            <Box position="sticky" top="86px">
+              <Paper>
+                <Box mb="12px">
+                  <FixedImage imageUrl={ogpUrl} />
                 </Box>
-              )}
-              <Button color="primary" onClick={handleClickShareButton}>
-                <Icon icon="TWITTER" size={16} color="WHITE" />
-              </Button>
-            </Paper>
+                {isMemberOfTeam && (
+                  <Box textAlign="center" mb="12px">
+                    <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
+                      <StyledButton color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
+                        {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
+                      </StyledButton>
+                    </Reward>
+                  </Box>
+                )}
+                <Button color="primary" onClick={handleClickShareButton}>
+                  <Icon icon="TWITTER" size={16} color="WHITE" />
+                </Button>
+              </Paper>
+            </Box>
           </Grid>
         </Grid>
       </Box>
