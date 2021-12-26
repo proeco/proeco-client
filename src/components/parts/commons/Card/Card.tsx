@@ -1,20 +1,14 @@
-import React, { VFC, ComponentProps } from 'react';
-import { Card as MuiCard } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React, { FC } from 'react';
 
-type Card = {
-  padding?: number;
+type Padding = 0 | 1 | 2 | 3 | 4 | 5;
+
+type Props = {
+  padding?: Padding;
   square?: boolean;
 };
 
-type Props = ComponentProps<typeof MuiCard> & Card;
-
-export const Card: VFC<Props> = ({ padding = 20, square = false, ...rest }) => {
-  return <StyledMuiCard padding={padding} square={square} {...rest} />;
+export const Card: FC<Props> = ({ padding = 3, square = false, children }) => {
+  const classNames = [`card border-0 shadow p-${padding}`];
+  if (square) classNames.push('rounded-0');
+  return <div className={classNames.join(' ')}>{children}</div>;
 };
-
-const StyledMuiCard = styled(MuiCard)<{ square: boolean; padding: number }>`
-  width: fit-content;
-  padding: ${(props) => props.padding}px;
-  border-radius: ${(props) => (props.square ? '0px' : '4px')};
-`;

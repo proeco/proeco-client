@@ -12,7 +12,7 @@ export default {
 
 const Template: ComponentStory<typeof Card> = ({ padding, square, ...rest }) => {
   return (
-    <Box p="40px" bgcolor="gray">
+    <Box p="40px" bgcolor="gray" width="400px">
       <Card padding={padding} square={square} {...rest}>
         <p>Cardのコンテンツ</p>
       </Card>
