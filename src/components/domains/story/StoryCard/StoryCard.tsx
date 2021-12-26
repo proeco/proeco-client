@@ -14,7 +14,7 @@ type Props = {
 
 export const SkeltonStoryCard: VFC = () => {
   return (
-    <StyledStoryCard>
+    <StyledStoryCard padding={0}>
       <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative"></Box>
       <Box p="12px">
         <Skeleton variant="text" width="50px" />
@@ -35,7 +35,7 @@ export const StoryCard: VFC<Props> = ({ story }) => {
 
   const StoryCardContent = useMemo(() => {
     return (
-      <StyledStoryCard>
+      <StyledStoryCard padding={0}>
         <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative">
           <StyledBox>
             <Emoji emojiId={story.emojiId} size={48} />
@@ -68,7 +68,6 @@ export const StoryCard: VFC<Props> = ({ story }) => {
 };
 
 const StyledStoryCard = styled(Card)`
-  padding: 0px;
   box-sizing: border-box;
   position: relative;
   width: 100%;
