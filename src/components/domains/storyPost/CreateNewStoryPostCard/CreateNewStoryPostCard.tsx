@@ -2,7 +2,7 @@ import { VFC, useState } from 'react';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 
-import { Editor, Paper } from '~/components/parts/commons';
+import { Card, Editor } from '~/components/parts/commons';
 import { StoryPost, User } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
@@ -14,7 +14,7 @@ type Props = {
   currentUser: User;
 };
 
-export const CreateNewStoryPostPaper: VFC<Props> = ({ storyId, page, currentUser }) => {
+export const CreateNewStoryPostCard: VFC<Props> = ({ storyId, page, currentUser }) => {
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
     page,
@@ -43,8 +43,8 @@ export const CreateNewStoryPostPaper: VFC<Props> = ({ storyId, page, currentUser
   };
 
   return (
-    <Paper>
+    <Card square>
       <Editor content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEdit} currentUser={currentUser} />
-    </Paper>
+    </Card>
   );
 };

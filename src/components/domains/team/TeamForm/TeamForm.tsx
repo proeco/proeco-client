@@ -16,7 +16,7 @@ import { restClient } from '~/utils/rest-client';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
-import { TextField, Button, Icon, Paper, IconUpload } from '~/components/parts/commons';
+import { TextField, Button, Icon, IconUpload, Card } from '~/components/parts/commons';
 import { useAttachment } from '~/stores/attachment';
 
 type Props = {
@@ -114,7 +114,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
   return (
     <Grid container>
       <Grid item xs={12} md={6} px={2} pb={3}>
-        <Paper square>
+        <Card>
           <Box display="flex" justifyContent="center">
             <IconUpload
               onSelectImage={handleChangeFile}
@@ -146,7 +146,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
               {team ? '更新する' : '新規チームを作成する'}
             </Button>
           </Box>
-        </Paper>
+        </Card>
       </Grid>
       <Grid item xs={12} md={6} px={2} pb={3}>
         <h3 className="mb-3 text-center">プレビュー</h3>

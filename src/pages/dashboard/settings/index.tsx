@@ -1,6 +1,6 @@
 import { Box } from '@mui/system';
 import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
-import { Button, Icon, IconUpload, Paper, TextField } from '~/components/parts/commons';
+import { Button, Card, Icon, IconUpload, TextField } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { URLS } from '~/constants';
@@ -83,7 +83,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
             設定
           </h2>
         </Box>
-        <Paper>
+        <Card>
           <Box display="flex" justifyContent="center">
             <IconUpload
               onSelectImage={handleChangeFile}
@@ -110,7 +110,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
               更新する
             </Button>
           </Box>
-        </Paper>
+        </Card>
       </Box>
     </>
   );

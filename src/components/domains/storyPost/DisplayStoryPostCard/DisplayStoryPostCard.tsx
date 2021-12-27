@@ -10,9 +10,9 @@ import {
   DropdownItem,
   Editor,
   EmojiRadioGroup,
-  Paper,
   MarkdownToHtmlBody,
   EmojiCountResult,
+  Card,
 } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { Reaction, StoryPost, User } from '~/domains';
@@ -41,7 +41,7 @@ type Props = {
   currentUser?: User | null;
 };
 
-export const DisplayStoryPostPaper: VFC<Props> = ({
+export const DisplayStoryPostCard: VFC<Props> = ({
   createdUserId,
   createdUserName,
   storyPost,
@@ -217,7 +217,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
 
   return (
     <>
-      <Paper>
+      <Card square>
         <StyledBox width="100%" display="flex" alignItems="center" ref={boxRef}>
           {createdUserId && createdUserName ? <Link href={'/user/' + createdUserId}>{createdUserName}</Link> : <span>undefined</span>}
           <StyledTime className="ms-1" dateTime={currentStoryPost.createdAt.toLocaleDateString()}>
@@ -296,7 +296,7 @@ export const DisplayStoryPostPaper: VFC<Props> = ({
             )}
           </>
         )}
-      </Paper>
+      </Card>
       <DeleteStoryPostModal
         isOpen={isOpenDeleteStoryPostModal}
         onCloseModal={() => setIsOpenDeleteStoryPostModal(false)}

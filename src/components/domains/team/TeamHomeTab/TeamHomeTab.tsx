@@ -1,6 +1,6 @@
 import React, { VFC, useState } from 'react';
 import { Box, Grid } from '@mui/material';
-import { Button, Editor, Icon, MarkdownToHtmlBody, Paper } from '~/components/parts/commons';
+import { Button, Card, Editor, Icon, MarkdownToHtmlBody } from '~/components/parts/commons';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { Team, User } from '~/domains';
 import { restClient } from '~/utils/rest-client';
@@ -63,7 +63,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
       </Box>
       <Grid container>
         <Grid item xs={12} sm={8} px={1} pb={2}>
-          <Paper>
+          <Card square>
             {isUpdate && currentUser && (
               <Editor
                 isUpdateMode
@@ -79,7 +79,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
                 <MarkdownToHtmlBody content={content} />
               </Box>
             )}
-          </Paper>
+          </Card>
         </Grid>
         <Grid item xs={12} sm={4} px={1} pb={2}>
           <TeamCard

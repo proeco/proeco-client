@@ -14,7 +14,6 @@ export { Link } from './Link';
 export { MarkdownToHtmlBody } from './MarkdownToHtmlBody';
 export { Modal } from './Modal';
 export { Pagination } from './Pagination';
-export { Paper } from './Paper';
 export { SelectableEmoji } from './SelectableEmoji';
 export { SideBarListItem } from './SideBarListItem';
 export { Spinner } from './Spinner';

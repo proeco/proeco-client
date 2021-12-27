@@ -17,13 +17,13 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
-import { Button, Emoji, FixedImage, Icon, Paper, TimeLineItem } from '~/components/parts/commons';
+import { Button, Card, Emoji, FixedImage, Icon, TimeLineItem } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
-import { CreateNewStoryPostPaper } from '~/components/domains/storyPost/CreateNewStoryPostPaper/CreateNewStoryPostPaper';
+import { CreateNewStoryPostCard } from '~/components/domains/storyPost/CreateNewStoryPostCard/CreateNewStoryPostCard';
 import { Dropdown, DropdownItem } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
-import { DisplayStoryPostPaper } from '~/components/domains/storyPost/DisplayStoryPostPaper';
+import { DisplayStoryPostCard } from '~/components/domains/storyPost/DisplayStoryPostCard';
 import { Attachment, Reaction, StoryPost, Team } from '~/domains';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
@@ -170,7 +170,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                   // customStoryPostが最後の要素ではないか、またはCurrentUserがチームに属しているときにtrue
                   isConnect={i !== customStoryPosts.length - 1 || isMemberOfTeam}
                 >
-                  <DisplayStoryPostPaper
+                  <DisplayStoryPostCard
                     createdUserId={createdStoryPostUser?._id}
                     createdUserName={createdStoryPostUser?.name}
                     storyPost={customStoryPost}
@@ -189,13 +189,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
               <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
                 <UserIcon size={40} isLink attachmentId={currentUser.iconImageId} userId={currentUser._id} />
                 <Box width="100%">
-                  <CreateNewStoryPostPaper storyId={storyId} page={page} currentUser={currentUser} />
+                  <CreateNewStoryPostCard storyId={storyId} page={page} currentUser={currentUser} />
                 </Box>
               </Box>
             )}
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
-            <Paper>
+            <Card square>
               <Box mb="12px">
                 <FixedImage imageUrl={ogpUrl} />
               </Box>
@@ -211,7 +211,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
               <Button color="primary" onClick={handleClickShareButton}>
                 <Icon icon="TWITTER" size={16} color="WHITE" />
               </Button>
-            </Paper>
+            </Card>
           </Grid>
         </Grid>
       </Box>
