@@ -3,7 +3,9 @@ import { useRouter } from 'next/router';
 
 import Reward, { RewardElement } from 'react-rewards';
 
-import { Box, styled } from '@mui/system';
+import styled from 'styled-components';
+
+import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
@@ -195,23 +197,25 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
             )}
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
-            <Card square>
-              <Box mb="12px">
-                <FixedImage imageUrl={ogpUrl} />
-              </Box>
-              {isMemberOfTeam && (
-                <Box textAlign="center" mb="12px">
-                  <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
-                    <StyledButton color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
-                      {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
-                    </StyledButton>
-                  </Reward>
+            <StyledDiv className="position-sticky">
+              <Card square>
+                <Box mb="12px">
+                  <FixedImage imageUrl={ogpUrl} />
                 </Box>
-              )}
-              <Button color="primary" onClick={handleClickShareButton}>
-                <Icon icon="TWITTER" size={16} color="WHITE" />
-              </Button>
-            </Card>
+                {isMemberOfTeam && (
+                  <Box textAlign="center" mb="12px">
+                    <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
+                      <Button color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
+                        {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
+                      </Button>
+                    </Reward>
+                  </Box>
+                )}
+                <Button color="primary" onClick={handleClickShareButton}>
+                  <Icon icon="TWITTER" size={16} color="WHITE" />
+                </Button>
+              </Card>
+            </StyledDiv>
           </Grid>
         </Grid>
       </Box>
@@ -234,8 +238,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   );
 };
 
-const StyledButton = styled(Button)`
-  text-transform: none;
+const StyledDiv = styled.div`
+  top: 86px;
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
