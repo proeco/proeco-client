@@ -1,6 +1,6 @@
 {
   "name": "proeco-client",
-  "version": "0.2.12",
+  "version": "0.2.14",
   "private": false,
   "author": "itizawa <itizawa.pen@gmail.com>",
   "homepage": "https://github.com/proeco/proeco#readme",
@@ -46,6 +46,7 @@
     "react-syntax-highlighter": "15.4.5",
     "reactstrap": "9.0.1",
     "remark-gfm": "3.0.1",
+    "styled-components": "^5.3.3",
     "swr": "1.1.1"
   },
   "devDependencies": {
@@ -67,6 +68,7 @@
     "@types/react-copy-to-clipboard": "5.0.2",
     "@types/react-test-renderer": "17.0.1",
     "@types/socket.io-client": "3.0.0",
+    "@types/styled-components": "^5.1.19",
     "@types/throttle-debounce": "2.1.0",
     "@types/toastr": "2.1.39",
     "@typescript-eslint/eslint-plugin": "rc-v5",
