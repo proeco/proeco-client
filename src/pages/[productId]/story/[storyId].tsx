@@ -3,7 +3,9 @@ import { useRouter } from 'next/router';
 
 import Reward, { RewardElement } from 'react-rewards';
 
-import { Box, styled } from '@mui/system';
+import styled from 'styled-components';
+
+import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
@@ -195,7 +197,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
             )}
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
-            <StyledDiv>
+            <StyledDiv className="position-sticky">
               <Paper>
                 <Box mb="12px">
                   <FixedImage imageUrl={ogpUrl} />
@@ -203,9 +205,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                 {isMemberOfTeam && (
                   <Box textAlign="center" mb="12px">
                     <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
-                      <StyledButton color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
+                      <Button color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
                         {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
-                      </StyledButton>
+                      </Button>
                     </Reward>
                   </Box>
                 )}
@@ -236,13 +238,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   );
 };
 
-const StyledDiv = styled('div')`
-  position: sticky;
+const StyledDiv = styled.div`
   top: 86px;
-`;
-
-const StyledButton = styled(Button)`
-  text-transform: none;
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
