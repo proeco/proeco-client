@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box } from '@mui/system';
 
 import { Editor } from './Editor';
-import { Paper } from '~/components/parts/commons';
+import { Card } from '~/components/parts/commons';
 import { MDS } from '~/constants';
 import { createMockUser } from '~/mocks/domains';
 
@@ -22,7 +22,7 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onComp
 
   return (
     <Box p="20px" width="600px" bgcolor="#e5e5e5">
-      <Paper>
+      <Card>
         <Editor
           content={markdownContent}
           onChangeContent={setMarkdownContent}
@@ -31,7 +31,7 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onComp
           onClickCancelButton={onClickCancelButton}
           currentUser={currentUser}
         />
-      </Paper>
+      </Card>
     </Box>
   );
 };
