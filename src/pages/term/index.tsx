@@ -13,7 +13,7 @@ const Term: ProecoNextPage = () => {
       <ProecoOgpHead title="Proeco - 利用規約" />
       <h1 className="text-center fw-bold">利用規約</h1>
       <Box maxWidth="800px" mx="auto">
-        <Card square>
+        <Card>
           <MarkdownToHtmlBody content={MDS.TERM_MD} />
         </Card>
       </Box>

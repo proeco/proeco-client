@@ -16,7 +16,7 @@ type Props = {
 
 export const SkeltonTeamCard: VFC = () => {
   return (
-    <StyledTeamCard padding={0}>
+    <StyledTeamCard>
       <FixedImage />
       <Box p={2}>
         <Box display="flex" alignItems="center" p={2}>
@@ -38,7 +38,7 @@ export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentI
   const { data: ogp } = useOgp(url);
 
   return (
-    <StyledTeamCard padding={0}>
+    <StyledTeamCard>
       <FixedImage imageUrl={ogp?.image} />
       <Box position="relative" p={2}>
         <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">

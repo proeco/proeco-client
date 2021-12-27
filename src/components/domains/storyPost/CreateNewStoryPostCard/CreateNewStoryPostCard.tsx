@@ -43,7 +43,7 @@ export const CreateNewStoryPostCard: VFC<Props> = ({ storyId, page, currentUser 
   };
 
   return (
-    <Card square>
+    <Card>
       <Editor content={content} onChangeContent={setContent} onCompleteEdit={handleCompleteEdit} currentUser={currentUser} />
     </Card>
   );

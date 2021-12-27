@@ -10,10 +10,10 @@ export default {
   component: Card,
 } as ComponentMeta<typeof Card>;
 
-const Template: ComponentStory<typeof Card> = ({ padding, square, ...rest }) => {
+const Template: ComponentStory<typeof Card> = ({ ...rest }) => {
   return (
     <Box p="40px" bgcolor="gray" width="400px">
-      <Card padding={padding} square={square} {...rest}>
+      <Card {...rest}>
         <p>Cardのコンテンツ</p>
       </Card>
     </Box>
@@ -21,11 +21,8 @@ const Template: ComponentStory<typeof Card> = ({ padding, square, ...rest }) => 
 };
 
 export const DefaultCard = Template.bind({});
-DefaultCard.args = {
-  square: false,
-};
 
-export const SquareCard = Template.bind({});
-SquareCard.args = {
-  square: true,
+export const CardWithImage = Template.bind({});
+CardWithImage.args = {
+  imagePath: 'https://itizawa-tech.growi.cloud/attachment/61bb543444194e2b1d023552',
 };

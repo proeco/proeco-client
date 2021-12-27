@@ -63,7 +63,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
       </Box>
       <Grid container>
         <Grid item xs={12} sm={8} px={1} pb={2}>
-          <Card square>
+          <Card>
             {isUpdate && currentUser && (
               <Editor
                 isUpdateMode

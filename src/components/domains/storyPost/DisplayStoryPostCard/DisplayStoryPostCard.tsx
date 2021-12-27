@@ -217,7 +217,7 @@ export const DisplayStoryPostCard: VFC<Props> = ({
 
   return (
     <>
-      <Card square>
+      <Card>
         <StyledBox width="100%" display="flex" alignItems="center" ref={boxRef}>
           {createdUserId && createdUserName ? <Link href={'/user/' + createdUserId}>{createdUserName}</Link> : <span>undefined</span>}
           <StyledTime className="ms-1" dateTime={currentStoryPost.createdAt.toLocaleDateString()}>

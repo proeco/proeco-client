@@ -22,7 +22,7 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onComp
 
   return (
     <Box p="20px" width="600px" bgcolor="#e5e5e5">
-      <Card square>
+      <Card>
         <Editor
           content={markdownContent}
           onChangeContent={setMarkdownContent}

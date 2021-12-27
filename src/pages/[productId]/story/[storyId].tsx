@@ -198,7 +198,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
             <StyledDiv className="position-sticky">
-              <Card square>
+              <Card>
                 <Box mb="12px">
                   <FixedImage imageUrl={ogpUrl} />
                 </Box>
