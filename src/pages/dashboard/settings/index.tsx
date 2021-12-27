@@ -1,10 +1,12 @@
 import { Box } from '@mui/system';
 import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
+import { SkeltonUserIcon } from '~/components/domains/user/UserIcon';
 import { Button, Icon, IconUpload, Paper, TextField } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { URLS } from '~/constants';
 import { User } from '~/domains';
+import { useUploadAttachment } from '~/hooks/attachments';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
@@ -25,6 +27,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
 
   const { notifyErrorMessage } = useErrorNotification();
   const { notifySuccessMessage } = useSuccessNotification();
+  const { uploadAttachment, isLoading: isLoadingUploadAttachment } = useUploadAttachment();
 
   useEffect(() => {
     if (currentUser) {
@@ -44,23 +47,24 @@ const DashboardSettingsPage: ProecoNextPage = () => {
     });
   };
 
-  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFile = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!currentUser) return;
     if (!e.target.files) {
       return;
     }
-
-    setIconImage(e.target.files[0]);
+    try {
+      const attachment = await uploadAttachment(e.target.files[0], `${currentUser._id}/user-icons`);
+      updateUserForm({ iconImageId: attachment._id });
+      setIconImage(e.target.files[0]);
+    } catch (error) {
+      notifyErrorMessage('ファイルのアップロードに失敗しました');
+    }
   };
 
   const handleClickCreateNewTeam = async () => {
     setIsUpdating(true);
     try {
-      const params = new FormData();
-      if (iconImage) {
-        params.append('file', iconImage);
-      }
-      params.append('newUser', JSON.stringify(newUser));
-      const { data } = await restClient.apiPut<User>('/users', params, { 'Content-Type': 'multipart/form-data' });
+      const { data } = await restClient.apiPut<User>('/users', { newUser });
       notifySuccessMessage('ユーザー情報更新しました');
       mutateCurrentUser(data, false);
       setIsUpdating(false);
@@ -85,10 +89,14 @@ const DashboardSettingsPage: ProecoNextPage = () => {
         </Box>
         <Paper>
           <Box display="flex" justifyContent="center">
-            <IconUpload
-              onSelectImage={handleChangeFile}
-              currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachment?.filePath}
-            />
+            {isLoadingUploadAttachment ? (
+              <SkeltonUserIcon size={100} />
+            ) : (
+              <IconUpload
+                onSelectImage={handleChangeFile}
+                currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachment?.filePath}
+              />
+            )}
           </Box>
           <Box mb="16px">
             <span className="mb-1 d-inline-block text-light">ユーザー名</span>
@@ -105,7 +113,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
             />
           </Box>
           <Box mt={4} textAlign="center">
-            <Button disabled={isUpdating || !isValidForm} color="primary" onClick={handleClickCreateNewTeam}>
+            <Button disabled={isUpdating || !isValidForm || isLoadingUploadAttachment} color="primary" onClick={handleClickCreateNewTeam}>
               <Icon icon="CLOCKWISE" size={16} color="WHITE" />
               更新する
             </Button>
