@@ -195,7 +195,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
             )}
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
-            <Box position="sticky" top="86px">
+            <StyledDiv>
               <Paper>
                 <Box mb="12px">
                   <FixedImage imageUrl={ogpUrl} />
@@ -213,7 +213,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                   <Icon icon="TWITTER" size={16} color="WHITE" />
                 </Button>
               </Paper>
-            </Box>
+            </StyledDiv>
           </Grid>
         </Grid>
       </Box>
@@ -235,6 +235,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     </>
   );
 };
+
+const StyledDiv = styled('div')`
+  position: sticky;
+  top: 86px;
+`;
 
 const StyledButton = styled(Button)`
   text-transform: none;
