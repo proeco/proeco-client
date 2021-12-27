@@ -5,8 +5,9 @@ import { Box, styled } from '@mui/system';
 import { Grid } from '@mui/material';
 
 import { TeamCard } from '../TeamCard';
+import { SkeltonTeamIcon } from '../TeamIcon';
 import { Ogp } from '~/interfaces/ogp';
-import { Attachment, Team, User } from '~/domains';
+import { Team, User } from '~/domains';
 
 import { URLS } from '~/constants';
 import { useTeamsRelatedUser } from '~/stores/team';
@@ -18,6 +19,7 @@ import { useErrorNotification } from '~/hooks/useErrorNotification';
 
 import { TextField, Button, Icon, IconUpload, Card } from '~/components/parts/commons';
 import { useAttachment } from '~/stores/attachment';
+import { useUploadAttachment } from '~/hooks/attachments';
 
 type Props = {
   currentUser: User;
@@ -30,6 +32,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
   const { notifyErrorMessage } = useErrorNotification();
   const { mutate: mutateTeamsRelatedUser } = useTeamsRelatedUser({ userId: currentUser._id });
   const { data: attachment } = useAttachment(team?.iconImageId);
+  const { uploadAttachment, isLoading: isLoadingUploadAttachment } = useUploadAttachment();
 
   const [isCreating, setIsCreating] = useState(false);
   const [iconImage, setIconImage] = useState<File>();
@@ -86,15 +89,10 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
     if (!e.target.files) {
       return;
     }
-    const file = e.target.files[0];
-    const params = new FormData();
     try {
-      params.append('file', file);
-      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/team-icons`, params, {
-        'Content-Type': 'multipart/form-data',
-      });
+      const attachment = await uploadAttachment(e.target.files[0], `${currentUser._id}/team-icons`);
       updateStoryForm({ iconImageId: attachment._id });
-      setIconImage(file);
+      setIconImage(e.target.files[0]);
     } catch (error) {
       notifyErrorMessage('ファイルのアップロードに失敗しました');
     }
@@ -116,10 +114,14 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
       <Grid item xs={12} md={6} px={2} pb={3}>
         <Card>
           <Box display="flex" justifyContent="center">
-            <IconUpload
-              onSelectImage={handleChangeFile}
-              currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachment?.filePath}
-            />
+            {isLoadingUploadAttachment ? (
+              <SkeltonTeamIcon size={100} />
+            ) : (
+              <IconUpload
+                onSelectImage={handleChangeFile}
+                currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachment?.filePath}
+              />
+            )}
           </Box>
           <span className="mb-1 d-inline-block text-light">プロダクトの url</span>
           <Box display="flex" alignItems="center" gap={1}>
@@ -141,7 +143,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
             onChange={(e) => updateStoryForm({ description: e.target.value })}
           />
           <Box mt={4} textAlign="center">
-            <Button disabled={isCreating || !isValidForm} color="primary" onClick={handleClickCreateNewTeam}>
+            <Button disabled={isCreating || !isValidForm || isLoadingUploadAttachment} color="primary" onClick={handleClickCreateNewTeam}>
               <Icon icon="PENCIL" size={20} color="WHITE" />
               {team ? '更新する' : '新規チームを作成する'}
             </Button>
