@@ -2,11 +2,12 @@ import React, { VFC, useMemo } from 'react';
 import { Box, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Story } from '~/domains';
-import { Emoji, Card, Link } from '~/components/parts/commons';
+import { Card, Link } from '~/components/parts/commons';
 import { useTeam } from '~/stores/team';
 import { TeamIcon, SkeltonTeamIcon, GuestTeamIcon } from '~/components/domains/team/TeamIcon';
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
-import { URLS } from '~/constants';
+import { IMAGE_PATH, URLS } from '~/constants';
+import { useAttachment } from '~/stores/attachment';
 
 type Props = {
   story: Story;
@@ -14,15 +15,13 @@ type Props = {
 
 export const SkeltonStoryCard: VFC = () => {
   return (
-    <StyledStoryCard>
+    <StyledStoryCard imagePath={IMAGE_PATH.NO_IMAGE}>
       <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative"></Box>
-      <Box p="12px">
-        <Skeleton variant="text" width="50px" />
-        <Skeleton variant="text" width="100%" />
-        <Box mt="12px" display="flex" alignItems="center" gap="8px">
-          <SkeltonTeamIcon size={32} />
-          <Skeleton variant="text" width="100px" />
-        </Box>
+      <Skeleton variant="text" width="50px" />
+      <Skeleton variant="text" width="100%" />
+      <Box mt="12px" display="flex" alignItems="center" gap="8px">
+        <SkeltonTeamIcon size={32} />
+        <Skeleton variant="text" width="100px" />
       </Box>
     </StyledStoryCard>
   );
@@ -30,37 +29,38 @@ export const SkeltonStoryCard: VFC = () => {
 
 export const StoryCard: VFC<Props> = ({ story }) => {
   const { data: team } = useTeam({ teamId: story.teamId });
+  const { data: teamIconAttachment } = useAttachment(team?.iconImageId);
 
+  const ogpUrl = useMemo(
+    () =>
+      team && teamIconAttachment
+        ? `https://proeco-ogp.vercel.app/api/ogp?title=${story.title}&teamName=${team.name}&teamIconUrl=${teamIconAttachment.filePath}`
+        : '',
+    [story, team, teamIconAttachment],
+  );
   const displayDate = formatDistanceToNow(story.updatedAt);
 
   const StoryCardContent = useMemo(() => {
     return (
-      <StyledStoryCard>
-        <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative">
-          <StyledBox>
-            <Emoji emojiId={story.emojiId} size={48} />
-          </StyledBox>
-        </Box>
-        <Box p="12px">
-          <StyledTime dateTime={story.updatedAt.toLocaleDateString()}>{displayDate}</StyledTime>
-          <p className="fw-bold mb-0">{story.title}</p>
-          <Box mt="12px" display="flex" alignItems="center" gap="8px">
-            {team ? (
-              <>
-                <TeamIcon size={32} attachmentId={team.iconImageId} />
-                <span className="fs-2">{team.name}</span>
-              </>
-            ) : (
-              <>
-                <GuestTeamIcon size={32} />
-                <span className="fs-2">undefined</span>
-              </>
-            )}
-          </Box>
+      <StyledStoryCard imagePath={ogpUrl}>
+        <StyledTime dateTime={story.updatedAt.toLocaleDateString()}>{displayDate}</StyledTime>
+        <p className="fw-bold mb-0">{story.title}</p>
+        <Box mt="12px" display="flex" alignItems="center" gap="8px">
+          {team ? (
+            <>
+              <TeamIcon size={32} attachmentId={team.iconImageId} />
+              <span className="fs-2">{team.name}</span>
+            </>
+          ) : (
+            <>
+              <GuestTeamIcon size={32} />
+              <span className="fs-2">undefined</span>
+            </>
+          )}
         </Box>
       </StyledStoryCard>
     );
-  }, [displayDate, story, team]);
+  }, [displayDate, story, team, ogpUrl]);
 
   if (!team) return StoryCardContent;
 
@@ -73,13 +73,6 @@ const StyledStoryCard = styled(Card)`
   width: 100%;
   top: 0;
   transition: all 0.3s;
-`;
-
-const StyledBox = styled(Box)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 `;
 
 const StyledTime = styled('time')`
