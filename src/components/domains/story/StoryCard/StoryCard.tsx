@@ -10,6 +10,7 @@ import { TeamIcon, SkeltonTeamIcon, GuestTeamIcon } from '~/components/domains/t
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
 import { URLS } from '~/constants';
 import { useAttachment } from '~/stores/attachment';
+import { createOgpUrl } from '~/utils/createOgpUrl/createOgpUrl';
 
 type Props = {
   story: Story;
@@ -36,10 +37,7 @@ export const StoryCard: VFC<Props> = ({ story }) => {
   const { data: teamIconAttachment } = useAttachment(team?.iconImageId);
 
   const ogpUrl = useMemo(
-    () =>
-      team && teamIconAttachment
-        ? `https://proeco-ogp.vercel.app/api/ogp?title=${story.title}&teamName=${team.name}&teamIconUrl=${teamIconAttachment.filePath}`
-        : '',
+    () => (team && teamIconAttachment ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : ''),
     [story, team, teamIconAttachment],
   );
   const displayDate = formatDistanceToNow(story.updatedAt);
@@ -52,7 +50,7 @@ export const StoryCard: VFC<Props> = ({ story }) => {
         </time>
         <div className="d-flex align-items-center">
           <span className="me-1">
-            <Emoji emojiId={story.emojiId} size={16} />
+            <Emoji emojiId={story.emojiId} size={20} />
           </span>
           <p className="fw-bold mb-0">{story.title}</p>
         </div>
