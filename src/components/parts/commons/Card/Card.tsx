@@ -9,7 +9,7 @@ export const Card: FC<Props> = ({ imagePath, children }) => {
   return (
     <div className={classNames.join(' ')}>
       {imagePath && <img src={imagePath} className="card-img-top" alt="card-img-top" />}
-      <div className="card-body p-3">{children}</div>
+      <div className="card-body p-3 position-relative">{children}</div>
     </div>
   );
 };

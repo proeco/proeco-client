@@ -4,7 +4,7 @@ import { Box, styled } from '@mui/system';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { Card } from '~/components/parts/commons';
 import { useOgp } from '~/stores/ogp';
-import { FixedImage } from '~/components/parts/commons/FixedImage';
+import { IMAGE_PATH } from '~/constants';
 
 type Props = {
   name: string;
@@ -16,8 +16,7 @@ type Props = {
 
 export const SkeltonTeamCard: VFC = () => {
   return (
-    <StyledTeamCard>
-      <FixedImage />
+    <StyledTeamCard imagePath={IMAGE_PATH.NO_IMAGE}>
       <Box p={2}>
         <Box display="flex" alignItems="center" p={2}>
           <Box mr="8px">
@@ -38,9 +37,8 @@ export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentI
   const { data: ogp } = useOgp(url);
 
   return (
-    <StyledTeamCard>
-      <FixedImage imageUrl={ogp?.image} />
-      <Box position="relative" p={2}>
+    <StyledTeamCard imagePath={ogp?.image || IMAGE_PATH.NO_IMAGE}>
+      <Box>
         <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">
           <TeamIcon size={50} attachmentId={attachmentId} />
           <span className="fw-bold maximum_lines_1">{name}</span>
