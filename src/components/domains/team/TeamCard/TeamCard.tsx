@@ -1,6 +1,7 @@
 import React, { VFC } from 'react';
 import { Skeleton } from '@mui/material';
-import { Box, styled } from '@mui/system';
+import { Box } from '@mui/system';
+import styled from 'styled-components';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
 import { Card } from '~/components/parts/commons';
 import { useOgp } from '~/stores/ogp';
@@ -16,7 +17,10 @@ type Props = {
 
 export const SkeltonTeamCard: VFC = () => {
   return (
-    <StyledTeamCard imagePath={IMAGE_PATH.NO_IMAGE}>
+    <StyledTeamCard>
+      <StyledDiv className="position-relative w-100">
+        <StyledSkeleton className="position-absolute" variant="rectangular" />
+      </StyledDiv>
       <Box display="flex" alignItems="center" p={2}>
         <Box mr="8px">
           <Skeleton variant="circular" width={40} height={40} />
@@ -45,6 +49,18 @@ export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentI
     </StyledTeamCard>
   );
 };
+
+const StyledDiv = styled.div`
+  padding-top: 52.5%;
+`;
+
+const StyledSkeleton = styled(Skeleton)`
+  object-fit: cover;
+  top: -16px;
+  left: -16px;
+  width: calc(100% + 32px);
+  height: calc(100% + 16px);
+`;
 
 const StyledTeamCard = styled(Card)`
   box-sizing: border-box;

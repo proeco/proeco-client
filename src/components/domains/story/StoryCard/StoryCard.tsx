@@ -1,12 +1,14 @@
 import React, { VFC, useMemo } from 'react';
 import { Box, Skeleton } from '@mui/material';
-import { styled } from '@mui/material/styles';
+
+import styled from 'styled-components';
+
 import { Story } from '~/domains';
-import { Card, Link } from '~/components/parts/commons';
+import { Card, Emoji, Link } from '~/components/parts/commons';
 import { useTeam } from '~/stores/team';
 import { TeamIcon, SkeltonTeamIcon, GuestTeamIcon } from '~/components/domains/team/TeamIcon';
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
-import { IMAGE_PATH, URLS } from '~/constants';
+import { URLS } from '~/constants';
 import { useAttachment } from '~/stores/attachment';
 
 type Props = {
@@ -15,7 +17,10 @@ type Props = {
 
 export const SkeltonStoryCard: VFC = () => {
   return (
-    <StyledStoryCard imagePath={IMAGE_PATH.NO_IMAGE}>
+    <StyledStoryCard>
+      <StyledDiv className="position-relative w-100">
+        <StyledSkeleton className="position-absolute" variant="rectangular" />
+      </StyledDiv>
       <Skeleton variant="text" width="50px" />
       <Skeleton variant="text" width="100%" />
       <Box mt="12px" display="flex" alignItems="center" gap="8px">
@@ -42,8 +47,15 @@ export const StoryCard: VFC<Props> = ({ story }) => {
   const StoryCardContent = useMemo(() => {
     return (
       <StyledStoryCard imagePath={ogpUrl}>
-        <StyledTime dateTime={story.updatedAt.toLocaleDateString()}>{displayDate}</StyledTime>
-        <p className="fw-bold mb-0">{story.title}</p>
+        <time className="text-light fs-4" dateTime={story.updatedAt.toLocaleDateString()}>
+          {displayDate}
+        </time>
+        <div className="d-flex align-items-center">
+          <span className="me-1">
+            <Emoji emojiId={story.emojiId} size={16} />
+          </span>
+          <p className="fw-bold mb-0">{story.title}</p>
+        </div>
         <Box mt="12px" display="flex" alignItems="center" gap="8px">
           {team ? (
             <>
@@ -66,15 +78,22 @@ export const StoryCard: VFC<Props> = ({ story }) => {
   return <Link href={URLS.TEAMS_STORY(team.productId, story._id)}>{StoryCardContent}</Link>;
 };
 
+const StyledDiv = styled.div`
+  padding-top: 52.5%;
+`;
+
+const StyledSkeleton = styled(Skeleton)`
+  object-fit: cover;
+  top: -16px;
+  left: -16px;
+  width: calc(100% + 32px);
+  height: calc(100% + 16px);
+`;
+
 const StyledStoryCard = styled(Card)`
   box-sizing: border-box;
   position: relative;
   width: 100%;
   top: 0;
   transition: all 0.3s;
-`;
-
-const StyledTime = styled('time')`
-  font-size: 10px;
-  color: ${(props) => props.theme.palette.textColor.light};
 `;
