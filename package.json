@@ -46,8 +46,8 @@
     "react-syntax-highlighter": "15.4.5",
     "reactstrap": "9.0.1",
     "remark-gfm": "3.0.1",
-    "styled-components": "^5.3.3",
-    "swr": "1.1.1"
+    "styled-components": "5.3.3",
+    "swr": "1.1.2"
   },
   "devDependencies": {
     "@babel/core": "7.16.5",
@@ -68,11 +68,11 @@
     "@types/react-copy-to-clipboard": "5.0.2",
     "@types/react-test-renderer": "17.0.1",
     "@types/socket.io-client": "3.0.0",
-    "@types/styled-components": "^5.1.19",
+    "@types/styled-components": "5.1.19",
     "@types/throttle-debounce": "2.1.0",
     "@types/toastr": "2.1.39",
     "@typescript-eslint/eslint-plugin": "rc-v5",
-    "@typescript-eslint/parser": "5.8.0",
+    "@typescript-eslint/parser": "5.8.1",
     "babel-loader": "8.2.3",
     "babel-preset-react-app": "10.0.1",
     "cross-env": "7.0.3",

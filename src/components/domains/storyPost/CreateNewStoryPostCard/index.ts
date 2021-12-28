@@ -1,0 +1,1 @@
+export { CreateNewStoryPostCard } from './CreateNewStoryPostCard';

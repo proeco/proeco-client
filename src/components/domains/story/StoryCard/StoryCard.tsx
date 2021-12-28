@@ -68,7 +68,6 @@ export const StoryCard: VFC<Props> = ({ story }) => {
 };
 
 const StyledStoryCard = styled(Card)`
-  padding: 0px;
   box-sizing: border-box;
   position: relative;
   width: 100%;

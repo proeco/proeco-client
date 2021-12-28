@@ -53,7 +53,6 @@ export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentI
 };
 
 const StyledTeamCard = styled(Card)`
-  padding: 0px;
   box-sizing: border-box;
   position: relative;
   top: 0;

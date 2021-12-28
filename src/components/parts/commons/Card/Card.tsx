@@ -1,20 +1,15 @@
-import React, { VFC, ComponentProps } from 'react';
-import { Card as MuiCard } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React, { FC } from 'react';
 
-type Card = {
-  padding?: number;
-  square?: boolean;
+type Props = {
+  imagePath?: string;
 };
 
-type Props = ComponentProps<typeof MuiCard> & Card;
-
-export const Card: VFC<Props> = ({ padding = 20, square = false, ...rest }) => {
-  return <StyledMuiCard padding={padding} square={square} {...rest} />;
+export const Card: FC<Props> = ({ imagePath, children }) => {
+  const classNames = ['card border-0 shadow text-black overflow-hidden'];
+  return (
+    <div className={classNames.join(' ')}>
+      {imagePath && <img src={imagePath} className="card-img-top" alt="card-img-top" />}
+      <div className="card-body p-3">{children}</div>
+    </div>
+  );
 };
-
-const StyledMuiCard = styled(MuiCard)<{ square: boolean; padding: number }>`
-  width: fit-content;
-  padding: ${(props) => props.padding}px;
-  border-radius: ${(props) => (props.square ? '0px' : '4px')};
-`;
