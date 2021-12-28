@@ -16,7 +16,6 @@ type Props = {
 export const SkeltonStoryCard: VFC = () => {
   return (
     <StyledStoryCard imagePath={IMAGE_PATH.NO_IMAGE}>
-      <Box width="100%" bgcolor="#ced7fd" pt="40%" position="relative"></Box>
       <Skeleton variant="text" width="50px" />
       <Skeleton variant="text" width="100%" />
       <Box mt="12px" display="flex" alignItems="center" gap="8px">
