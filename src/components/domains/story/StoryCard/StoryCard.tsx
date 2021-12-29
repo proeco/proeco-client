@@ -18,14 +18,14 @@ type Props = {
 
 export const SkeltonStoryCard: VFC = () => {
   return (
-    <StyledStoryCard headerContent={<SkeltonFixedImage />}>
+    <StyledCard headerContent={<SkeltonFixedImage />}>
       <Skeleton variant="text" width="50px" />
       <Skeleton variant="text" width="100%" />
       <Box mt="12px" display="flex" alignItems="center" gap="8px">
         <SkeltonTeamIcon size={32} />
         <Skeleton variant="text" width="100px" />
       </Box>
-    </StyledStoryCard>
+    </StyledCard>
   );
 };
 
@@ -41,7 +41,7 @@ export const StoryCard: VFC<Props> = ({ story }) => {
 
   const StoryCardContent = useMemo(() => {
     return (
-      <StyledStoryCard headerContent={ogpUrl ? <FixedImage imageUrl={ogpUrl} /> : <SkeltonFixedImage />}>
+      <StyledCard headerContent={ogpUrl ? <FixedImage imageUrl={ogpUrl} /> : <SkeltonFixedImage />}>
         <time className="text-light fs-4" dateTime={story.updatedAt.toLocaleDateString()}>
           {displayDate}
         </time>
@@ -64,7 +64,7 @@ export const StoryCard: VFC<Props> = ({ story }) => {
             </>
           )}
         </Box>
-      </StyledStoryCard>
+      </StyledCard>
     );
   }, [displayDate, story, team, ogpUrl]);
 
@@ -73,7 +73,7 @@ export const StoryCard: VFC<Props> = ({ story }) => {
   return <Link href={URLS.TEAMS_STORY(team.productId, story._id)}>{StoryCardContent}</Link>;
 };
 
-const StyledStoryCard = styled(Card)`
+const StyledCard = styled(Card)`
   box-sizing: border-box;
   position: relative;
   width: 100%;
