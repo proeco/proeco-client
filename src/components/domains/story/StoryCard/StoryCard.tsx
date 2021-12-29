@@ -4,7 +4,7 @@ import { Box, Skeleton } from '@mui/material';
 import styled from 'styled-components';
 
 import { Story } from '~/domains';
-import { Card, Emoji, Link } from '~/components/parts/commons';
+import { Card, Emoji, FixedImage, Link, SkeltonFixedImage } from '~/components/parts/commons';
 import { useTeam } from '~/stores/team';
 import { TeamIcon, SkeltonTeamIcon, GuestTeamIcon } from '~/components/domains/team/TeamIcon';
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
@@ -18,10 +18,7 @@ type Props = {
 
 export const SkeltonStoryCard: VFC = () => {
   return (
-    <StyledStoryCard>
-      <StyledDiv className="position-relative w-100">
-        <StyledSkeleton className="position-absolute" variant="rectangular" />
-      </StyledDiv>
+    <StyledStoryCard headerContent={<SkeltonFixedImage />}>
       <Skeleton variant="text" width="50px" />
       <Skeleton variant="text" width="100%" />
       <Box mt="12px" display="flex" alignItems="center" gap="8px">
@@ -37,14 +34,14 @@ export const StoryCard: VFC<Props> = ({ story }) => {
   const { data: teamIconAttachment } = useAttachment(team?.iconImageId);
 
   const ogpUrl = useMemo(
-    () => (team && teamIconAttachment ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : ''),
+    () => team && teamIconAttachment && createOgpUrl(story.title, team.name, teamIconAttachment.filePath),
     [story, team, teamIconAttachment],
   );
   const displayDate = formatDistanceToNow(story.updatedAt);
 
   const StoryCardContent = useMemo(() => {
     return (
-      <StyledStoryCard imagePath={ogpUrl}>
+      <StyledStoryCard headerContent={ogpUrl ? <FixedImage imageUrl={ogpUrl} /> : <SkeltonFixedImage />}>
         <time className="text-light fs-4" dateTime={story.updatedAt.toLocaleDateString()}>
           {displayDate}
         </time>
@@ -75,18 +72,6 @@ export const StoryCard: VFC<Props> = ({ story }) => {
 
   return <Link href={URLS.TEAMS_STORY(team.productId, story._id)}>{StoryCardContent}</Link>;
 };
-
-const StyledDiv = styled.div`
-  padding-top: 52.5%;
-`;
-
-const StyledSkeleton = styled(Skeleton)`
-  object-fit: cover;
-  top: -16px;
-  left: -16px;
-  width: calc(100% + 32px);
-  height: calc(100% + 16px);
-`;
 
 const StyledStoryCard = styled(Card)`
   box-sizing: border-box;

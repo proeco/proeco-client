@@ -1,14 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 
 type Props = {
-  imagePath?: string;
+  headerContent?: ReactNode;
 };
 
-export const Card: FC<Props> = ({ imagePath, children }) => {
-  const classNames = ['card border-0 shadow text-black overflow-hidden'];
+export const Card: FC<Props> = ({ headerContent, children }) => {
   return (
-    <div className={classNames.join(' ')}>
-      {imagePath && <img src={imagePath} className="card-img-top h-auto" alt="card-img-top" width="1200" height="630" />}
+    <div className="card border-0 shadow text-black overflow-hidden">
+      {headerContent}
       <div className="card-body p-3 position-relative">{children}</div>
     </div>
   );
