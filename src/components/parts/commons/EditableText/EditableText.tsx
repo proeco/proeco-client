@@ -1,45 +1,40 @@
-import React, { VFC } from 'react';
-import { styled } from '@mui/material/styles';
-import { TextField } from '~/components/parts/commons/TextField';
+import { VFC } from 'react';
+
+import styled from 'styled-components';
 
 type Props = {
   value?: string;
   onChange: (inputValue: string) => void;
-  variant: string;
+  isHeader?: boolean;
   placeholder?: string;
-  multiline?: boolean;
-  error?: boolean;
 };
 
-export const EditableText: VFC<Props> = ({ onChange, variant, value = '', placeholder = '', multiline = false, error = false }) => {
+export const EditableInput: VFC<Props> = (props) => {
+  const { value, onChange, isHeader, placeholder } = props;
+
   return (
-    <StyledTextField
+    <StyledInput
+      className={`form-control text-white text-nowrap overflow-scroll ${isHeader ? 'fs-1' : ''} py-0 pb-md-0 w-100`}
       onChange={(e) => onChange(e.target.value)}
-      sx={{ typography: variant }}
-      value={value}
-      placeholder={placeholder}
-      multiline={multiline}
-      error={error}
+      value={value || ''}
+      placeholder={placeholder || ''}
     />
   );
 };
 
-const StyledTextField = styled(TextField)`
-  &.MuiFormControl-root {
-    border: 2px solid transparent;
-    background: transparent;
-  }
-  .MuiOutlinedInput-root {
-    font-size: 1em;
-  }
-  .MuiOutlinedInput-input {
-    font-size: 1em;
-    &:hover {
-      background: #ccc;
-      border-radius: 4px;
+const StyledInput = styled.input`
+  background: transparent;
+  border: none;
+  &:hover {
+    background: #232323;
+    ::placeholder {
+      color: #ccc;
     }
-    &:focus {
-      background: transparent;
+  }
+  &:focus {
+    background: transparent;
+    ::placeholder {
+      color: #ccc;
     }
   }
 `;
