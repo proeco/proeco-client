@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
-import { Box } from '@mui/system';
 
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
+import styled from 'styled-components';
 import { useTeams } from '~/stores/team';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
@@ -42,12 +42,12 @@ const Home: ProecoNextPage = () => {
     <>
       <ProecoOgpHead />
       <h1 className="text-center fw-bold my-3">プロダクト一覧</h1>
-      <Box mb={5} maxWidth="1200px" mx="auto">
+      <StyledDiv className="mb-5 mx-auto">
         <Carousel className="carousel" responsive={responsive} showDots arrows={false} autoPlay infinite>
           {teamList
             ? teamList.docs.map((team, index) => {
                 return (
-                  <Box px={2} key={index}>
+                  <div className="px-3" key={index}>
                     <Link href={URLS.TEAMS(team.productId)}>
                       <TeamCard
                         name={team.name}
@@ -57,40 +57,40 @@ const Home: ProecoNextPage = () => {
                         url={team.url}
                       />
                     </Link>
-                  </Box>
+                  </div>
                 );
               })
             : [
-                <Box px={2} key="first">
+                <div className="px-3" key="first">
                   <SkeltonTeamCard />
-                </Box>,
-                <Box px={2} key="second">
+                </div>,
+                <div className="px-3" key="second">
                   <SkeltonTeamCard />
-                </Box>,
+                </div>,
               ]}
         </Carousel>
-      </Box>
+      </StyledDiv>
       <h2 className="text-center fw-bold my-3">進行中のストーリー一覧</h2>
-      <Box mb={5} maxWidth="1200px" mx="auto">
+      <StyledDiv className="mb-5 mx-auto">
         <Carousel className="carousel" responsive={responsive} showDots arrows={false} autoPlay infinite>
           {openStoryList
             ? openStoryList.docs.map((story, index) => {
                 return (
-                  <Box px={2} key={index}>
+                  <div className="px-3" key={index}>
                     <StoryCard story={story} />
-                  </Box>
+                  </div>
                 );
               })
             : [
-                <Box px={2} key="first">
+                <div className="px-3" key="first">
                   <SkeltonStoryCard />
-                </Box>,
-                <Box px={2} key="second">
+                </div>,
+                <div className="px-3" key="second">
                   <SkeltonStoryCard />
-                </Box>,
+                </div>,
               ]}
         </Carousel>
-      </Box>
+      </StyledDiv>
       <h1 className="text-center fw-bold">Top Page</h1>
       <Link href={URLS.DASHBOARD_TEAMS}>所属チーム一覧</Link>
       {currentUser ? (
@@ -105,6 +105,10 @@ const Home: ProecoNextPage = () => {
     </>
   );
 };
+
+const StyledDiv = styled.div`
+  max-width: 1200px;
+`;
 
 Home.getLayout = (page: ReactNode) => <>{page}</>;
 

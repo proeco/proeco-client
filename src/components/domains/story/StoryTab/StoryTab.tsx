@@ -72,18 +72,18 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
         {openStoryList
           ? openStoryList.docs.map((story, index) => {
               return (
-                <Box px={2} key={index}>
+                <div className="px-3" key={index}>
                   <StoryCard story={story} />
-                </Box>
+                </div>
               );
             })
           : [
-              <Box px={2} key="first">
+              <div className="px-3" key="first">
                 <SkeltonStoryCard />
-              </Box>,
-              <Box px={2} key="second">
+              </div>,
+              <div className="px-3" key="second">
                 <SkeltonStoryCard />
-              </Box>,
+              </div>,
             ]}
       </Carousel>
       <h3 className="fw-bold my-4 text-center">完了したストーリー</h3>
