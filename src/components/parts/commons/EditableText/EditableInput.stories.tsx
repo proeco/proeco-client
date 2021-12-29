@@ -1,26 +1,24 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-import { EditableText } from './EditableText';
+import { EditableInput } from './EditableInput';
 
 export default {
-  title: 'parts/commons/EditableText',
-  component: EditableText,
+  title: 'parts/commons/EditableInput',
+  component: EditableInput,
   argTypes: { onChange: { action: 'onChange' } },
-} as ComponentMeta<typeof EditableText>;
+} as ComponentMeta<typeof EditableInput>;
 
-const Template: ComponentStory<typeof EditableText> = ({ ...rest }) => {
+const Template: ComponentStory<typeof EditableInput> = ({ ...rest }) => {
   return (
-    <Box p="20px" bgcolor="#e5e5e5">
-      <EditableText {...rest}></EditableText>
-    </Box>
+    <div className="p-3 bg-white">
+      <EditableInput {...rest}></EditableInput>
+    </div>
   );
 };
 
 export const DefaultEditableText = Template.bind({});
 DefaultEditableText.args = {
-  variant: 'body1',
   value: 'EditableText',
 };
 
@@ -34,5 +32,4 @@ DefaultEditableText.args = {
 export const ErrorEditableText = Template.bind({});
 ErrorEditableText.args = {
   ...DefaultEditableText.args,
-  error: true,
 };

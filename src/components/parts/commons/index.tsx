@@ -1,7 +1,7 @@
 export { Button } from './Button';
 export { Card } from './Card';
 export { Dropdown, DropdownItem } from './Dropdown';
-export { EditableText } from './EditableText';
+export { EditableInput } from './EditableText';
 export { Editor } from './Editor';
 export { Emoji } from './Emoji';
 export { EmojiCountResult } from './EmojiCountResult';
