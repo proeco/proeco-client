@@ -23,6 +23,7 @@ DefaultTeamCard.args = {
   name: 'Proeco',
   description: 'description',
   attachmentId: 'attachmentId1',
+  url: 'https://www.proeco.app/',
 };
 
 export const LongTextTeamCard = Template.bind({});

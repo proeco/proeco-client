@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 
-import { FixedImage } from './FixedImage';
+import { FixedImage, SkeltonFixedImage } from './FixedImage';
 
 export default {
   title: 'parts/commons/FixedImage',
@@ -25,3 +25,13 @@ Default.args = {
 
 export const NotFound = Template.bind({});
 NotFound.args = {};
+
+const SkeltonTemplate: ComponentStory<typeof SkeltonFixedImage> = () => {
+  return (
+    <Box p="40px" bgcolor="#e5e5e5" width="400px">
+      <SkeltonFixedImage></SkeltonFixedImage>
+    </Box>
+  );
+};
+
+export const Skelton = SkeltonTemplate.bind({});

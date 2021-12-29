@@ -1,10 +1,10 @@
 import React, { VFC } from 'react';
 import { Skeleton } from '@mui/material';
-import { Box, styled } from '@mui/system';
+import { Box } from '@mui/system';
+import styled from 'styled-components';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
-import { Card } from '~/components/parts/commons';
+import { Card, FixedImage, SkeltonFixedImage } from '~/components/parts/commons';
 import { useOgp } from '~/stores/ogp';
-import { FixedImage } from '~/components/parts/commons/FixedImage';
 
 type Props = {
   name: string;
@@ -16,21 +16,18 @@ type Props = {
 
 export const SkeltonTeamCard: VFC = () => {
   return (
-    <StyledTeamCard>
-      <FixedImage />
-      <Box p={2}>
-        <Box display="flex" alignItems="center" p={2}>
-          <Box mr="8px">
-            <Skeleton variant="circular" width={40} height={40} />
-          </Box>
-          <Skeleton variant="text" width="100%" />
+    <StyledCard headerContent={<SkeltonFixedImage />}>
+      <Box display="flex" alignItems="center" p={2}>
+        <Box mr="8px">
+          <Skeleton variant="circular" width={40} height={40} />
         </Box>
-        <Box>
-          <Skeleton variant="text" width="100%" />
-          <Skeleton variant="text" width="100%" />
-        </Box>
+        <Skeleton variant="text" width="100%" />
       </Box>
-    </StyledTeamCard>
+      <Box>
+        <Skeleton variant="text" width="100%" />
+        <Skeleton variant="text" width="100%" />
+      </Box>
+    </StyledCard>
   );
 };
 
@@ -38,21 +35,18 @@ export const TeamCard: VFC<Props> = ({ name, productId, description, attachmentI
   const { data: ogp } = useOgp(url);
 
   return (
-    <StyledTeamCard>
-      <FixedImage imageUrl={ogp?.image} />
-      <Box position="relative" p={2}>
-        <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">
-          <TeamIcon size={50} attachmentId={attachmentId} />
-          <span className="fw-bold maximum_lines_1">{name}</span>
-          <span className="text-light fs-3 maximum_lines_1">@{productId}</span>
-        </Box>
-        <span className="mt-3 fs-3 maximum_lines_2">{description}</span>
+    <StyledCard headerContent={ogp ? <FixedImage imageUrl={ogp?.image} /> : <SkeltonFixedImage />}>
+      <Box position="absolute" top={-25} display="flex" gap={1} alignItems="end" mb="8px">
+        <TeamIcon size={50} attachmentId={attachmentId} />
+        <span className="fw-bold maximum_lines_1">{name}</span>
+        <span className="text-light fs-3 maximum_lines_1">@{productId}</span>
       </Box>
-    </StyledTeamCard>
+      <span className="mt-3 fs-3 maximum_lines_2">{description}</span>
+    </StyledCard>
   );
 };
 
-const StyledTeamCard = styled(Card)`
+const StyledCard = styled(Card)`
   box-sizing: border-box;
   position: relative;
   top: 0;

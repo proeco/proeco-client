@@ -33,6 +33,7 @@ import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
 import { PaginationResult } from '~/interfaces';
 
 import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { createOgpUrl } from '~/utils/createOgpUrl';
 
 type Props = {
   storyFromServerSide: Story;
@@ -117,10 +118,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   ];
 
   const ogpUrl = useMemo(
-    () =>
-      story
-        ? `https://proeco-ogp.vercel.app/api/ogp?title=${story.title}&teamName=${team.name}&teamIconUrl=${teamIconAttachment.filePath}`
-        : '',
+    () => (story ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : ''),
     [story, team.name, teamIconAttachment],
   );
 
