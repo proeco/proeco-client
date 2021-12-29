@@ -1,11 +1,11 @@
-import React, { VFC } from 'react';
+import { VFC, ReactNode } from 'react';
 import styled from 'styled-components';
 import { GuestUserIcon, UserIcon } from '~/components/domains/user/UserIcon';
 
 type Props = {
   userAttachmentId?: string;
   userId: string;
-  children: React.ReactNode;
+  children: ReactNode;
   isConnect?: boolean;
 };
 
