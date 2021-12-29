@@ -1,4 +1,4 @@
-import React, { VFC, useState, ChangeEvent } from 'react';
+import React, { VFC, useState } from 'react';
 import { Box, styled } from '@mui/material';
 import Carousel from 'react-multi-carousel';
 import { Button, Icon, Pagination } from '~/components/parts/commons';
@@ -38,7 +38,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
   const { data: openStoryList } = useStories({ page: 1, limit: 100, teamId: team._id, isCompleted: false });
   const { data: closeStoriesPagination } = useStories({
     page: closeStoryPage,
-    limit: 100,
+    limit: 10,
     teamId: team._id,
     isCompleted: true,
   });
@@ -47,8 +47,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
     setIsOpeCreateNewStoryModal(true);
   };
 
-  const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
-    event.preventDefault();
+  const handleChangePage = (value: number | null) => {
     if (!value) return;
     setCloseStoryPage(value);
   };

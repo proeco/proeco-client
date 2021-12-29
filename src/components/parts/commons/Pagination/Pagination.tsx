@@ -1,5 +1,8 @@
 import React, { VFC } from 'react';
 import { Pagination as PaginationOriginal, PaginationItem, PaginationLink } from 'reactstrap';
+import styled from 'styled-components';
+
+import { Icon } from '~/components/parts/commons';
 
 type Props = {
   count: number;
@@ -13,19 +16,43 @@ export const Pagination: VFC<Props> = ({ count, page, onChange }) => {
 
   return (
     <PaginationOriginal>
-      <PaginationItem>
-        <PaginationLink previous href="#" onClick={() => onChange(page - 1 < 1 ? null : page - 1)} />
+      <PaginationItem className="p-1">
+        <StyledPaginationLink
+          className="rounded-circle d-inline-flex justify-content-center align-items-center p-0 bg-transparent border-0"
+          onClick={() => onChange(page - 1 < 1 ? null : page - 1)}
+          tag="button"
+        >
+          <Icon icon="CHEVRON_LEFT" size={12} />
+        </StyledPaginationLink>
       </PaginationItem>
       {countArr.map((num) => (
-        <PaginationItem key={num} active={page === num}>
-          <PaginationLink href="#" onClick={() => onChange(num)}>
+        <PaginationItem key={num} active={page === num} className="p-1">
+          <StyledPaginationLink
+            className={`rounded-circle d-inline-flex justify-content-center align-items-center p-0 border-0 ${
+              page !== num && 'bg-transparent text-black'
+            }`}
+            onClick={() => onChange(num)}
+            tag="button"
+          >
             {num}
-          </PaginationLink>
+          </StyledPaginationLink>
         </PaginationItem>
       ))}
-      <PaginationItem>
-        <PaginationLink next href="#" onClick={() => onChange(page + 1 > count ? null : page + 1)} />
+      <PaginationItem className="p-1">
+        <StyledPaginationLink
+          className="rounded-circle d-inline-flex justify-content-center align-items-center p-0 border-0 bg-transparent"
+          href="#"
+          onClick={() => onChange(page + 1 > count ? null : page + 1)}
+          tag="button"
+        >
+          <Icon icon="CHEVRON_RIGHT" size={12} />
+        </StyledPaginationLink>
       </PaginationItem>
     </PaginationOriginal>
   );
 };
+
+const StyledPaginationLink = styled(PaginationLink)`
+  min-width: 32px;
+  height: 32px;
+`;
