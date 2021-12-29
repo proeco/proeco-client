@@ -1,1 +1,1 @@
-export { FixedImage } from './FixedImage';
+export { FixedImage, SkeltonFixedImage } from './FixedImage';

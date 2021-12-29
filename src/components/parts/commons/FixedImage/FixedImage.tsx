@@ -1,10 +1,15 @@
 import { VFC } from 'react';
-import { styled } from '@mui/system';
+import styled from 'styled-components';
 import { IMAGE_PATH } from '~/constants';
 
 type Props = {
   imageUrl?: string;
 };
+
+export const SkeltonFixedImage: VFC = () => {
+  return <StyledSkeltonFixedImage></StyledSkeltonFixedImage>;
+};
+
 export const FixedImage: VFC<Props> = ({ imageUrl }) => {
   return (
     <StyledImageWrapper>
@@ -20,7 +25,25 @@ export const FixedImage: VFC<Props> = ({ imageUrl }) => {
   );
 };
 
-const StyledImageWrapper = styled('div')`
+const StyledSkeltonFixedImage = styled.div`
+  @keyframes loading {
+    0% {
+      background-color: rgba(0, 0, 0, 0.11);
+    }
+    50% {
+      background-color: rgba(255, 255, 255, 0.11);
+    }
+    100% {
+      background-color: rgba(0, 0, 0, 0.11);
+    }
+  }
+  width: 100%;
+  padding-top: 52.5%;
+  background-color: rgba(0, 0, 0, 0.11);
+  animation: loading 1.5s ease-in-out 0.5s infinite;
+`;
+
+const StyledImageWrapper = styled.div`
   position: relative;
   width: 100%;
   padding-top: 52.5%;
