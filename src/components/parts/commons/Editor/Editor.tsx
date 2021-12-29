@@ -1,10 +1,11 @@
 import React, { VFC, useState, ChangeEvent, useRef } from 'react';
-import { Box, styled } from '@mui/system';
+import { Box } from '@mui/system';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
+import styled from 'styled-components';
 
 import { Spinner } from '../Spinner';
-import { TextField, Button, MarkdownToHtmlBody, Icon } from '~/components/parts/commons';
+import { Button, MarkdownToHtmlBody, Icon } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
 import { Attachment, User } from '~/domains';
@@ -53,24 +54,24 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
       setIsUploading(false);
     }
   };
+
+  console.log();
+
   return (
-    <Box>
+    <>
       <TabContext value={value}>
         <StyledTabList onChange={handleChange} aria-label="Editor tabs">
           <StyledTab label="editor" value="editor" />
           <StyledTab label="preview" value="preview" />
         </StyledTabList>
         <StyledTabPanel value="editor">
-          <Box my="16px">
-            <TextField
-              inputRef={inputRef}
-              fullWidth
-              multiline
-              minRows={10}
-              value={content}
-              onChange={(e) => onChangeContent(e.target.value)}
-            />
-          </Box>
+          <textarea
+            className="form-control my-3"
+            ref={inputRef}
+            value={content}
+            onChange={(e) => onChangeContent(e.target.value)}
+            rows={(content.match(/\n/g) || []).length + 10}
+          />
         </StyledTabPanel>
         <StyledTabPanel value="preview">
           {content === '' ? (
@@ -89,7 +90,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
           <StyledLabel htmlFor="image">
             <Icon icon="CLOUD_UPLOAD" size={16} color="LIGHT" />
             <span className="fs-2 text-light">画像をアップロード</span>
-            <StyledInput type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
+            <input className="d-none" type="file" name="image" id="image" onChange={handleUploadFile} accept="image/*" />
             {isUploading && <Spinner isSmall color="secondary" />}
           </StyledLabel>
         )}
@@ -98,11 +99,11 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             キャンセル
           </Button>
         )}
-        <Button color="primary" onClick={onCompleteEdit} disabled={content.trim() === ''}>
+        <Button color="primary" onClick={onCompleteEdit} disabled={content.trim() === '' || isUploading}>
           {isUpdateMode ? '更新する' : '投稿する'}
         </Button>
       </Box>
-    </Box>
+    </>
   );
 };
 
@@ -120,7 +121,7 @@ const StyledTab = styled(Tab)`
   min-width: unset;
 `;
 
-const StyledLabel = styled('label')`
+const StyledLabel = styled.label`
   position: relative;
   display: flex;
   align-items: center;
@@ -128,16 +129,4 @@ const StyledLabel = styled('label')`
   width: fit-content;
   margin-right: auto;
   cursor: pointer;
-  &:hover {
-    span {
-      color: ${(props) => props.theme.palette.primary.main};
-    }
-    .MuiSvgIcon-root {
-      color: ${(props) => props.theme.palette.primary.main};
-    }
-  }
-`;
-
-const StyledInput = styled('input')`
-  display: none;
 `;
