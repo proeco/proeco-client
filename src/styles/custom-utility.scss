@@ -18,6 +18,12 @@
   cursor: pointer;
 }
 
+.center-adjustment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .skelton {
   @keyframes loading {
     0% {

@@ -1,6 +1,7 @@
 import React, { VFC, useState } from 'react';
-import { Box, styled } from '@mui/material';
+import { Box } from '@mui/material';
 import Carousel from 'react-multi-carousel';
+
 import { Button, Icon, Pagination } from '~/components/parts/commons';
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
@@ -89,7 +90,9 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
       {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
         <>
           <StoryListTable stories={closeStoriesPagination.docs} productId={team.productId} />
-          <StyledPagination count={closeStoriesPagination.totalPages} page={closeStoryPage} onChange={handleChangePage} />
+          <div className="mt-4 d-flex justify-content-center align-items-center">
+            <Pagination count={closeStoriesPagination.totalPages} page={closeStoryPage} onChange={handleChangePage} />
+          </div>
         </>
       )}
       <CreateNewStoryModal
@@ -101,10 +104,3 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
     </>
   );
 };
-
-const StyledPagination = styled(Pagination)`
-  margin-top: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;

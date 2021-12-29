@@ -18,7 +18,7 @@ export const Pagination: VFC<Props> = ({ count, page, onChange }) => {
     <PaginationOriginal>
       <PaginationItem className="p-1">
         <StyledPaginationLink
-          className="rounded-circle d-inline-flex justify-content-center align-items-center p-0 bg-transparent border-0"
+          className="rounded-circle center-adjustment p-0 bg-transparent border-0"
           onClick={() => onChange(page - 1 < 1 ? null : page - 1)}
           tag="button"
         >
@@ -28,9 +28,7 @@ export const Pagination: VFC<Props> = ({ count, page, onChange }) => {
       {countArr.map((num) => (
         <PaginationItem key={num} active={page === num} className="p-1">
           <StyledPaginationLink
-            className={`rounded-circle d-inline-flex justify-content-center align-items-center p-0 border-0 ${
-              page !== num && 'bg-transparent text-black'
-            }`}
+            className={`rounded-circle center-adjustment p-0 border-0 ${page !== num && 'bg-transparent text-black'}`}
             onClick={() => onChange(num)}
             tag="button"
           >
@@ -40,7 +38,7 @@ export const Pagination: VFC<Props> = ({ count, page, onChange }) => {
       ))}
       <PaginationItem className="p-1">
         <StyledPaginationLink
-          className="rounded-circle d-inline-flex justify-content-center align-items-center p-0 border-0 bg-transparent"
+          className="rounded-circle center-adjustment p-0 border-0 bg-transparent"
           href="#"
           onClick={() => onChange(page + 1 > count ? null : page + 1)}
           tag="button"
