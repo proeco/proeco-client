@@ -17,6 +17,5 @@ export { Pagination } from './Pagination';
 export { SelectableEmoji } from './SelectableEmoji';
 export { SideBarListItem } from './SideBarListItem';
 export { Spinner } from './Spinner';
-export { TextField } from './TextField';
 export { TimeLineItem } from './TimeLineItem';
 export { TrimImageModal } from './TrimImageModal';
