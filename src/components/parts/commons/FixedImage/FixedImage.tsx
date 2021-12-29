@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const SkeltonFixedImage: VFC = () => {
-  return <StyledSkeltonFixedImage></StyledSkeltonFixedImage>;
+  return <StyledDiv className="w-100 skelton"></StyledDiv>;
 };
 
 export const FixedImage: VFC<Props> = ({ imageUrl }) => {
@@ -25,22 +25,8 @@ export const FixedImage: VFC<Props> = ({ imageUrl }) => {
   );
 };
 
-const StyledSkeltonFixedImage = styled.div`
-  @keyframes loading {
-    0% {
-      background-color: rgba(0, 0, 0, 0.11);
-    }
-    50% {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-    100% {
-      background-color: rgba(0, 0, 0, 0.11);
-    }
-  }
-  width: 100%;
+const StyledDiv = styled.div`
   padding-top: 52.5%;
-  background-color: rgba(0, 0, 0, 0.11);
-  animation: loading 1.5s ease-in-out 0.5s infinite;
 `;
 
 const StyledImageWrapper = styled.div`
