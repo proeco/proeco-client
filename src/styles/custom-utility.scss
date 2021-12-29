@@ -17,3 +17,19 @@
 .c-pointer {
   cursor: pointer;
 }
+
+.skelton {
+  @keyframes loading {
+    0% {
+      background-color: rgba(0, 0, 0, 0.11);
+    }
+    50% {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    100% {
+      background-color: rgba(0, 0, 0, 0.11);
+    }
+  }
+  background-color: rgba(0, 0, 0, 0.11);
+  animation: loading 1.5s ease-in-out 0.5s infinite;
+}

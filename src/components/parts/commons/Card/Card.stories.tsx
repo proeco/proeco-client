@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Box } from '@mui/system';
 
-import { Card } from '~/components/parts/commons';
+import { Card, FixedImage } from '~/components/parts/commons';
 
 export default {
   title: 'parts/commons/Card',
@@ -24,5 +24,5 @@ export const DefaultCard = Template.bind({});
 
 export const CardWithImage = Template.bind({});
 CardWithImage.args = {
-  imagePath: 'https://itizawa-tech.growi.cloud/attachment/61bb543444194e2b1d023552',
+  headerContent: <FixedImage imageUrl="https://itizawa-tech.growi.cloud/attachment/61bb543444194e2b1d023552" />,
 };

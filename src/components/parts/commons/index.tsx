@@ -7,7 +7,7 @@ export { Emoji } from './Emoji';
 export { EmojiCountResult } from './EmojiCountResult';
 export { EmojiRadioGroup } from './EmojiRadioGroup';
 export { FirstLetterIcon } from './FirstLetterIcon';
-export { FixedImage } from './FixedImage';
+export { FixedImage, SkeltonFixedImage } from './FixedImage';
 export { Icon } from './Icon';
 export { IconUpload } from './IconUpload';
 export { Link } from './Link';
