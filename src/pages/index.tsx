@@ -4,7 +4,6 @@ import { Box } from '@mui/system';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-import styled from 'styled-components';
 import { useTeams } from '~/stores/team';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
@@ -44,7 +43,7 @@ const Home: ProecoNextPage = () => {
       <ProecoOgpHead />
       <h1 className="text-center fw-bold my-3">プロダクト一覧</h1>
       <Box mb={5} maxWidth="1200px" mx="auto">
-        <StyledCarousel responsive={responsive} showDots arrows={false} autoPlay>
+        <Carousel className="carousel" responsive={responsive} showDots arrows={false} autoPlay infinite>
           {teamList
             ? teamList.docs.map((team, index) => {
                 return (
@@ -69,11 +68,11 @@ const Home: ProecoNextPage = () => {
                   <SkeltonTeamCard />
                 </Box>,
               ]}
-        </StyledCarousel>
+        </Carousel>
       </Box>
       <h2 className="text-center fw-bold my-3">進行中のストーリー一覧</h2>
       <Box mb={5} maxWidth="1200px" mx="auto">
-        <StyledCarousel responsive={responsive} showDots arrows={false} autoPlay>
+        <Carousel className="carousel" responsive={responsive} showDots arrows={false} autoPlay infinite>
           {openStoryList
             ? openStoryList.docs.map((story, index) => {
                 return (
@@ -90,7 +89,7 @@ const Home: ProecoNextPage = () => {
                   <SkeltonStoryCard />
                 </Box>,
               ]}
-        </StyledCarousel>
+        </Carousel>
       </Box>
       <h1 className="text-center fw-bold">Top Page</h1>
       <Link href={URLS.DASHBOARD_TEAMS}>所属チーム一覧</Link>
@@ -106,28 +105,6 @@ const Home: ProecoNextPage = () => {
     </>
   );
 };
-
-const StyledCarousel = styled(Carousel)`
-  &.react-multi-carousel-list {
-    padding-bottom: 48px;
-  }
-  .react-multi-carousel-dot-list {
-    gap: 4px;
-  }
-  .react-multi-carousel-dot {
-    > button {
-      border: none;
-      background-color: #ced7fd;
-    }
-  }
-  .react-multi-carousel-dot--active {
-    > button {
-      /* あとで直す */
-      background-color: #6684f7;
-      transform: scale(1.6);
-    }
-  }
-`;
 
 Home.getLayout = (page: ReactNode) => <>{page}</>;
 

@@ -68,7 +68,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
         )}
       </Box>
       <h3 className="fw-bold mb-4 text-center">進行中のストーリー</h3>
-      <StyledCarousel responsive={responsive} showDots arrows={false}>
+      <Carousel className="carousel" responsive={responsive} showDots arrows={false}>
         {openStoryList
           ? openStoryList.docs.map((story, index) => {
               return (
@@ -85,7 +85,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
                 <SkeltonStoryCard />
               </Box>,
             ]}
-      </StyledCarousel>
+      </Carousel>
       <h3 className="fw-bold my-4 text-center">完了したストーリー</h3>
       {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
         <>
@@ -108,25 +108,4 @@ const StyledPagination = styled(Pagination)`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const StyledCarousel = styled(Carousel)`
-  &.react-multi-carousel-list {
-    padding-bottom: 48px;
-  }
-  .react-multi-carousel-dot-list {
-    gap: 4px;
-  }
-  .react-multi-carousel-dot {
-    > button {
-      border: none;
-      background-color: #ced7fd;
-    }
-  }
-  .react-multi-carousel-dot--active {
-    > button {
-      background-color: ${(props) => props.theme.palette.primary.main};
-      transform: scale(1.6);
-    }
-  }
 `;
