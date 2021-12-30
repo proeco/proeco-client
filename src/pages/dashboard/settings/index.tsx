@@ -1,5 +1,6 @@
-import { Box } from '@mui/system';
 import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
+import styled from 'styled-components';
+
 import { SkeltonUserIcon } from '~/components/domains/user/UserIcon';
 import { Button, Card, Icon, IconUpload } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
@@ -80,15 +81,15 @@ const DashboardSettingsPage: ProecoNextPage = () => {
   return (
     <>
       <ProecoOgpHead />
-      <Box mx="auto" maxWidth="1200px">
-        <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
+      <StyledDiv className="mx-auto">
+        <div className="d-flex align-items-center mb-3">
           <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
             <Icon icon="GEAR" size={28} />
             設定
           </h2>
-        </Box>
+        </div>
         <Card>
-          <Box display="flex" justifyContent="center">
+          <div className="d-flex align-items-center justify-content-center">
             {isLoadingUploadAttachment ? (
               <SkeltonUserIcon size={100} />
             ) : (
@@ -97,7 +98,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
                 currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachment?.filePath}
               />
             )}
-          </Box>
+          </div>
           <div className="mb-3">
             <span className="mb-1 d-inline-block text-light">ユーザー名</span>
             <input className="form-control" value={newUser?.name} onChange={(e) => updateUserForm({ name: e.target.value })} />
@@ -111,17 +112,21 @@ const DashboardSettingsPage: ProecoNextPage = () => {
               onChange={(e) => updateUserForm({ description: e.target.value })}
             />
           </div>
-          <Box mt={4} textAlign="center">
+          <div className="d-flex align-items-center justify-content-center">
             <Button disabled={isUpdating || !isValidForm || isLoadingUploadAttachment} color="primary" onClick={handleClickCreateNewTeam}>
               <Icon icon="CLOCKWISE" size={16} color="WHITE" />
               更新する
             </Button>
-          </Box>
+          </div>
         </Card>
-      </Box>
+      </StyledDiv>
     </>
   );
 };
+
+const StyledDiv = styled.div`
+  max-width: 1200px;
+`;
 
 DashboardSettingsPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 DashboardSettingsPage.getAccessControl = () => {
