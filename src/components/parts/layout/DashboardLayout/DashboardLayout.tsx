@@ -1,29 +1,19 @@
-import { Box, styled } from '@mui/system';
+import styled from 'styled-components';
 import { FC } from 'react';
-import { UserSideBar } from '../../../domains/user/UserSideBar';
+
+import { SideBar } from '../SideBar';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 export const DashboardLayout: FC = ({ children }) => {
   const { data: currentUser } = useCurrentUser();
   return (
-    <Box display="flex">
-      {currentUser && (
-        <Box flexShrink={1}>
-          <UserSideBar currentUser={currentUser} />
-        </Box>
-      )}
-      <StyledBox width="100%" minWidth="0" p={5}>
-        {children}
-      </StyledBox>
-    </Box>
+    <StyledDiv className="d-flex h-100">
+      {currentUser && <SideBar currentUser={currentUser} />}
+      <div className="w-100 p-md-4 p-3">{children}</div>
+    </StyledDiv>
   );
 };
 
-const StyledBox = styled(Box)`
-  /*
-   * モバイルではサイドバーを表示しない
-   */
-  @media (max-width: ${({ theme }) => theme.breakpoints.values.sm}px) {
-    padding: 12px;
-  }
+const StyledDiv = styled.div`
+  min-height: 100vh;
 `;
