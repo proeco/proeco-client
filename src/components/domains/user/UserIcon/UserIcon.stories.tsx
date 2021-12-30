@@ -1,6 +1,5 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Box } from '@mui/system';
 
 import { UserIcon, GuestUserIcon } from './UserIcon';
 import { createMockUser } from '~/mocks/domains/createMockUser';
@@ -12,21 +11,21 @@ export default {
 
 const LoginUser: ComponentStory<typeof UserIcon> = ({ ...props }) => {
   return (
-    <Box width="300px" bgcolor="gray" p={4} display="flex" alignItems="center" justifyContent="space-around">
+    <div className="p-4 d-flex align-items-center gap-4">
       <UserIcon {...props} size={40} />
       <UserIcon {...props} size={60} />
       <UserIcon {...props} size={80} />
-    </Box>
+    </div>
   );
 };
 
 const GuestUser: ComponentStory<typeof UserIcon> = ({ ...props }) => {
   return (
-    <Box width="300px" bgcolor="gray" p={4} display="flex" alignItems="center" justifyContent="space-around">
+    <div className="p-4 d-flex align-items-center gap-4">
       <GuestUserIcon {...props} size={40} />
       <GuestUserIcon {...props} size={60} />
       <GuestUserIcon {...props} size={80} />
-    </Box>
+    </div>
   );
 };
 
