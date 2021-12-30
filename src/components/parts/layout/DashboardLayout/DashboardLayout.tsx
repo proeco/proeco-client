@@ -16,4 +16,5 @@ export const DashboardLayout: FC = ({ children }) => {
 
 const StyledDiv = styled.div`
   min-height: 100vh;
+  min-width: 0%;
 `;
