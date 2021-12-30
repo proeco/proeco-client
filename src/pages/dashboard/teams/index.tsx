@@ -70,7 +70,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
 };
 
 const StyledDiv = styled.div`
-  max-width: 1200;
+  max-width: 1200px;
 `;
 
 DashboardTeamPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
