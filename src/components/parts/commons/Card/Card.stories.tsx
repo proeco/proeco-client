@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { Card, FixedImage } from '~/components/parts/commons';
 
 export default {
@@ -12,11 +10,11 @@ export default {
 
 const Template: ComponentStory<typeof Card> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="gray" width="400px">
+    <div className="p-4">
       <Card {...rest}>
         <p>Cardのコンテンツ</p>
       </Card>
-    </Box>
+    </div>
   );
 };
 

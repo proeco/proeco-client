@@ -12,7 +12,7 @@ type Props = {
 // ログインしていない状態の TeamIcon
 export const GuestTeamIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
   return (
-    <StyledIconWrapper size={size} className="rounded-circle border border-primary border-2 bg-white">
+    <StyledIconWrapper size={size} className="rounded-circle border border-primary border-2 bg-white overflow-hidden">
       <Icon icon="PEOPLE" size={size} color="SECONDARY" />
     </StyledIconWrapper>
   );

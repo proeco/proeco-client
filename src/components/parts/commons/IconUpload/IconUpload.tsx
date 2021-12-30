@@ -1,7 +1,7 @@
 import React, { VFC, ChangeEvent } from 'react';
-import { Box, styled } from '@mui/system';
-import { Avatar } from '@mui/material';
+import styled from 'styled-components';
 import { Icon } from '../Icon/Icon';
+import { GuestTeamIcon } from '~/components/domains/team/TeamIcon';
 
 type Props = {
   onSelectImage: (file: ChangeEvent<HTMLInputElement>) => void;
@@ -11,42 +11,22 @@ type Props = {
 
 export const IconUpload: VFC<Props> = ({ onSelectImage, currentImagePath, size = 100 }) => {
   return (
-    <StyledLabel htmlFor="image">
+    <label className="position-relative" htmlFor="image">
       {currentImagePath ? (
-        <StyledAvatar size={size} src={currentImagePath} />
+        <img className="rounded-circle border border-primary border-2" width={size} height={size} src={currentImagePath} />
       ) : (
-        <StyledAvatar size={size}>
-          <Icon icon="PEOPLE" color="SECONDARY" size={size} />
-        </StyledAvatar>
+        <GuestTeamIcon size={size} />
       )}
       <StyledOverlay className="d-flex gap-2 align-items-center">
         <StyledIcon icon="IMAGE" color="WHITE" size={20} />
         <p className="fs-4 mb-0 text-white">写真を変更</p>
       </StyledOverlay>
-      <StyledInput type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
-    </StyledLabel>
+      <input className="d-none" type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
+    </label>
   );
 };
 
-const StyledLabel = styled('label')`
-  position: relative;
-  display: block;
-  width: fit-content;
-`;
-
-const StyledAvatar = styled(Avatar)<{ size: number }>`
-  background-color: white;
-  border: 2px solid ${(props) => props.theme.palette.primary.main};
-  box-sizing: border-box;
-  width: ${(props) => props.size}px;
-  height: ${(props) => props.size}px;
-`;
-
-const StyledInput = styled('input')`
-  display: none;
-`;
-
-const StyledOverlay = styled(Box)`
+const StyledOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;

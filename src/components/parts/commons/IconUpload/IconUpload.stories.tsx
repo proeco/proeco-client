@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { IconUpload } from './IconUpload';
 
 export default {
@@ -13,9 +11,9 @@ export default {
 
 const Template: ComponentStory<typeof IconUpload> = ({ ...rest }) => {
   return (
-    <Box p="20px">
+    <div className="p-3">
       <IconUpload {...rest} />
-    </Box>
+    </div>
   );
 };
 
