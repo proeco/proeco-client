@@ -1,1 +1,0 @@
-export { UserIconGroup } from './UserIconGroup';
