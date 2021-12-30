@@ -1,6 +1,7 @@
-import React, { VFC, useState, ChangeEvent } from 'react';
-import { Box, styled } from '@mui/material';
+import React, { VFC, useState } from 'react';
+import { Box } from '@mui/material';
 import Carousel from 'react-multi-carousel';
+
 import { Button, Icon, Pagination } from '~/components/parts/commons';
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
@@ -38,7 +39,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
   const { data: openStoryList } = useStories({ page: 1, limit: 100, teamId: team._id, isCompleted: false });
   const { data: closeStoriesPagination } = useStories({
     page: closeStoryPage,
-    limit: 100,
+    limit: 10,
     teamId: team._id,
     isCompleted: true,
   });
@@ -47,8 +48,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
     setIsOpeCreateNewStoryModal(true);
   };
 
-  const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
-    event.preventDefault();
+  const handleChangePage = (value: number | null) => {
     if (!value) return;
     setCloseStoryPage(value);
   };
@@ -68,29 +68,31 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
         )}
       </Box>
       <h3 className="fw-bold mb-4 text-center">進行中のストーリー</h3>
-      <StyledCarousel responsive={responsive} showDots arrows={false}>
+      <Carousel className="carousel" responsive={responsive} showDots arrows={false}>
         {openStoryList
           ? openStoryList.docs.map((story, index) => {
               return (
-                <Box px={2} key={index}>
+                <div className="px-3" key={index}>
                   <StoryCard story={story} />
-                </Box>
+                </div>
               );
             })
           : [
-              <Box px={2} key="first">
+              <div className="px-3" key="first">
                 <SkeltonStoryCard />
-              </Box>,
-              <Box px={2} key="second">
+              </div>,
+              <div className="px-3" key="second">
                 <SkeltonStoryCard />
-              </Box>,
+              </div>,
             ]}
-      </StyledCarousel>
+      </Carousel>
       <h3 className="fw-bold my-4 text-center">完了したストーリー</h3>
       {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
         <>
           <StoryListTable stories={closeStoriesPagination.docs} productId={team.productId} />
-          <StyledPagination count={closeStoriesPagination.totalPages} page={closeStoryPage} onChange={handleChangePage} />
+          <div className="mt-4 d-flex justify-content-center align-items-center">
+            <Pagination count={closeStoriesPagination.totalPages} page={closeStoryPage} onChange={handleChangePage} />
+          </div>
         </>
       )}
       <CreateNewStoryModal
@@ -102,31 +104,3 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
     </>
   );
 };
-
-const StyledPagination = styled(Pagination)`
-  margin-top: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StyledCarousel = styled(Carousel)`
-  &.react-multi-carousel-list {
-    padding-bottom: 48px;
-  }
-  .react-multi-carousel-dot-list {
-    gap: 4px;
-  }
-  .react-multi-carousel-dot {
-    > button {
-      border: none;
-      background-color: #ced7fd;
-    }
-  }
-  .react-multi-carousel-dot--active {
-    > button {
-      background-color: ${(props) => props.theme.palette.primary.main};
-      transform: scale(1.6);
-    }
-  }
-`;

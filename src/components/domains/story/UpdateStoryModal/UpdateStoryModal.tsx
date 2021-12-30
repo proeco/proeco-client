@@ -1,13 +1,12 @@
 import React, { VFC, useState, useEffect } from 'react';
 
 import { Box } from '@mui/system';
-import { styled } from '@mui/material/styles';
 
 import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
 
-import { Modal, SelectableEmoji, Button, TextField, Icon } from '~/components/parts/commons';
+import { Modal, SelectableEmoji, Button, Icon } from '~/components/parts/commons';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -20,10 +19,6 @@ type Props = {
   teamId: string;
   page: number;
 };
-
-const StyledTextField = styled(TextField)`
-  height: 40px;
-`;
 
 export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, teamId, page }) => {
   const { notifySuccessMessage } = useSuccessNotification();
@@ -93,7 +88,7 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
           <Box mr="8px">
             <SelectableEmoji emojiId={newStory.emojiId} size={40} onSelectEmoji={(emojiId) => updateStoryForm({ emojiId })} />
           </Box>
-          <StyledTextField fullWidth value={newStory.title} onChange={(e) => updateStoryForm({ title: e.target.value })} />
+          <input className="form-control" value={newStory.title} onChange={(e) => updateStoryForm({ title: e.target.value })} />
         </Box>
       </Box>
       <Box width="100%" textAlign="center">

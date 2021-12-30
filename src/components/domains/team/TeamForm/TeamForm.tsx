@@ -17,7 +17,7 @@ import { restClient } from '~/utils/rest-client';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
-import { TextField, Button, Icon, IconUpload, Card } from '~/components/parts/commons';
+import { Button, Icon, IconUpload, Card } from '~/components/parts/commons';
 import { useAttachment } from '~/stores/attachment';
 import { useUploadAttachment } from '~/hooks/attachments';
 
@@ -125,19 +125,18 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
           </Box>
           <span className="mb-1 d-inline-block text-light">プロダクトの url</span>
           <Box display="flex" alignItems="center" gap={1}>
-            <StyledUrlTextField fullWidth value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
+            <input className="form-control" value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
             <StyledButton color="primary" disabled={!isValidUrl(newTeam.url)} onClick={handleClickFetchByUrl}>
-              データ取得
+              <Icon icon="CLOCKWISE" color="WHITE" />
             </StyledButton>
           </Box>
           <span className="mt-3 mb-1 d-inline-block text-light">Product Id</span>
-          <TextField fullWidth value={newTeam.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
+          <input className="form-control" value={newTeam.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
           <span className="mt-3 mb-1 d-inline-block text-light">名前</span>
-          <TextField fullWidth value={newTeam.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
+          <input className="form-control" value={newTeam.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
           <span className="mt-3 mb-1 d-inline-block text-light">どんなプロダクト？</span>
-          <TextField
-            fullWidth
-            multiline
+          <textarea
+            className="form-control"
             value={newTeam.description}
             rows={6}
             onChange={(e) => updateStoryForm({ description: e.target.value })}
@@ -163,10 +162,6 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
     </Grid>
   );
 };
-
-const StyledUrlTextField = styled(TextField)`
-  flex: 1;
-`;
 
 const StyledButton = styled(Button)`
   white-space: nowrap;

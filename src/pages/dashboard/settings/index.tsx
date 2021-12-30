@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
 import { SkeltonUserIcon } from '~/components/domains/user/UserIcon';
-import { Button, Card, Icon, IconUpload, TextField } from '~/components/parts/commons';
+import { Button, Card, Icon, IconUpload } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { URLS } from '~/constants';
@@ -98,20 +98,19 @@ const DashboardSettingsPage: ProecoNextPage = () => {
               />
             )}
           </Box>
-          <Box mb="16px">
+          <div className="mb-3">
             <span className="mb-1 d-inline-block text-light">ユーザー名</span>
-            <TextField fullWidth value={newUser?.name} onChange={(e) => updateUserForm({ name: e.target.value })} />
-          </Box>
-          <Box mb="16px">
+            <input className="form-control" value={newUser?.name} onChange={(e) => updateUserForm({ name: e.target.value })} />
+          </div>
+          <div className="mb-3">
             <span className="mb-1 d-inline-block text-light">自己紹介</span>
-            <TextField
-              fullWidth
-              multiline
-              rows={4}
+            <textarea
+              className="form-control"
+              rows={6}
               value={newUser?.description}
               onChange={(e) => updateUserForm({ description: e.target.value })}
             />
-          </Box>
+          </div>
           <Box mt={4} textAlign="center">
             <Button disabled={isUpdating || !isValidForm || isLoadingUploadAttachment} color="primary" onClick={handleClickCreateNewTeam}>
               <Icon icon="CLOCKWISE" size={16} color="WHITE" />

@@ -1,56 +1,26 @@
-import React, { VFC } from 'react';
-import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@mui/lab';
-import { styled } from '@mui/system';
+import { VFC, ReactNode } from 'react';
+import styled from 'styled-components';
 import { GuestUserIcon, UserIcon } from '~/components/domains/user/UserIcon';
 
 type Props = {
   userAttachmentId?: string;
   userId: string;
-  children: React.ReactNode;
+  children: ReactNode;
   isConnect?: boolean;
 };
 
 export const TimeLineItem: VFC<Props> = ({ userAttachmentId, userId, children, isConnect = true }) => {
   return (
-    <StyledDiv>
-      <TimelineItem>
-        <TimelineSeparator>
-          <StyledTimeLineDot>
-            {userAttachmentId ? <UserIcon size={40} isLink attachmentId={userAttachmentId} userId={userId} /> : <GuestUserIcon size={40} />}
-          </StyledTimeLineDot>
-          {isConnect && <StyledTimeLineConnector />}
-        </TimelineSeparator>
-        <StyledTimeLineContent>{children}</StyledTimeLineContent>
-      </TimelineItem>
-    </StyledDiv>
+    <div className="d-flex">
+      <div className="d-flex flex-column align-items-center">
+        {userAttachmentId ? <UserIcon size={40} isLink attachmentId={userAttachmentId} userId={userId} /> : <GuestUserIcon size={40} />}
+        {isConnect && <StyledTimeLineConnector className="bg-primary h-100" />}
+      </div>
+      <div className="w-100 pb-5 ps-2">{children}</div>
+    </div>
   );
 };
 
-const StyledDiv = styled('div')`
-  .MuiTimelineItem-root {
-    margin: 0 auto;
-    &::before {
-      flex: unset;
-      padding: 0;
-    }
-  }
-`;
-
-const StyledTimeLineContent = styled(TimelineContent)`
-  padding: 0 0px 40px 8px;
-  flex: 1;
-  min-width: 0;
-`;
-
-const StyledTimeLineDot = styled(TimelineDot)`
-  padding: 0;
-  margin: 0;
-  border: none;
-  .MuiTypography-root {
-    height: fit-content;
-  }
-`;
-
-const StyledTimeLineConnector = styled(TimelineConnector)`
-  background-color: ${(props) => props.theme.palette.primary.main};
+const StyledTimeLineConnector = styled.div`
+  width: 3px;
 `;

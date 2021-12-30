@@ -51,7 +51,7 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
         justifyContent={open ? 'flex-end' : 'center'}
       >
         <button className="btn" onClick={handleClickChevronButton}>
-          <Icon icon={open ? 'CHEVRON_LEFT' : 'CHEVRON_RIGHT'} size={30} />
+          <Icon icon={open ? 'CHEVRON_LEFT' : 'CHEVRON_RIGHT'} size={24} />
         </button>
       </Box>
       <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke" height="100%" display="flex" flexDirection="column">
@@ -74,7 +74,9 @@ export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeConte
               <Link href={sidebarItem.url} key={index}>
                 <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
                   <Icon icon={sidebarItem.icon} size={24} color={sidebarItem.url === router.asPath ? 'PRIMARY' : 'BLACK'} />
-                  <span className={`fs-4 ${sidebarItem.url === router.asPath ? 'text-primary' : 'text-black'}`}>{sidebarItem.text}</span>
+                  <span className={`fs-4 fw-bold ${sidebarItem.url === router.asPath ? 'text-primary' : 'text-black'}`}>
+                    {sidebarItem.text}
+                  </span>
                 </Box>
               </Link>
             );
