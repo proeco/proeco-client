@@ -1,1 +1,1 @@
-export { EditableText } from './EditableText';
+export { EditableInput } from './EditableInput';

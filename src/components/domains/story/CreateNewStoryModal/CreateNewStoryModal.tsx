@@ -1,12 +1,9 @@
 import React, { VFC, useState, useEffect } from 'react';
 
-import { Box } from '@mui/system';
-import { styled } from '@mui/material/styles';
-
 import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
-import { Modal, SelectableEmoji, Button, TextField } from '~/components/parts/commons';
+import { Modal, SelectableEmoji, Button } from '~/components/parts/commons';
 import { useStories } from '~/stores/story';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -72,26 +69,20 @@ export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, 
 
   const content = (
     <>
-      <Box mb="16px">
+      <div className="mb-3">
         <p className="mb-1 text-light">ストーリー名</p>
-        <Box display="flex" alignItems="center">
-          <Box mr="8px">
-            <SelectableEmoji emojiId={newStory.emojiId} size={40} onSelectEmoji={(emojiId) => updateStoryForm({ emojiId })} />
-          </Box>
-          <StyledTextField fullWidth value={newStory.title} onChange={(e) => updateStoryForm({ title: e.target.value })} />
-        </Box>
-      </Box>
-      <Box width="100%" textAlign="center">
+        <div className="d-flex align-items-center">
+          <SelectableEmoji emojiId={newStory.emojiId} size={40} onSelectEmoji={(emojiId) => updateStoryForm({ emojiId })} />
+          <input className="ms-2 form-control" value={newStory.title} onChange={(e) => updateStoryForm({ title: e.target.value })} />
+        </div>
+      </div>
+      <div className="text-center">
         <Button onClick={handleClickCreateNewStoryButton} disabled={isDisabled} color="primary">
           ストーリーを作る！
         </Button>
-      </Box>
+      </div>
     </>
   );
 
   return <Modal content={content} emojiId="sparkles" title="ストーリーを作成する" open={isOpen} onClose={onCloseModal} />;
 };
-
-const StyledTextField = styled(TextField)`
-  height: 40px;
-`;
