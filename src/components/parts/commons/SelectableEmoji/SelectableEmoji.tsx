@@ -68,4 +68,5 @@ const StyledEmojiPickerWrapper = styled.div<{ top: number; left: number }>`
   position: absolute;
   top: ${(props) => props.top}px;
   left: ${(props) => props.left}px;
+  z-index: 1;
 `;
