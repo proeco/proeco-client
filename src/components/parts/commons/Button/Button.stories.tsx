@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { Button } from './Button';
 
 export default {
@@ -10,21 +9,21 @@ export default {
 } as ComponentMeta<typeof Button>;
 
 const Template: ComponentStory<typeof Button> = (args) => (
-  <Box display="flex" alignItems="start" gap="20px" mb="30px">
-    <Box>
+  <div className="d-flex gap-3">
+    <div>
       <Button size="sm" {...args}>
         Button!
       </Button>
-    </Box>
-    <Box>
+    </div>
+    <div>
       <Button {...args}>Button!</Button>
-    </Box>
-    <Box>
+    </div>
+    <div>
       <Button size="lg" {...args}>
         Button!
       </Button>
-    </Box>
-  </Box>
+    </div>
+  </div>
 );
 
 export const Contained = Template.bind({});

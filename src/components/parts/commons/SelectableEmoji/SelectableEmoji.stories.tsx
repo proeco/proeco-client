@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { SelectableEmoji } from './SelectableEmoji';
 
 export default {
@@ -15,9 +14,9 @@ const Template: ComponentStory<typeof SelectableEmoji> = ({ size }) => {
   console.log(emojiId);
 
   return (
-    <Box p={30}>
+    <div className="p-4">
       <SelectableEmoji size={size} emojiId={emojiId} onSelectEmoji={(emojiId) => setEmojiId(emojiId)} />
-    </Box>
+    </div>
   );
 };
 

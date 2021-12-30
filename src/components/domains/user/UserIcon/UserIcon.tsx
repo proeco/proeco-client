@@ -1,6 +1,6 @@
 import { memo, VFC, MouseEvent } from 'react';
-import { Avatar, Skeleton } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import styled from 'styled-components';
+
 import { Icon, Link } from '~/components/parts/commons';
 import { useAttachment } from '~/stores/attachment';
 
@@ -15,36 +15,47 @@ type Props = {
 // ログインしていない状態の UserIcon
 export const GuestUserIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
   return (
-    <StyledAvatar size={size}>
-      <Icon icon="PEOPLE" size={size} color="WHITE" />
-    </StyledAvatar>
+    <StyledIconWrapper size={size} className="rounded-circle border border-primary border-2 bg-white">
+      <Icon icon="PEOPLE" size={size} color="SECONDARY" />
+    </StyledIconWrapper>
   );
 };
 
 // ローディング状態の UserIcon
 export const SkeltonUserIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
-  return <Skeleton variant="circular" width={size} height={size} />;
+  return <StyledIconWrapper size={size} className="skelton rounded-circle border border-primary border-2" />;
 };
 
 // 通常状態の UserIcon
 export const UserIcon: VFC<Props> = memo(({ attachmentId, userId, isLink = false, size, onClick }) => {
   const { data: attachment } = useAttachment(attachmentId);
 
-  if (!isLink) return <StyledAvatar size={size} alt={userId} src={attachment?.filePath} />;
+  if (!isLink)
+    return (
+      <img
+        className="rounded-circle border border-primary border-2 bg-white"
+        width={size}
+        height={size}
+        alt={userId}
+        src={attachment?.filePath}
+      />
+    );
 
   return (
     <Link href={'/user/' + userId}>
-      <StyledAvatar size={size} alt={userId} src={attachment?.filePath} onClick={onClick} />
+      <img
+        className="rounded-circle border border-primary border-2 bg-white d-block"
+        width={size}
+        height={size}
+        alt={userId}
+        src={attachment?.filePath}
+        onClick={onClick}
+      />
     </Link>
   );
 });
 
-const StyledAvatar = styled(Avatar)<{ size: number }>`
-  &.MuiAvatar-root {
-    border: 2px solid ${(props) => props.theme.palette.primary.main};
-  }
-  background-color: white;
-  box-sizing: border-box;
+const StyledIconWrapper = styled.div<{ size: number }>`
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;
 `;

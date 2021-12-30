@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { Modal } from './Modal';
 
 export default {
@@ -10,18 +9,10 @@ export default {
   argTypes: { onClose: { action: 'closed' } },
 } as ComponentMeta<typeof Modal>;
 
-const Content = (
-  <Box>
-    <p>ここにコンテンツが入る</p>
-  </Box>
-);
+const Content = <p>ここにコンテンツが入る</p>;
 
 const Template: ComponentStory<typeof Modal> = (args) => {
-  return (
-    <Box>
-      <Modal {...args}></Modal>
-    </Box>
-  );
+  return <Modal {...args}></Modal>;
 };
 
 export const SmallModal = Template.bind({});

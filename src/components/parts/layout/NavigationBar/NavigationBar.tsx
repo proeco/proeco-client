@@ -41,7 +41,7 @@ export const NavigationBar: VFC = memo(() => {
 
     if (currentUser) {
       return (
-        <Dropdown toggle={<StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="span">
+        <Dropdown toggle={<StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="div">
           {menuItems(currentUser).map((menuItem, i) => (
             <DropdownItem key={i} onClick={menuItem.onClick}>
               {menuItem.icon}

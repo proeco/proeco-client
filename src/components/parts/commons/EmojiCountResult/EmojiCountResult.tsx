@@ -1,5 +1,4 @@
 import React, { VFC } from 'react';
-import { Box } from '@mui/system';
 import { Emoji } from '~/components/parts/commons';
 
 type Props = {
@@ -8,13 +7,13 @@ type Props = {
 
 export const EmojiCountResult: VFC<Props> = ({ emojisInfo }) => {
   return (
-    <Box display="flex" alignItems="center" gap="12px" bgcolor="#e5e5e5" width="fit-content" borderRadius="18px" p="0 8px">
+    <div className="d-flex align-items-center gap-4">
       {emojisInfo.map((emojiInfo, i) => (
-        <Box key={i} p="8px" display="flex" alignItems="center" gap="4px">
+        <div key={i} className="d-flex align-items-center">
           <Emoji emojiId={emojiInfo.emojiId} size={20} />
-          <span className="fs-2 fw-bold">{emojiInfo.count}</span>
-        </Box>
+          <span className="ms-2 fs-2 fw-bold">{emojiInfo.count}</span>
+        </div>
       ))}
-    </Box>
+    </div>
   );
 };
