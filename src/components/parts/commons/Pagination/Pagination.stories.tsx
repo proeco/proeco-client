@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Stack } from '@mui/material';
+
 import { Pagination } from '~/components/parts/commons';
 
 export default {
@@ -16,10 +16,10 @@ const Template: ComponentStory<typeof Pagination> = ({ count }) => {
     setPage(value);
   };
   return (
-    <Stack spacing={2}>
+    <div>
       <p>page: {page}</p>
       <Pagination count={count} page={page} onChange={handleChangePage} />
-    </Stack>
+    </div>
   );
 };
 
