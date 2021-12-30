@@ -1,143 +1,59 @@
-import { ComponentProps, memo, VFC, useState } from 'react';
-
-import { Box } from '@mui/system';
-import { Drawer as MuiDrawer } from '@mui/material';
-import { styled, Theme, CSSObject } from '@mui/material/styles';
+import { ComponentProps, memo, VFC } from 'react';
 
 import { useRouter } from 'next/router';
-import { SideBarListItem, Icon, Link } from '~/components/parts/commons';
-import { UserIcon } from '~/components/domains/user/UserIcon';
+import { Icon, Link } from '~/components/parts/commons';
 
-import { useLocalStorage } from '~/hooks/useLocalStorage';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { UserIcon } from '~/components/domains/user/UserIcon';
+import { User } from '~/domains';
+import { URLS } from '~/constants';
 
 type Props = {
-  openContent: JSX.Element;
-  closeContent: JSX.Element;
-  sidebarItems: {
-    icon: ComponentProps<typeof Icon>['icon'];
-    url: string;
-    text: string;
-  }[];
+  currentUser: User;
 };
 
-const drawerWidth = 280;
-const isOpenSideBar = 'isOpenSideBar';
+const sidebarItems: {
+  icon: ComponentProps<typeof Icon>['icon'];
+  url: string;
+  text: string;
+}[] = [
+  // {
+  //   icon: 'DashboardOutlined',
+  //   url: URLS.DASHBOARD,
+  //   text: 'ホーム',
+  // },
+  {
+    icon: 'PEOPLE',
+    url: URLS.DASHBOARD_TEAMS,
+    text: 'チーム',
+  },
+  {
+    icon: 'GEAR',
+    url: URLS.DASHBOARD_SETTINGS,
+    text: '設定',
+  },
+];
 
-export const SideBar: VFC<Props> = memo(({ sidebarItems, openContent, closeContent }) => {
-  const { data: currentUser } = useCurrentUser();
+export const SideBar: VFC<Props> = memo(({ currentUser }) => {
   const router = useRouter();
 
-  const { fetchData, storeData } = useLocalStorage();
-  const value = fetchData<boolean>(isOpenSideBar);
-  const [open, setOpen] = useState(value ?? true);
-
-  const handleClickChevronButton = () => {
-    setOpen((prevState) => {
-      storeData<boolean>(isOpenSideBar, !prevState);
-      return !prevState;
-    });
-  };
-
   return (
-    <StyledDrawer variant="permanent" open={open}>
-      <div className={`mt-2 position-absolute d-flex w-100 ${open ? 'justify-content-end p-2' : 'justify-content-center'}`}>
-        <button className="btn" onClick={handleClickChevronButton}>
-          <Icon icon={open ? 'CHEVRON_LEFT' : 'CHEVRON_RIGHT'} size={24} />
-        </button>
+    <div className="bg-white p-3 d-flex flex-column align-items-center d-md-block d-none">
+      <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} isLink />
+      <div className="mt-4 d-flex flex-column gap-3">
+        {sidebarItems.map((sidebarItem, index) => {
+          return (
+            <Link href={sidebarItem.url} key={index}>
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                {/* // <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center"> */}
+                <Icon icon={sidebarItem.icon} size={24} color={sidebarItem.url === router.asPath ? 'PRIMARY' : 'BLACK'} />
+                <span className={`fs-4 fw-bold ${sidebarItem.url === router.asPath ? 'text-primary' : 'text-black'}`}>
+                  {sidebarItem.text}
+                </span>
+              </div>
+            </Link>
+          );
+        })}
       </div>
-      <StyledSideBarWrapper width="280px" p="16px" bgcolor="whitesmoke" height="100%" display="flex" flexDirection="column">
-        {open ? openContent : closeContent}
-        <Box p="12px 0 24px" display="flex" flexDirection="column" gap="8px">
-          {sidebarItems.map((sidebarItem, index) => {
-            if (open) {
-              return (
-                <Link href={sidebarItem.url} key={index}>
-                  <SideBarListItem
-                    icon={<Icon icon={sidebarItem.icon} size={20} color={sidebarItem.url === router.asPath ? 'WHITE' : 'BLACK'} />}
-                    selected={sidebarItem.url === router.asPath}
-                  >
-                    <span className={sidebarItem.url === router.asPath ? 'text-white' : 'text-black'}>{sidebarItem.text}</span>
-                  </SideBarListItem>
-                </Link>
-              );
-            }
-            return (
-              <Link href={sidebarItem.url} key={index}>
-                <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center">
-                  <Icon icon={sidebarItem.icon} size={24} color={sidebarItem.url === router.asPath ? 'PRIMARY' : 'BLACK'} />
-                  <span className={`fs-4 fw-bold ${sidebarItem.url === router.asPath ? 'text-primary' : 'text-black'}`}>
-                    {sidebarItem.text}
-                  </span>
-                </Box>
-              </Link>
-            );
-          })}
-        </Box>
-        {currentUser && (
-          <Box mt="auto">
-            <Box display="flex" alignItems="center" gap="8px">
-              <UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser._id} />
-              {open && <span>{currentUser.name}</span>}
-            </Box>
-          </Box>
-        )}
-      </StyledSideBarWrapper>
-    </StyledDrawer>
+    </div>
   );
 });
-
-const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-});
-
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(9)} + 1px)`,
-  },
-});
-
-const StyledDrawer = styled(MuiDrawer)<{ open: boolean }>`
-  width: ${drawerWidth}px;
-  flex-shrink: 0;
-  white-space: nowrap;
-  box-sizing: border-box;
-
-  .MuiDrawer-paper {
-    top: 56px;
-    background-color: whitesmoke;
-  }
-  ${(props) =>
-    props.open && {
-      ...openedMixin(props.theme),
-      '& .MuiDrawer-paper': openedMixin(props.theme),
-    }}
-  ${(props) =>
-    !props.open && {
-      ...closedMixin(props.theme),
-      '& .MuiDrawer-paper': closedMixin(props.theme),
-    }}
-
-  /*
-   * モバイルではサイドバーを表示しない
-   */
-  @media (max-width:  ${({ theme }) => theme.breakpoints.values.sm}px) {
-    display: none;
-  }
-`;
-
-const StyledSideBarWrapper = styled(Box)`
-  box-sizing: border-box;
-  border-right: 1px solid ${(props) => props.theme.palette.borderColor.main};
-`;
