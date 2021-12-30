@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Stack } from '@mui/material';
 import { Pagination } from '~/components/parts/commons';
@@ -8,17 +8,17 @@ export default {
   component: Pagination,
 } as ComponentMeta<typeof Pagination>;
 
-const Template: ComponentStory<typeof Pagination> = ({ count, ...rest }) => {
+const Template: ComponentStory<typeof Pagination> = ({ count }) => {
   const [page, setPage] = useState(1);
 
-  const handleChangePage = (event: ChangeEvent<unknown>, value: number | null) => {
+  const handleChangePage = (value: number | null) => {
     if (!value) return;
     setPage(value);
   };
   return (
     <Stack spacing={2}>
       <p>page: {page}</p>
-      <Pagination count={count} page={page} onChange={handleChangePage} {...rest} />
+      <Pagination count={count} page={page} onChange={handleChangePage} />
     </Stack>
   );
 };
