@@ -1,6 +1,6 @@
-import { Avatar, Skeleton } from '@mui/material';
-import { styled } from '@mui/system';
 import React, { VFC } from 'react';
+import styled from 'styled-components';
+
 import { Icon } from '~/components/parts/commons';
 import { useAttachment } from '~/stores/attachment';
 
@@ -12,28 +12,33 @@ type Props = {
 // ログインしていない状態の TeamIcon
 export const GuestTeamIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
   return (
-    <StyledAvatar size={size}>
-      <Icon icon="PEOPLE" size={size} />
-    </StyledAvatar>
+    <StyledIconWrapper size={size} className="rounded-circle border border-primary border-2 bg-white">
+      <Icon icon="PEOPLE" size={size} color="SECONDARY" />
+    </StyledIconWrapper>
   );
 };
 
 // ローディング状態の TeamIcon
 export const SkeltonTeamIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
-  return <Skeleton variant="circular" width={size} height={size} />;
+  return <StyledIconWrapper size={size} className="skelton rounded-circle border border-primary border-2" />;
 };
 
 // 通常状態の TeamIcon
 export const TeamIcon: VFC<Props> = ({ attachmentId, size }) => {
   const { data: attachment } = useAttachment(attachmentId);
 
-  return <StyledAvatar size={size} src={attachment?.filePath} />;
+  return (
+    <img
+      className="rounded-circle border border-primary border-2 bg-white d-block"
+      width={size}
+      height={size}
+      alt={attachmentId}
+      src={attachment?.filePath}
+    />
+  );
 };
 
-const StyledAvatar = styled(Avatar)<{ size: number }>`
-  background-color: white;
-  border: 2px solid ${(props) => props.theme.palette.primary.main};
-  box-sizing: border-box;
+const StyledIconWrapper = styled.div<{ size: number }>`
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;
 `;

@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { TeamIcon } from './TeamIcon';
 
 export default {
@@ -12,11 +10,11 @@ export default {
 
 const Template: ComponentStory<typeof TeamIcon> = ({ attachmentId }) => {
   return (
-    <Box p="20px" display="flex" alignItems="center" gap="20px">
+    <div className="p-4 d-flex align-items-center gap-4">
       <TeamIcon attachmentId={attachmentId} size={24} />
       <TeamIcon attachmentId={attachmentId} size={40} />
       <TeamIcon attachmentId={attachmentId} size={80} />
-    </Box>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import { Dropdown as DropdownOriginal, DropdownMenu, DropdownToggle, DropdownIte
 
 type Props = {
   toggle: ReactNode;
-  tag?: 'span';
+  tag?: 'span' | 'div';
 };
 
 export const Dropdown: FC<Props> = ({ toggle, tag, children }) => {
