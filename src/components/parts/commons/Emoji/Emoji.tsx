@@ -1,6 +1,6 @@
 import { VFC } from 'react';
 import { EmojiData, Emoji as EmojiOrigin } from 'emoji-mart';
-import { Box, styled } from '@mui/system';
+import styled from 'styled-components';
 
 type Props = {
   emojiId: EmojiData | string;
@@ -16,7 +16,7 @@ export const Emoji: VFC<Props> = ({ emojiId, size, onClick }) => {
   );
 };
 
-const StyledEmojiWrapper = styled(Box)`
+const StyledEmojiWrapper = styled.div`
   .emoji-mart-emoji {
     display: block;
   }
