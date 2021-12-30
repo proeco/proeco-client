@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { Emoji } from './Emoji';
 
 export default {
@@ -12,11 +11,11 @@ export default {
 
 const Template: ComponentStory<typeof Emoji> = (args) => {
   return (
-    <Box p="32px" display="flex" gap="16px">
+    <div className="p-4 d-flex gap-3">
       <Emoji emojiId={args.emojiId} size={24} />
       <Emoji emojiId={args.emojiId} size={32} />
       <Emoji emojiId={args.emojiId} size={40} />
-    </Box>
+    </div>
   );
 };
 
