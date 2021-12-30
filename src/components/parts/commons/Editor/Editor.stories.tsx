@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { Editor } from './Editor';
 import { Card } from '~/components/parts/commons';
 import { MDS } from '~/constants';
@@ -21,7 +19,7 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onComp
   const [markdownContent, setMarkdownContent] = useState(content);
 
   return (
-    <Box p="20px" width="600px" bgcolor="#e5e5e5">
+    <div className="p-3">
       <Card>
         <Editor
           content={markdownContent}
@@ -32,7 +30,7 @@ const Template: ComponentStory<typeof Editor> = ({ content, isUpdateMode, onComp
           currentUser={currentUser}
         />
       </Card>
-    </Box>
+    </div>
   );
 };
 

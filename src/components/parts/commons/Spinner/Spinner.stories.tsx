@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { Spinner } from '~/components/parts/commons';
 
 export default {
@@ -10,11 +9,7 @@ export default {
 } as ComponentMeta<typeof Spinner>;
 
 export const Template: ComponentStory<typeof Spinner> = ({ color }) => {
-  return (
-    <Box>
-      <Spinner color={color} />
-    </Box>
-  );
+  return <Spinner color={color} />;
 };
 
 export const Default = Template.bind({});
