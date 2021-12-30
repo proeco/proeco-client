@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { Link } from './Link';
 
 export default {
@@ -11,11 +10,9 @@ export default {
 
 const Template: ComponentStory<typeof Link> = ({ ...rest }) => {
   return (
-    <Box>
-      <Link {...rest}>
-        <p>Linkのテキスト</p>
-      </Link>
-    </Box>
+    <Link {...rest}>
+      <p>Linkのテキスト</p>
+    </Link>
   );
 };
 

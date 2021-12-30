@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { SkeltonStoryCard, StoryCard } from './StoryCard';
 import { createMockStory } from '~/mocks/domains';
 
@@ -13,9 +11,9 @@ export default {
 
 const Template: ComponentStory<typeof StoryCard> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="#e5e5e5" width="400px">
+    <div className="p-4">
       <StoryCard {...rest} />
-    </Box>
+    </div>
   );
 };
 
@@ -28,9 +26,9 @@ Default.args = {
 
 const SkeltonTemplate: ComponentStory<typeof SkeltonStoryCard> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="#e5e5e5" width="400px">
+    <div className="p-4">
       <SkeltonStoryCard {...rest} />
-    </Box>
+    </div>
   );
 };
 

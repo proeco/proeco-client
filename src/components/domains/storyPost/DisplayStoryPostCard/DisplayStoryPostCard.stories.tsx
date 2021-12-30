@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { DisplayStoryPostCard } from './DisplayStoryPostCard';
 import { createMockStoryPost, createMockUser } from '~/mocks/domains';
 import { MDS } from '~/constants';
@@ -13,9 +12,9 @@ export default {
 
 const Template: ComponentStory<typeof DisplayStoryPostCard> = ({ ...rest }) => {
   return (
-    <Box p="20px" width="600px" bgcolor="#e5e5e5">
+    <div className="p-4">
       <DisplayStoryPostCard {...rest} />
-    </Box>
+    </div>
   );
 };
 

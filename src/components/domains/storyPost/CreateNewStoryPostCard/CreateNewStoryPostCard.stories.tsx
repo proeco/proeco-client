@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { CreateNewStoryPostCard } from '~/components/domains/storyPost/CreateNewStoryPostCard';
 import { createMockUser } from '~/mocks/domains';
 
@@ -13,9 +11,9 @@ export default {
 
 const Template: ComponentStory<typeof CreateNewStoryPostCard> = ({ storyId, page, currentUser }) => {
   return (
-    <Box p="40px" bgcolor="#e5e5e5" width="600px">
+    <div className="p-4">
       <CreateNewStoryPostCard storyId={storyId} page={page} currentUser={currentUser} />
-    </Box>
+    </div>
   );
 };
 

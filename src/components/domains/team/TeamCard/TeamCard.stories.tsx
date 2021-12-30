@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { SkeltonTeamCard, TeamCard } from './TeamCard';
 
 export default {
@@ -12,9 +10,9 @@ export default {
 
 const Template: ComponentStory<typeof TeamCard> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="#e5e5e5" width="400px">
+    <div className="p-4">
       <TeamCard {...rest}></TeamCard>
-    </Box>
+    </div>
   );
 };
 
@@ -35,9 +33,9 @@ LongTextTeamCard.args = {
 
 const SkeltonTemplate: ComponentStory<typeof SkeltonTeamCard> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="#e5e5e5" width="400px">
+    <div className="p-4">
       <SkeltonTeamCard {...rest}></SkeltonTeamCard>
-    </Box>
+    </div>
   );
 };
 

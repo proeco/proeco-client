@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { FixedImage, SkeltonFixedImage } from './FixedImage';
 
 export default {
@@ -12,9 +10,9 @@ export default {
 
 const Template: ComponentStory<typeof FixedImage> = ({ ...rest }) => {
   return (
-    <Box p="40px" bgcolor="#e5e5e5" width="400px">
+    <div className="p-4">
       <FixedImage {...rest}></FixedImage>
-    </Box>
+    </div>
   );
 };
 
@@ -28,9 +26,9 @@ NotFound.args = {};
 
 const SkeltonTemplate: ComponentStory<typeof SkeltonFixedImage> = () => {
   return (
-    <Box p="40px" bgcolor="#e5e5e5" width="400px">
+    <div className="p-4">
       <SkeltonFixedImage></SkeltonFixedImage>
-    </Box>
+    </div>
   );
 };
 
