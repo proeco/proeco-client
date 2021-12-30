@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const SkeltonFixedImage: VFC = () => {
-  return <StyledDiv className="w-100 skelton"></StyledDiv>;
+  return <StyledDiv className="w-100 skelton" />;
 };
 
 export const FixedImage: VFC<Props> = ({ imageUrl }) => {
