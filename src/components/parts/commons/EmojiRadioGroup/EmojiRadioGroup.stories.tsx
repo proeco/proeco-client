@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { EmojiRadioGroup } from './EmojiRadioGroup';
 
 export default {
@@ -18,9 +16,9 @@ const Template: ComponentStory<typeof EmojiRadioGroup> = ({ selectedEmojiId, ...
   };
 
   return (
-    <Box p="20px">
+    <div className="p-4">
       <EmojiRadioGroup selectedEmojiId={newSelectedEmojiId} {...rest} onClick={handleClickEmoji} />
-    </Box>
+    </div>
   );
 };
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { EmojiCountResult } from './EmojiCountResult';
 
 export default {
@@ -12,9 +10,9 @@ export default {
 
 const Template: ComponentStory<typeof EmojiCountResult> = ({ ...rest }) => {
   return (
-    <Box p="20px">
+    <div className="p-4">
       <EmojiCountResult {...rest} />
-    </Box>
+    </div>
   );
 };
 

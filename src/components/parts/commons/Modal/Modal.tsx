@@ -16,7 +16,7 @@ type Props = {
 
 export const Modal: VFC<Props> = ({ open, emojiId, title, content, onClose, size = 'lg' }) => {
   return (
-    <ModalOriginal isOpen={open} toggle={onClose} centered zIndex={1400} size={size}>
+    <ModalOriginal isOpen={open} toggle={onClose} zIndex={1400} size={size}>
       {title && (
         <ModalHeader className="text-center" toggle={onClose}>
           <div className="d-flex align-items-center gap-2">

@@ -1,5 +1,5 @@
 import React, { VFC } from 'react';
-import { Box, styled } from '@mui/system';
+import styled from 'styled-components';
 
 import { Emoji } from '~/components/parts/commons';
 
@@ -11,7 +11,7 @@ type Props = {
 
 export const EmojiRadioGroup: VFC<Props> = ({ emojiIds, onClick, selectedEmojiId }) => {
   return (
-    <Box display="flex" alignItems="center" gap="12px" bgcolor="#e5e5e5" width="fit-content" borderRadius="18px" p="0 8px">
+    <div className="d-flex align-items-center gap-3">
       {emojiIds.map((emojiId, i) => {
         if (selectedEmojiId) {
           return (
@@ -26,11 +26,11 @@ export const EmojiRadioGroup: VFC<Props> = ({ emojiIds, onClick, selectedEmojiId
           </StyledBox>
         );
       })}
-    </Box>
+    </div>
   );
 };
 
-const StyledBox = styled(Box)`
+const StyledBox = styled.div`
   cursor: pointer;
   padding: 8px;
   transition: all ease 100ms;
