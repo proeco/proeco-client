@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { LoginModal } from './LoginModal';
 
 export default {
@@ -13,11 +12,7 @@ export default {
 } as ComponentMeta<typeof LoginModal>;
 
 const Template: ComponentStory<typeof LoginModal> = (args) => {
-  return (
-    <Box>
-      <LoginModal {...args} />
-    </Box>
-  );
+  return <LoginModal {...args} />;
 };
 
 export const OpenModal = Template.bind({});
