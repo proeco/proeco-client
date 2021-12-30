@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { styled } from '@mui/system';
-import { List } from '@mui/material';
+import styled from 'styled-components';
 
 import { SideBarListItem } from '~/components/parts/commons';
 
@@ -20,7 +19,7 @@ const Template: ComponentStory<typeof SideBarListItem> = ({ icon, selected }) =>
   );
 };
 
-const StyledList = styled(List)`
+const StyledList = styled.li`
   width: 280px;
 `;
 

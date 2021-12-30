@@ -1,46 +1,24 @@
-import React, { VFC, ComponentProps } from 'react';
-import ListItemButton from '@mui/material/ListItemButton';
-import { styled } from '@mui/system';
-import { ListItemIcon, ListItemText } from '@mui/material';
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
-type SideBarListItemType = {
+type Props = {
   icon: JSX.Element;
+  selected: boolean;
 };
 
-type Props = ComponentProps<typeof ListItemButton> & SideBarListItemType;
-
-export const SideBarListItem: VFC<Props> = ({ children, selected, icon }) => {
+export const SideBarListItem: FC<Props> = ({ children, selected, icon }) => {
   return (
-    <StyledListItemButton selected={selected}>
-      <StyledListItemIcon>{icon}</StyledListItemIcon>
-      <StyledListItemText disableTypography primary={children} />
-    </StyledListItemButton>
+    <StyledList
+      className={`list-group-item list-group-item-action border-0 d-flex align-items-center rounded-2 ${selected ? 'bg-primary' : ''}`}
+    >
+      {icon}
+      <span className="ms-2">{children}</span>
+    </StyledList>
   );
 };
 
-const StyledListItemButton = styled(ListItemButton)`
-  padding: 8px;
-  border-radius: 4px;
-  &.Mui-selected {
-    background-color: ${(props) => props.theme.palette.primary.main};
-    &:hover {
-      background-color: ${(props) => props.theme.palette.primary.main};
-      opacity: 0.7;
-    }
-    .MuiTypography-root {
-      color: #fff;
-    }
+const StyledList = styled.li`
+  :hover {
+    background: #e3f2fd;
   }
-  &:hover {
-    background-color: #e3f2fd;
-  }
-`;
-
-const StyledListItemIcon = styled(ListItemIcon)`
-  min-width: unset;
-  margin-right: 8px;
-`;
-
-const StyledListItemText = styled(ListItemText)`
-  margin: 0;
 `;
