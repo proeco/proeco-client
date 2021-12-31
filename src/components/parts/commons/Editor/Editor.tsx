@@ -1,5 +1,4 @@
 import React, { VFC, useState, ChangeEvent, useRef } from 'react';
-import { Box } from '@mui/system';
 import { Tab } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import styled from 'styled-components';
@@ -75,17 +74,15 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
         </StyledTabPanel>
         <StyledTabPanel value="preview">
           {content === '' ? (
-            <Box minHeight="112px" display="flex" p="16px" my="16px" alignItems="center" justifyContent="center">
-              <p className="mb-0">本文がありません</p>
-            </Box>
+            <StyledParagraphWrapper className="text-center d-flex flex-column align-items-center justify-content-center">
+              本文がありません
+            </StyledParagraphWrapper>
           ) : (
-            <Box minHeight="112px" p="16px" mt="8px" mb="24px">
-              <MarkdownToHtmlBody content={content} />
-            </Box>
+            <MarkdownToHtmlBody content={content} />
           )}
         </StyledTabPanel>
       </TabContext>
-      <Box display="flex" alignItems="center" justifyContent="flex-end" gap="4px">
+      <div className="d-flex align-items-center justify-content-end">
         {value === 'editor' && (
           <StyledLabel htmlFor="image">
             <Icon icon="CLOUD_UPLOAD" size={16} color="LIGHT" />
@@ -102,10 +99,14 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
         <Button color="primary" onClick={onCompleteEdit} disabled={content.trim() === '' || isUploading}>
           {isUpdateMode ? '更新する' : '投稿する'}
         </Button>
-      </Box>
+      </div>
     </>
   );
 };
+
+const StyledParagraphWrapper = styled.div`
+  min-height: 290px;
+`;
 
 const StyledTabPanel = styled(TabPanel)`
   padding: 0px;

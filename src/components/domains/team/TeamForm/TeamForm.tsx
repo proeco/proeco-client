@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { VFC, useState, ChangeEvent, useEffect } from 'react';
 
-import { Box, styled } from '@mui/system';
 import { Grid } from '@mui/material';
 
 import { TeamCard } from '../TeamCard';
@@ -113,7 +112,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
     <Grid container>
       <Grid item xs={12} md={6} px={2} pb={3}>
         <Card>
-          <Box display="flex" justifyContent="center">
+          <div className="d-flex align-items-center justify-content-center mb-2">
             {isLoadingUploadAttachment ? (
               <SkeltonTeamIcon size={100} />
             ) : (
@@ -122,14 +121,14 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
                 currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachment?.filePath}
               />
             )}
-          </Box>
+          </div>
           <span className="mb-1 d-inline-block text-light">プロダクトの url</span>
-          <Box display="flex" alignItems="center" gap={1}>
-            <input className="form-control" value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
-            <StyledButton color="primary" disabled={!isValidUrl(newTeam.url)} onClick={handleClickFetchByUrl}>
+          <div className="d-flex align-items-center">
+            <input className="form-control me-2" value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
+            <Button color="primary" disabled={!isValidUrl(newTeam.url)} onClick={handleClickFetchByUrl}>
               <Icon icon="CLOCKWISE" color="WHITE" />
-            </StyledButton>
-          </Box>
+            </Button>
+          </div>
           <span className="mt-3 mb-1 d-inline-block text-light">Product Id</span>
           <input className="form-control" value={newTeam.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
           <span className="mt-3 mb-1 d-inline-block text-light">名前</span>
@@ -141,28 +140,18 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
             rows={6}
             onChange={(e) => updateStoryForm({ description: e.target.value })}
           />
-          <Box mt={4} textAlign="center">
+          <div className="text-center mt-3">
             <Button disabled={isCreating || !isValidForm || isLoadingUploadAttachment} color="primary" onClick={handleClickCreateNewTeam}>
               <Icon icon="PENCIL" size={20} color="WHITE" />
               {team ? '更新する' : '新規チームを作成する'}
             </Button>
-          </Box>
+          </div>
         </Card>
       </Grid>
       <Grid item xs={12} md={6} px={2} pb={3}>
         <h3 className="mb-3 text-center">プレビュー</h3>
-        <TeamCard
-          name={newTeam.name}
-          productId={newTeam.productId}
-          url={newTeam.url}
-          description={newTeam.description}
-          attachmentId={newTeam.iconImageId}
-        />
+        <TeamCard name={newTeam.name} url={newTeam.url} description={newTeam.description} attachmentId={newTeam.iconImageId} />
       </Grid>
     </Grid>
   );
 };
-
-const StyledButton = styled(Button)`
-  white-space: nowrap;
-`;

@@ -1,6 +1,8 @@
-import { Box } from '@mui/system';
 import { ReactNode } from 'react';
+
 import { Grid } from '@mui/material';
+import styled from 'styled-components';
+
 import { Button, Icon, Link } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -23,8 +25,8 @@ const DashboardTeamPage: ProecoNextPage = () => {
   return (
     <>
       <ProecoOgpHead />
-      <Box mx="auto" maxWidth="1200px">
-        <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
+      <StyledDiv className="mx-auto">
+        <div className="d-flex align-items-center justify-content-between mb-3">
           <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
             <Icon icon="PEOPLE" size={28} />
             チームリスト
@@ -35,19 +37,13 @@ const DashboardTeamPage: ProecoNextPage = () => {
               新規チームを作成する
             </Button>
           </Link>
-        </Box>
+        </div>
         <Grid container>
           {teams ? (
             teams.map((team) => (
               <Grid key={`my-teams-${team._id}`} item xs={12} sm={6} md={4} px={1} pb={2}>
                 <Link href={URLS.TEAMS(team.productId)}>
-                  <TeamCard
-                    name={team.name}
-                    productId={team.productId}
-                    description={team.description}
-                    attachmentId={team.iconImageId}
-                    url={team.url}
-                  />
+                  <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
                 </Link>
               </Grid>
             ))
@@ -62,10 +58,14 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </>
           )}
         </Grid>
-      </Box>
+      </StyledDiv>
     </>
   );
 };
+
+const StyledDiv = styled.div`
+  max-width: 1200px;
+`;
 
 DashboardTeamPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 DashboardTeamPage.getAccessControl = () => {

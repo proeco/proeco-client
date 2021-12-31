@@ -44,7 +44,6 @@ export const SideBar: VFC<Props> = memo(({ currentUser }) => {
           return (
             <Link href={sidebarItem.url} key={index}>
               <div className="d-flex flex-column justify-content-center align-items-center">
-                {/* // <Box width="40px" display="flex" alignItems="center" flexDirection="column" justifyContent="center"> */}
                 <Icon icon={sidebarItem.icon} size={24} color={sidebarItem.url === router.asPath ? 'PRIMARY' : 'BLACK'} />
                 <span className={`fs-4 fw-bold ${sidebarItem.url === router.asPath ? 'text-primary' : 'text-black'}`}>
                   {sidebarItem.text}

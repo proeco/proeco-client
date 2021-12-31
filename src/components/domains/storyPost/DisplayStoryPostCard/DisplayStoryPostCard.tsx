@@ -1,8 +1,8 @@
 import React, { VFC, useState, useCallback, useMemo, useRef } from 'react';
-import { Box, styled } from '@mui/system';
 
 import { Emoji } from 'emoji-mart';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import styled from 'styled-components';
 import {
   Icon,
   Link,
@@ -218,12 +218,12 @@ export const DisplayStoryPostCard: VFC<Props> = ({
   return (
     <>
       <Card>
-        <StyledBox width="100%" display="flex" alignItems="center" ref={boxRef}>
+        <div className="w-100 d-flex align-items-center" ref={boxRef}>
           {createdUserId && createdUserName ? <Link href={'/user/' + createdUserId}>{createdUserName}</Link> : <span>undefined</span>}
-          <StyledTime className="ms-1" dateTime={currentStoryPost.createdAt.toLocaleDateString()}>
+          <time className="ms-2 text-light fs-3" dateTime={currentStoryPost.createdAt.toLocaleDateString()}>
             {displayDate}
-          </StyledTime>
-          <WrapDropdown>
+          </time>
+          <div className="ms-auto">
             <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
               <CopyToClipboard
                 text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(productId, storyId, storyPost._id)}
@@ -251,8 +251,8 @@ export const DisplayStoryPostCard: VFC<Props> = ({
                 </DropdownItem>
               )}
             </Dropdown>
-          </WrapDropdown>
-        </StyledBox>
+          </div>
+        </div>
         {isUpdate && currentUser && (
           <Editor
             isUpdateMode
@@ -265,33 +265,33 @@ export const DisplayStoryPostCard: VFC<Props> = ({
         )}
         {!isUpdate && (
           <>
-            <Box p={2}>
+            <StyledDiv className="py-4">
               <MarkdownToHtmlBody content={content} />
-            </Box>
+            </StyledDiv>
             <hr className="my-3 text-light" />
             {editable ? (
               <>
-                <Box textAlign="center">
+                <div className="text-center">
                   <span className="fs-3 text-light">
                     <Emoji emoji="bulb" size={12} />
                     ユーザーからリアクションが届いています
                   </span>
-                </Box>
-                <Box display="flex" justifyContent="center">
+                </div>
+                <div className="d-flex align-items-center justify-content-center">
                   <EmojiCountResult emojisInfo={emojisInfo} />
-                </Box>
+                </div>
               </>
             ) : (
               <>
-                <Box textAlign="center">
+                <div className="text-center">
                   <span className="fs-3 text-light">
                     <Emoji emoji="bulb" size={12} />
                     リアクションを送信しましょう
                   </span>
-                </Box>
-                <Box display="flex" justifyContent="center">
+                </div>
+                <div className="d-flex align-items-center justify-content-center">
                   <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
-                </Box>
+                </div>
               </>
             )}
           </>
@@ -309,18 +309,6 @@ export const DisplayStoryPostCard: VFC<Props> = ({
   );
 };
 
-const StyledBox = styled(Box)`
-  .MuiLink-root {
-    color: ${(props) => props.theme.palette.textColor.main};
-    margin-right: 8px;
-  }
-`;
-
-const WrapDropdown = styled(Box)`
-  margin-left: auto;
-`;
-
-const StyledTime = styled('time')`
-  font-size: 12px;
-  color: ${(props) => props.theme.palette.textColor.light};
+const StyledDiv = styled.div`
+  min-height: 170px;
 `;

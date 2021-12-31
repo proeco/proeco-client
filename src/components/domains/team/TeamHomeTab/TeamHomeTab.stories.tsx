@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { TeamHomeTab } from './TeamHomeTab';
 import { createMockTeam, createMockUser } from '~/mocks/domains';
 import { MDS } from '~/constants';
@@ -14,9 +12,9 @@ export default {
 
 const Template: ComponentStory<typeof TeamHomeTab> = ({ ...rest }) => {
   return (
-    <Box p="20px">
+    <div className="p-4">
       <TeamHomeTab {...rest} />
-    </Box>
+    </div>
   );
 };
 

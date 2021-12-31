@@ -4,8 +4,8 @@ import gfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import 'github-markdown-css';
-
-import { Box, styled } from '@mui/system';
+import styled from 'styled-components';
+import { COLORS } from '~/constants';
 
 type Props = {
   content: string;
@@ -13,7 +13,7 @@ type Props = {
 
 export const MarkdownToHtmlBody: VFC<Props> = ({ content }) => {
   return (
-    <StyledMarkdownBody className="markdown-body">
+    <StyledMarkdownBody className="markdown-body text-clack">
       <ReactMarkdown
         components={{
           code({ inline, className, children, ...props }) {
@@ -38,9 +38,9 @@ export const MarkdownToHtmlBody: VFC<Props> = ({ content }) => {
   );
 };
 
-const StyledMarkdownBody = styled(Box)`
+const StyledMarkdownBody = styled.div`
   &.markdown-body {
-    color: ${(props) => props.theme.palette.textColor.main};
+    color: ${COLORS.TEXT};
     background-color: whitesmoke;
     p {
       white-space: pre-wrap;
