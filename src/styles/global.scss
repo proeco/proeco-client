@@ -20,6 +20,7 @@
 @import "./override-bootstrap/button.scss";
 
 @import "./override-reactstrap.scss";
+@import "~toastr/toastr.scss";
 
 // customize
 @import "./custom-utility.scss";
@@ -33,4 +34,15 @@
 }
 body {
   background-color: #e5e5e5;
+}
+
+#toast-container {
+  @include media-breakpoint-down(md) {
+    left: 0;
+    width: 100%;
+    padding: 0 5%;
+    .toast {
+      width: 100%;
+    }
+  }
 }
