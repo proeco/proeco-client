@@ -4,7 +4,7 @@ import { addDecorator} from '@storybook/react';
 
 import '../src/styles/global.scss';
 
-import { worker } from '../src/mocks/browser';
+const { worker } = require('../src/mocks/browser');
 worker.start()
 
 Object.defineProperty(nextImage, 'default', {
