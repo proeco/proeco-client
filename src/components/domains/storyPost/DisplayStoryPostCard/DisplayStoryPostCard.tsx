@@ -3,6 +3,7 @@ import React, { VFC, useState, useCallback, useMemo, useRef } from 'react';
 import { Emoji } from 'emoji-mart';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styled from 'styled-components';
+import { GuestUserIcon, UserIcon } from '../../user/UserIcon';
 import {
   Icon,
   Link,
@@ -29,6 +30,7 @@ import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 type Props = {
   createdUserId?: string;
+  createdUserAttachmentId?: string;
   createdUserName?: string;
   storyPost: StoryPost & { currentUserReaction?: Reaction };
   emojiIds?: string[];
@@ -43,6 +45,7 @@ type Props = {
 
 export const DisplayStoryPostCard: VFC<Props> = ({
   createdUserId,
+  createdUserAttachmentId,
   createdUserName,
   storyPost,
   emojiIds = ['disappointed_relieved', 'confused', 'slightly_smiling_face', 'smiling_face_with_3_hearts'],
@@ -219,6 +222,13 @@ export const DisplayStoryPostCard: VFC<Props> = ({
     <>
       <Card>
         <div className="w-100 d-flex align-items-center" ref={boxRef}>
+          <div className="me-2 d-md-none d-block">
+            {createdUserAttachmentId && createdUserId ? (
+              <UserIcon size={32} isLink attachmentId={createdUserAttachmentId} userId={createdUserId} />
+            ) : (
+              <GuestUserIcon size={32} />
+            )}
+          </div>
           {createdUserId && createdUserName ? <Link href={'/user/' + createdUserId}>{createdUserName}</Link> : <span>undefined</span>}
           <time className="ms-2 text-light fs-3" dateTime={currentStoryPost.createdAt.toLocaleDateString()}>
             {displayDate}
