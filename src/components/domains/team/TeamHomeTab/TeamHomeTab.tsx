@@ -82,13 +82,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
           </Card>
         </Grid>
         <Grid item xs={12} sm={4} px={1} pb={2}>
-          <TeamCard
-            name={team.name}
-            productId={team.productId}
-            description={team.description}
-            attachmentId={team.iconImageId}
-            url={team.url}
-          />
+          <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
         </Grid>
       </Grid>
     </>

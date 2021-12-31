@@ -150,13 +150,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
       </Grid>
       <Grid item xs={12} md={6} px={2} pb={3}>
         <h3 className="mb-3 text-center">プレビュー</h3>
-        <TeamCard
-          name={newTeam.name}
-          productId={newTeam.productId}
-          url={newTeam.url}
-          description={newTeam.description}
-          attachmentId={newTeam.iconImageId}
-        />
+        <TeamCard name={newTeam.name} url={newTeam.url} description={newTeam.description} attachmentId={newTeam.iconImageId} />
       </Grid>
     </Grid>
   );

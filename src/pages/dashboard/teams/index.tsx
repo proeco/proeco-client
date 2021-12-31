@@ -43,13 +43,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
             teams.map((team) => (
               <Grid key={`my-teams-${team._id}`} item xs={12} sm={6} md={4} px={1} pb={2}>
                 <Link href={URLS.TEAMS(team.productId)}>
-                  <TeamCard
-                    name={team.name}
-                    productId={team.productId}
-                    description={team.description}
-                    attachmentId={team.iconImageId}
-                    url={team.url}
-                  />
+                  <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
                 </Link>
               </Grid>
             ))
