@@ -1,6 +1,4 @@
 import { ReactNode } from 'react';
-
-import { Grid } from '@mui/material';
 import styled from 'styled-components';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
@@ -38,26 +36,26 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </div>
-        <Grid container>
+        <div className="row">
           {teams ? (
             teams.map((team) => (
-              <Grid key={`my-teams-${team._id}`} item xs={12} sm={6} md={4} px={1} pb={2}>
+              <div key={`my-teams-${team._id}`} className="col-12 col-sm-6 col-md-4">
                 <Link href={URLS.TEAMS(team.productId)}>
                   <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
                 </Link>
-              </Grid>
+              </div>
             ))
           ) : (
             <>
-              <Grid item xs={12} sm={6} md={4} px={1}>
+              <div className="col-12 col-sm-6 col-md-4">
                 <SkeltonTeamCard />
-              </Grid>
-              <Grid item xs={12} sm={6} md={4} px={1}>
+              </div>
+              <div className="col-12 col-sm-6 col-md-4">
                 <SkeltonTeamCard />
-              </Grid>
+              </div>
             </>
           )}
-        </Grid>
+        </div>
       </StyledDiv>
     </>
   );

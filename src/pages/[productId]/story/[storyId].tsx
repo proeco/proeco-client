@@ -5,7 +5,6 @@ import Reward, { RewardElement } from 'react-rewards';
 
 import styled from 'styled-components';
 
-import { Grid } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
 
@@ -157,8 +156,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
             </Dropdown>
           )}
         </div>
-        <Grid container>
-          <Grid item xs={12} md={8} px={2} pb={3}>
+        <div className="row">
+          <div className="col-12 col-md-8">
             {customStoryPosts.map((customStoryPost, i) => {
               const createdStoryPostUser = teamUsers.find((teamUser) => teamUser._id === customStoryPost.createdUserId);
               return (
@@ -192,8 +191,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                 </div>
               </div>
             )}
-          </Grid>
-          <Grid item xs={12} md={4} px={2} pb={3}>
+          </div>
+          <div className="col-12 col-md-4">
             <StyledRightSide className="position-sticky">
               <Card>
                 <div className="mb-2 rounded-2 overflow-hidden">
@@ -213,8 +212,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                 </Button>
               </Card>
             </StyledRightSide>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </StyledDiv>
       <UpdateStoryModal
         isOpen={isOpenUpdateStoryModal}
