@@ -1,5 +1,6 @@
 export { Button } from './Button';
 export { Card } from './Card';
+export { Carousel } from './Carousel';
 export { Dropdown, DropdownItem } from './Dropdown';
 export { EditableInput } from './EditableText';
 export { Editor } from './Editor';
