@@ -1,5 +1,4 @@
 import React, { VFC, useMemo } from 'react';
-import { Box, Skeleton } from '@mui/material';
 
 import styled from 'styled-components';
 
@@ -19,15 +18,19 @@ type Props = {
 export const SkeltonStoryCard: VFC = () => {
   return (
     <StyledCard headerContent={<SkeltonFixedImage />}>
-      <Skeleton variant="text" width="50px" />
-      <Skeleton variant="text" width="100%" />
-      <Box mt="12px" display="flex" alignItems="center" gap="8px">
+      <StyledSkeltonParagraph className="mb-2 skelton w-25 rounded-2" />
+      <StyledSkeltonParagraph className="skelton w-100 rounded-2" />
+      <div className="mt-3 d-flex align-items-center">
         <SkeltonTeamIcon size={32} />
-        <Skeleton variant="text" width="100px" />
-      </Box>
+        <StyledSkeltonParagraph className="ms-2 skelton w-100 rounded-2" />
+      </div>
     </StyledCard>
   );
 };
+
+const StyledSkeltonParagraph = styled.div`
+  height: 16px;
+`;
 
 export const StoryCard: VFC<Props> = ({ story }) => {
   const { data: team } = useTeam({ teamId: story.teamId });
@@ -51,19 +54,19 @@ export const StoryCard: VFC<Props> = ({ story }) => {
           </span>
           <p className="fw-bold mb-0">{story.title}</p>
         </div>
-        <Box mt="12px" display="flex" alignItems="center" gap="8px">
+        <div className="mt-3 d-flex align-items-center">
           {team ? (
             <>
               <TeamIcon size={32} attachmentId={team.iconImageId} />
-              <span className="fs-2">{team.name}</span>
+              <span className="fs-2 ms-2">{team.name}</span>
             </>
           ) : (
             <>
               <GuestTeamIcon size={32} />
-              <span className="fs-2">undefined</span>
+              <span className="fs-2 ms-2">undefined</span>
             </>
           )}
-        </Box>
+        </div>
       </StyledCard>
     );
   }, [displayDate, story, team, ogpUrl]);
@@ -78,5 +81,4 @@ const StyledCard = styled(Card)`
   position: relative;
   width: 100%;
   top: 0;
-  transition: all 0.3s;
 `;
