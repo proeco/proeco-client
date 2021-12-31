@@ -141,10 +141,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
       <StyledDiv className="mx-auto">
         <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(team.productId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
         <div className="mb-3 d-flex align-items-center justify-content-between">
-          <div className="d-flex align-items-center gap-3">
-            <Emoji emojiId={story.emojiId} size={40} />
-            <h1 className="fw-bold mb-0 d-flex align-items-center gap-2">{story.title}</h1>
-          </div>
+          <Emoji emojiId={story.emojiId} size={40} />
+          <h1 className="ms-2 fw-bold mb-0 text-truncate">{story.title}</h1>
           {isMemberOfTeam && (
             <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
               {menuItems.map((menuItem, i) => (

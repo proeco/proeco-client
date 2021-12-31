@@ -55,18 +55,17 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
   return (
     <>
       <div className="mb-3 d-flex align-items-center justify-content-between">
-        <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-          <Icon icon="LIST" size={28} />
-          ストーリーリスト
-        </h2>
+        <h3 className="fw-bold mb-0 d-flex align-items-center gap-2">
+          <Icon icon="LIST" size={24} />
+          進行中のストーリー
+        </h3>
         {editable && (
           <Button onClick={handleClickCreateStoryButton} color="primary">
             <Icon icon="PENCIL" size={16} color="WHITE" />
-            ストーリーを追加する
+            追加する
           </Button>
         )}
       </div>
-      <h3 className="fw-bold mb-4 text-center">進行中のストーリー</h3>
       <Carousel className="carousel" responsive={responsive} showDots arrows={false}>
         {openStoryList
           ? openStoryList.docs.map((story, index) => {

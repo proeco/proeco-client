@@ -24,7 +24,7 @@ export const Breadcrumbs: VFC<Props> = ({ breadcrumbsItems }) => {
             );
           }
           return (
-            <li className="breadcrumb-item" key={i}>
+            <li className="breadcrumb-item text-truncate" key={i}>
               <span className="fs-2 fw-bold">{breadcrumbsItem.label}</span>
             </li>
           );

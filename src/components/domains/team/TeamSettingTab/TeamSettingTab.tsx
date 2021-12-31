@@ -11,10 +11,10 @@ type Props = {
 export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
   return (
     <>
-      <h2 className="fw-bold mb-3 d-flex align-items-center gap-2">
-        <Icon icon="GEAR" size={28} />
+      <h3 className="fw-bold mb-3 d-flex align-items-center gap-2">
+        <Icon icon="GEAR" size={24} />
         設定
-      </h2>
+      </h3>
       <TeamForm currentUser={currentUser} team={team} />
     </>
   );
