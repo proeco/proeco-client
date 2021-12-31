@@ -1,13 +1,10 @@
 import { ReactNode } from 'react';
 
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-
 import styled from 'styled-components';
 import { useTeams } from '~/stores/team';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { Link } from '~/components/parts/commons';
+import { Link, Carousel } from '~/components/parts/commons';
 import { URLS } from '~/constants';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 
@@ -15,21 +12,6 @@ import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 import { useStories } from '~/stores/story';
 import { SkeltonStoryCard, StoryCard } from '~/components/domains/story/StoryCard';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
-
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 960 },
-    items: 3,
-  },
-  tablet: {
-    breakpoint: { max: 960, min: 600 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 600, min: 0 },
-    items: 1,
-  },
-};
 
 const Home: ProecoNextPage = () => {
   const { data: teamList } = useTeams({ page: 1 });
@@ -40,7 +22,7 @@ const Home: ProecoNextPage = () => {
       <ProecoOgpHead />
       <h1 className="text-center fw-bold my-3">プロダクト一覧</h1>
       <StyledDiv className="mb-5 mx-auto">
-        <Carousel className="carousel" responsive={responsive} showDots arrows={false} autoPlay infinite>
+        <Carousel autoPlay>
           {teamList
             ? teamList.docs.map((team, index) => {
                 return (
@@ -63,7 +45,7 @@ const Home: ProecoNextPage = () => {
       </StyledDiv>
       <h2 className="text-center fw-bold my-3">進行中のストーリー一覧</h2>
       <StyledDiv className="mb-5 mx-auto">
-        <Carousel className="carousel" responsive={responsive} showDots arrows={false} autoPlay infinite>
+        <Carousel autoPlay>
           {openStoryList
             ? openStoryList.docs.map((story, index) => {
                 return (

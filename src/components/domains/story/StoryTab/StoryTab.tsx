@@ -1,33 +1,15 @@
 import React, { VFC, useState } from 'react';
-import Carousel from 'react-multi-carousel';
 
-import { Button, Icon, Pagination } from '~/components/parts/commons';
+import { Button, Carousel, Icon, Pagination } from '~/components/parts/commons';
 import { StoryListTable } from '~/components/domains/story/StoryListTable';
 import { CreateNewStoryModal } from '~/components/domains/story/CreateNewStoryModal';
 import { StoryCard, SkeltonStoryCard } from '~/components/domains/story/StoryCard';
 import { Team } from '~/domains';
 import { useStories } from '~/stores/story';
 
-import 'react-multi-carousel/lib/styles.css';
-
 type Props = {
   team: Team;
   editable: boolean;
-};
-
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 960 },
-    items: 3,
-  },
-  tablet: {
-    breakpoint: { max: 960, min: 600 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 600, min: 0 },
-    items: 1,
-  },
 };
 
 export const StoryTab: VFC<Props> = ({ team, editable }) => {
@@ -66,7 +48,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
           </Button>
         )}
       </div>
-      <Carousel className="carousel" responsive={responsive} showDots arrows={false}>
+      <Carousel>
         {openStoryList
           ? openStoryList.docs.map((story, index) => {
               return (
