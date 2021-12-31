@@ -114,7 +114,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
 };
 
 const StyledParagraphWrapper = styled.div`
-  min-height: 290px;
+  min-height: 286px;
 `;
 
 const StyledLabel = styled.label`
