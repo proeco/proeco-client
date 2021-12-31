@@ -1,5 +1,5 @@
 import React, { VFC, useState } from 'react';
-import { Grid } from '@mui/material';
+
 import { Button, Card, Editor, Icon, MarkdownToHtmlBody } from '~/components/parts/commons';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { Team, User } from '~/domains';
@@ -61,8 +61,8 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
           </Button>
         )}
       </div>
-      <Grid container>
-        <Grid item xs={12} sm={8} px={1} pb={2}>
+      <div className="row">
+        <div className="col-12 col-md-6 pb-4">
           <Card>
             {isUpdate && currentUser && (
               <Editor
@@ -80,11 +80,11 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
               </div>
             )}
           </Card>
-        </Grid>
-        <Grid item xs={12} sm={4} px={1} pb={2}>
+        </div>
+        <div className="col-12 col-md-6">
           <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </>
   );
 };
