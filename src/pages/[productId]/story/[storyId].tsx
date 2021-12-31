@@ -268,23 +268,30 @@ export const getStaticProps: any = async (context: any) => {
 };
 
 export async function getStaticPaths() {
-  const { data: pagination } = await restClient.apiGet<PaginationResult<Story>>(`/stories`);
+  try {
+    const { data: pagination } = await restClient.apiGet<PaginationResult<Story>>(`/stories`);
 
-  const paths = await Promise.all(
-    pagination.docs.map(async (v) => {
-      return {
-        params: {
-          productId: await restClient.apiGet<Team>(`/teams/${v.teamId}`).then((v) => v.data.productId),
-          storyId: v._id,
-        },
-      };
-    }),
-  );
+    const paths = await Promise.all(
+      pagination.docs.map(async (v) => {
+        return {
+          params: {
+            productId: await restClient.apiGet<Team>(`/teams/${v.teamId}`).then((v) => v.data.productId),
+            storyId: v._id,
+          },
+        };
+      }),
+    );
 
-  return {
-    paths,
-    fallback: true,
-  };
+    return {
+      paths,
+      fallback: true,
+    };
+  } catch (error) {
+    return {
+      paths: [],
+      fallback: true,
+    };
+  }
 }
 
 StoryPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
