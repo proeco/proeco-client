@@ -247,11 +247,12 @@ const StyledRightSide = styled.div`
 export const getStaticProps: any = async (context: any) => {
   const { storyId, productId } = context.params;
 
-  const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`);
+  const [{ data: pagination }, { data: story }] = await Promise.all([
+    restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`),
+    restClient.apiGet(`/stories/${storyId}`),
+  ]);
+
   const team = pagination?.docs[0];
-
-  const { data: story } = await restClient.apiGet(`/stories/${storyId}`);
-
   const { data: teamIconAttachment } = await restClient.apiGet(`/attachments/${team.iconImageId}`);
 
   if (!team || !story || !teamIconAttachment) {
@@ -267,10 +268,30 @@ export const getStaticProps: any = async (context: any) => {
 };
 
 export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  };
+  try {
+    const { data: pagination } = await restClient.apiGet<PaginationResult<Story>>(`/stories`);
+
+    const paths = await Promise.all(
+      pagination.docs.map(async (v) => {
+        return {
+          params: {
+            productId: await restClient.apiGet<Team>(`/teams/${v.teamId}`).then((v) => v.data.productId),
+            storyId: v._id,
+          },
+        };
+      }),
+    );
+
+    return {
+      paths,
+      fallback: true,
+    };
+  } catch (error) {
+    return {
+      paths: [],
+      fallback: true,
+    };
+  }
 }
 
 StoryPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
