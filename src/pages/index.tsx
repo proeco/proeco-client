@@ -5,12 +5,10 @@ import 'react-multi-carousel/lib/styles.css';
 
 import styled from 'styled-components';
 import { useTeams } from '~/stores/team';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { Link } from '~/components/parts/commons';
 import { URLS } from '~/constants';
-import { UserIcon } from '~/components/domains/user/UserIcon';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
@@ -34,7 +32,6 @@ const responsive = {
 };
 
 const Home: ProecoNextPage = () => {
-  const { data: currentUser } = useCurrentUser();
   const { data: teamList } = useTeams({ page: 1 });
   const { data: openStoryList } = useStories({ page: 1, limit: 100, isCompleted: false });
 
@@ -85,17 +82,6 @@ const Home: ProecoNextPage = () => {
               ]}
         </Carousel>
       </StyledDiv>
-      <h1 className="text-center fw-bold">Top Page</h1>
-      <Link href={URLS.DASHBOARD_TEAMS}>所属チーム一覧</Link>
-      {currentUser ? (
-        <>
-          <h3>Hello {currentUser.name}!</h3>
-          <UserIcon size={200} userId={currentUser._id} attachmentId={currentUser.iconImageId} />
-          <Link href={URLS.API_LOGOUT}>Logout</Link>
-        </>
-      ) : (
-        <Link href={URLS.API_LOGIN}>Login</Link>
-      )}
     </>
   );
 };
