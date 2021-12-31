@@ -1,9 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { ReactNode, useState, useEffect, useMemo } from 'react';
-
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Tab } from '@mui/material';
+import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 
 import styled from 'styled-components';
 import { Team } from '~/domains';
@@ -61,7 +59,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
     }
   }, [router.asPath]);
 
-  const handleChange = (_event: React.SyntheticEvent, newValue: TabTypes) => {
+  const handleChange = (newValue: TabTypes) => {
     router.push(`#${newValue}`);
     setActiveTab(newValue);
   };
@@ -79,20 +77,49 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
             </a>
           </div>
         </div>
-        <TabContext value={activeTab}>
-          <StyledTabList onChange={handleChange} aria-label="team tabs">
-            <StyledTab label={<span className="fw-bold fs-1">ホーム</span>} value={TabTypes.HOME} />
-            <StyledTab label={<span className="fw-bold fs-1">ストーリー</span>} value={TabTypes.STORY} />
-            {isMemberOfTeam && <StyledTab label={<span className="fw-bold fs-1">設定</span>} value={TabTypes.SETTINGS} />}
-          </StyledTabList>
-          <TabPanel value={TabTypes.HOME}>
+        <Nav tabs>
+          <NavItem active={activeTab === TabTypes.HOME}>
+            <NavLink
+              className={`${
+                activeTab === TabTypes.HOME ? 'active border-bottom border-4 text-primary' : 'text-black'
+              } c-pointer bg-transparent border-0 border-primary`}
+              onClick={() => handleChange(TabTypes.HOME)}
+            >
+              <span className="fw-bold fs-1">ホーム</span>
+            </NavLink>
+          </NavItem>
+          <NavItem active={activeTab === TabTypes.STORY}>
+            <NavLink
+              className={`${
+                activeTab === TabTypes.STORY ? 'active border-bottom border-4 text-primary' : 'text-black'
+              } c-pointer bg-transparent border-0 border-primary`}
+              onClick={() => handleChange(TabTypes.STORY)}
+            >
+              <span className="fw-bold fs-1">ストーリー</span>
+            </NavLink>
+          </NavItem>
+          <NavItem active={activeTab === TabTypes.SETTINGS}>
+            <NavLink
+              className={`${
+                activeTab === TabTypes.SETTINGS ? 'active border-bottom border-4 text-primary' : 'text-black'
+              } c-pointer bg-transparent border-0 border-primary`}
+              onClick={() => handleChange(TabTypes.SETTINGS)}
+            >
+              <span className="fw-bold fs-1">設定</span>
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={activeTab}>
+          <TabPane className="py-3" tabId={TabTypes.HOME}>
             <TeamHomeTab team={team} currentUser={currentUser} editable={isMemberOfTeam} />
-          </TabPanel>
-          <TabPanel value={TabTypes.STORY}>
+          </TabPane>
+          <TabPane className="py-3" tabId={TabTypes.STORY}>
             <StoryTab team={team} editable={isMemberOfTeam} />
-          </TabPanel>
-          <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}</TabPanel>
-        </TabContext>
+          </TabPane>
+          <TabPane className="py-3" tabId={TabTypes.SETTINGS}>
+            {currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}
+          </TabPane>
+        </TabContent>
       </StyledDiv>
     </>
   );
@@ -100,18 +127,6 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
 
 const StyledDiv = styled.div`
   max-width: 1200px;
-`;
-
-const StyledTabList = styled(TabList)`
-  .MuiTabs-flexContainer {
-    gap: 16px;
-  }
-  min-height: unset;
-`;
-
-const StyledTab = styled(Tab)`
-  padding: 8px;
-  min-height: unset;
 `;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
