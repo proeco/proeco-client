@@ -1,12 +1,10 @@
 import { SnackbarProvider } from 'notistack';
 import { ReactNode } from 'react';
-import { ThemeProvider as MaterialThemeProvider } from '@mui/material/styles';
 import { UserProvider } from '@auth0/nextjs-auth0';
 import { SWRConfig } from 'swr';
 
 import '~/styles/global.scss';
 
-import { theme } from '../theme';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 import { CurrentUserProvider } from '~/hooks/CurrentUserProvider';
@@ -22,18 +20,16 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
 
   return (
     <UserProvider>
-      <MaterialThemeProvider theme={theme}>
-        <SnackbarProvider>
-          <SWRConfig value={{ revalidateOnFocus: false }}>
-            <CurrentUserProvider>
-              <AccessControlProvider getAccessControl={Component.getAccessControl}>
-                <NavigationBar />
-                {getLayout(<Component {...pageProps} />)}
-              </AccessControlProvider>
-            </CurrentUserProvider>
-          </SWRConfig>
-        </SnackbarProvider>
-      </MaterialThemeProvider>
+      <SnackbarProvider>
+        <SWRConfig value={{ revalidateOnFocus: false }}>
+          <CurrentUserProvider>
+            <AccessControlProvider getAccessControl={Component.getAccessControl}>
+              <NavigationBar />
+              {getLayout(<Component {...pageProps} />)}
+            </AccessControlProvider>
+          </CurrentUserProvider>
+        </SWRConfig>
+      </SnackbarProvider>
     </UserProvider>
   );
 }
