@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import { VFC, useState, ChangeEvent, useEffect } from 'react';
 
-import { Grid } from '@mui/material';
-
 import { TeamCard } from '../TeamCard';
 import { SkeltonTeamIcon } from '../TeamIcon';
 import { Ogp } from '~/interfaces/ogp';
@@ -109,8 +107,8 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
   }, [newTeam]);
 
   return (
-    <Grid container>
-      <Grid item xs={12} md={6} px={2} pb={3}>
+    <div className="row">
+      <div className="col-12 col-md-6">
         <Card>
           <div className="d-flex align-items-center justify-content-center mb-2">
             {isLoadingUploadAttachment ? (
@@ -147,11 +145,11 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
             </Button>
           </div>
         </Card>
-      </Grid>
-      <Grid item xs={12} md={6} px={2} pb={3}>
+      </div>
+      <div className="col-12 col-md-6">
         <h3 className="mb-3 text-center">プレビュー</h3>
         <TeamCard name={newTeam.name} url={newTeam.url} description={newTeam.description} attachmentId={newTeam.iconImageId} />
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };
