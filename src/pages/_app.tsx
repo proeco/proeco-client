@@ -9,7 +9,6 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 import { CurrentUserProvider } from '~/hooks/CurrentUserProvider';
 import { AccessControlProvider } from '~/hooks/AccessControlProvider';
-import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode } }): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,7 +24,6 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
     <UserProvider>
       <SWRConfig value={{ revalidateOnFocus: false }}>
         <CurrentUserProvider>
-          <ProecoOgpHead />
           <AccessControlProvider getAccessControl={Component.getAccessControl}>
             <NavigationBar />
             {getLayout(<Component {...pageProps} />)}
