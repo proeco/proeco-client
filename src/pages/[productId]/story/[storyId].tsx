@@ -185,9 +185,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
               );
             })}
             {isMemberOfTeam && currentUser && (
-              <div className="mb-3 d-flex align-items-top justify-content-between gap-1">
+              <div className="mb-3 d-flex align-items-top justify-content-between">
                 <UserIcon size={40} isLink attachmentId={currentUser.iconImageId} userId={currentUser._id} />
-                <div className="w-100">
+                <div className="w-100 ps-2">
                   <CreateNewStoryPostCard storyId={storyId} page={page} currentUser={currentUser} />
                 </div>
               </div>
