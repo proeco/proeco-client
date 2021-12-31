@@ -62,7 +62,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
         )}
       </div>
       <div className="row">
-        <div className="col-12 col-md-6">
+        <div className="col-12 col-md-6 pb-4">
           <Card>
             {isUpdate && currentUser && (
               <Editor
