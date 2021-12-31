@@ -247,8 +247,10 @@ const StyledRightSide = styled.div`
 export const getStaticProps: any = async (context: any) => {
   const { storyId, productId } = context.params;
 
-  const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`);
-  const { data: story } = await restClient.apiGet(`/stories/${storyId}`);
+  const [{ data: pagination }, { data: story }] = await Promise.all([
+    restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`),
+    restClient.apiGet(`/stories/${storyId}`),
+  ]);
 
   const team = pagination?.docs[0];
   const { data: teamIconAttachment } = await restClient.apiGet(`/attachments/${team.iconImageId}`);
