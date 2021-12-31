@@ -1,7 +1,5 @@
 import React, { VFC, useState, useEffect } from 'react';
 
-import { Box } from '@mui/system';
-
 import { restClient } from '~/utils/rest-client';
 
 import { Story } from '~/domains';
@@ -82,21 +80,19 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
 
   const content = (
     <>
-      <Box mb="16px">
+      <div className="mb-3">
         <p className="text-light mb-1">ストーリー名</p>
-        <Box display="flex" alignItems="center">
-          <Box mr="8px">
-            <SelectableEmoji emojiId={newStory.emojiId} size={40} onSelectEmoji={(emojiId) => updateStoryForm({ emojiId })} />
-          </Box>
-          <input className="form-control" value={newStory.title} onChange={(e) => updateStoryForm({ title: e.target.value })} />
-        </Box>
-      </Box>
-      <Box width="100%" textAlign="center">
+        <div className="d-flex align-items-center">
+          <SelectableEmoji emojiId={newStory.emojiId} size={40} onSelectEmoji={(emojiId) => updateStoryForm({ emojiId })} />
+          <input className="ms-2 form-control" value={newStory.title} onChange={(e) => updateStoryForm({ title: e.target.value })} />
+        </div>
+      </div>
+      <div className="text-center mt-5">
         <Button color="primary" onClick={handleClickUpdateStoryButton} disabled={isDisabled}>
           <Icon icon="CLOCKWISE" size={20} color="WHITE" />
           更新する
         </Button>
-      </Box>
+      </div>
     </>
   );
 
