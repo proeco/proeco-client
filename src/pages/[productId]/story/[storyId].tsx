@@ -140,9 +140,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
       <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/story/${story._id}`} />
       <StyledDiv className="mx-auto">
         <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(team.productId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
-        <div className="mb-3 d-flex align-items-center justify-content-between">
+        <div className="mb-3 d-flex align-items-center">
           <Emoji emojiId={story.emojiId} size={40} />
-          <h1 className="ms-2 fw-bold mb-0 text-truncate">{story.title}</h1>
+          <h1 className="ms-2 me-auto fw-bold mb-0 text-truncate">{story.title}</h1>
           {isMemberOfTeam && (
             <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
               {menuItems.map((menuItem, i) => (
