@@ -1,5 +1,5 @@
 import React, { VFC, useState } from 'react';
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Button, Card, Editor, Icon, MarkdownToHtmlBody } from '~/components/parts/commons';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { Team, User } from '~/domains';
@@ -49,7 +49,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
 
   return (
     <>
-      <Box mb={2} display="flex" alignItems="center" justifyContent="space-between">
+      <div className="mb-3 d-flex align-items-center justify-content-between">
         <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
           <Icon icon="FILE_WITH_EARMARK" size={28} />
           プロダクトについて
@@ -60,7 +60,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
             説明を更新する
           </Button>
         )}
-      </Box>
+      </div>
       <Grid container>
         <Grid item xs={12} sm={8} px={1} pb={2}>
           <Card>
@@ -75,9 +75,9 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
               />
             )}
             {!isUpdate && (
-              <Box p={2}>
+              <div className="p-2">
                 <MarkdownToHtmlBody content={content} />
-              </Box>
+              </div>
             )}
           </Card>
         </Grid>
