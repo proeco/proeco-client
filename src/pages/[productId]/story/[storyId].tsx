@@ -268,9 +268,22 @@ export const getStaticProps: any = async (context: any) => {
 };
 
 export async function getStaticPaths() {
+  const { data: pagination } = await restClient.apiGet<PaginationResult<Story>>(`/stories`);
+
+  const paths = await Promise.all(
+    pagination.docs.map(async (v) => {
+      return {
+        params: {
+          productId: await restClient.apiGet<Team>(`/teams/${v.teamId}`).then((v) => v.data.productId),
+          storyId: v._id,
+        },
+      };
+    }),
+  );
+
   return {
-    paths: [],
-    fallback: 'true',
+    paths,
+    fallback: true,
   };
 }
 
