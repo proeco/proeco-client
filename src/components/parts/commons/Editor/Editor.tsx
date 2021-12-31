@@ -83,7 +83,9 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
               本文がありません
             </StyledParagraphWrapper>
           ) : (
-            <MarkdownToHtmlBody content={content} />
+            <StyledDiv className="py-4">
+              <MarkdownToHtmlBody content={content} />
+            </StyledDiv>
           )}
         </TabPane>
       </TabContent>
@@ -101,9 +103,11 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             キャンセル
           </Button>
         )}
-        <Button color="primary" onClick={onCompleteEdit} disabled={content.trim() === '' || isUploading}>
-          {isUpdateMode ? '更新する' : '投稿する'}
-        </Button>
+        <div className="ms-2">
+          <Button color="primary" onClick={onCompleteEdit} disabled={content.trim() === '' || isUploading}>
+            {isUpdateMode ? '更新する' : '投稿する'}
+          </Button>
+        </div>
       </div>
     </>
   );
@@ -121,4 +125,8 @@ const StyledLabel = styled.label`
   width: fit-content;
   margin-right: auto;
   cursor: pointer;
+`;
+
+const StyledDiv = styled.div`
+  min-height: 170px;
 `;
