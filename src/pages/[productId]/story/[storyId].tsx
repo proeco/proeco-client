@@ -5,7 +5,6 @@ import Reward, { RewardElement } from 'react-rewards';
 
 import styled from 'styled-components';
 
-import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains/story';
@@ -140,13 +139,13 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   return (
     <>
       <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/story/${story._id}`} />
-      <Box mx="auto" maxWidth="1200px">
+      <StyledDiv className="mx-auto">
         <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(team.productId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
-        <Box mt={1} mb={4} display="flex" alignItems="center" justifyContent="space-between">
-          <Box display="flex" alignItems="center" gap="16px">
+        <div className="mt-1 mb-3 d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center gap-3">
             <Emoji emojiId={story.emojiId} size={40} />
             <h1 className="fw-bold mb-0 d-flex align-items-center gap-2">{story.title}</h1>
-          </Box>
+          </div>
           {isMemberOfTeam && (
             <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
               {menuItems.map((menuItem, i) => (
@@ -157,7 +156,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
               ))}
             </Dropdown>
           )}
-        </Box>
+        </div>
         <Grid container>
           <Grid item xs={12} md={8} px={2} pb={3}>
             {customStoryPosts.map((customStoryPost, i) => {
@@ -186,37 +185,37 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
               );
             })}
             {isMemberOfTeam && currentUser && (
-              <Box display="flex" alignItems="top" justifyContent="space-between" gap={1}>
+              <div className="mb-3 d-flex align-items-top justify-content-between gap-1">
                 <UserIcon size={40} isLink attachmentId={currentUser.iconImageId} userId={currentUser._id} />
-                <Box width="100%">
+                <div className="w-100">
                   <CreateNewStoryPostCard storyId={storyId} page={page} currentUser={currentUser} />
-                </Box>
-              </Box>
+                </div>
+              </div>
             )}
           </Grid>
           <Grid item xs={12} md={4} px={2} pb={3}>
-            <StyledDiv className="position-sticky">
+            <StyledRightSide className="position-sticky">
               <Card>
-                <Box mb="12px">
+                <div className="mb-2 rounded-2 overflow-hidden">
                   <FixedImage imageUrl={ogpUrl} />
-                </Box>
+                </div>
                 {isMemberOfTeam && (
-                  <Box textAlign="center" mb="12px">
+                  <div className="text-center mb-3">
                     <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
                       <Button color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
                         {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
                       </Button>
                     </Reward>
-                  </Box>
+                  </div>
                 )}
                 <Button color="primary" onClick={handleClickShareButton}>
                   <Icon icon="TWITTER" size={16} color="WHITE" />
                 </Button>
               </Card>
-            </StyledDiv>
+            </StyledRightSide>
           </Grid>
         </Grid>
-      </Box>
+      </StyledDiv>
       <UpdateStoryModal
         isOpen={isOpenUpdateStoryModal}
         onCloseModal={() => setIsOpenUpdateStoryModal(false)}
@@ -237,6 +236,10 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 };
 
 const StyledDiv = styled.div`
+  max-width: 1200px;
+`;
+
+const StyledRightSide = styled.div`
   top: 86px;
 `;
 
