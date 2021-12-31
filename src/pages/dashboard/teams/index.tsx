@@ -32,7 +32,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           <Link href={URLS.DASHBOARD_TEAMS_NEW}>
             <Button color="primary">
               <Icon icon="PENCIL" size={16} color="WHITE" />
-              新規チームを作成する
+              作成する
             </Button>
           </Link>
         </div>
