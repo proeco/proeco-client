@@ -1,4 +1,3 @@
-import { Box } from '@mui/system';
 import { NextPage } from 'next';
 import { NotFound } from '~/components/parts/layout/NotFound';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -8,9 +7,9 @@ const Custom404: WithGetAccessControl<NextPage> = () => {
   return (
     <>
       <ProecoOgpHead />
-      <Box mt="100px">
+      <div className="mt-5">
         <NotFound />
-      </Box>
+      </div>
     </>
   );
 };

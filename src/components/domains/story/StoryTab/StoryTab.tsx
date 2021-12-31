@@ -1,5 +1,4 @@
 import React, { VFC, useState } from 'react';
-import { Box } from '@mui/material';
 import Carousel from 'react-multi-carousel';
 
 import { Button, Icon, Pagination } from '~/components/parts/commons';
@@ -55,7 +54,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
 
   return (
     <>
-      <Box mb={6} display="flex" alignItems="center" justifyContent="space-between">
+      <div className="mb-3 d-flex align-items-center justify-content-between">
         <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
           <Icon icon="LIST" size={28} />
           ストーリーリスト
@@ -66,7 +65,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
             ストーリーを追加する
           </Button>
         )}
-      </Box>
+      </div>
       <h3 className="fw-bold mb-4 text-center">進行中のストーリー</h3>
       <Carousel className="carousel" responsive={responsive} showDots arrows={false}>
         {openStoryList

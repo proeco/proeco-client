@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { action } from '@storybook/addon-actions';
 import { DeleteStoryModal } from './DeleteStoryModal';
 import { createMockStory } from '~/mocks/domains';
@@ -15,11 +14,7 @@ export default {
 } as ComponentMeta<typeof DeleteStoryModal>;
 
 const Template: ComponentStory<typeof DeleteStoryModal> = (args) => {
-  return (
-    <Box>
-      <DeleteStoryModal {...args} />
-    </Box>
-  );
+  return <DeleteStoryModal {...args} />;
 };
 
 export const OpenModal = Template.bind({});

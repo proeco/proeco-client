@@ -2,7 +2,7 @@ import React, { VFC, useCallback } from 'react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { TableCell, TableRow } from '@mui/material';
-import { Box, styled } from '@mui/system';
+import styled from 'styled-components';
 
 import { Emoji } from '~/components/parts/commons';
 import { UserIcon, GuestUserIcon } from '~/components/domains/user/UserIcon';
@@ -36,10 +36,10 @@ export const StoryTableRow: VFC<Props> = ({ story, productId }) => {
         )}
       </StyledBodyTableCell>
       <StyledBodyTableCell>
-        <Box display="flex" alignItems="center" gap="8px">
+        <div className="d-flex align-items-center gap-2">
           <Emoji emojiId={story.emojiId} size={20} />
           {story.title}
-        </Box>
+        </div>
       </StyledBodyTableCell>
       <StyledBodyTableCell align="right">{format(story.updatedAt, DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
     </StyledTableRow>

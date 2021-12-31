@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { UpdateStoryModal } from './UpdateStoryModal';
 import { createMockStory } from '~/mocks/domains';
 
@@ -14,11 +13,7 @@ export default {
 } as ComponentMeta<typeof UpdateStoryModal>;
 
 const Template: ComponentStory<typeof UpdateStoryModal> = (args) => {
-  return (
-    <Box>
-      <UpdateStoryModal {...args} />
-    </Box>
-  );
+  return <UpdateStoryModal {...args} />;
 };
 
 export const OpenModal = Template.bind({});

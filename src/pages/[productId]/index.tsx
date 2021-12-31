@@ -4,8 +4,8 @@ import { ReactNode, useState, useEffect, useMemo } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Tab } from '@mui/material';
-import { Box, styled } from '@mui/system';
 
+import styled from 'styled-components';
 import { Team } from '~/domains';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -69,11 +69,16 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   return (
     <>
       <ProecoOgpHead title={`${team.name}のホーム`} />
-      <Box mx="auto" maxWidth="1200px">
-        <Box mb={2} display="flex" alignItems="center" gap={2}>
+      <StyledDiv className="mx-auto">
+        <div className="mb-2 d-flex align-items-center">
           <TeamIcon attachmentId={team.iconImageId} size={80} />
-          <h1 className="mb-0 maximum_lines_1">{team.name}</h1>
-        </Box>
+          <div className="d-flex flex-column ms-3">
+            <h1 className="mb-0 maximum_lines_1">{team.name}</h1>
+            <a className="text-decoration-none" href={team.url}>
+              {team.url}
+            </a>
+          </div>
+        </div>
         <TabContext value={activeTab}>
           <StyledTabList onChange={handleChange} aria-label="team tabs">
             <StyledTab label={<span className="fw-bold fs-1">ホーム</span>} value={TabTypes.HOME} />
@@ -88,10 +93,14 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
           </TabPanel>
           <TabPanel value={TabTypes.SETTINGS}>{currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}</TabPanel>
         </TabContext>
-      </Box>
+      </StyledDiv>
     </>
   );
 };
+
+const StyledDiv = styled.div`
+  max-width: 1200px;
+`;
 
 const StyledTabList = styled(TabList)`
   .MuiTabs-flexContainer {
@@ -123,7 +132,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return { props: { team } };
   } catch (error) {
-    return { props: {} };
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404',
+      },
+    };
   }
 };
 

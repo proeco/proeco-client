@@ -1,12 +1,11 @@
 import React, { VFC } from 'react';
-import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
-import { Modal, Button, Emoji, Icon } from '~/components/parts/commons';
 
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
 import { useStories } from '~/stores/story';
+import { Modal, Button, Emoji, Icon } from '~/components/parts/commons';
 
 import { restClient } from '~/utils/rest-client';
 import { Story } from '~/domains';
@@ -47,22 +46,18 @@ export const DeleteStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, pro
 
   const content = (
     <>
-      <Box>
-        <span className="mb-2">ストーリー名</span>
-        <Box display="flex" alignItems="center">
-          <Box mr="8px">
-            <Emoji emojiId={story.emojiId} size={28} />
-          </Box>
-          <h2 className="fw-bold mb-2">{story.title}</h2>
-        </Box>
-      </Box>
+      <p className="mb-2">ストーリー名</p>
+      <div className="d-flex align-items-center">
+        <Emoji emojiId={story.emojiId} size={28} />
+        <h2 className="fw-bold ms-2 mb-2">{story.title}</h2>
+      </div>
 
-      <Box mt={3} width="100%" textAlign="center">
+      <div className="mt-3 d-flex align-items-center justify-content-center">
         <Button color="danger" onClick={handleClickDeleteStoryButton}>
           <Icon icon="TRASH" size={20} color="WHITE" />
           削除する
         </Button>
-      </Box>
+      </div>
     </>
   );
 

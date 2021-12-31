@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, FC } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
-import { Box } from '@mui/system';
 import { useErrorNotification } from '../useErrorNotification';
 import { GetAccessControl } from '~/interfaces/accessControl';
 import { Spinner } from '~/components/parts/commons';
@@ -39,9 +38,9 @@ export const AccessControlProvider: FC<{ getAccessControl?: GetAccessControl }> 
 
   if (isLoading) {
     return (
-      <Box textAlign="center" pt="40px">
+      <div className="mt-5 text-center">
         <Spinner />
-      </Box>
+      </div>
     );
   }
 

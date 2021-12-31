@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { ReactNode, useMemo } from 'react';
-import { Box } from '@mui/system';
-import { Grid } from '@mui/material';
+import styled from 'styled-components';
+
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { Icon, Link } from '~/components/parts/commons';
@@ -24,60 +24,60 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
     if (!teamsRelatedUser) {
       return (
         <>
-          <Grid item xs={12} sm={6} px={1}>
+          <div className="col-12 col-sm-6">
             <SkeltonTeamCard />
-          </Grid>
-          <Grid item xs={12} sm={6} px={1}>
+          </div>
+          <div className="col-12 col-sm-6">
             <SkeltonTeamCard />
-          </Grid>
+          </div>
         </>
       );
     }
 
     if (teamsRelatedUser.length === 0)
       return (
-        <Grid item xs={24} textAlign="center" pt="20px">
+        <div className="col-12 col-sm-6 text-center pt-3">
           <h3>所属しているチームがありません</h3>
-        </Grid>
+        </div>
       );
 
     return teamsRelatedUser.map((team) => (
-      <Grid item key={`top-${team._id}`} xs={12} sm={6} px={1} pb={2}>
+      <div key={`top-${team._id}`} className="col-12 col-sm-6 text-center">
         <Link href={URLS.TEAMS(team.productId)}>
-          <TeamCard
-            name={team.name}
-            productId={team.productId}
-            description={team.description}
-            attachmentId={team.iconImageId}
-            url={team.url}
-          />
+          <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
         </Link>
-      </Grid>
+      </div>
     ));
   }, [teamsRelatedUser]);
 
   return (
     <>
       <ProecoOgpHead />
-      <Box mx="auto" maxWidth="1200px">
-        <Box display="flex" alignItems="flex-start" gap="16px" mb="48px">
+      <StyledDiv className="mx-auto">
+        <div className="d-flex align-items-start gap-4 mb-5">
           <UserIcon attachmentId={user.iconImageId} size={120} userId={user._id} />
-          <Box pt="8px">
+          <div className="mt-2">
             <h3 className="mb-3 fw-bold">{user.name}</h3>
             <p className="mb-0">{user.description}</p>
-          </Box>
-        </Box>
+          </div>
+        </div>
         <h2 className="fw-bold mb-4 d-flex text-center align-items-center gap-2">
           <Icon icon="PEOPLE" size={32} />
           チームリスト
         </h2>
-        <Grid container maxWidth="900px" mx="auto">
-          {teamsContent}
-        </Grid>
-      </Box>
+        <StyledRow className="row mx-auto">{teamsContent}</StyledRow>
+      </StyledDiv>
     </>
   );
 };
+
+const StyledRow = styled.div`
+  max-width: 900px;
+`;
+
+const StyledDiv = styled.div`
+  max-width: 1200px;
+`;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { userId } = context.query;
@@ -96,7 +96,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return { props: { user } };
   } catch (error) {
-    return { props: {} };
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404',
+      },
+    };
   }
 };
 

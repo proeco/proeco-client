@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { action } from '@storybook/addon-actions';
 import { CreateNewStoryModal } from '.';
 
@@ -14,11 +13,7 @@ export default {
 } as ComponentMeta<typeof CreateNewStoryModal>;
 
 const Template: ComponentStory<typeof CreateNewStoryModal> = (args) => {
-  return (
-    <Box>
-      <CreateNewStoryModal {...args} />
-    </Box>
-  );
+  return <CreateNewStoryModal {...args} />;
 };
 
 export const OpenModal = Template.bind({});

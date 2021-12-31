@@ -1,5 +1,5 @@
 import React, { VFC } from 'react';
-import { Box } from '@mui/system';
+
 import { Button, Icon, Modal } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
@@ -37,15 +37,13 @@ export const DeleteStoryPostModal: VFC<Props> = ({ isOpen, storyPostId, storyId,
 
   const content = (
     <>
-      <Box mb="20px" textAlign="center">
-        ※ この操作は戻すことが出来ません。
-      </Box>
-      <Box width="100%" textAlign="center">
+      <div className="mb-3 text-center">※ この操作は戻すことが出来ません。</div>
+      <div className="text-center mt-5">
         <Button color="danger" onClick={handleClickDeleteStoryPostButton}>
           <Icon icon="TRASH" size={20} color="WHITE" />
           削除する
         </Button>
-      </Box>
+      </div>
     </>
   );
   return <Modal open={isOpen} title="投稿を削除しますか？" emojiId="wastebasket" onClose={onCloseModal} content={content} />;

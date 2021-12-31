@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
-
 import { StoryTab } from './StoryTab';
 import { createMockTeam } from '~/mocks/domains';
 
@@ -13,9 +11,9 @@ export default {
 
 const Template: ComponentStory<typeof StoryTab> = ({ ...rest }) => {
   return (
-    <Box p="20px">
+    <div className="p-4">
       <StoryTab {...rest} />
-    </Box>
+    </div>
   );
 };
 

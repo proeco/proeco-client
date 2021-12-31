@@ -1,8 +1,8 @@
 import { VFC } from 'react';
 
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { styled } from '@mui/system';
 
+import styled from 'styled-components';
 import { StoryTableRow } from '~/components/domains/story/StoryTableRow';
 
 import { Story } from '~/domains';

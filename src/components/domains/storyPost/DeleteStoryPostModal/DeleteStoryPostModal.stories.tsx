@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Box } from '@mui/system';
 import { DeleteStoryPostModal } from './DeleteStoryPostModal';
 
 export default {
@@ -14,11 +13,7 @@ export default {
 } as ComponentMeta<typeof DeleteStoryPostModal>;
 
 const Template: ComponentStory<typeof DeleteStoryPostModal> = (args) => {
-  return (
-    <Box>
-      <DeleteStoryPostModal {...args} />
-    </Box>
-  );
+  return <DeleteStoryPostModal {...args} />;
 };
 
 export const OpenModal = Template.bind({});

@@ -49,13 +49,7 @@ const Home: ProecoNextPage = () => {
                 return (
                   <div className="px-3" key={index}>
                     <Link href={URLS.TEAMS(team.productId)}>
-                      <TeamCard
-                        name={team.name}
-                        productId={team.productId}
-                        description={team.description}
-                        attachmentId={team.iconImageId}
-                        url={team.url}
-                      />
+                      <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
                     </Link>
                   </div>
                 );

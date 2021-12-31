@@ -41,9 +41,9 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, size, onSelectEmoji }) =>
 
   return (
     <>
-      <StyledBox className="c-pointer p-1 border" ref={emojiRef}>
+      <StyledEmojiWrapper className="c-pointer p-1 border" ref={emojiRef}>
         {emoji && <Emoji emojiId={emoji} size={28} onClick={handleClickEmoji} />}
-      </StyledBox>
+      </StyledEmojiWrapper>
       {isEmojiSettingMode && (
         <>
           <div className="position-fixed top-0 start-0 end-0 bottom-0" onClick={() => setIsEmojiSettingMode(false)} />
@@ -56,7 +56,7 @@ export const SelectableEmoji: VFC<Props> = ({ emojiId, size, onSelectEmoji }) =>
   );
 };
 
-const StyledBox = styled.div`
+const StyledEmojiWrapper = styled.div`
   border-radius: 4px;
   box-sizing: border-box;
   .emoji-mart-emoji {
