@@ -1,6 +1,7 @@
 import React, { VFC, ReactNode } from 'react';
 
 import CarouselOriginal from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 import styled from 'styled-components';
 
 import { COLORS } from '~/constants/colors';
