@@ -50,14 +50,14 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
   return (
     <>
       <div className="mb-3 d-flex align-items-center justify-content-between">
-        <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-          <Icon icon="FILE_WITH_EARMARK" size={28} />
+        <h3 className="fw-bold mb-0 d-flex align-items-center gap-2">
+          <Icon icon="FILE_WITH_EARMARK" size={24} />
           プロダクトについて
-        </h2>
+        </h3>
         {editable && (
           <Button onClick={handleClickUpdate} color="primary">
             <Icon icon="PENCIL" size={16} color="WHITE" />
-            説明を更新する
+            更新する
           </Button>
         )}
       </div>
