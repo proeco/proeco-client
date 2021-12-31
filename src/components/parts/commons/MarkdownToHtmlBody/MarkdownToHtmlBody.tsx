@@ -46,6 +46,7 @@ const StyledMarkdownBody = styled.div`
       white-space: pre-wrap;
     }
     pre {
+      color: white;
       background-color: rgb(30, 30, 30);
     }
     code {
