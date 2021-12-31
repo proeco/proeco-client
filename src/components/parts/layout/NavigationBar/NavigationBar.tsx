@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import { memo, VFC, useState, useMemo, useCallback } from 'react';
-import { AppBar } from '@mui/material';
-import { styled } from '@mui/material/styles';
 
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
 import { Dropdown, DropdownItem } from '~/components/parts/commons/Dropdown';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
@@ -41,7 +40,7 @@ export const NavigationBar: VFC = memo(() => {
 
     if (currentUser) {
       return (
-        <Dropdown toggle={<StyledUserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="div">
+        <Dropdown toggle={<UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="div">
           {menuItems(currentUser).map((menuItem, i) => (
             <DropdownItem key={i} onClick={menuItem.onClick}>
               {menuItem.icon}
@@ -53,50 +52,27 @@ export const NavigationBar: VFC = memo(() => {
     }
 
     return (
-      <StyledButton color="orange" onClick={() => setIsLoginModalOpen(true)}>
+      <Button color="orange" onClick={() => setIsLoginModalOpen(true)}>
         ログイン
-      </StyledButton>
+      </Button>
     );
   }, [isValidatingCurrentUser, currentUser, menuItems]);
 
   return (
     <>
-      <StyledAppBar position="sticky">
+      <StyledNavbar className="sticky-top navbar bg-primary p-2 shadow">
         <Link href="/">
-          <Image src={IMAGE_PATH.LOGO} alt="Proeco Logo" width={195} height={40} />
+          <Image className="mb-0" src={IMAGE_PATH.LOGO} alt="Proeco Logo" width={195} height={40} />
         </Link>
         {Contents}
-      </StyledAppBar>
+      </StyledNavbar>
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </>
   );
 });
 
-const StyledAppBar = styled(AppBar)`
-  position: sticky;
-  top: 0px;
-  z-index: 1300;
-  background-color: ${(props) => props.theme.palette.primary.main};
-  padding: 8px 12px;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
+const StyledNavbar = styled.div`
   a {
     height: 40px;
   }
-`;
-
-const StyledButton = styled(Button)`
-  width: 200px;
-  color: #fff;
-  background-color: ${(props) => props.theme.palette.secondary.main};
-  text-transform: none;
-  &:hover {
-    background-color: ${(props) => props.theme.palette.secondary.main};
-    opacity: 0.7;
-  }
-`;
-
-const StyledUserIcon = styled(UserIcon)`
-  cursor: pointer;
 `;

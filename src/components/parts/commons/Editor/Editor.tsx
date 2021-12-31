@@ -1,8 +1,7 @@
 import React, { VFC, useState, ChangeEvent, useRef } from 'react';
-import { Tab } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
 import styled from 'styled-components';
 
+import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import { Spinner } from '../Spinner';
 import { Button, MarkdownToHtmlBody, Icon } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -25,7 +24,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
 
   const { notifyErrorMessage } = useErrorNotification();
 
-  const handleChange = (_event: React.SyntheticEvent, newValue: 'editor' | 'preview') => {
+  const handleChange = (newValue: 'editor' | 'preview') => {
     setValue(newValue);
   };
 
@@ -54,16 +53,22 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
     }
   };
 
-  console.log();
-
   return (
     <>
-      <TabContext value={value}>
-        <StyledTabList onChange={handleChange} aria-label="Editor tabs">
-          <StyledTab label="editor" value="editor" />
-          <StyledTab label="preview" value="preview" />
-        </StyledTabList>
-        <StyledTabPanel value="editor">
+      <Nav tabs>
+        <NavItem active={value === 'editor'}>
+          <NavLink className={value === 'editor' ? 'active' : ''} onClick={() => handleChange('editor')}>
+            Editor
+          </NavLink>
+        </NavItem>
+        <NavItem active={value === 'preview'}>
+          <NavLink className={value === 'preview' ? 'active' : ''} onClick={() => handleChange('preview')}>
+            Preview
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent activeTab={value}>
+        <TabPane tabId="editor">
           <textarea
             className="form-control my-3"
             ref={inputRef}
@@ -71,17 +76,19 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             onChange={(e) => onChangeContent(e.target.value)}
             rows={(content.match(/\n/g) || []).length + 10}
           />
-        </StyledTabPanel>
-        <StyledTabPanel value="preview">
+        </TabPane>
+        <TabPane tabId="preview">
           {content === '' ? (
             <StyledParagraphWrapper className="text-center d-flex flex-column align-items-center justify-content-center">
               本文がありません
             </StyledParagraphWrapper>
           ) : (
-            <MarkdownToHtmlBody content={content} />
+            <StyledDiv className="py-4">
+              <MarkdownToHtmlBody content={content} />
+            </StyledDiv>
           )}
-        </StyledTabPanel>
-      </TabContext>
+        </TabPane>
+      </TabContent>
       <div className="d-flex align-items-center justify-content-end">
         {value === 'editor' && (
           <StyledLabel htmlFor="image">
@@ -96,9 +103,11 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
             キャンセル
           </Button>
         )}
-        <Button color="primary" onClick={onCompleteEdit} disabled={content.trim() === '' || isUploading}>
-          {isUpdateMode ? '更新する' : '投稿する'}
-        </Button>
+        <div className="ms-2">
+          <Button color="primary" onClick={onCompleteEdit} disabled={content.trim() === '' || isUploading}>
+            {isUpdateMode ? '更新する' : '投稿する'}
+          </Button>
+        </div>
       </div>
     </>
   );
@@ -106,20 +115,6 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
 
 const StyledParagraphWrapper = styled.div`
   min-height: 290px;
-`;
-
-const StyledTabPanel = styled(TabPanel)`
-  padding: 0px;
-`;
-
-const StyledTabList = styled(TabList)`
-  min-height: unset;
-`;
-
-const StyledTab = styled(Tab)`
-  padding: 8px;
-  min-height: unset;
-  min-width: unset;
 `;
 
 const StyledLabel = styled.label`
@@ -130,4 +125,8 @@ const StyledLabel = styled.label`
   width: fit-content;
   margin-right: auto;
   cursor: pointer;
+`;
+
+const StyledDiv = styled.div`
+  min-height: 170px;
 `;
