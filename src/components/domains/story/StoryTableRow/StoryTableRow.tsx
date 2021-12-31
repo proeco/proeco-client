@@ -1,7 +1,7 @@
 import React, { VFC, useCallback } from 'react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
-import { TableCell, TableRow } from '@mui/material';
+
 import styled from 'styled-components';
 
 import { Emoji } from '~/components/parts/commons';
@@ -27,35 +27,34 @@ export const StoryTableRow: VFC<Props> = ({ story, productId }) => {
   }, [router, story._id, productId]);
 
   return (
-    <StyledTableRow hover onClick={handleClickRow}>
-      <StyledBodyTableCell component="th" scope="row" width={40}>
-        {createdStoryUser ? (
-          <UserIcon attachmentId={createdStoryUser.iconImageId} size={40} userId={story.createdUserId} isLink />
-        ) : (
-          <GuestUserIcon size={40} />
-        )}
-      </StyledBodyTableCell>
-      <StyledBodyTableCell>
-        <div className="d-flex align-items-center gap-2">
-          <Emoji emojiId={story.emojiId} size={20} />
-          {story.title}
-        </div>
-      </StyledBodyTableCell>
-      <StyledBodyTableCell align="right">{format(story.updatedAt, DATE_FORMAT.EXCEPT_SECOND)}</StyledBodyTableCell>
-    </StyledTableRow>
+    <StyledRow className="row py-3 align-items-center c-pointer" onClick={handleClickRow}>
+      <div className="col-2">
+        <span className="text-light fs-3 text-nowrap">
+          {createdStoryUser ? (
+            <UserIcon attachmentId={createdStoryUser.iconImageId} size={40} userId={story.createdUserId} isLink />
+          ) : (
+            <GuestUserIcon size={40} />
+          )}
+        </span>
+      </div>
+      <div className="col-7">
+        <span className="text-light fs-3 text-nowrap">
+          <div className="d-flex align-items-center gap-2">
+            <Emoji emojiId={story.emojiId} size={20} />
+            {story.title}
+          </div>
+        </span>
+      </div>
+      <div className="col-3">
+        <span className="text-light fs-3 text-nowrap">{format(story.updatedAt, DATE_FORMAT.EXCEPT_SECOND)}</span>
+      </div>
+    </StyledRow>
   );
 };
 
-const StyledBodyTableCell = styled(TableCell)<{ width?: number }>`
-  &.MuiTableCell-root {
-    ${(props) => props.width && `width: ${props.width}px;`}
-    padding: 20px 16px;
-    font-size: 14px;
+const StyledRow = styled.div`
+  :hover {
+    background-color: rgba(0, 0, 0, 0.04);
   }
-`;
-
-const StyledTableRow = styled(TableRow)`
-  &.MuiTableRow-root {
-    cursor: pointer;
-  }
+  margin: 0px -16px;
 `;
