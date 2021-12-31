@@ -248,10 +248,9 @@ export const getStaticProps: any = async (context: any) => {
   const { storyId, productId } = context.params;
 
   const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`);
-  const team = pagination?.docs[0];
-
   const { data: story } = await restClient.apiGet(`/stories/${storyId}`);
 
+  const team = pagination?.docs[0];
   const { data: teamIconAttachment } = await restClient.apiGet(`/attachments/${team.iconImageId}`);
 
   if (!team || !story || !teamIconAttachment) {
@@ -269,7 +268,7 @@ export const getStaticProps: any = async (context: any) => {
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: 'blocking',
+    fallback: 'true',
   };
 }
 
