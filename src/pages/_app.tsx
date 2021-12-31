@@ -1,4 +1,3 @@
-import { SnackbarProvider } from 'notistack';
 import { ReactNode } from 'react';
 import { UserProvider } from '@auth0/nextjs-auth0';
 import { SWRConfig } from 'swr';
@@ -20,16 +19,14 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
 
   return (
     <UserProvider>
-      <SnackbarProvider>
-        <SWRConfig value={{ revalidateOnFocus: false }}>
-          <CurrentUserProvider>
-            <AccessControlProvider getAccessControl={Component.getAccessControl}>
-              <NavigationBar />
-              {getLayout(<Component {...pageProps} />)}
-            </AccessControlProvider>
-          </CurrentUserProvider>
-        </SWRConfig>
-      </SnackbarProvider>
+      <SWRConfig value={{ revalidateOnFocus: false }}>
+        <CurrentUserProvider>
+          <AccessControlProvider getAccessControl={Component.getAccessControl}>
+            <NavigationBar />
+            {getLayout(<Component {...pageProps} />)}
+          </AccessControlProvider>
+        </CurrentUserProvider>
+      </SWRConfig>
     </UserProvider>
   );
 }

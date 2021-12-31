@@ -18,14 +18,14 @@ export const Breadcrumbs: VFC<Props> = ({ breadcrumbsItems }) => {
             return (
               <li className="breadcrumb-item" key={i}>
                 <Link href={breadcrumbsItem.url}>
-                  <span className="text-primary fs-2">{breadcrumbsItem.label}</span>
+                  <span className="text-primary fs-2 fw-bold">{breadcrumbsItem.label}</span>
                 </Link>
               </li>
             );
           }
           return (
-            <li className="breadcrumb-item" key={i}>
-              <span className="fs-2">{breadcrumbsItem.label}</span>
+            <li className="breadcrumb-item text-truncate" key={i}>
+              <span className="fs-2 fw-bold">{breadcrumbsItem.label}</span>
             </li>
           );
         })}

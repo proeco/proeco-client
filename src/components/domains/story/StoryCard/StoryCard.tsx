@@ -52,7 +52,7 @@ export const StoryCard: VFC<Props> = ({ story }) => {
           <span className="me-1">
             <Emoji emojiId={story.emojiId} size={20} />
           </span>
-          <p className="fw-bold mb-0">{story.title}</p>
+          <p className="fw-bold mb-0 text-truncate">{story.title}</p>
         </div>
         <div className="mt-3 d-flex align-items-center">
           {team ? (

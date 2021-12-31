@@ -21,7 +21,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
       <StyledDiv className="mx-auto">
         <h2 className="fw-bold mb-3 d-flex align-items-center gap-2">
           <Icon icon="PENCIL" size={28} />
-          新規チームを作成する
+          作成する
         </h2>
         {currentUser && <TeamForm currentUser={currentUser} />}
       </StyledDiv>

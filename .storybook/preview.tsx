@@ -1,11 +1,10 @@
 import * as nextImage from 'next/image';
 import React from 'react';
-import { SnackbarProvider } from 'notistack';
 import { addDecorator} from '@storybook/react';
 
 import '../src/styles/global.scss';
 
-import { worker } from '../src/mocks/browser';
+const { worker } = require('../src/mocks/browser');
 worker.start()
 
 Object.defineProperty(nextImage, 'default', {
@@ -17,11 +16,7 @@ Object.defineProperty(nextImage, 'default', {
 
 
 addDecorator((story) => {
-  return (
-    <SnackbarProvider>
-      {story()}
-    </SnackbarProvider>
-  )
+  return story()
 });
   
 export const parameters = {
