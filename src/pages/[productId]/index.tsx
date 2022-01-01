@@ -50,14 +50,16 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
         break;
       }
       case TabTypes.SETTINGS: {
-        setActiveTab(TabTypes.SETTINGS);
+        if (isMemberOfTeam) {
+          setActiveTab(TabTypes.SETTINGS);
+        }
         break;
       }
       default: {
         void 0;
       }
     }
-  }, [router.asPath]);
+  }, [isMemberOfTeam, router.asPath]);
 
   const handleChange = (newValue: TabTypes) => {
     router.push(`#${newValue}`);
@@ -98,16 +100,18 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
               <span className="fw-bold fs-1">ストーリー</span>
             </NavLink>
           </NavItem>
-          <NavItem active={activeTab === TabTypes.SETTINGS}>
-            <NavLink
-              className={`${
-                activeTab === TabTypes.SETTINGS ? 'active border-bottom border-4 text-primary' : 'text-black'
-              } c-pointer bg-transparent border-0 border-primary`}
-              onClick={() => handleChange(TabTypes.SETTINGS)}
-            >
-              <span className="fw-bold fs-1">設定</span>
-            </NavLink>
-          </NavItem>
+          {isMemberOfTeam && (
+            <NavItem active={activeTab === TabTypes.SETTINGS}>
+              <NavLink
+                className={`${
+                  activeTab === TabTypes.SETTINGS ? 'active border-bottom border-4 text-primary' : 'text-black'
+                } c-pointer bg-transparent border-0 border-primary`}
+                onClick={() => handleChange(TabTypes.SETTINGS)}
+              >
+                <span className="fw-bold fs-1">設定</span>
+              </NavLink>
+            </NavItem>
+          )}
         </Nav>
         <TabContent activeTab={activeTab}>
           <TabPane className="py-3" tabId={TabTypes.HOME}>
@@ -117,7 +121,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
             <StoryTab team={team} editable={isMemberOfTeam} />
           </TabPane>
           <TabPane className="py-3" tabId={TabTypes.SETTINGS}>
-            {currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}
+            {isMemberOfTeam && currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}
           </TabPane>
         </TabContent>
       </StyledDiv>
