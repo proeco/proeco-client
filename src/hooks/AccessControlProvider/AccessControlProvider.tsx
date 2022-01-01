@@ -5,16 +5,12 @@ import { useErrorNotification } from '../useErrorNotification';
 import { GetAccessControl } from '~/interfaces/accessControl';
 import { Spinner } from '~/components/parts/commons';
 
-const accessControl = () => {
-  throw new Error('getAccessControl が定義されていません。');
-};
-
 /**
  * AccessControlによってログイン状態をもとにリダイレクトを行う
  * @param getAccessControl
  * @returns
  */
-export const AccessControlProvider: FC<{ getAccessControl?: GetAccessControl }> = ({ getAccessControl = accessControl, children }) => {
+export const AccessControlProvider: FC<{ getAccessControl: GetAccessControl }> = ({ getAccessControl, children }) => {
   const router = useRouter();
   const { user, isLoading } = useUser();
   const { notifyErrorMessage } = useErrorNotification();
@@ -36,7 +32,7 @@ export const AccessControlProvider: FC<{ getAccessControl?: GetAccessControl }> 
     control();
   }, [getAccessControl, isLoading, notifyErrorMessage, router, user]);
 
-  if (isLoading && typeof window !== 'undefined') {
+  if (getAccessControl().loginRequired && isLoading) {
     return (
       <div className="mt-5 text-center">
         <Spinner />
