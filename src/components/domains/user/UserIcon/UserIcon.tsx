@@ -31,15 +31,7 @@ export const UserIcon: VFC<Props> = memo(({ attachmentId, userId, isLink = false
   const { data: attachment } = useAttachment(attachmentId);
 
   if (!isLink)
-    return (
-      <img
-        className="rounded-circle border border-primary border-2 bg-white"
-        width={size}
-        height={size}
-        alt={userId}
-        src={attachment?.filePath}
-      />
-    );
+    return <img className="rounded-circle border border-primary border-2 bg-white" width={size} height={size} src={attachment?.filePath} />;
 
   return (
     <Link href={'/user/' + userId}>
