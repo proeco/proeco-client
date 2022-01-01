@@ -10,9 +10,9 @@ import { convertStoryFromServer, Story } from '~/domains';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useStory = (id: string, fallbackData: Story): SWRResponse<Story, Error> => {
+export const useStory = (id?: string, fallbackData?: Story): SWRResponse<Story, Error> => {
   return useSWR(
-    `/stories/${id}`,
+    id ? `/stories/${id}` : null,
     (endpoint: string) => restClient.apiGet<Story>(endpoint).then((result) => convertStoryFromServer(result.data)),
     {
       fallbackData,

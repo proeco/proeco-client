@@ -34,9 +34,9 @@ import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { createOgpUrl } from '~/utils/createOgpUrl';
 
 type Props = {
-  storyFromServerSide: Story;
-  team: Team;
-  teamIconAttachment: Attachment;
+  storyFromServerSide?: Story;
+  team?: Team;
+  teamIconAttachment?: Attachment;
 };
 
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconAttachment }) => {
@@ -47,12 +47,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 
   const [isOpenUpdateStoryModal, setIsOpenUpdateStoryModal] = useState(false);
   const [isOpenDeleteStoryModal, setIsOpenDeleteStoryModal] = useState(false);
-  const storyId = storyFromServerSide._id;
+  const storyId = storyFromServerSide?._id;
   const storyPostId = router.query.storyPostId as string;
 
   const { data: story, mutate: mutateStory } = useStory(storyId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
-  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
 
   const isMemberOfTeam = useMemo(() => {
     return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
@@ -116,20 +116,20 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   ];
 
   const ogpUrl = useMemo(
-    () => (story ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : ''),
-    [story, team.name, teamIconAttachment],
+    () => (story && team && teamIconAttachment ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : ''),
+    [story, team, teamIconAttachment],
   );
 
   const handleClickShareButton = useCallback(async () => {
     if (window != null) {
       const twitterUrl = new URL(
         `https://twitter.com/intent/tweet?url=${
-          process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(team.productId, storyId)
+          process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(team?.productId || '', storyId || '')
         }&hashtags=Proeco`,
       );
       window.open(twitterUrl.toString(), '_blank');
     }
-  }, [storyId, team.productId]);
+  }, [storyId, team?.productId]);
 
   if (!story || !storyPosts) {
     return null;
@@ -137,9 +137,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 
   return (
     <>
-      <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/story/${story._id}`} />
+      <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story._id}`} />
       <StyledDiv className="mx-auto">
-        <Breadcrumbs breadcrumbsItems={[{ url: `${URLS.TEAMS(team.productId)}#story`, label: 'ストーリーリスト' }, { label: story.title }]} />
+        <Breadcrumbs
+          breadcrumbsItems={[{ url: `${URLS.TEAMS(team?.productId || '')}#story`, label: 'ストーリーリスト' }, { label: story.title }]}
+        />
         <div className="mb-3 d-flex align-items-center">
           <Emoji emojiId={story.emojiId} size={40} />
           <h1 className="ms-2 me-auto fw-bold mb-0 text-truncate">{story.title}</h1>
@@ -171,9 +173,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                     createdUserAttachmentId={createdStoryPostUser?.iconImageId}
                     createdUserName={createdStoryPostUser?.name}
                     storyPost={customStoryPost}
-                    teamId={team._id}
-                    productId={team.productId}
-                    storyId={storyId}
+                    teamId={team?._id || ''}
+                    productId={team?.productId || ''}
+                    storyId={storyId || ''}
                     page={page}
                     editable={isMemberOfTeam}
                     isScrollTarget={storyPostId === customStoryPost._id}
@@ -188,7 +190,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                   <UserIcon size={40} isLink attachmentId={currentUser.iconImageId} userId={currentUser._id} />
                 </div>
                 <div className="w-100">
-                  <CreateNewStoryPostCard storyId={storyId} page={page} currentUser={currentUser} />
+                  <CreateNewStoryPostCard storyId={storyId || ''} page={page} currentUser={currentUser} />
                 </div>
               </div>
             )}
@@ -220,15 +222,15 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
         isOpen={isOpenUpdateStoryModal}
         onCloseModal={() => setIsOpenUpdateStoryModal(false)}
         story={story}
-        teamId={team._id}
+        teamId={team?._id || ''}
         page={page}
       />
       <DeleteStoryModal
         isOpen={isOpenDeleteStoryModal}
         onCloseModal={() => setIsOpenDeleteStoryModal(false)}
         page={page}
-        teamId={team._id}
-        productId={team.productId}
+        teamId={team?._id || ''}
+        productId={team?.productId || ''}
         story={story}
       />
     </>

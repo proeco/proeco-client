@@ -25,11 +25,11 @@ export const ProecoOgpHead: VFC<Props> = (props) => {
       <meta property="og:site_name" content={siteName || 'Proeco'} />
       <meta property="og:title" content={title || 'Proeco'} />
       <meta property="og:url" content={url || 'https://www.proeco.app'} />
-      <meta property="og:image" content={image || `https://www.proeco.app/${IMAGE_PATH.TWITTER_OGP}`} />
+      <meta property="og:image" content={image || `https://www.proeco.app${IMAGE_PATH.TWITTER_OGP}`} />
       <meta property="og:description" content={description || DESCRIPTION} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title || 'Proeco'} />
-      <meta name="twitter:image" content={image || `https://www.proeco.app/${IMAGE_PATH.TWITTER_OGP}`} />
+      <meta name="twitter:image" content={image || `https://www.proeco.app${IMAGE_PATH.TWITTER_OGP}`} />
       <meta name="twitter:description" content={description || DESCRIPTION} />
     </Head>
   );
