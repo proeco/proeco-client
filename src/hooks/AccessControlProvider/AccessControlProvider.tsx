@@ -36,7 +36,7 @@ export const AccessControlProvider: FC<{ getAccessControl?: GetAccessControl }> 
     control();
   }, [getAccessControl, isLoading, notifyErrorMessage, router, user]);
 
-  if (isLoading && typeof window !== 'undefined') {
+  if (getAccessControl().loginRequired && isLoading) {
     return (
       <div className="mt-5 text-center">
         <Spinner />
