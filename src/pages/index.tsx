@@ -20,7 +20,8 @@ const Home: ProecoNextPage = () => {
   return (
     <>
       <ProecoOgpHead />
-      <img src={IMAGE_PATH.EYE_CATCH} alt={IMAGE_PATH.EYE_CATCH} width="100%" />
+      <img className="d-none d-md-block" src={IMAGE_PATH.EYE_CATCH} alt={IMAGE_PATH.EYE_CATCH} width="100%" />
+      <img className="d-md-none d-block" src={IMAGE_PATH.EYE_CATCH_MOBILE} alt={IMAGE_PATH.EYE_CATCH} width="100%" />
       <h1 className="text-center fw-bold my-3">プロダクト一覧</h1>
       <StyledDiv className="mb-5 mx-auto">
         <Carousel autoPlay>
