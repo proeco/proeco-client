@@ -20,6 +20,15 @@ const Home: ProecoNextPage = () => {
   return (
     <>
       <ProecoOgpHead />
+      <div className="container vh-100">
+        <div className="col-12 col-md-6">
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <h2 className="fw-bold text-center">プロダクトの開発記録を簡単に</h2>
+            <p className="fs-2">あなたのプロセスの共有がプロダクトの魅力を高めます</p>
+          </div>
+        </div>
+        <div className="col-12 col-md-6">hoge</div>
+      </div>
       <h1 className="text-center fw-bold my-3">プロダクト一覧</h1>
       <StyledDiv className="mb-5 mx-auto">
         <Carousel autoPlay>
