@@ -105,7 +105,7 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
         )}
         <div className="ms-2">
           <Button color="primary" onClick={onCompleteEdit} disabled={content.trim() === '' || isUploading}>
-            {isUpdateMode ? '更新する' : '投稿する'}
+            {isUpdateMode ? '更新' : '投稿'}
           </Button>
         </div>
       </div>

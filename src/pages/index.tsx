@@ -5,7 +5,7 @@ import { useTeams } from '~/stores/team';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { Link, Carousel } from '~/components/parts/commons';
-import { URLS } from '~/constants';
+import { IMAGE_PATH, URLS } from '~/constants';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
@@ -20,6 +20,7 @@ const Home: ProecoNextPage = () => {
   return (
     <>
       <ProecoOgpHead />
+      <img src={IMAGE_PATH.EYE_CATCH} alt={IMAGE_PATH.EYE_CATCH} width="100%" />
       <h1 className="text-center fw-bold my-3">プロダクト一覧</h1>
       <StyledDiv className="mb-5 mx-auto">
         <Carousel autoPlay>
