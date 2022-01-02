@@ -1,0 +1,1 @@
+export { FooterNavbar } from './FooterNavbar';
