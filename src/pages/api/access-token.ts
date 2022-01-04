@@ -3,10 +3,11 @@ import { getSession } from 'next-auth/react';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async (req: any, res: any) => {
   const session = await getSession({ req });
+  console.log(session);
 
   if (session) {
     res.send({
-      content: 'This is protected content. You can access this content because you are signed in.',
+      accessToken: session.accessToken,
     });
   } else {
     res.send({
