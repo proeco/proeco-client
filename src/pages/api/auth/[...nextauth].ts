@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { restClient } from '~/utils/rest-client';
 
 export default NextAuth({
   providers: [
@@ -12,6 +13,13 @@ export default NextAuth({
     async jwt({ token, account }) {
       if (account) {
         token.accessToken = account.access_token;
+        await restClient.apiPost('/users', {
+          user: {
+            name: token.name,
+            email: token.email,
+            accessToken: token.accessToken,
+          },
+        });
       }
       return token;
     },
