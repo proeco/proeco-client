@@ -3,6 +3,7 @@ import { memo, VFC, useState, useMemo, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { signIn } from 'next-auth/react';
 import { Dropdown, DropdownItem } from '~/components/parts/commons/Dropdown';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
@@ -52,7 +53,7 @@ export const NavigationBar: VFC = memo(() => {
     }
 
     return (
-      <Button color="orange" onClick={() => setIsLoginModalOpen(true)}>
+      <Button color="orange" onClick={() => signIn('google')}>
         ログイン
       </Button>
     );
