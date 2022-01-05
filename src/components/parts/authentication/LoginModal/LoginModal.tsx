@@ -1,5 +1,5 @@
 import React, { VFC } from 'react';
-import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { Modal, Link } from '~/components/parts/commons';
@@ -11,7 +11,6 @@ type Props = {
 };
 
 export const LoginModal: VFC<Props> = ({ isOpen, onClose }) => {
-  const router = useRouter();
   const content = (
     <>
       <div className="text-center">
@@ -21,13 +20,7 @@ export const LoginModal: VFC<Props> = ({ isOpen, onClose }) => {
       <p className="text-light mt-3">Proeco はプロダクト開発を支援するプラットフォームです あなたの素敵なアイデアを実現しましょう</p>
 
       <div className="text-center">
-        <StyledLoginButton
-          className="c-pointer"
-          src={IMAGE_PATH.SIGN_IN_GOOGLE}
-          height={50}
-          width={190}
-          onClick={() => router.push(URLS.API_LOGIN)}
-        />
+        <StyledLoginButton className="c-pointer" src={IMAGE_PATH.SIGN_IN_GOOGLE} height={50} width={190} onClick={() => signIn('google')} />
       </div>
 
       <p className="text-light">

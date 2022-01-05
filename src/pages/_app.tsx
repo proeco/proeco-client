@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
-import { UserProvider } from '@auth0/nextjs-auth0';
 import { SWRConfig } from 'swr';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
 
 import '~/styles/global.scss';
 
@@ -10,7 +11,7 @@ import { CurrentUserProvider } from '~/hooks/CurrentUserProvider';
 import { AccessControlProvider } from '~/hooks/AccessControlProvider';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 
-function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { children?: ReactNode } }): JSX.Element {
+function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { session: Session; children?: ReactNode } }): JSX.Element {
   const getLayout = Component.getLayout || ((page) => page);
 
   if (process.env.NEXT_PUBLIC_ENABLE_MOCK === 'TRUE') {
@@ -19,7 +20,7 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
   }
 
   return (
-    <UserProvider>
+    <SessionProvider session={pageProps.session}>
       <SWRConfig value={{ revalidateOnFocus: false }}>
         <CurrentUserProvider>
           <AccessControlProvider getAccessControl={Component.getAccessControl}>
@@ -28,7 +29,7 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
           </AccessControlProvider>
         </CurrentUserProvider>
       </SWRConfig>
-    </UserProvider>
+    </SessionProvider>
   );
 }
 

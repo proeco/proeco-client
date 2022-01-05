@@ -3,6 +3,7 @@ import { memo, VFC, useState, useMemo, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { signOut } from 'next-auth/react';
 import { Dropdown, DropdownItem } from '~/components/parts/commons/Dropdown';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
@@ -29,7 +30,7 @@ export const NavigationBar: VFC = memo(() => {
       {
         icon: <Icon icon="REPLY" size={20} />,
         text: 'Logout',
-        onClick: () => router.push(URLS.API_LOGOUT),
+        onClick: () => signOut(),
       },
     ],
     [router],
