@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, FC } from 'react';
-import { useUser } from '@auth0/nextjs-auth0';
+import { useSession } from 'next-auth/react';
 import { useErrorNotification } from '../useErrorNotification';
 import { GetAccessControl } from '~/interfaces/accessControl';
 import { Spinner } from '~/components/parts/commons';
@@ -12,27 +12,27 @@ import { Spinner } from '~/components/parts/commons';
  */
 export const AccessControlProvider: FC<{ getAccessControl: GetAccessControl }> = ({ getAccessControl, children }) => {
   const router = useRouter();
-  const { user, isLoading } = useUser();
+  const { data: session, status } = useSession();
   const { notifyErrorMessage } = useErrorNotification();
 
   useEffect(() => {
     const control = async () => {
-      if (isLoading) return;
+      if (status === 'loading') return;
       const accessControl = getAccessControl();
 
       if (accessControl.loginRequired == null) return;
 
-      if (accessControl.loginRequired === true && !user) {
+      if (accessControl.loginRequired === true && !session) {
         notifyErrorMessage('ログインが必要です');
         router.push(accessControl.destination);
-      } else if (accessControl.loginRequired === false && user) {
+      } else if (accessControl.loginRequired === false && session) {
         router.push(accessControl.destination);
       }
     };
     control();
-  }, [getAccessControl, isLoading, notifyErrorMessage, router, user]);
+  }, [getAccessControl, notifyErrorMessage, router, session, status]);
 
-  if (getAccessControl().loginRequired && isLoading) {
+  if (getAccessControl().loginRequired && status === 'loading') {
     return (
       <div className="mt-5 text-center">
         <Spinner />

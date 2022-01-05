@@ -5,7 +5,6 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import 'github-markdown-css';
 import styled from 'styled-components';
-import { COLORS } from '~/constants';
 
 type Props = {
   content: string;
@@ -13,7 +12,7 @@ type Props = {
 
 export const MarkdownToHtmlBody: VFC<Props> = ({ content }) => {
   return (
-    <StyledMarkdownBody className="markdown-body text-clack">
+    <StyledMarkdownBody className="markdown-body bg-white text-black">
       <ReactMarkdown
         components={{
           code({ inline, className, children, ...props }) {
@@ -40,8 +39,6 @@ export const MarkdownToHtmlBody: VFC<Props> = ({ content }) => {
 
 const StyledMarkdownBody = styled.div`
   &.markdown-body {
-    color: ${COLORS.TEXT};
-    background-color: whitesmoke;
     p {
       white-space: pre-wrap;
     }
@@ -50,7 +47,7 @@ const StyledMarkdownBody = styled.div`
       background-color: rgb(30, 30, 30);
     }
     code {
-      color: #white;
+      color: white;
     }
     p::selection,
     li::selection,
