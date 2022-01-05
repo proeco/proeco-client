@@ -13,18 +13,14 @@ export default NextAuth({
     async jwt({ token, account }) {
       if (account) {
         token.accessToken = account.access_token;
-        try {
-          await restClient.apiPost('/users', {
-            user: {
-              name: token.name,
-              email: token.email,
-              accessToken: token.accessToken,
-            },
-            secret: process.env.AUTH_SECRET,
-          });
-        } catch (error) {
-          console.log(error);
-        }
+        await restClient.apiPost('/users', {
+          user: {
+            name: token.name,
+            email: token.email,
+            accessToken: token.accessToken,
+          },
+          secret: process.env.AUTH_SECRET,
+        });
       }
       return token;
     },
