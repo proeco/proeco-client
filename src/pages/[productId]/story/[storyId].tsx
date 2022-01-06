@@ -144,7 +144,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
         />
         <div className="mb-3 d-flex align-items-center">
           <Emoji emojiId={story.emojiId} size={40} />
-          <h1 className="ms-2 me-auto fw-bold mb-0 text-truncate">{story.title}</h1>
+          <h1 className="ms-2 me-auto fw-bold mb-0 overflow-scroll">{story.title}</h1>
           {isMemberOfTeam && (
             <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
               {menuItems.map((menuItem, i) => (
