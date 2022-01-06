@@ -16,7 +16,7 @@ export const FooterNavbar: VFC = () => {
   ];
 
   return (
-    <div className="fixed-bottom bg-white d-flex justify-content-evenly d-md-none">
+    <div className="fixed-bottom bg-white d-flex justify-content-evenly d-md-none border-top shadow-lg">
       {navbarItemMappings.map((v) => {
         const isActive = router.pathname.startsWith(v.url);
         return (
