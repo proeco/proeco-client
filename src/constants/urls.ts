@@ -11,4 +11,7 @@ export const URLS = {
     `/${productId}/story/${storyId}${storyPostId ? `?storyPostId=${storyPostId}` : ''}`,
   TERM: '/term',
   PRIVACY_POLICY: '#',
+
+  PROECO_GITHUB_URL: 'https://github.com/proeco',
+  TWITTER_URL: 'https://twitter.com/ProecoDev',
 };
