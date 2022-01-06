@@ -10,6 +10,7 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { CurrentUserProvider } from '~/hooks/CurrentUserProvider';
 import { AccessControlProvider } from '~/hooks/AccessControlProvider';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
+import { Footer } from '~/components/parts/layout/Footer';
 
 function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { session: Session; children?: ReactNode } }): JSX.Element {
   const getLayout = Component.getLayout || ((page) => page);
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
           <AccessControlProvider getAccessControl={Component.getAccessControl}>
             <NavigationBar />
             {getLayout(<Component {...pageProps} />)}
+            <Footer />
           </AccessControlProvider>
         </CurrentUserProvider>
       </SWRConfig>
