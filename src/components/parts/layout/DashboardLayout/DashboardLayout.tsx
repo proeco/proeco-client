@@ -8,7 +8,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 export const DashboardLayout: FC = ({ children }) => {
   const { data: currentUser } = useCurrentUser();
   return (
-    <div className="min-vh-100 d-flex h-100 pb-5">
+    <div className="min-vh-100 d-flex h-100 pb-md-0 pb-5 mb-md-0 mb-5">
       {currentUser && <SideBar currentUser={currentUser} />}
       <StyledDiv className="w-100 p-md-4 p-3">{children}</StyledDiv>
       {currentUser && <FooterNavbar />}
