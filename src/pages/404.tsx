@@ -7,7 +7,7 @@ const Custom404: WithGetAccessControl<NextPage> = () => {
   return (
     <>
       <ProecoOgpHead />
-      <div className="mt-5">
+      <div className="vh-100 py-5">
         <NotFound />
       </div>
     </>

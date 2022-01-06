@@ -31,4 +31,8 @@ export default NextAuth({
     },
   },
   secret: process.env.SESSION_COOKIE_SECRET,
+
+  jwt: {
+    secret: process.env.SESSION_COOKIE_SECRET,
+  },
 });

@@ -41,12 +41,12 @@ export const StoryTableRow: VFC<Props> = ({ story, productId }) => {
         <span className="text-light fs-3 text-nowrap">
           <div className="d-flex align-items-center gap-2">
             <Emoji emojiId={story.emojiId} size={20} />
-            {story.title}
+            <span className="text-truncate">{story.title}</span>
           </div>
         </span>
       </div>
-      <div className="col-3">
-        <span className="text-light fs-3 text-nowrap">{format(story.updatedAt, DATE_FORMAT.EXCEPT_SECOND)}</span>
+      <div className="col-3 text-truncate">
+        <span className="text-light fs-3 text-nowrap ">{format(story.updatedAt, DATE_FORMAT.EXCEPT_SECOND)}</span>
       </div>
     </StyledRow>
   );
