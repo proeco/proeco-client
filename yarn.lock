@@ -4328,7 +4328,7 @@ babel-plugin-react-docgen@^4.2.1:
     lodash "^4.17.15"
     react-docgen "^5.0.0"
 
-"babel-plugin-styled-components@>= 1.12.0", babel-plugin-styled-components@^2.0.2:
+babel-plugin-styled-components@2.0.2, "babel-plugin-styled-components@>= 1.12.0":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-2.0.2.tgz#0fac11402dc9db73698b55847ab1dc73f5197c54"
   integrity sha512-7eG5NE8rChnNTDxa6LQfynwgHTVOYYaHJbUYSlOhk8QBXIQiMBKq4gyfHBBKPrxUcVBXVJL61ihduCpCQbuNbw==
@@ -10509,7 +10509,7 @@ nested-error-stacks@^2.0.0, nested-error-stacks@^2.1.0:
   resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.1.0.tgz#0fbdcf3e13fe4994781280524f8b96b0cdff9c61"
   integrity sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==
 
-next-auth@^4.0.6:
+next-auth@4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.0.6.tgz#93ca158993fc259c3d00029f644fc98825321e3c"
   integrity sha512-44IwABioPpfI+T8zEHfCH3S7xigd+7XxbqVj2uUTwLZaaYXpjhsNYgiE2ZCh5+8vbj/ls89ypl0TLL7mQeKA8Q==
