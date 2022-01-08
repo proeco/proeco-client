@@ -15,9 +15,10 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
           <a href="#" className="list-group-item list-group-item-action active" aria-current="true">
             基本設定
           </a>
-          <a href="#" className="list-group-item list-group-item-action">
+          {/* TODO */}
+          {/* <a href="#" className="list-group-item list-group-item-action">
             重要な設定
-          </a>
+          </a> */}
         </div>
         <div className="col-12 col-md-9">
           <TeamForm currentUser={currentUser} team={team} />
