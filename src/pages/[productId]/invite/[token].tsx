@@ -1,11 +1,14 @@
 import { GetServerSideProps } from 'next';
 import { ReactNode } from 'react';
+import { addDays, isPast } from 'date-fns';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { InvitationToken, Team } from '~/domains';
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { restClient } from '~/utils/rest-client';
+
+const TOKEN_LIMIT_DAYS = 7;
 
 type Props = {
   team: Team;
@@ -28,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`);
     const team = pagination?.docs[0];
 
-    if (!invitationToken || invitationToken.teamId !== team._id) {
+    if (!invitationToken || invitationToken.teamId !== team._id || isPast(addDays(new Date(invitationToken.createdAt), TOKEN_LIMIT_DAYS))) {
       return {
         redirect: {
           permanent: false,
