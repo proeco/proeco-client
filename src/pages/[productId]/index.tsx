@@ -69,50 +69,50 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   return (
     <>
       <ProecoOgpHead title={`${team.name}のホーム`} />
-      <StyledDiv className="mx-auto">
-        <div className="mb-2 d-flex align-items-center">
-          <TeamIcon attachmentId={team.iconImageId} size={80} />
-          <div className="d-flex flex-column ms-3">
-            <h1 className="mb-0 maximum_lines_1">{team.name}</h1>
-            <a className="text-decoration-none" href={team.url}>
-              {team.url}
-            </a>
-          </div>
+      <div className="mb-2 d-flex align-items-center">
+        <TeamIcon attachmentId={team.iconImageId} size={80} />
+        <div className="d-flex flex-column ms-3">
+          <h1 className="mb-0 maximum_lines_1">{team.name}</h1>
+          <a className="text-decoration-none" href={team.url}>
+            {team.url}
+          </a>
         </div>
-        <Nav tabs>
-          <NavItem active={activeTab === TabTypes.HOME}>
+      </div>
+      <Nav tabs>
+        <NavItem active={activeTab === TabTypes.HOME}>
+          <NavLink
+            className={`${
+              activeTab === TabTypes.HOME ? 'active border-bottom border-4 text-primary' : 'text-black'
+            } c-pointer bg-transparent border-0 border-primary`}
+            onClick={() => handleChange(TabTypes.HOME)}
+          >
+            <span className="fw-bold fs-1">ホーム</span>
+          </NavLink>
+        </NavItem>
+        <NavItem active={activeTab === TabTypes.STORY}>
+          <NavLink
+            className={`${
+              activeTab === TabTypes.STORY ? 'active border-bottom border-4 text-primary' : 'text-black'
+            } c-pointer bg-transparent border-0 border-primary`}
+            onClick={() => handleChange(TabTypes.STORY)}
+          >
+            <span className="fw-bold fs-1">ストーリー</span>
+          </NavLink>
+        </NavItem>
+        {isMemberOfTeam && (
+          <NavItem active={activeTab === TabTypes.SETTINGS}>
             <NavLink
               className={`${
-                activeTab === TabTypes.HOME ? 'active border-bottom border-4 text-primary' : 'text-black'
+                activeTab === TabTypes.SETTINGS ? 'active border-bottom border-4 text-primary' : 'text-black'
               } c-pointer bg-transparent border-0 border-primary`}
-              onClick={() => handleChange(TabTypes.HOME)}
+              onClick={() => handleChange(TabTypes.SETTINGS)}
             >
-              <span className="fw-bold fs-1">ホーム</span>
+              <span className="fw-bold fs-1">設定</span>
             </NavLink>
           </NavItem>
-          <NavItem active={activeTab === TabTypes.STORY}>
-            <NavLink
-              className={`${
-                activeTab === TabTypes.STORY ? 'active border-bottom border-4 text-primary' : 'text-black'
-              } c-pointer bg-transparent border-0 border-primary`}
-              onClick={() => handleChange(TabTypes.STORY)}
-            >
-              <span className="fw-bold fs-1">ストーリー</span>
-            </NavLink>
-          </NavItem>
-          {isMemberOfTeam && (
-            <NavItem active={activeTab === TabTypes.SETTINGS}>
-              <NavLink
-                className={`${
-                  activeTab === TabTypes.SETTINGS ? 'active border-bottom border-4 text-primary' : 'text-black'
-                } c-pointer bg-transparent border-0 border-primary`}
-                onClick={() => handleChange(TabTypes.SETTINGS)}
-              >
-                <span className="fw-bold fs-1">設定</span>
-              </NavLink>
-            </NavItem>
-          )}
-        </Nav>
+        )}
+      </Nav>
+      <StyledDiv className="mx-auto">
         <TabContent activeTab={activeTab}>
           <TabPane className="py-3" tabId={TabTypes.HOME}>
             <TeamHomeTab team={team} currentUser={currentUser} editable={isMemberOfTeam} />
