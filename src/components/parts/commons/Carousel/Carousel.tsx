@@ -1,6 +1,7 @@
-import React, { VFC, ReactNode } from 'react';
+import React, { VFC, ReactNode, useState } from 'react';
 
 import CarouselOriginal from 'react-multi-carousel';
+import { DotProps } from 'react-multi-carousel/lib/types';
 import 'react-multi-carousel/lib/styles.css';
 import styled from 'styled-components';
 
@@ -26,9 +27,30 @@ const responsive = {
   },
 };
 
-export const Carousel: VFC<Props> = ({ children, autoPlay = false }) => {
+const CustomDot: VFC<DotProps> = ({ onClick, active }) => {
   return (
-    <StyledCarouselOriginal responsive={responsive} showDots arrows={false} autoPlay={autoPlay} infinite={autoPlay}>
+    <li className={`react-multi-carousel-dot ${active && 'react-multi-carousel-dot--active'}`}>
+      <button onClick={onClick}></button>
+    </li>
+  );
+};
+
+export const Carousel: VFC<Props> = ({ children, autoPlay = false }) => {
+  const [currentAutoPlay, setCurrentAutoPlay] = useState(autoPlay);
+
+  const handleClickDot = () => {
+    setCurrentAutoPlay(false);
+  };
+
+  return (
+    <StyledCarouselOriginal
+      responsive={responsive}
+      showDots
+      customDot={<CustomDot onClick={handleClickDot} />}
+      arrows={false}
+      autoPlay={currentAutoPlay}
+      infinite={currentAutoPlay}
+    >
       {children}
     </StyledCarouselOriginal>
   );
