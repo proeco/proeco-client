@@ -36,7 +36,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </div>
-        <div className="row">
+        <div className="row gy-3">
           {teams ? (
             teams.map((team) => (
               <div key={`my-teams-${team._id}`} className="col-12 col-sm-6 col-md-4">

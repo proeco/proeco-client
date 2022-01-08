@@ -42,7 +42,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
       );
 
     return teamsRelatedUser.map((team) => (
-      <div key={`top-${team._id}`} className="col-12 col-sm-6 text-center">
+      <div key={`top-${team._id}`} className="col-12 col-sm-6">
         <Link href={URLS.TEAMS(team.productId)}>
           <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
         </Link>
@@ -61,11 +61,11 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
             <p className="mb-0">{user.description}</p>
           </div>
         </div>
-        <h2 className="fw-bold mb-4 d-flex text-center align-items-center gap-2">
+        <h2 className="fw-bold mb-4 d-flex align-items-center gap-2">
           <Icon icon="PEOPLE" size={32} />
           チームリスト
         </h2>
-        <StyledRow className="row mx-auto">{teamsContent}</StyledRow>
+        <StyledRow className="row mx-auto gy-3">{teamsContent}</StyledRow>
       </StyledDiv>
     </>
   );
