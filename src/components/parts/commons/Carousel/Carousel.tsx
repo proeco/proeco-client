@@ -1,10 +1,15 @@
-import React, { VFC, ReactNode } from 'react';
+import React, { VFC, ReactNode, useState } from 'react';
 
 import CarouselOriginal from 'react-multi-carousel';
+import { DotProps } from 'react-multi-carousel/lib/types';
 import 'react-multi-carousel/lib/styles.css';
 import styled from 'styled-components';
 
 import { COLORS } from '~/constants/colors';
+
+interface CustomDotProps extends DotProps {
+  changeCurrentAutoPlay: () => void;
+}
 
 type Props = {
   children: ReactNode;
@@ -26,9 +31,31 @@ const responsive = {
   },
 };
 
-export const Carousel: VFC<Props> = ({ children, autoPlay = false }) => {
+const CustomDot: VFC<CustomDotProps> = ({ onClick, changeCurrentAutoPlay, active }) => {
+  const handleClick = () => {
+    if (!onClick) return;
+    onClick();
+    changeCurrentAutoPlay();
+  };
   return (
-    <StyledCarouselOriginal responsive={responsive} showDots arrows={false} autoPlay={autoPlay} infinite={autoPlay}>
+    <li className={`react-multi-carousel-dot ${active && 'react-multi-carousel-dot--active'}`}>
+      <button onClick={handleClick}></button>
+    </li>
+  );
+};
+
+export const Carousel: VFC<Props> = ({ children, autoPlay = false }) => {
+  const [currentAutoPlay, setCurrentAutoPlay] = useState(autoPlay);
+
+  return (
+    <StyledCarouselOriginal
+      responsive={responsive}
+      showDots
+      customDot={<CustomDot changeCurrentAutoPlay={() => setCurrentAutoPlay(false)} />}
+      arrows={false}
+      autoPlay={currentAutoPlay}
+      infinite={true}
+    >
       {children}
     </StyledCarouselOriginal>
   );
