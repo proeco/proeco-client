@@ -7,6 +7,10 @@ import styled from 'styled-components';
 
 import { COLORS } from '~/constants/colors';
 
+interface CustomDotProps extends DotProps {
+  changeCurrentAutoPlay: () => void;
+}
+
 type Props = {
   children: ReactNode;
   autoPlay?: boolean;
@@ -27,10 +31,15 @@ const responsive = {
   },
 };
 
-const CustomDot: VFC<DotProps> = ({ onClick, active }) => {
+const CustomDot: VFC<CustomDotProps> = ({ onClick, changeCurrentAutoPlay, active }) => {
+  const handleClick = () => {
+    if (!onClick) return;
+    onClick();
+    changeCurrentAutoPlay();
+  };
   return (
     <li className={`react-multi-carousel-dot ${active && 'react-multi-carousel-dot--active'}`}>
-      <button onClick={onClick}></button>
+      <button onClick={handleClick}></button>
     </li>
   );
 };
@@ -38,18 +47,14 @@ const CustomDot: VFC<DotProps> = ({ onClick, active }) => {
 export const Carousel: VFC<Props> = ({ children, autoPlay = false }) => {
   const [currentAutoPlay, setCurrentAutoPlay] = useState(autoPlay);
 
-  const handleClickDot = () => {
-    setCurrentAutoPlay(false);
-  };
-
   return (
     <StyledCarouselOriginal
       responsive={responsive}
       showDots
-      customDot={<CustomDot onClick={handleClickDot} />}
+      customDot={<CustomDot changeCurrentAutoPlay={() => setCurrentAutoPlay(false)} />}
       arrows={false}
       autoPlay={currentAutoPlay}
-      infinite={currentAutoPlay}
+      infinite={true}
     >
       {children}
     </StyledCarouselOriginal>
