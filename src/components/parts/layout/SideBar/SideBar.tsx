@@ -25,7 +25,7 @@ const sidebarItems: {
   {
     icon: 'PEOPLE',
     url: URLS.DASHBOARD_TEAMS,
-    text: 'チーム',
+    text: 'プロダクト',
   },
   {
     icon: 'GEAR',

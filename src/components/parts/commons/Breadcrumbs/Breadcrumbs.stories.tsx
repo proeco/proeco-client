@@ -21,7 +21,7 @@ Default.args = {
   breadcrumbsItems: [
     {
       url: '/teamId',
-      label: 'チーム',
+      label: 'プロダクト',
     },
     {
       url: '/team/story',

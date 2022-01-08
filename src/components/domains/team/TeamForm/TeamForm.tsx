@@ -58,10 +58,10 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
     try {
       if (team) {
         await restClient.apiPut<Team>(`/teams/${team._id}`, { team: newTeam });
-        notifySuccessMessage('チームを更新しました');
+        notifySuccessMessage('プロダクトを更新しました');
       } else {
         await restClient.apiPost<Team>('/teams', { team: newTeam });
-        notifySuccessMessage('チームを作成しました');
+        notifySuccessMessage('プロダクトを作成しました');
       }
       await mutateTeamsRelatedUser();
       if (!team) {
@@ -141,7 +141,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
           <div className="text-center mt-3">
             <Button disabled={isCreating || !isValidForm || isLoadingUploadAttachment} color="primary" onClick={handleClickCreateNewTeam}>
               <Icon icon="PENCIL" size={20} color="WHITE" />
-              {team ? '更新する' : '新規チームを作成する'}
+              {team ? '更新する' : '新規プロダクトを作成する'}
             </Button>
           </div>
         </Card>

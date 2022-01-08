@@ -11,7 +11,7 @@ export const FooterNavbar: VFC = () => {
 
   const navbarItemMappings: Array<{ text: string; url: string; icon: keyof typeof IconMap }> = [
     // { text: 'トップ', url: URLS., icon: 'HOME' },
-    { text: 'チーム', url: URLS.DASHBOARD_TEAMS, icon: 'PEOPLE' },
+    { text: 'プロダクト', url: URLS.DASHBOARD_TEAMS, icon: 'PEOPLE' },
     { text: '設定', url: URLS.DASHBOARD_SETTINGS, icon: 'GEAR' },
   ];
 

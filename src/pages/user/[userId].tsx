@@ -37,7 +37,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
     if (teamsRelatedUser.length === 0)
       return (
         <div className="col-12 col-sm-6 text-center pt-3">
-          <h3>所属しているチームがありません</h3>
+          <h3>所属しているプロダクトがありません</h3>
         </div>
       );
 
@@ -63,7 +63,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
         </div>
         <h2 className="fw-bold mb-4 d-flex align-items-center gap-2">
           <Icon icon="PEOPLE" size={32} />
-          チームリスト
+          プロダクトリスト
         </h2>
         <StyledRow className="row mx-auto gy-3">{teamsContent}</StyledRow>
       </StyledDiv>
