@@ -11,7 +11,7 @@ type Props = {
   keywords?: string[];
 };
 
-const DESCRIPTION = 'Proeco は、個人開発やチーム開発を応援するWEBアプリケーションです！';
+const DESCRIPTION = 'Proeco は、プロダクト開発を応援するWEBアプリケーションです！';
 const KEYWORDS = 'プロセスエコノミー,個人開発';
 
 export const ProecoOgpHead: VFC<Props> = (props) => {

@@ -66,7 +66,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
               </div>,
             ]}
       </Carousel>
-      <h3 className="fw-bold my-4 text-center">完了したストーリー</h3>
+      <h3 className="fw-bold my-4">完了したストーリー</h3>
       {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
         <>
           <StoryListTable stories={closeStoriesPagination.docs} productId={team.productId} />
