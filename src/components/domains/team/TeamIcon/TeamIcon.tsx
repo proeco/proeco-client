@@ -28,13 +28,7 @@ export const TeamIcon: VFC<Props> = ({ attachmentId, size }) => {
   const { data: attachment } = useAttachment(attachmentId);
 
   return (
-    <img
-      className="rounded-circle border border-primary border-2 bg-white d-block"
-      width={size}
-      height={size}
-      alt={attachmentId}
-      src={attachment?.filePath}
-    />
+    <img className="rounded-circle border border-primary border-2 bg-white d-block" width={size} height={size} src={attachment?.filePath} />
   );
 };
 

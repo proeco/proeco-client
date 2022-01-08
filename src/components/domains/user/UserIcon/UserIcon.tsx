@@ -47,7 +47,6 @@ export const UserIcon: VFC<Props> = memo(({ attachmentId, userId, isLink = false
         className="rounded-circle border border-primary border-2 bg-white d-block"
         width={size}
         height={size}
-        alt={attachmentId}
         src={attachment?.filePath}
         onClick={onClick}
       />
