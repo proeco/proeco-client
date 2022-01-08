@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { memo, VFC, useState, useMemo, useCallback } from 'react';
+import { memo, VFC, useState, useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
@@ -12,7 +12,6 @@ import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 import { IMAGE_PATH, URLS } from '~/constants';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { User } from '~/domains';
 
 export const NavigationBar: VFC = memo(() => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -20,16 +19,21 @@ export const NavigationBar: VFC = memo(() => {
 
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
 
-  const menuItems = useCallback(
-    (user: User) => [
+  const menuItems = useMemo(
+    () => [
       {
-        icon: <UserIcon size={20} userId={user._id} attachmentId={user.iconImageId} />,
-        text: 'ダッシュボード',
+        icon: <Icon icon="PEOPLE" size={20} />,
+        text: 'プロダクト',
         onClick: () => router.push(URLS.DASHBOARD_TEAMS),
       },
       {
+        icon: <Icon icon="GEAR" size={20} />,
+        text: '設定',
+        onClick: () => router.push(URLS.DASHBOARD_SETTINGS),
+      },
+      {
         icon: <Icon icon="REPLY" size={20} />,
-        text: 'Logout',
+        text: 'ログアウト',
         onClick: () => signOut(),
       },
     ],
@@ -42,7 +46,7 @@ export const NavigationBar: VFC = memo(() => {
     if (currentUser) {
       return (
         <Dropdown toggle={<UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="div">
-          {menuItems(currentUser).map((menuItem, i) => (
+          {menuItems.map((menuItem, i) => (
             <DropdownItem key={i} onClick={menuItem.onClick}>
               {menuItem.icon}
               <span className="ms-2">{menuItem.text}</span>
