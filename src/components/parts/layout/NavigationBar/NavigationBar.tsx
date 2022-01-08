@@ -28,7 +28,7 @@ export const NavigationBar: VFC = memo(() => {
       },
       {
         icon: <Icon icon="GEAR" size={20} />,
-        text: '設定',
+        text: '個人設定',
         onClick: () => router.push(URLS.DASHBOARD_SETTINGS),
       },
       {
