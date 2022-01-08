@@ -27,7 +27,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
         <div className="d-flex align-items-center justify-content-between mb-3">
           <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
             <Icon icon="PEOPLE" size={28} />
-            チームリスト
+            プロダクトリスト
           </h2>
           <Link href={URLS.DASHBOARD_TEAMS_NEW}>
             <Button color="primary">
@@ -36,7 +36,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </div>
-        <div className="row">
+        <div className="row gy-3">
           {teams ? (
             teams.map((team) => (
               <div key={`my-teams-${team._id}`} className="col-12 col-sm-6 col-md-4">
