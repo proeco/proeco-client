@@ -22,8 +22,8 @@ export const NavigationBar: VFC = memo(() => {
   const menuItems = useMemo(
     () => [
       {
-        icon: <Icon icon="PEOPLE" size={20} />,
-        text: 'プロダクト',
+        icon: <Icon icon="HOME" size={20} />,
+        text: 'ホーム',
         onClick: () => router.push(URLS.DASHBOARD_TEAMS),
       },
       {
