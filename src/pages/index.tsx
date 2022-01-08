@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 import styled from 'styled-components';
 import { useTeams } from '~/stores/team';
 
@@ -73,8 +71,6 @@ const Home: ProecoNextPage = () => {
 const StyledDiv = styled.div`
   max-width: 1200px;
 `;
-
-Home.getLayout = (page: ReactNode) => <>{page}</>;
 
 Home.getAccessControl = () => {
   return { loginRequired: null };

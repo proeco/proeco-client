@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 import styled from 'styled-components';
 
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
@@ -16,7 +14,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
 
   return (
-    <>
+    <DashboardLayout>
       <ProecoOgpHead />
       <StyledDiv className="mx-auto">
         <h2 className="fw-bold mb-3 d-flex align-items-center gap-2">
@@ -25,7 +23,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
         </h2>
         {currentUser && <TeamForm currentUser={currentUser} />}
       </StyledDiv>
-    </>
+    </DashboardLayout>
   );
 };
 
@@ -33,7 +31,6 @@ const StyledDiv = styled.div`
   max-width: 1200px;
 `;
 
-DashboardTeamPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 DashboardTeamPage.getAccessControl = () => {
   return { destination: URLS.TOP, loginRequired: true };
 };

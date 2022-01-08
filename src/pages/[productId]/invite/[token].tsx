@@ -1,5 +1,4 @@
 import { GetServerSideProps } from 'next';
-import { ReactNode } from 'react';
 import { addDays, isPast } from 'date-fns';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -16,10 +15,10 @@ type Props = {
 
 const InvitePage: ProecoNextPage<Props> = ({ team }) => {
   return (
-    <>
+    <DashboardLayout>
       <ProecoOgpHead />
       <h1>{team.name}の参加確認画面</h1>
-    </>
+    </DashboardLayout>
   );
 };
 
@@ -51,7 +50,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-InvitePage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 InvitePage.getAccessControl = () => {
   return { loginRequired: null };
 };

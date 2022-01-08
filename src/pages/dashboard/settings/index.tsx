@@ -1,4 +1,4 @@
-import { useEffect, useState, ReactNode, ChangeEvent } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 import { SkeltonUserIcon } from '~/components/domains/user/UserIcon';
@@ -79,7 +79,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
   }, [newUser]);
 
   return (
-    <>
+    <DashboardLayout>
       <ProecoOgpHead />
       <StyledDiv className="mx-auto">
         <div className="d-flex align-items-center mb-3">
@@ -120,7 +120,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
           </div>
         </Card>
       </StyledDiv>
-    </>
+    </DashboardLayout>
   );
 };
 
@@ -128,7 +128,6 @@ const StyledDiv = styled.div`
   max-width: 1200px;
 `;
 
-DashboardSettingsPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 DashboardSettingsPage.getAccessControl = () => {
   return { destination: URLS.TOP, loginRequired: true };
 };

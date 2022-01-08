@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 import styled from 'styled-components';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -11,7 +9,7 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const Term: ProecoNextPage = () => {
   return (
-    <>
+    <DashboardLayout>
       <ProecoOgpHead title="Proeco - 利用規約" />
       <h1 className="text-center fw-bold">利用規約</h1>
       <StyledDiv className="mx-auto">
@@ -19,7 +17,7 @@ const Term: ProecoNextPage = () => {
           <MarkdownToHtmlBody content={MDS.TERM_MD} />
         </Card>
       </StyledDiv>
-    </>
+    </DashboardLayout>
   );
 };
 
@@ -27,7 +25,6 @@ const StyledDiv = styled.div`
   max-width: 800px;
 `;
 
-Term.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 Term.getAccessControl = () => {
   return { loginRequired: null };
 };
