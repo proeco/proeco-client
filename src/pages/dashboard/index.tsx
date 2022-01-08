@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
@@ -8,7 +7,7 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
 const Dashboard: ProecoNextPage = () => {
   return (
-    <>
+    <DashboardLayout>
       <ProecoOgpHead />
       <StyledDiv className="mx-auto">
         <div className="d-flex align-items-center">
@@ -18,7 +17,7 @@ const Dashboard: ProecoNextPage = () => {
           </h3> */}
         </div>
       </StyledDiv>
-    </>
+    </DashboardLayout>
   );
 };
 
@@ -26,7 +25,6 @@ const StyledDiv = styled.div`
   max-width: 1200px;
 `;
 
-Dashboard.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 Dashboard.getAccessControl = () => {
   return { destination: URLS.TOP, loginRequired: true };
 };

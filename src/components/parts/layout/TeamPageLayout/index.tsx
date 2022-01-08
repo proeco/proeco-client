@@ -1,0 +1,1 @@
+export { TeamPageLayout } from './TeamPageLayout';
