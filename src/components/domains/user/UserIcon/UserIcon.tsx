@@ -15,7 +15,7 @@ type Props = {
 // ログインしていない状態の UserIcon
 export const GuestUserIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
   return (
-    <StyledIconWrapper size={size} className="rounded-circle border border-primary border-2 bg-white">
+    <StyledIconWrapper size={size} className="rounded-circle border border-primary border-2 bg-white overflow-hidden">
       <Icon icon="PEOPLE" size={size} color="SECONDARY" />
     </StyledIconWrapper>
   );
@@ -28,7 +28,15 @@ export const SkeltonUserIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
 
 // 通常状態の UserIcon
 export const UserIcon: VFC<Props> = memo(({ attachmentId, userId, isLink = false, size, onClick }) => {
-  const { data: attachment } = useAttachment(attachmentId);
+  const { data: attachment, isValidating } = useAttachment(attachmentId);
+
+  if (isValidating) {
+    return <SkeltonUserIcon size={size} />;
+  }
+
+  if (!attachment) {
+    return <GuestUserIcon size={size} />;
+  }
 
   if (!isLink)
     return <img className="rounded-circle border border-primary border-2 bg-white" width={size} height={size} src={attachment?.filePath} />;
@@ -39,7 +47,7 @@ export const UserIcon: VFC<Props> = memo(({ attachmentId, userId, isLink = false
         className="rounded-circle border border-primary border-2 bg-white d-block"
         width={size}
         height={size}
-        alt={userId}
+        alt={attachmentId}
         src={attachment?.filePath}
         onClick={onClick}
       />
