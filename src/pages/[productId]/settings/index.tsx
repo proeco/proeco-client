@@ -7,8 +7,6 @@ import { Team } from '~/domains';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamPageLayout } from '~/components/parts/layout/TeamPageLayout';
 
-import { TeamHomeTab } from '~/components/domains/team/TeamHomeTab';
-
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeamUsers } from '~/stores/team';
 
@@ -16,6 +14,7 @@ import { restClient } from '~/utils/rest-client';
 
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { TeamSettingTab } from '~/components/domains/team/TeamSettingTab';
 
 type Props = {
   team: Team;
@@ -33,7 +32,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
     <TeamPageLayout team={team}>
       <ProecoOgpHead title={`${team.name}のホーム`} />
       <StyledDiv className="mx-auto py-3">
-        <TeamHomeTab team={team} currentUser={currentUser} editable={isMemberOfTeam} />
+        {isMemberOfTeam && currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}
       </StyledDiv>
     </TeamPageLayout>
   );

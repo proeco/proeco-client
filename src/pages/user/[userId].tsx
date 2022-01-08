@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { ReactNode, useMemo } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -51,7 +51,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
   }, [teamsRelatedUser]);
 
   return (
-    <>
+    <DashboardLayout>
       <ProecoOgpHead />
       <StyledDiv className="mx-auto">
         <div className="d-flex align-items-start gap-4 mb-5">
@@ -67,7 +67,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
         </h2>
         <StyledRow className="row mx-auto gy-3">{teamsContent}</StyledRow>
       </StyledDiv>
-    </>
+    </DashboardLayout>
   );
 };
 
@@ -105,7 +105,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-Dashboard.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 Dashboard.getAccessControl = () => {
   return { loginRequired: null };
 };

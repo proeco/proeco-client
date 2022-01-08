@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
@@ -21,7 +20,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
   });
 
   return (
-    <>
+    <DashboardLayout>
       <ProecoOgpHead />
       <StyledDiv className="mx-auto">
         <div className="d-flex align-items-center justify-content-between mb-3">
@@ -57,7 +56,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
           )}
         </div>
       </StyledDiv>
-    </>
+    </DashboardLayout>
   );
 };
 
@@ -65,7 +64,6 @@ const StyledDiv = styled.div`
   max-width: 1200px;
 `;
 
-DashboardTeamPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 DashboardTeamPage.getAccessControl = () => {
   return { destination: URLS.TOP, loginRequired: true };
 };

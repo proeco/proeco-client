@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo, useState, useRef, useCallback } from 'react';
+import React, { useMemo, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import Reward, { RewardElement } from 'react-rewards';
@@ -19,7 +19,7 @@ import { useTeamUsers } from '~/stores/team';
 
 import { Button, Card, Emoji, FixedImage, Icon, TimeLineItem } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
+import { TeamPageLayout } from '~/components/parts/layout/TeamPageLayout';
 import { CreateNewStoryPostCard } from '~/components/domains/storyPost/CreateNewStoryPostCard/CreateNewStoryPostCard';
 import { Dropdown, DropdownItem } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
@@ -27,7 +27,6 @@ import { DisplayStoryPostCard } from '~/components/domains/storyPost/DisplayStor
 import { Attachment, Reaction, StoryPost, Team } from '~/domains';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
-import { Breadcrumbs } from '~/components/parts/commons/Breadcrumbs';
 import { PaginationResult } from '~/interfaces';
 
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -35,7 +34,7 @@ import { createOgpUrl } from '~/utils/createOgpUrl';
 
 type Props = {
   storyFromServerSide?: Story;
-  team?: Team;
+  team: Team;
   teamIconAttachment?: Attachment;
 };
 
@@ -136,12 +135,9 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   }
 
   return (
-    <>
+    <TeamPageLayout team={team}>
       <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story._id}`} />
-      <StyledDiv className="mx-auto">
-        <Breadcrumbs
-          breadcrumbsItems={[{ url: `${URLS.TEAMS(team?.productId || '')}#story`, label: 'ストーリーリスト' }, { label: story.title }]}
-        />
+      <StyledDiv className="mx-auto my-3">
         <div className="mb-3 d-flex align-items-center">
           <Emoji emojiId={story.emojiId} size={40} />
           <h1 className="ms-2 me-auto fw-bold mb-0 overflow-scroll">{story.title}</h1>
@@ -233,7 +229,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
         productId={team?.productId || ''}
         story={story}
       />
-    </>
+    </TeamPageLayout>
   );
 };
 
@@ -296,7 +292,6 @@ export async function getStaticPaths() {
   }
 }
 
-StoryPage.getLayout = (page: ReactNode) => <DashboardLayout>{page}</DashboardLayout>;
 StoryPage.getAccessControl = () => {
   return { loginRequired: null };
 };
