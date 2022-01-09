@@ -135,7 +135,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   }
 
   return (
-    <TeamPageLayout team={team}>
+    <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
       <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story._id}`} />
       <StyledDiv className="mx-auto my-3">
         <div className="mb-3 d-flex align-items-center">
