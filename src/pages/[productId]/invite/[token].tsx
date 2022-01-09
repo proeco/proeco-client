@@ -6,6 +6,7 @@ import { InvitationToken, Team } from '~/domains';
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { restClient } from '~/utils/rest-client';
+import { Button } from '~/components/parts/commons';
 
 const TOKEN_LIMIT_DAYS = 7;
 
@@ -18,6 +19,10 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
     <DashboardLayout>
       <ProecoOgpHead />
       <h1>{team.name}の参加確認画面</h1>
+      <div className="d-flex align-items-center gap-2">
+        <Button color="primary">チームに参加する</Button>
+        <Button color="primary">チームに参加しない</Button>
+      </div>
     </DashboardLayout>
   );
 };
