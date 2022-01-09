@@ -14,27 +14,32 @@ const navItems = [
     path: (productId: string) => URLS.TEAMS(productId),
     text: 'ホーム',
     isActive: (path: string) => path === '/[productId]',
+    onlyMember: false,
   },
   {
     path: (productId: string) => URLS.TEAMS_STORIES(productId),
     text: 'ストーリー',
     isActive: (path: string) => path.startsWith('/[productId]/story'),
+    onlyMember: false,
   },
   {
     path: (productId: string) => URLS.TEAMS_SETTINGS(productId),
     text: '設定',
     isActive: (path: string) => path.startsWith('/[productId]/settings'),
+    onlyMember: true,
   },
 ];
 
 type Props = {
   team: Team;
+  isMemberOfTeam: boolean;
 };
 
-export const TeamPageLayout: FC<Props> = ({ team, children }) => {
+export const TeamPageLayout: FC<Props> = ({ team, isMemberOfTeam, children }) => {
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUser();
+
   return (
     <div className="min-vh-100 h-100 pb-md-0 pb-5 mb-md-0 mb-5">
       <StyledDiv className="w-100 p-md-4 p-3">
@@ -49,6 +54,8 @@ export const TeamPageLayout: FC<Props> = ({ team, children }) => {
         </div>
         <Nav tabs>
           {navItems.map((v, index) => {
+            if (v.onlyMember && !isMemberOfTeam) return null;
+
             return (
               <NavItem key={index} active={v.isActive(router.pathname)}>
                 <NavLink
