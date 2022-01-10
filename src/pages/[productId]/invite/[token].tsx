@@ -14,6 +14,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { URLS } from '~/constants';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
+import { useTeamUsers } from '~/stores/team';
 
 const TOKEN_LIMIT_DAYS = 7;
 
@@ -25,13 +26,19 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const { data: currentUser } = useCurrentUser();
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
   const router = useRouter();
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
   useEffect(() => {
     currentUser ? setIsLoginModalOpen(false) : setIsLoginModalOpen(true);
-  }, [currentUser]);
+
+    if (currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id)) {
+      notifySuccessMessage('すでにチームに所属しています');
+      router.push(URLS.TEAMS(team.productId));
+    }
+  }, [currentUser, teamUsers, team, router, notifySuccessMessage]);
 
   const handleApproveInvite = async () => {
     try {
@@ -54,14 +61,14 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
     <DashboardLayout>
       <ProecoOgpHead />
       <h1>{team.name}の参加確認画面</h1>
-      <div className="d-flex align-items-center gap-2">
+      <div className="mb-4">
         <Button color="primary" onClick={handleApproveInvite}>
           チームに参加する
         </Button>
-        <Button color="primary" onClick={handleRejectInvite}>
-          チームに参加しない
-        </Button>
       </div>
+      <Button color="primary" onClick={handleRejectInvite}>
+        Topページに戻る
+      </Button>
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </DashboardLayout>
   );
