@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { addDays, isPast } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
@@ -9,7 +9,6 @@ import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { restClient } from '~/utils/rest-client';
 import { Button } from '~/components/parts/commons';
-import { LoginModal } from '~/components/parts/authentication/LoginModal';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { URLS } from '~/constants';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -23,22 +22,25 @@ type Props = {
 };
 
 const InvitePage: ProecoNextPage<Props> = ({ team }) => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
   const router = useRouter();
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
   useEffect(() => {
-    currentUser ? setIsLoginModalOpen(false) : setIsLoginModalOpen(true);
+    if (!currentUser && !isValidatingCurrentUser) {
+      notifySuccessMessage('ログイン後再度招待リンクを開いてください');
+      router.push(URLS.TEAMS(team.productId));
+    }
+  }, [currentUser, team, router, notifySuccessMessage, isValidatingCurrentUser]);
 
+  useEffect(() => {
     if (currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id)) {
       notifySuccessMessage('すでにチームに所属しています');
       router.push(URLS.TEAMS(team.productId));
     }
-  }, [currentUser, teamUsers, team, router, notifySuccessMessage]);
+  }, [currentUser, notifySuccessMessage, router, team, teamUsers]);
 
   const handleApproveInvite = async () => {
     try {
@@ -69,7 +71,6 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
       <Button color="primary" onClick={handleRejectInvite}>
         Topページに戻る
       </Button>
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </DashboardLayout>
   );
 };
