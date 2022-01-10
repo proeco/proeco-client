@@ -245,15 +245,26 @@ const StyledRightSide = styled.div`
 export const getStaticProps: any = async (context: any) => {
   const { storyId, productId } = context.params;
 
-  const [{ data: pagination }, { data: story }] = await Promise.all([
-    restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`),
-    restClient.apiGet(`/stories/${storyId}`),
-  ]);
+  try {
+    const [{ data: pagination }, { data: story }] = await Promise.all([
+      restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`),
+      restClient.apiGet(`/stories/${storyId}`),
+    ]);
 
-  const team = pagination?.docs[0];
-  const { data: teamIconAttachment } = await restClient.apiGet(`/attachments/${team.iconImageId}`);
+    const team = pagination?.docs[0];
+    const { data: teamIconAttachment } = await restClient.apiGet(`/attachments/${team.iconImageId}`);
 
-  if (!team || !story || !teamIconAttachment) {
+    if (!team || !story || !teamIconAttachment) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/404',
+        },
+      };
+    }
+
+    return { props: { storyFromServerSide: story, team, teamIconAttachment }, revalidate: 60 };
+  } catch (error) {
     return {
       redirect: {
         permanent: false,
@@ -261,8 +272,6 @@ export const getStaticProps: any = async (context: any) => {
       },
     };
   }
-
-  return { props: { storyFromServerSide: story, team, teamIconAttachment }, revalidate: 60 };
 };
 
 export async function getStaticPaths() {
