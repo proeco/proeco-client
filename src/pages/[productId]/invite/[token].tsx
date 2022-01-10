@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
-import { InvitationToken, Team } from '~/domains';
+import { InvitationToken, Team, UserTeamRelation } from '~/domains';
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { restClient } from '~/utils/rest-client';
@@ -23,7 +23,7 @@ type Props = {
 
 const InvitePage: ProecoNextPage<Props> = ({ team }) => {
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
-  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
+  const { data: teamUsers = [], mutate: mutateTeamUsers } = useTeamUsers({ teamId: team._id });
   const router = useRouter();
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
@@ -44,15 +44,15 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
 
   const handleApproveInvite = async () => {
     try {
-      await restClient.apiPost<InvitationToken>('/user-team-relations', {
+      await restClient.apiPost<UserTeamRelation>('/user-team-relations', {
         token: router.query.token,
       });
+      await mutateTeamUsers();
       notifySuccessMessage('チームに参加しました！');
+      router.push(URLS.TEAMS(team.productId));
     } catch (error) {
       notifyErrorMessage('チームへの参加に失敗しました。');
     }
-
-    router.push(URLS.TEAMS(team.productId));
   };
 
   const handleRejectInvite = () => {
