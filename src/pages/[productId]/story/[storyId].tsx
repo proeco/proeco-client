@@ -136,7 +136,6 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 
   return (
     <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
-      <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story._id}`} />
       <StyledDiv className="mx-auto my-3">
         <div className="mb-3 d-flex align-items-center">
           <Emoji emojiId={story.emojiId} size={40} />
@@ -306,6 +305,14 @@ export async function getStaticPaths() {
     };
   }
 }
+
+StoryPage.generateOgp = ({ storyFromServerSide: story, team, teamIconAttachment }: Props) => {
+  const ogpUrl = story && team && teamIconAttachment ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : '';
+
+  return (
+    <ProecoOgpHead title={story?.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story?._id}`} />
+  );
+};
 
 StoryPage.getAccessControl = () => {
   return { loginRequired: null };

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { SkeltonUserIcon } from '~/components/domains/user/UserIcon';
 import { Button, Card, Icon, IconUpload } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
-import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { URLS } from '~/constants';
 import { User } from '~/domains';
 import { useUploadAttachment } from '~/hooks/attachments';
@@ -80,7 +79,6 @@ const DashboardSettingsPage: ProecoNextPage = () => {
 
   return (
     <DashboardLayout>
-      <ProecoOgpHead />
       <StyledDiv className="mx-auto">
         <div className="d-flex align-items-center mb-3">
           <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
