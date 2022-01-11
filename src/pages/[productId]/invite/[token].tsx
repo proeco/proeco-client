@@ -59,13 +59,6 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
 
   return (
     <DashboardLayout>
-<<<<<<< HEAD
-      <h1>{team.name}の参加確認画面</h1>
-      <div className="mb-4">
-        <Button color="primary" onClick={handleApproveInvite}>
-          チームに参加する
-        </Button>
-=======
       <ProecoOgpHead />
       <div className="d-flex flex-column align-items-center justify-content-center pt-3">
         <h1 className="fw-normal mb-4">
@@ -80,7 +73,6 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
           </Button>
           <Link href={URLS.TOP}>Topページに戻る</Link>
         </div>
->>>>>>> origin/master
       </div>
     </DashboardLayout>
   );
