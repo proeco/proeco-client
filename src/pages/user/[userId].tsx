@@ -2,7 +2,6 @@ import { GetServerSideProps } from 'next';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
-import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { Icon, Link } from '~/components/parts/commons';
 import { UserIcon } from '~/components/domains/user/UserIcon';
@@ -52,7 +51,6 @@ const Dashboard: ProecoNextPage<Props> = ({ user }) => {
 
   return (
     <DashboardLayout>
-      <ProecoOgpHead />
       <StyledDiv className="mx-auto">
         <div className="d-flex align-items-start gap-4 mb-5">
           <UserIcon attachmentId={user.iconImageId} size={120} userId={user._id} />

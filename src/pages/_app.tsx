@@ -11,6 +11,7 @@ import { CurrentUserProvider } from '~/hooks/CurrentUserProvider';
 import { AccessControlProvider } from '~/hooks/AccessControlProvider';
 import { NavigationBar } from '~/components/parts/layout/NavigationBar';
 import { Footer } from '~/components/parts/layout/Footer';
+import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps: { session: Session; children?: ReactNode } }): JSX.Element {
   if (process.env.NEXT_PUBLIC_ENABLE_MOCK === 'TRUE') {
@@ -21,6 +22,7 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
   return (
     <SessionProvider session={pageProps.session}>
       <SWRConfig value={{ revalidateOnFocus: false }}>
+        {Component.generateOgp ? Component.generateOgp({ ...pageProps }) : <ProecoOgpHead />}
         <CurrentUserProvider>
           <AccessControlProvider getAccessControl={Component.getAccessControl}>
             <NavigationBar />

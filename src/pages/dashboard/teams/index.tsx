@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
-import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { URLS } from '~/constants';
 
@@ -21,7 +20,6 @@ const DashboardTeamPage: ProecoNextPage = () => {
 
   return (
     <DashboardLayout>
-      <ProecoOgpHead />
       <StyledDiv className="mx-auto">
         <div className="d-flex align-items-center justify-content-between mb-3">
           <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
