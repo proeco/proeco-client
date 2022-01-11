@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { Card, MarkdownToHtmlBody } from '~/components/parts/commons';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
+import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 
 import { MDS } from '~/constants/mds';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';

@@ -69,10 +69,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
-Dashboard.generateOgp = ({ team }: Props) => {
-  return <ProecoOgpHead title={`${team.name}のホーム`} />;
+Dashboard.generateOgp = (props: Props) => {
+  return <ProecoOgpHead title={`${props?.team?.name}のホーム`} />;
 };
-
 Dashboard.getAccessControl = () => {
   return { loginRequired: null };
 };

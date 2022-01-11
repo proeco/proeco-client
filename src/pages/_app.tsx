@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }: { Component: ProecoNextPage; pageProps:
     <SessionProvider session={pageProps.session}>
       {Component.generateOgp ? Component.generateOgp({ ...pageProps }) : <ProecoOgpHead />}
       <SWRConfig value={{ revalidateOnFocus: false }}>
+        {Component.generateOgp ? Component.generateOgp({ ...pageProps }) : <ProecoOgpHead />}
         <CurrentUserProvider>
           <AccessControlProvider getAccessControl={Component.getAccessControl}>
             <NavigationBar />

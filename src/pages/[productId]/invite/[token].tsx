@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
-import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { Button, Link } from '~/components/parts/commons';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { InvitationToken, Team, UserTeamRelation } from '~/domains';
@@ -59,7 +58,6 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
 
   return (
     <DashboardLayout>
-      <ProecoOgpHead />
       <div className="d-flex flex-column align-items-center justify-content-center pt-3">
         <h1 className="fw-normal mb-4">
           <span className="fw-bold">{team.name}</span>があなたをプロダクトに招待しました！
