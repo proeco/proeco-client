@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useTeams } from '~/stores/team';
 
-import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { Link, Carousel } from '~/components/parts/commons';
 import { IMAGE_PATH, URLS } from '~/constants';
 import { TeamCard } from '~/components/domains/team/TeamCard';
@@ -17,7 +16,6 @@ const Home: ProecoNextPage = () => {
 
   return (
     <>
-      <ProecoOgpHead />
       <img className="d-none d-md-block" src={IMAGE_PATH.EYE_CATCH} alt={IMAGE_PATH.EYE_CATCH} width="100%" />
       <img className="d-md-none d-block" src={IMAGE_PATH.EYE_CATCH_MOBILE} alt={IMAGE_PATH.EYE_CATCH} width="100%" />
       <h1 className="text-center fw-bold my-3">プロダクト一覧</h1>

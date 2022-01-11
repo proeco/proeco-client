@@ -30,7 +30,6 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
 
   return (
     <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
-      <ProecoOgpHead title={`${team.name}のホーム`} />
       <StyledDiv className="mx-auto py-3">
         {isMemberOfTeam && currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}
       </StyledDiv>
@@ -67,6 +66,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+};
+
+Dashboard.generateOgp = (props: Props) => {
+  return <ProecoOgpHead title={`${props?.team?.name}のホーム`} />;
 };
 
 Dashboard.getAccessControl = () => {
