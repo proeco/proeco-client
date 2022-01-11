@@ -8,7 +8,7 @@ import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { restClient } from '~/utils/rest-client';
 import { Button } from '~/components/parts/commons';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useCurrentUser } from '~/hooks/CurrentUserProvider';
 import { URLS } from '~/constants';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
@@ -21,18 +21,18 @@ type Props = {
 };
 
 const InvitePage: ProecoNextPage<Props> = ({ team }) => {
-  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   const { data: teamUsers = [], mutate: mutateTeamUsers } = useTeamUsers({ teamId: team._id });
   const router = useRouter();
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
   useEffect(() => {
-    if (!currentUser && !isValidatingCurrentUser) {
+    if (!currentUser) {
       notifySuccessMessage('ログイン後再度招待リンクを開いてください');
       router.push(URLS.TEAMS(team.productId));
     }
-  }, [currentUser, team, router, notifySuccessMessage, isValidatingCurrentUser]);
+  }, [currentUser, team, router, notifySuccessMessage]);
 
   useEffect(() => {
     if (currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id)) {

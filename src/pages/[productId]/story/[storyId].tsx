@@ -13,7 +13,7 @@ import { URLS } from '~/constants';
 
 import { useStory } from '~/stores/story/useStory';
 import { useStoryPosts } from '~/stores/storyPost';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useCurrentUser } from '~/hooks/CurrentUserProvider';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
@@ -50,7 +50,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   const storyPostId = router.query.storyPostId as string;
 
   const { data: story, mutate: mutateStory } = useStory(storyId, storyFromServerSide);
-  const { data: currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
 
   const isMemberOfTeam = useMemo(() => {
