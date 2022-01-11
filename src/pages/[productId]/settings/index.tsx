@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { useMemo } from 'react';
 
 import styled from 'styled-components';
@@ -17,16 +17,20 @@ import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { TeamSettingTab } from '~/components/domains/team/TeamSettingTab';
 
 type Props = {
-  team: Team;
+  team?: Team;
 };
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const { data: currentUser } = useCurrentUser();
-  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
 
   const isMemberOfTeam = useMemo(() => {
     return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
   }, [currentUser, teamUsers]);
+
+  if (!team) {
+    return null;
+  }
 
   return (
     <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
@@ -41,8 +45,9 @@ const StyledDiv = styled.div`
   max-width: 1200px;
 `;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { productId } = context.query;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getStaticProps: GetStaticProps = async (context: any) => {
+  const { productId } = context.params;
 
   try {
     const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?productId=${productId}`);
@@ -67,6 +72,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 };
+
+export async function getStaticPaths() {
+  try {
+    const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?page=1&limit=10`);
+
+    const paths = pagination.docs.map((v) => {
+      return {
+        params: {
+          productId: v.productId,
+        },
+      };
+    });
+    console.log(paths);
+
+    return {
+      paths,
+      fallback: true,
+    };
+  } catch (error) {
+    return {
+      paths: [],
+      fallback: true,
+    };
+  }
+}
 
 Dashboard.generateOgp = (props: Props) => {
   return <ProecoOgpHead title={`${props?.team?.name}のホーム`} />;
