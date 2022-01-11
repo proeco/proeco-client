@@ -7,10 +7,9 @@ import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { MDS } from '~/constants/mds';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 
-const Term: ProecoNextPage = () => {
+const Page: ProecoNextPage = () => {
   return (
     <DashboardLayout>
-      <ProecoOgpHead title="Proeco - 利用規約" />
       <h1 className="text-center fw-bold">利用規約</h1>
       <StyledDiv className="mx-auto">
         <Card>
@@ -25,8 +24,12 @@ const StyledDiv = styled.div`
   max-width: 800px;
 `;
 
-Term.getAccessControl = () => {
+Page.generateOgp = () => {
+  return <ProecoOgpHead title="Proeco - 利用規約" />;
+};
+
+Page.getAccessControl = () => {
   return { loginRequired: null };
 };
 
-export default Term;
+export default Page;

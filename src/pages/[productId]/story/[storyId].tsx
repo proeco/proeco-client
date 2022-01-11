@@ -33,9 +33,9 @@ import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { createOgpUrl } from '~/utils/createOgpUrl';
 
 type Props = {
-  storyFromServerSide?: Story;
+  storyFromServerSide: Story;
   team: Team;
-  teamIconAttachment?: Attachment;
+  teamIconAttachment: Attachment;
 };
 
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconAttachment }) => {
@@ -114,10 +114,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     },
   ];
 
-  const ogpUrl = useMemo(
-    () => (story && team && teamIconAttachment ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : ''),
-    [story, team, teamIconAttachment],
-  );
+  const ogpUrl = useMemo(() => createOgpUrl(story?.title || '', team.name, teamIconAttachment.filePath), [story, team, teamIconAttachment]);
 
   const handleClickShareButton = useCallback(async () => {
     if (window != null) {
@@ -136,7 +133,6 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 
   return (
     <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
-      <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story._id}`} />
       <StyledDiv className="mx-auto my-3">
         <div className="mb-3 d-flex align-items-center">
           <Emoji emojiId={story.emojiId} size={40} />
@@ -300,6 +296,13 @@ export async function getStaticPaths() {
     };
   }
 }
+
+StoryPage.generateOgp = ({ storyFromServerSide: story, team, teamIconAttachment }: Props) => {
+  const ogpUrl = createOgpUrl(story?.title || '', team.name, teamIconAttachment.filePath);
+  return (
+    <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story._id}`} />
+  );
+};
 
 StoryPage.getAccessControl = () => {
   return { loginRequired: null };

@@ -3,7 +3,6 @@ import { addDays, isPast } from 'date-fns';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
-import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { InvitationToken, Team, UserTeamRelation } from '~/domains';
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
@@ -61,7 +60,6 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
 
   return (
     <DashboardLayout>
-      <ProecoOgpHead />
       <h1>{team.name}の参加確認画面</h1>
       <div className="mb-4">
         <Button color="primary" onClick={handleApproveInvite}>
