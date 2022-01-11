@@ -66,9 +66,12 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
               </div>,
             ]}
       </Carousel>
-      <h3 className="fw-bold my-4">完了したストーリー</h3>
       {closeStoriesPagination && closeStoriesPagination.docs.length !== 0 && (
         <>
+          <h3 className="fw-bold my-4 d-flex align-items-center gap-2">
+            <Icon icon="LIST" size={24} />
+            完了したストーリー
+          </h3>
           <StoryListTable stories={closeStoriesPagination.docs} productId={team.productId} />
           <div className="mt-4 d-flex justify-content-center align-items-center">
             <Pagination count={closeStoriesPagination.totalPages} page={closeStoryPage} onChange={handleChangePage} />
