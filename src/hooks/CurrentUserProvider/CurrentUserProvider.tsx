@@ -43,7 +43,7 @@ export const CurrentUserProvider: FC<{ children: ReactNode }> = ({ children }) =
       return;
     }
 
-    setCookie(null, 'access-token', session?.accessToken as string, {
+    setCookie(null, 'access-token', session.accessToken as string, {
       maxAge: 30 * 24 * 60 * 60,
       path: '/',
     });
