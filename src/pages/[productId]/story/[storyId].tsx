@@ -298,7 +298,7 @@ export async function getStaticPaths() {
 }
 
 StoryPage.generateOgp = ({ storyFromServerSide: story, team, teamIconAttachment }: Props) => {
-  const ogpUrl = createOgpUrl(story?.title || '', team.name, teamIconAttachment.filePath);
+  const ogpUrl = createOgpUrl(story?.title || '', team?.name, teamIconAttachment.filePath);
   return (
     <ProecoOgpHead title={story.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story._id}`} />
   );
