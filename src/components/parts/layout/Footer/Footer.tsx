@@ -12,7 +12,7 @@ export const Footer: FC = () => {
           <ul className="ps-0">
             <li className="list-unstyled my-1" role="button">
               <Link href={URLS.TERM}>
-                <a className="fw-bold text-white">利用規約</a>
+                <span className="text-white">利用規約</span>
               </Link>
             </li>
           </ul>
