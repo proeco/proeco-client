@@ -4,6 +4,7 @@ import { FC } from 'react';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import { useRouter } from 'next/router';
 import { FooterNavbar } from '../FooterNavbar';
+import { Link } from '../../commons';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { URLS } from '~/constants';
 import { Team } from '~/domains';
@@ -59,12 +60,18 @@ export const TeamPageLayout: FC<Props> = ({ team, isMemberOfTeam, children }) =>
             return (
               <NavItem key={index} active={v.isActive(router.pathname)}>
                 <NavLink
+                  tag="div"
                   className={`${
                     v.isActive(router.pathname) ? 'active border-bottom border-4 text-primary' : 'text-black'
                   } c-pointer bg-transparent border-0 border-primary`}
-                  href={v.path(team.productId)}
                 >
-                  <span className="fw-bold fs-1">{v.text}</span>
+                  <Link href={v.path(team.productId)}>
+                    <span
+                      className={`fw-bold fs-1 ${v.isActive(router.pathname) ? 'active border-bottom border-4 text-primary' : 'text-black'}`}
+                    >
+                      {v.text}
+                    </span>
+                  </Link>
                 </NavLink>
               </NavItem>
             );
