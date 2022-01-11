@@ -1,6 +1,6 @@
 {
   "name": "proeco-client",
-  "version": "0.3.12",
+  "version": "0.3.14",
   "private": false,
   "author": "itizawa <itizawa.pen@gmail.com>",
   "homepage": "https://github.com/proeco/proeco#readme",
@@ -25,7 +25,7 @@
     "emoji-mart": "3.0.1",
     "github-markdown-css": "5.1.0",
     "next": "12.0.7",
-    "next-auth": "4.0.6",
+    "next-auth": "4.1.0",
     "nookies": "2.5.2",
     "react": "17.0.2",
     "react-copy-to-clipboard": "5.0.4",
@@ -43,13 +43,13 @@
   "devDependencies": {
     "@babel/core": "7.16.7",
     "@next/bundle-analyzer": "12.0.7",
-    "@storybook/addon-actions": "6.4.9",
-    "@storybook/addon-essentials": "6.4.9",
-    "@storybook/addon-links": "6.4.9",
-    "@storybook/addon-storyshots": "6.4.9",
-    "@storybook/builder-webpack5": "6.4.9",
-    "@storybook/manager-webpack5": "6.4.9",
-    "@storybook/react": "6.4.9",
+    "@storybook/addon-actions": "6.4.10",
+    "@storybook/addon-essentials": "6.4.10",
+    "@storybook/addon-links": "6.4.10",
+    "@storybook/addon-storyshots": "6.4.10",
+    "@storybook/builder-webpack5": "6.4.10",
+    "@storybook/manager-webpack5": "6.4.10",
+    "@storybook/react": "6.4.10",
     "@types/emoji-mart": "3.0.9",
     "@types/enzyme-adapter-react-16": "1.0.6",
     "@types/jest": "27.4.0",
@@ -62,7 +62,7 @@
     "@types/throttle-debounce": "2.1.0",
     "@types/toastr": "2.1.39",
     "@typescript-eslint/eslint-plugin": "rc-v5",
-    "@typescript-eslint/parser": "5.9.0",
+    "@typescript-eslint/parser": "5.9.1",
     "babel-loader": "8.2.3",
     "babel-preset-react-app": "10.0.1",
     "cross-env": "7.0.3",
@@ -97,6 +97,6 @@
     "workerDirectory": "public"
   },
   "volta": {
-    "node": "16.13.1"
+    "node": "16.13.2"
   }
 }

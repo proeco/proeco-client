@@ -2,17 +2,20 @@ import { GetServerSideProps } from 'next';
 import { addDays, isPast } from 'date-fns';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
+import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
+import { Button, Link } from '~/components/parts/commons';
+import { TeamCard } from '~/components/domains/team/TeamCard';
 import { InvitationToken, Team, UserTeamRelation } from '~/domains';
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { restClient } from '~/utils/rest-client';
-import { Button } from '~/components/parts/commons';
-import { useCurrentUser } from '~/hooks/CurrentUserProvider';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useTeamUsers } from '~/stores/team';
 import { URLS } from '~/constants';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
-import { useTeamUsers } from '~/stores/team';
 
 const TOKEN_LIMIT_DAYS = 7;
 
@@ -36,7 +39,7 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
 
   useEffect(() => {
     if (currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id)) {
-      notifySuccessMessage('すでにチームに所属しています');
+      notifySuccessMessage('すでにプロダクトに所属しています');
       router.push(URLS.TEAMS(team.productId));
     }
   }, [currentUser, notifySuccessMessage, router, team, teamUsers]);
@@ -47,28 +50,38 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
         token: router.query.token,
       });
       await mutateTeamUsers();
-      notifySuccessMessage('チームに参加しました！');
+      notifySuccessMessage('プロダクトに参加しました！');
       router.push(URLS.TEAMS(team.productId));
     } catch (error) {
-      notifyErrorMessage('チームへの参加に失敗しました。');
+      notifyErrorMessage('プロダクトへの参加に失敗しました。');
     }
-  };
-
-  const handleRejectInvite = () => {
-    router.push(URLS.TOP);
   };
 
   return (
     <DashboardLayout>
+<<<<<<< HEAD
       <h1>{team.name}の参加確認画面</h1>
       <div className="mb-4">
         <Button color="primary" onClick={handleApproveInvite}>
           チームに参加する
         </Button>
+=======
+      <ProecoOgpHead />
+      <div className="d-flex flex-column align-items-center justify-content-center pt-3">
+        <h1 className="fw-normal mb-4">
+          <span className="fw-bold">{team.name}</span>があなたをプロダクトに招待しました！
+        </h1>
+        <div className="mb-4">
+          <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
+        </div>
+        <div className="d-flex align-items-center gap-3">
+          <Button color="primary" onClick={handleApproveInvite}>
+            プロダクトに参加する
+          </Button>
+          <Link href={URLS.TOP}>Topページに戻る</Link>
+        </div>
+>>>>>>> origin/master
       </div>
-      <Button color="primary" onClick={handleRejectInvite}>
-        Topページに戻る
-      </Button>
     </DashboardLayout>
   );
 };
