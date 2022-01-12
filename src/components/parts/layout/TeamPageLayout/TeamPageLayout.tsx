@@ -58,20 +58,20 @@ export const TeamPageLayout: FC<Props> = ({ team, children }) => {
 
             return (
               <NavItem key={index} active={v.isActive(router.pathname)}>
-                <NavLink
-                  tag="div"
-                  className={`${
-                    v.isActive(router.pathname) ? 'active border-bottom border-4 text-primary' : 'text-black'
-                  } c-pointer bg-transparent border-0 border-primary`}
-                >
-                  <Link href={v.path(team.productId)}>
+                <Link href={v.path(team.productId)}>
+                  <NavLink
+                    tag="div"
+                    className={`${
+                      v.isActive(router.pathname) ? 'active border-bottom border-4 text-primary' : 'text-black'
+                    } c-pointer bg-transparent border-0 border-primary`}
+                  >
                     <span
                       className={`fw-bold fs-1 ${v.isActive(router.pathname) ? 'active border-bottom border-4 text-primary' : 'text-black'}`}
                     >
                       {v.text}
                     </span>
-                  </Link>
-                </NavLink>
+                  </NavLink>
+                </Link>
               </NavItem>
             );
           })}
