@@ -21,20 +21,17 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
   const [activeContent, setActiveContent] = useState('basic');
 
   useEffect(() => {
-    if (!router) return;
+    if (!router.query.content) return;
     setActiveContent(router.query.content as string);
   }, [router]);
 
   const handleCreateInviteLink = async () => {
     try {
-      const { data: invitationToken } = await restClient.apiPost<InvitationToken>('/invitation-tokens', {
+      await restClient.apiPost<InvitationToken>('/invitation-tokens', {
         teamId: team._id,
       });
 
-      const inviteLink = `${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/invite/${invitationToken.token}`;
-
-      navigator.clipboard.writeText(inviteLink);
-      notifySuccessMessage('招待リンクをコピーしました!');
+      notifySuccessMessage('招待リンクを作成しました!');
     } catch (error) {
       notifyErrorMessage('招待リンクの作成に失敗しました!');
     }
@@ -57,6 +54,7 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
         <div className="col-12 col-md-9">
           {activeContent === 'basic' && <TeamForm currentUser={currentUser} team={team} />}
           {activeContent === 'team' && (
+            // TODO チーム設定のコンテンツ部分を別componentにする
             <Button color="primary" onClick={handleCreateInviteLink}>
               招待リンクを作成
             </Button>
