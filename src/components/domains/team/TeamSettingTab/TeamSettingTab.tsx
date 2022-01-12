@@ -1,12 +1,9 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState, VFC } from 'react';
 import { TeamForm } from '~/components/domains/team/TeamForm';
-import { Button } from '~/components/parts/commons';
+import { TeamMemberSettingCard } from '~/components/domains/team/TeamMemberSettingCard';
 import { URLS } from '~/constants';
-import { InvitationToken, Team, User } from '~/domains';
-import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { useSuccessNotification } from '~/hooks/useSuccessNotification';
-import { restClient } from '~/utils/rest-client';
+import { Team, User } from '~/domains';
 
 type Props = {
   currentUser: User;
@@ -14,8 +11,6 @@ type Props = {
 };
 
 export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
-  const { notifySuccessMessage } = useSuccessNotification();
-  const { notifyErrorMessage } = useErrorNotification();
   const router = useRouter();
 
   const [activeContent, setActiveContent] = useState('basic');
@@ -29,17 +24,6 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
     router.push(URLS.TEAMS_SETTINGS(team.productId) + `?content=${name}`);
   };
 
-  const handleCreateInviteLink = async () => {
-    try {
-      await restClient.apiPost<InvitationToken>('/invitation-tokens', {
-        teamId: team._id,
-      });
-
-      notifySuccessMessage('招待リンクを作成しました!');
-    } catch (error) {
-      notifyErrorMessage('招待リンクの作成に失敗しました!');
-    }
-  };
   return (
     <>
       <div className="row gy-3">
@@ -51,10 +35,10 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
             基本設定
           </span>
           <span
-            className={`list-group-item list-group-item-action rounded ${activeContent === 'team' && 'active'}`}
-            onClick={() => handleClickSideMenu('team')}
+            className={`list-group-item list-group-item-action rounded ${activeContent === 'member' && 'active'}`}
+            onClick={() => handleClickSideMenu('member')}
           >
-            チーム設定
+            メンバー管理
           </span>
           {/* TODO */}
           {/* <a href="#" className="list-group-item list-group-item-action">
@@ -63,12 +47,7 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
         </div>
         <div className="col-12 col-md-9">
           {activeContent === 'basic' && <TeamForm currentUser={currentUser} team={team} />}
-          {activeContent === 'team' && (
-            // TODO チーム設定のコンテンツ部分を別componentにする
-            <Button color="primary" onClick={handleCreateInviteLink}>
-              招待リンクを作成
-            </Button>
-          )}
+          {activeContent === 'member' && <TeamMemberSettingCard team={team} />}
         </div>
       </div>
     </>
