@@ -1,5 +1,4 @@
 import { GetStaticProps } from 'next';
-import { useMemo } from 'react';
 
 import styled from 'styled-components';
 import { Team } from '~/domains';
@@ -78,7 +77,6 @@ export async function getStaticPaths() {
         },
       };
     });
-    console.log(paths);
 
     return {
       paths,
