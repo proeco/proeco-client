@@ -15,28 +15,27 @@ const navItems = [
     path: (productId: string) => URLS.TEAMS(productId),
     text: 'ホーム',
     isActive: (path: string) => path === '/[productId]',
-    onlyMember: false,
+    onlyAdmin: false,
   },
   {
     path: (productId: string) => URLS.TEAMS_STORIES(productId),
     text: 'ストーリー',
     isActive: (path: string) => path.startsWith('/[productId]/story'),
-    onlyMember: false,
+    onlyAdmin: false,
   },
   {
     path: (productId: string) => URLS.TEAMS_SETTINGS(productId),
     text: '設定',
     isActive: (path: string) => path.startsWith('/[productId]/settings'),
-    onlyMember: true,
+    onlyAdmin: true,
   },
 ];
 
 type Props = {
   team: Team;
-  isMemberOfTeam: boolean;
 };
 
-export const TeamPageLayout: FC<Props> = ({ team, isMemberOfTeam, children }) => {
+export const TeamPageLayout: FC<Props> = ({ team, children }) => {
   const router = useRouter();
 
   const { currentUser } = useCurrentUser();
@@ -55,7 +54,7 @@ export const TeamPageLayout: FC<Props> = ({ team, isMemberOfTeam, children }) =>
         </div>
         <Nav tabs>
           {navItems.map((v, index) => {
-            if (v.onlyMember && !isMemberOfTeam) return null;
+            if (v.onlyAdmin && team.adminUserId !== currentUser?._id) return null;
 
             return (
               <NavItem key={index} active={v.isActive(router.pathname)}>

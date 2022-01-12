@@ -33,7 +33,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   }
 
   return (
-    <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
+    <TeamPageLayout team={team}>
       <StyledDiv className="mx-auto py-3">
         {isMemberOfTeam && currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}
       </StyledDiv>
