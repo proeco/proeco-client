@@ -17,11 +17,14 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
   const { notifyErrorMessage } = useErrorNotification();
   const handleCreateInviteLink = async () => {
     try {
-      await restClient.apiPost<InvitationToken>('/invitation-tokens', {
+      const { data: invitationToken } = await restClient.apiPost<InvitationToken>('/invitation-tokens', {
         teamId: team._id,
       });
 
-      notifySuccessMessage('招待リンクの作成に成功しました!');
+      const inviteLink = `${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/invite/${invitationToken.token}`;
+
+      navigator.clipboard.writeText(inviteLink);
+      notifySuccessMessage('招待リンクをコピーしました!');
     } catch (error) {
       notifyErrorMessage('招待リンクの作成に失敗しました!');
     }
