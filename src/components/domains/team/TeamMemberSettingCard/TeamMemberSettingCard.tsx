@@ -14,13 +14,15 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team }) => {
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
-  const { data: InvitationTokens = [] } = useInvitationTokens({ teamId: team._id, page: 1, limit: 100 });
+  const { data: InvitationTokens = [], mutate: mutateInvitationTokens } = useInvitationTokens({ teamId: team._id, page: 1, limit: 100 });
 
   const handleCreateInviteLink = async () => {
     try {
       await restClient.apiPost<InvitationToken>('/invitation-tokens', {
         teamId: team._id,
       });
+
+      await mutateInvitationTokens();
 
       notifySuccessMessage('招待リンクを作成しました!');
     } catch (error) {
@@ -36,10 +38,14 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team }) => {
       <div className="mt-4">
         {InvitationTokens.map((invitationToken) => {
           const inviteLink = `${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/invite/${invitationToken.token}`;
+          const handleCopyInviteLink = () => {
+            navigator.clipboard.writeText(inviteLink);
+            notifySuccessMessage('招待リンクをコピーしました!');
+          };
           return (
             <div className="mb-3 d-flex align-item-center" key={invitationToken._id}>
               <input className="me-2 form-control border-0" readOnly value={inviteLink} />
-              <Button color="primary" outlined>
+              <Button color="primary" outlined onClick={handleCopyInviteLink}>
                 コピー
               </Button>
             </div>
