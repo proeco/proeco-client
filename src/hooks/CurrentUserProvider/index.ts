@@ -1,1 +1,1 @@
-export { CurrentUserProvider, useCurrentUser } from './CurrentUserProvider';
+export { CurrentUserProvider } from './CurrentUserProvider';

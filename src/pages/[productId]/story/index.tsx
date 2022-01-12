@@ -9,7 +9,7 @@ import { TeamPageLayout } from '~/components/parts/layout/TeamPageLayout';
 
 import { StoryTab } from '~/components/domains/story/StoryTab';
 
-import { useCurrentUser } from '~/hooks/CurrentUserProvider';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeamUsers } from '~/stores/team';
 
 import { restClient } from '~/utils/rest-client';
@@ -22,7 +22,7 @@ type Props = {
 };
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
-  const { currentUser } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
 
   const isMemberOfTeam = useMemo(() => {
@@ -34,7 +34,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   }
 
   return (
-    <TeamPageLayout team={team}>
+    <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
       <StyledDiv className="mx-auto py-3">
         <StoryTab team={team} editable={isMemberOfTeam} />
       </StyledDiv>

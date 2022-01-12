@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import { useMemo } from 'react';
 
 import styled from 'styled-components';
 import { Team } from '~/domains';
@@ -6,7 +7,8 @@ import { Team } from '~/domains';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamPageLayout } from '~/components/parts/layout/TeamPageLayout';
 
-import { useCurrentUser } from '~/hooks/CurrentUserProvider';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useTeamUsers } from '~/stores/team';
 
 import { restClient } from '~/utils/rest-client';
 
@@ -19,16 +21,21 @@ type Props = {
 };
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
-  const { currentUser } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
+
+  const isMemberOfTeam = useMemo(() => {
+    return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
+  }, [currentUser, teamUsers]);
 
   if (!team) {
     return null;
   }
 
   return (
-    <TeamPageLayout team={team}>
+    <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
       <StyledDiv className="mx-auto py-3">
-        {currentUser && team.adminUserId === currentUser._id && <TeamSettingTab currentUser={currentUser} team={team} />}
+        {isMemberOfTeam && currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}
       </StyledDiv>
     </TeamPageLayout>
   );
@@ -77,6 +84,7 @@ export async function getStaticPaths() {
         },
       };
     });
+    console.log(paths);
 
     return {
       paths,
