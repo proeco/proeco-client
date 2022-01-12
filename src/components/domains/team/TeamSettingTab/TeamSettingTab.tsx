@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState, VFC } from 'react';
+import React, { useEffect, useMemo, useState, VFC } from 'react';
 import { TeamForm } from '~/components/domains/team/TeamForm';
 import { Button } from '~/components/parts/commons';
 import { URLS } from '~/constants';
@@ -40,22 +40,28 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
       notifyErrorMessage('招待リンクの作成に失敗しました!');
     }
   };
+
+  const listItems = useMemo(
+    () => [
+      { content: 'basic', text: '基本設定' },
+      { content: 'team', text: 'メンバー設定' },
+    ],
+    [],
+  );
+
   return (
     <>
       <div className="row gy-3">
         <div className="list-group col-12 col-md-3">
-          <span
-            className={`c-pointer list-group-item list-group-item-action rounded ${activeContent === 'basic' && 'active'}`}
-            onClick={() => handleClickSideMenu('basic')}
-          >
-            基本設定
-          </span>
-          <span
-            className={`c-pointer list-group-item list-group-item-action rounded ${activeContent === 'team' && 'active'}`}
-            onClick={() => handleClickSideMenu('team')}
-          >
-            チーム設定
-          </span>
+          {listItems.map((listItem, index) => {
+            <span
+              key={index}
+              className={`c-pointer list-group-item list-group-item-action rounded ${activeContent === listItem.content && 'active'}`}
+              onClick={() => handleClickSideMenu(listItem.content)}
+            >
+              {listItem.text}
+            </span>;
+          })}
           {/* TODO */}
           {/* <a href="#" className="list-group-item list-group-item-action">
             重要な設定
