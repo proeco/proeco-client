@@ -1,18 +1,42 @@
-import { useState, VFC, useEffect } from 'react';
-import { Button, Card, Icon } from '~/components/parts/commons';
+import { useRouter } from 'next/router';
+import { useState, VFC, useEffect, useCallback } from 'react';
+import { restClient } from '~/utils/rest-client';
+
 import { Team } from '~/domains';
+import { Button, Card, Icon } from '~/components/parts/commons';
+
+import { useErrorNotification } from '~/hooks/useErrorNotification';
+import { useSuccessNotification } from '~/hooks/useSuccessNotification';
+import { URLS } from '~/constants';
 
 type Props = {
   team: Team;
 };
 
 export const DeleteTeamCard: VFC<Props> = ({ team }) => {
+  const router = useRouter();
+
   const [disabledDeleteButton, setDisabledDeleteButton] = useState(true);
   const [productNameForConfirm, setProductNameForConfirm] = useState('');
+
+  const { notifyErrorMessage } = useErrorNotification();
+  const { notifySuccessMessage } = useSuccessNotification();
 
   useEffect(() => {
     setDisabledDeleteButton(productNameForConfirm !== team.name);
   }, [productNameForConfirm, team.name]);
+
+  const handleSubmitDeleteButton = useCallback(async () => {
+    setDisabledDeleteButton(true);
+    try {
+      await restClient.apiDelete(`/teams/${team?._id}`);
+      notifySuccessMessage('プロダクトの削除に成功しました');
+      router.push(URLS.TOP);
+    } catch (error) {
+      setDisabledDeleteButton(false);
+      notifyErrorMessage('プロダクトの削除に失敗しました');
+    }
+  }, [notifyErrorMessage, notifySuccessMessage, router, team?._id]);
 
   return (
     <Card>
@@ -28,7 +52,7 @@ export const DeleteTeamCard: VFC<Props> = ({ team }) => {
         value={productNameForConfirm}
         onChange={(e) => setProductNameForConfirm(e.target.value)}
       />
-      <Button color="danger" disabled={disabledDeleteButton} onClick={() => void 0}>
+      <Button color="danger" disabled={disabledDeleteButton} onClick={handleSubmitDeleteButton}>
         プロダクトを削除する
       </Button>
     </Card>
