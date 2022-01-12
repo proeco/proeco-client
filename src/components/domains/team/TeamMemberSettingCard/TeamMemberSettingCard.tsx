@@ -30,6 +30,14 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team }) => {
       <Button color="primary" onClick={handleCreateInviteLink}>
         招待リンクを作成
       </Button>
+      <div className="mt-4">
+        <div className="mb-2 d-flex align-item-center">
+          <input className="me-2 form-control border-0" readOnly value="https://proeco.app/productId/invite/aaaa" />
+          <Button color="primary" outlined>
+            コピー
+          </Button>
+        </div>
+      </div>
     </Card>
   );
 };
