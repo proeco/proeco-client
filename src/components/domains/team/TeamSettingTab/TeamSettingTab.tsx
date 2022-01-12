@@ -45,13 +45,13 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
       <div className="row gy-3">
         <div className="list-group col-12 col-md-3">
           <span
-            className={`list-group-item list-group-item-action rounded ${activeContent === 'basic' && 'active'}`}
+            className={`c-pointer list-group-item list-group-item-action rounded ${activeContent === 'basic' && 'active'}`}
             onClick={() => handleClickSideMenu('basic')}
           >
             基本設定
           </span>
           <span
-            className={`list-group-item list-group-item-action rounded ${activeContent === 'team' && 'active'}`}
+            className={`c-pointer list-group-item list-group-item-action rounded ${activeContent === 'team' && 'active'}`}
             onClick={() => handleClickSideMenu('team')}
           >
             チーム設定

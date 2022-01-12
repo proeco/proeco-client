@@ -6,14 +6,14 @@ import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { URLS } from '~/constants';
 
 import { useTeamsRelatedUser } from '~/stores/team';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useCurrentUser } from '~/hooks/CurrentUserProvider';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
 
 const DashboardTeamPage: ProecoNextPage = () => {
-  const { data: currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   const { data: teams } = useTeamsRelatedUser({
     userId: currentUser?._id,
   });

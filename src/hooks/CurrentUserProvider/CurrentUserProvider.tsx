@@ -1,41 +1,53 @@
-import { createContext, FC, ReactNode, useEffect } from 'react';
+import { createContext, FC, ReactNode, useContext, useEffect } from 'react';
 import useSWR from 'swr';
-import axios from 'axios';
 import { destroyCookie, setCookie } from 'nookies';
 import { useSession } from 'next-auth/react';
-import { User } from '~/domains';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { convertUserFromServer, User } from '~/domains';
+import { restClient } from '~/utils/rest-client';
+import { Spinner } from '~/components/parts/commons';
+
+export const useCurrentUser = () => {
+  return useContext(CurrentUserContext);
+};
 
 export const CurrentUserContext = createContext<{
-  currentUser?: User | null;
+  currentUser: User | null;
+  mutateCurrentUser: () => void;
 }>({
   currentUser: null,
+  mutateCurrentUser: () => void 0,
 });
 
 export const CurrentUserProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { data: session, status } = useSession();
-
-  const { data: accessToken, isValidating } = useSWR<string>(status === 'loading' ? null : session?.user?.email, () =>
-    axios.get('/api/access-token').then((res) => res.data.accessToken),
+  const { data: currentUser, mutate } = useSWR(['/users/me', session?.accessToken], (endpoint: string) =>
+    restClient.apiGet<User | null>(endpoint).then((result) => (result.data ? convertUserFromServer(result.data) : null)),
   );
-  const { data: currentUser, mutate } = useCurrentUser();
 
   useEffect(() => {
-    if (isValidating) return;
+    if (status === 'loading') return;
 
-    if (!accessToken) {
+    if (!session) {
       destroyCookie(null, 'access-token');
       mutate();
 
       return;
     }
 
-    setCookie(null, 'access-token', accessToken, {
+    setCookie(null, 'access-token', session?.accessToken as string, {
       maxAge: 30 * 24 * 60 * 60,
       path: '/',
     });
     mutate();
-  }, [accessToken, isValidating, mutate]);
+  }, [mutate, session, status]);
 
-  return <CurrentUserContext.Provider value={{ currentUser }}>{children}</CurrentUserContext.Provider>;
+  if (currentUser === undefined) {
+    return (
+      <div className="mt-5 text-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  return <CurrentUserContext.Provider value={{ currentUser, mutateCurrentUser: mutate }}>{children}</CurrentUserContext.Provider>;
 };
