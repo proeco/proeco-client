@@ -82,7 +82,7 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
               招待リンクを作成
             </Button>
           )}
-          {activeContent === 'delete' && <DeleteTeamCard />}
+          {activeContent === 'delete' && <DeleteTeamCard team={team} />}
         </div>
       </div>
     </>
