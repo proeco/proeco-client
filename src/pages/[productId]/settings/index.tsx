@@ -8,7 +8,6 @@ import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamPageLayout } from '~/components/parts/layout/TeamPageLayout';
 
 import { useCurrentUser } from '~/hooks/CurrentUserProvider';
-import { useTeamUsers } from '~/stores/team';
 
 import { restClient } from '~/utils/rest-client';
 
@@ -22,11 +21,6 @@ type Props = {
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const { currentUser } = useCurrentUser();
-  const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
-
-  const isMemberOfTeam = useMemo(() => {
-    return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
-  }, [currentUser, teamUsers]);
 
   if (!team) {
     return null;
@@ -35,7 +29,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   return (
     <TeamPageLayout team={team}>
       <StyledDiv className="mx-auto py-3">
-        {isMemberOfTeam && currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}
+        {currentUser && team.adminUserId === currentUser._id && <TeamSettingTab currentUser={currentUser} team={team} />}
       </StyledDiv>
     </TeamPageLayout>
   );
