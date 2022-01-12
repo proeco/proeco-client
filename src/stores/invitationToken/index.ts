@@ -1,1 +1,1 @@
-export { useInvitationToken } from './useInvitationToken';
+export { useInvitationTokens } from './useInvitationTokens';

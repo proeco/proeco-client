@@ -11,14 +11,14 @@ import { PaginationResult } from '~/interfaces';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useInvitationToken = ({
+export const useInvitationTokens = ({
   teamId,
   page,
   limit,
 }: {
   teamId?: string;
-  page?: number;
-  limit?: number;
+  page: number;
+  limit: number;
 }): SWRResponse<InvitationToken[], Error> => {
   const key = teamId ? `/invitation-tokens?teamId=${teamId}&page=${page}&limit=${limit}` : null;
   return useSWR(
