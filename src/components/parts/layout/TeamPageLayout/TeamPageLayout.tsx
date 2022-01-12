@@ -8,7 +8,7 @@ import { Link } from '../../commons';
 import { URLS } from '~/constants';
 import { Team } from '~/domains';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
-import { useCurrentUser } from '~/hooks/CurrentUserProvider/CurrentUserProvider';
+import { useCurrentUser } from '~/hooks/CurrentUserProvider';
 
 const navItems = [
   {

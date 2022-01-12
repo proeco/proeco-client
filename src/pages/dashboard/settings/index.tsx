@@ -11,11 +11,11 @@ import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { useAttachment } from '~/stores/attachment';
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useCurrentUser } from '~/hooks/CurrentUserProvider';
 import { restClient } from '~/utils/rest-client';
 
 const DashboardSettingsPage: ProecoNextPage = () => {
-  const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
+  const { currentUser, mutateCurrentUser } = useCurrentUser();
   const [newUser, setNewUser] = useState<Pick<User, 'name' | 'description'>>({
     name: '',
     description: '',
@@ -64,9 +64,9 @@ const DashboardSettingsPage: ProecoNextPage = () => {
   const handleClickCreateNewTeam = async () => {
     setIsUpdating(true);
     try {
-      const { data } = await restClient.apiPut<User>('/users', { newUser });
+      await restClient.apiPut<User>('/users', { newUser });
       notifySuccessMessage('ユーザー情報更新しました');
-      mutateCurrentUser(data, false);
+      mutateCurrentUser();
       setIsUpdating(false);
     } catch (error) {
       notifyErrorMessage('ユーザー情報の更新に失敗しました');
