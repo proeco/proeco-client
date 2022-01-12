@@ -1,4 +1,5 @@
 import React, { VFC } from 'react';
+import styled from 'styled-components';
 import { Button, Card } from '~/components/parts/commons';
 import { InvitationToken, Team } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -43,11 +44,12 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team }) => {
             notifySuccessMessage('招待リンクをコピーしました!');
           };
           return (
-            <div className="mb-3 d-flex align-item-center" key={invitationToken._id}>
-              <input className="me-2 form-control border-0" readOnly value={inviteLink} />
+            <div className="mb-3 d-flex align-items-center gap-2" key={invitationToken._id}>
+              <StyledInput className="form-control border-0" readOnly value={inviteLink} />
               <Button color="primary" outlined onClick={handleCopyInviteLink}>
                 コピー
               </Button>
+              <Button color="danger">削除</Button>
             </div>
           );
         })}
@@ -55,3 +57,7 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team }) => {
     </Card>
   );
 };
+
+const StyledInput = styled.input`
+  flex: 1;
+`;
