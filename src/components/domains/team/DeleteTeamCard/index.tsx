@@ -1,0 +1,1 @@
+export { DeleteTeamCard } from './DeleteTeamCard';

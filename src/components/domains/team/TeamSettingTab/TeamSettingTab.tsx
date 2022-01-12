@@ -1,9 +1,14 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState, VFC } from 'react';
-import { TeamForm } from '~/components/domains/team/TeamForm';
-import { Button } from '~/components/parts/commons';
-import { URLS } from '~/constants';
+
 import { InvitationToken, Team, User } from '~/domains';
+
+import { TeamForm } from '~/components/domains/team/TeamForm';
+import { DeleteTeamCard } from '~/components/domains/team/DeleteTeamCard';
+
+import { Button } from '~/components/parts/commons';
+
+import { URLS } from '~/constants';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { restClient } from '~/utils/rest-client';
@@ -77,6 +82,7 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
               招待リンクを作成
             </Button>
           )}
+          {activeContent === 'delete' && <DeleteTeamCard />}
         </div>
       </div>
     </>
