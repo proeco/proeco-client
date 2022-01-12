@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState, VFC } from 'react';
 import { TeamForm } from '~/components/domains/team/TeamForm';
-import { Button, Link } from '~/components/parts/commons';
+import { Button } from '~/components/parts/commons';
 import { URLS } from '~/constants';
 import { InvitationToken, Team, User } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -25,6 +25,10 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
     setActiveContent(router.query.content as string);
   }, [router]);
 
+  const handleClickSideMenu = (name: string) => {
+    router.push(URLS.TEAMS_SETTINGS(team.productId) + `?content=${name}`);
+  };
+
   const handleCreateInviteLink = async () => {
     try {
       await restClient.apiPost<InvitationToken>('/invitation-tokens', {
@@ -40,12 +44,18 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
     <>
       <div className="row gy-3">
         <div className="list-group col-12 col-md-3">
-          <Link href={URLS.TEAMS_SETTINGS(team.productId) + '?content=basic'}>
-            <span className={`list-group-item list-group-item-action rounded ${activeContent === 'basic' && 'active'}`}>基本設定</span>
-          </Link>
-          <Link href={URLS.TEAMS_SETTINGS(team.productId) + '?content=team'}>
-            <span className={`list-group-item list-group-item-action rounded ${activeContent === 'team' && 'active'}`}>チーム設定</span>
-          </Link>
+          <span
+            className={`list-group-item list-group-item-action rounded ${activeContent === 'basic' && 'active'}`}
+            onClick={() => handleClickSideMenu('basic')}
+          >
+            基本設定
+          </span>
+          <span
+            className={`list-group-item list-group-item-action rounded ${activeContent === 'team' && 'active'}`}
+            onClick={() => handleClickSideMenu('team')}
+          >
+            チーム設定
+          </span>
           {/* TODO */}
           {/* <a href="#" className="list-group-item list-group-item-action">
             重要な設定
