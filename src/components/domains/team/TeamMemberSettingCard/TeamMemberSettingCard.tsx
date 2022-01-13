@@ -1,11 +1,15 @@
 import React, { VFC } from 'react';
 import styled from 'styled-components';
+import { addDays, format, isPast } from 'date-fns';
 import { Button, Card } from '~/components/parts/commons';
 import { InvitationToken, Team } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useInvitationTokens } from '~/stores/invitationToken';
 import { restClient } from '~/utils/rest-client';
+import { DATE_FORMAT } from '~/constants';
+
+const TOKEN_LIMIT_DAYS = 7;
 
 type Props = {
   team: Team;
@@ -54,15 +58,20 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team }) => {
       <div className="mt-4">
         {InvitationTokens.map((invitationToken) => {
           const inviteLink = `${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/invite/${invitationToken.token}`;
+          const expirationDate = addDays(new Date(invitationToken.createdAt), TOKEN_LIMIT_DAYS);
+
           return (
-            <div className="mb-3 d-flex align-items-center gap-2" key={invitationToken._id}>
-              <StyledInput className="form-control border-0" readOnly value={inviteLink} />
-              <Button color="primary" outlined onClick={() => handleCopyInviteLink(inviteLink)}>
-                コピー
-              </Button>
-              <Button color="danger" onClick={() => handleDeleteInviteLink(invitationToken)}>
-                削除
-              </Button>
+            <div className="mb-3" key={invitationToken._id}>
+              <div className="d-flex align-items-center gap-2">
+                <StyledInput className={`form-control border-0 ${isPast(expirationDate) && 'text-danger'}`} readOnly value={inviteLink} />
+                <Button color="primary" outlined onClick={() => handleCopyInviteLink(inviteLink)}>
+                  コピー
+                </Button>
+                <Button color="danger" onClick={() => handleDeleteInviteLink(invitationToken)}>
+                  削除
+                </Button>
+              </div>
+              <span>有効期限: {format(expirationDate, DATE_FORMAT.EXCEPT_SECOND)}</span>
             </div>
           );
         })}
