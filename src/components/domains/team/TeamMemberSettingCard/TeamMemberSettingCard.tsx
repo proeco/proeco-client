@@ -1,6 +1,8 @@
 import React, { VFC } from 'react';
 import styled from 'styled-components';
 import { addDays, format, isPast } from 'date-fns';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import { Button, Card } from '~/components/parts/commons';
 import { InvitationToken, Team } from '~/domains';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -35,11 +37,6 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team }) => {
     }
   };
 
-  const handleCopyInviteLink = (inviteLink: string) => {
-    navigator.clipboard.writeText(inviteLink);
-    notifySuccessMessage('招待リンクをコピーしました!');
-  };
-
   const handleDeleteInviteLink = async (invitationToken: InvitationToken) => {
     try {
       await restClient.apiDelete<InvitationToken>(`/invitation-tokens/${invitationToken._id}`);
@@ -52,21 +49,27 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team }) => {
 
   return (
     <Card>
-      <Button color="primary" onClick={handleCreateInviteLink}>
-        招待リンクを作成
-      </Button>
+      <div className="d-flex align-items-center gap-2 flex-wrap">
+        <Button color="primary" onClick={handleCreateInviteLink}>
+          招待リンクを作成
+        </Button>
+        <small className="fw-bold">※使用した招待リンクは破棄されます</small>
+      </div>
       <div className="mt-4">
         {InvitationTokens.map((invitationToken) => {
           const inviteLink = `${process.env.NEXT_PUBLIC_ROOT_URL}/${team.productId}/invite/${invitationToken.token}`;
-          const expirationDate = addDays(new Date(invitationToken.createdAt), TOKEN_LIMIT_DAYS);
+          const expirationDate = addDays(invitationToken.createdAt, TOKEN_LIMIT_DAYS);
 
           return (
             <div className="mb-3" key={invitationToken._id}>
               <div className="d-flex align-items-center gap-2">
-                <StyledInput className={`form-control border-0 ${isPast(expirationDate) && 'text-danger'}`} readOnly value={inviteLink} />
-                <Button color="primary" outlined onClick={() => handleCopyInviteLink(inviteLink)}>
-                  コピー
-                </Button>
+                <CopyToClipboard text={inviteLink} onCopy={() => notifySuccessMessage('招待リンクをコピーしました!')}>
+                  <StyledInput
+                    className={`form-control border-0 c-pointer ${isPast(expirationDate) ? 'text-danger' : ''}`}
+                    readOnly
+                    value={inviteLink}
+                  />
+                </CopyToClipboard>
                 <Button color="danger" onClick={() => handleDeleteInviteLink(invitationToken)}>
                   削除
                 </Button>
