@@ -27,7 +27,7 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
   const listItems = useMemo(
     () => [
       { content: 'basic', text: '基本設定' },
-      { content: 'team', text: 'メンバー設定' },
+      { content: 'member', text: 'メンバー設定' },
     ],
     [],
   );
