@@ -36,15 +36,17 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
     <>
       <div className="row gy-3">
         <div className="list-group col-12 col-md-3">
-          {listItems.map((listItem, index) => (
-            <span
-              key={index}
-              className={`c-pointer list-group-item list-group-item-action rounded ${activeContent === listItem.content && 'active'}`}
-              onClick={() => handleClickSideMenu(listItem.content)}
-            >
-              {listItem.text}
-            </span>
-          ))}
+          {listItems.map((listItem, index) => {
+            return (
+              <span
+                key={index}
+                className={`c-pointer list-group-item list-group-item-action rounded ${activeContent === listItem.content && 'active'}`}
+                onClick={() => handleClickSideMenu(listItem.content)}
+              >
+                {listItem.text}
+              </span>
+            );
+          })}
           {/* TODO */}
           {/* <a href="#" className="list-group-item list-group-item-action">
             重要な設定
