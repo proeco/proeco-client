@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { useCurrentUser } from '~/hooks/CurrentUserProvider';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { URLS } from '~/constants';
@@ -10,7 +10,7 @@ import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { TeamForm } from '~/components/domains/team/TeamForm';
 
 const DashboardTeamPage: ProecoNextPage = () => {
-  const { currentUser } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
 
   return (
     <DashboardLayout>

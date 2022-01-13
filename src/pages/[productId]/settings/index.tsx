@@ -6,7 +6,7 @@ import { Team } from '~/domains';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamPageLayout } from '~/components/parts/layout/TeamPageLayout';
 
-import { useCurrentUser } from '~/hooks/CurrentUserProvider';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { restClient } from '~/utils/rest-client';
 
@@ -19,7 +19,7 @@ type Props = {
 };
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
-  const { currentUser } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
 
   if (!team) {
     return null;

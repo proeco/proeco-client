@@ -7,17 +7,17 @@ import { signOut } from 'next-auth/react';
 import { Dropdown, DropdownItem } from '~/components/parts/commons/Dropdown';
 
 import { Button, Icon, Link } from '~/components/parts/commons';
-import { UserIcon } from '~/components/domains/user/UserIcon';
+import { UserIcon, SkeltonUserIcon } from '~/components/domains/user/UserIcon';
 import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 import { IMAGE_PATH, URLS } from '~/constants';
-import { useCurrentUser } from '~/hooks/CurrentUserProvider';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 export const NavigationBar: VFC = memo(() => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const router = useRouter();
 
-  const { currentUser } = useCurrentUser();
+  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
 
   const menuItems = useMemo(
     () => [
@@ -41,6 +41,8 @@ export const NavigationBar: VFC = memo(() => {
   );
 
   const Contents = useMemo(() => {
+    if (isValidatingCurrentUser) return <SkeltonUserIcon size={40} />;
+
     if (currentUser) {
       return (
         <Dropdown toggle={<UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="div">
@@ -59,7 +61,7 @@ export const NavigationBar: VFC = memo(() => {
         ログイン
       </Button>
     );
-  }, [currentUser, menuItems]);
+  }, [isValidatingCurrentUser, currentUser, menuItems]);
 
   return (
     <>

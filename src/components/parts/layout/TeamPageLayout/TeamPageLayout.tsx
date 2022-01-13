@@ -5,10 +5,10 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 import { useRouter } from 'next/router';
 import { FooterNavbar } from '../FooterNavbar';
 import { Link } from '../../commons';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { URLS } from '~/constants';
 import { Team } from '~/domains';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
-import { useCurrentUser } from '~/hooks/CurrentUserProvider';
 
 const navItems = [
   {
@@ -38,7 +38,7 @@ type Props = {
 export const TeamPageLayout: FC<Props> = ({ team, children }) => {
   const router = useRouter();
 
-  const { currentUser } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
 
   return (
     <div className="min-vh-100 h-100 pb-md-0 pb-5 mb-md-0 mb-5">
