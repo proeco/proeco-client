@@ -15,28 +15,27 @@ const navItems = [
     path: (productId: string) => URLS.TEAMS(productId),
     text: 'ホーム',
     isActive: (path: string) => path === '/[productId]',
-    onlyMember: false,
+    onlyAdmin: false,
   },
   {
     path: (productId: string) => URLS.TEAMS_STORIES(productId),
     text: 'ストーリー',
     isActive: (path: string) => path.startsWith('/[productId]/story'),
-    onlyMember: false,
+    onlyAdmin: false,
   },
   {
     path: (productId: string) => URLS.TEAMS_SETTINGS(productId),
     text: '設定',
     isActive: (path: string) => path.startsWith('/[productId]/settings'),
-    onlyMember: true,
+    onlyAdmin: true,
   },
 ];
 
 type Props = {
   team: Team;
-  isMemberOfTeam: boolean;
 };
 
-export const TeamPageLayout: FC<Props> = ({ team, isMemberOfTeam, children }) => {
+export const TeamPageLayout: FC<Props> = ({ team, children }) => {
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUser();
@@ -48,31 +47,31 @@ export const TeamPageLayout: FC<Props> = ({ team, isMemberOfTeam, children }) =>
           <TeamIcon attachmentId={team.iconImageId} size={80} />
           <div className="d-flex flex-column ms-3">
             <h1 className="mb-0 maximum_lines_1">{team.name}</h1>
-            <a className="text-decoration-none" href={team.url}>
+            <a className="text-decoration-none" href={team.url} target="_blank" rel="noreferrer">
               {team.url}
             </a>
           </div>
         </div>
         <Nav tabs>
           {navItems.map((v, index) => {
-            if (v.onlyMember && !isMemberOfTeam) return null;
+            if (v.onlyAdmin && team.adminUserId !== currentUser?._id) return null;
 
             return (
               <NavItem key={index} active={v.isActive(router.pathname)}>
-                <NavLink
-                  tag="div"
-                  className={`${
-                    v.isActive(router.pathname) ? 'active border-bottom border-4 text-primary' : 'text-black'
-                  } c-pointer bg-transparent border-0 border-primary`}
-                >
-                  <Link href={v.path(team.productId)}>
+                <Link href={v.path(team.productId)}>
+                  <NavLink
+                    tag="div"
+                    className={`${
+                      v.isActive(router.pathname) ? 'active border-bottom border-4 text-primary' : 'text-black'
+                    } c-pointer bg-transparent border-0 border-primary`}
+                  >
                     <span
                       className={`fw-bold fs-1 ${v.isActive(router.pathname) ? 'active border-bottom border-4 text-primary' : 'text-black'}`}
                     >
                       {v.text}
                     </span>
-                  </Link>
-                </NavLink>
+                  </NavLink>
+                </Link>
               </NavItem>
             );
           })}
