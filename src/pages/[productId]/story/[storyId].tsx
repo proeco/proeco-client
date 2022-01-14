@@ -139,7 +139,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
       <StyledDiv className="mx-auto my-3">
         <div className="mb-3 d-flex align-items-center">
           <Emoji emojiId={story.emojiId} size={40} />
-          <StyledTitle className="ms-2 me-auto fw-bold mb-0 d-flex align-items-center">{story.title}</StyledTitle>
+          <h2 className="ms-2 me-auto fw-bold mb-0 text-break">{story.title}</h2>
           {isMemberOfTeam && (
             <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
               {menuItems.map((menuItem, i) => (
@@ -238,12 +238,6 @@ const StyledDiv = styled.div`
 
 const StyledRightSide = styled.div`
   top: 86px;
-`;
-
-const StyledTitle = styled.h1`
-  overflow-x: scroll;
-  height: 40px;
-  white-space: nowrap;
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
