@@ -47,7 +47,7 @@ export const TeamPageLayout: FC<Props> = ({ team, children }) => {
           <TeamIcon attachmentId={team.iconImageId} size={80} />
           <div className="d-flex flex-column ms-3">
             <h1 className="mb-0 maximum_lines_1">{team.name}</h1>
-            <a className="text-decoration-none" href={team.url} target="_blank" rel="noreferrer">
+            <a className="text-decoration-none text-break maximum_lines_1" href={team.url} target="_blank" rel="noreferrer">
               {team.url}
             </a>
           </div>
