@@ -139,7 +139,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     <TeamPageLayout team={team}>
       <StyledDiv className="mx-auto my-3">
         <div className="mb-3 d-flex align-items-center">
-          <Emoji emojiId={story.emojiId} size={40} />
+          <Emoji emojiId={story.emojiId} size={32} />
           <h2 className="ms-2 me-auto fw-bold mb-0 text-break">{story.title}</h2>
           {isMemberOfTeam && (
             <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
