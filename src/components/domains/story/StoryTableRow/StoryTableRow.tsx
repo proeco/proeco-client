@@ -29,13 +29,13 @@ export const StoryTableRow: VFC<Props> = ({ story, productId }) => {
   return (
     <StyledRow className="row py-3 align-items-center c-pointer" onClick={handleClickRow}>
       <div className="col-2">
-        <span className="text-light fs-3 text-nowrap">
+        <div className="ps-1">
           {createdStoryUser ? (
             <UserIcon attachmentId={createdStoryUser.iconImageId} size={40} userId={story.createdUserId} isLink />
           ) : (
             <GuestUserIcon size={40} />
           )}
-        </span>
+        </div>
       </div>
       <div className="col-7">
         <span className="text-light fs-3 text-nowrap">
