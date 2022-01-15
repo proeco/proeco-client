@@ -1,12 +1,13 @@
 import React, { VFC, useState } from 'react';
 
+import { SkeltonUserIcon, UserIcon } from '../../user/UserIcon';
 import { Button, Card, Editor, Icon, MarkdownToHtmlBody } from '~/components/parts/commons';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { Team, User } from '~/domains';
 import { restClient } from '~/utils/rest-client';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
-import { useTeam } from '~/stores/team';
+import { useTeam, useTeamUsers } from '~/stores/team';
 
 type Props = {
   team: Team;
@@ -19,6 +20,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
   const [content, setContent] = useState(team.homeContent);
 
   const { mutate: mutateTeam } = useTeam({ teamId: team._id });
+  const { data: teamUsers } = useTeamUsers({ teamId: team._id });
 
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
@@ -62,7 +64,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
         )}
       </div>
       <div className="row">
-        <div className="col-12 col-md-6 pb-4">
+        <div className="col-12 col-md-8 pb-4">
           <Card>
             {isUpdate && currentUser && (
               <Editor
@@ -81,8 +83,21 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
             )}
           </Card>
         </div>
-        <div className="col-12 col-md-6">
+        <div className="col-12 col-md-4">
           <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
+          <h5 className="mt-3 d-flex gap-1">
+            <Icon icon="PEOPLE" size={24} color="BLACK" />
+            プロダクトメンバー
+          </h5>
+          <div className="mt-2 d-flex gap-2">
+            {teamUsers ? (
+              teamUsers?.map((user) => {
+                return <UserIcon key={user._id} attachmentId={user.iconImageId} userId={user._id} isLink size={56} />;
+              })
+            ) : (
+              <SkeltonUserIcon size={40} />
+            )}
+          </div>
         </div>
       </div>
     </>
