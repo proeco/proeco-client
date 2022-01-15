@@ -61,13 +61,14 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { data: storyPosts = [] } = useStoryPosts({
+  const { data: storyPosts } = useStoryPosts({
     storyId,
     page,
     limit: 100,
   });
 
   const customStoryPosts: Array<StoryPost & { currentUserReaction?: Reaction }> = useMemo(() => {
+    if (!storyPosts) return [];
     return storyPosts.map((s) => {
       return {
         ...s,
@@ -138,7 +139,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     <TeamPageLayout team={team}>
       <StyledDiv className="mx-auto my-3">
         <div className="mb-3 d-flex align-items-center">
-          <Emoji emojiId={story.emojiId} size={40} />
+          <Emoji emojiId={story.emojiId} size={32} />
           <h2 className="ms-2 me-auto fw-bold mb-0 text-break">{story.title}</h2>
           {isMemberOfTeam && (
             <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
@@ -274,30 +275,10 @@ export const getStaticProps: any = async (context: any) => {
 };
 
 export async function getStaticPaths() {
-  try {
-    const { data: pagination } = await restClient.apiGet<PaginationResult<Story>>(`/stories`);
-
-    const paths = await Promise.all(
-      pagination.docs.map(async (v) => {
-        return {
-          params: {
-            productId: await restClient.apiGet<Team>(`/teams/${v.teamId}`).then((v) => v.data.productId),
-            storyId: v._id,
-          },
-        };
-      }),
-    );
-
-    return {
-      paths,
-      fallback: true,
-    };
-  } catch (error) {
-    return {
-      paths: [],
-      fallback: true,
-    };
-  }
+  return {
+    paths: [],
+    fallback: true,
+  };
 }
 
 StoryPage.generateOgp = ({ storyFromServerSide: story, team, teamIconAttachment }: Props) => {

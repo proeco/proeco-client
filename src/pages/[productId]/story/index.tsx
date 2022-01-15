@@ -16,6 +16,7 @@ import { restClient } from '~/utils/rest-client';
 
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { Spinner } from '~/components/parts/commons';
 
 type Props = {
   team?: Team;
@@ -30,7 +31,11 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   }, [currentUser, teamUsers]);
 
   if (!team) {
-    return null;
+    return (
+      <div className="min-vh-100 text-center pt-5">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -75,27 +80,10 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
 };
 
 export async function getStaticPaths() {
-  try {
-    const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?page=1&limit=10`);
-
-    const paths = pagination.docs.map((v) => {
-      return {
-        params: {
-          productId: v.productId,
-        },
-      };
-    });
-
-    return {
-      paths,
-      fallback: true,
-    };
-  } catch (error) {
-    return {
-      paths: [],
-      fallback: true,
-    };
-  }
+  return {
+    paths: [],
+    fallback: true,
+  };
 }
 
 Dashboard.generateOgp = (props: Props) => {

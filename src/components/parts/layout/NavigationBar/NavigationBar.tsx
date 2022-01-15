@@ -12,12 +12,15 @@ import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 import { IMAGE_PATH, URLS } from '~/constants';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useTeamsRelatedUser } from '~/stores/team';
+import { TeamIcon } from '~/components/domains/team/TeamIcon';
 
 export const NavigationBar: VFC = memo(() => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const router = useRouter();
 
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
+  const { data: teams = [] } = useTeamsRelatedUser({ userId: currentUser?._id });
 
   const menuItems = useMemo(
     () => [
@@ -45,14 +48,36 @@ export const NavigationBar: VFC = memo(() => {
 
     if (currentUser) {
       return (
-        <Dropdown toggle={<UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="div">
-          {menuItems.map((menuItem, i) => (
-            <DropdownItem key={i} onClick={menuItem.onClick}>
-              {menuItem.icon}
-              <span className="ms-2">{menuItem.text}</span>
-            </DropdownItem>
-          ))}
-        </Dropdown>
+        <div className="d-flex align-items-center gap-3">
+          {teams.length !== 0 && (
+            <Dropdown
+              toggle={
+                <div className="d-flex flex-column text-white fs-4 align-items-center">
+                  <Icon size={24} icon="COLUMN" color="WHITE" />
+                  プロダクト
+                </div>
+              }
+              tag="div"
+            >
+              {teams.map((team, i) => (
+                <Link key={i} href={`/${team.productId}`}>
+                  <DropdownItem>
+                    <TeamIcon attachmentId={team.iconImageId} size={20} />
+                    <span className="ms-2">{team.name}</span>
+                  </DropdownItem>
+                </Link>
+              ))}
+            </Dropdown>
+          )}
+          <Dropdown toggle={<UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="div">
+            {menuItems.map((menuItem, i) => (
+              <DropdownItem key={i} onClick={menuItem.onClick}>
+                {menuItem.icon}
+                <span className="ms-2">{menuItem.text}</span>
+              </DropdownItem>
+            ))}
+          </Dropdown>
+        </div>
       );
     }
 
@@ -61,7 +86,7 @@ export const NavigationBar: VFC = memo(() => {
         ログイン
       </Button>
     );
-  }, [isValidatingCurrentUser, currentUser, menuItems]);
+  }, [isValidatingCurrentUser, currentUser, teams, menuItems]);
 
   return (
     <>
