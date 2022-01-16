@@ -3,6 +3,7 @@ import { addDays, isPast } from 'date-fns';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
+import styled from 'styled-components';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { Button, Link } from '~/components/parts/commons';
 import { TeamCard } from '~/components/domains/team/TeamCard';
@@ -62,9 +63,9 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
         <h1 className="fw-normal mb-4">
           <span className="fw-bold">{team.name}</span>があなたをプロダクトに招待しました！
         </h1>
-        <div className="mb-4">
+        <StyledDiv className="mb-4 w-100">
           <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
-        </div>
+        </StyledDiv>
         <div className="d-flex align-items-center gap-3">
           <Button color="primary" onClick={handleApproveInvite}>
             プロダクトに参加する
@@ -75,6 +76,10 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
     </DashboardLayout>
   );
 };
+
+const StyledDiv = styled.div`
+  max-width: 500px;
+`;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { productId, token } = context.query;
