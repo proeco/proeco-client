@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import { useRouter } from 'next/router';
@@ -9,25 +9,26 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { URLS } from '~/constants';
 import { Team } from '~/domains';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
+import { useTeamUsers } from '~/stores/team';
 
 const navItems = [
   {
     path: (productId: string) => URLS.TEAMS(productId),
     text: 'ホーム',
     isActive: (path: string) => path === '/[productId]',
-    onlyAdmin: false,
+    onlyMember: false,
   },
   {
     path: (productId: string) => URLS.TEAMS_STORIES(productId),
     text: 'ストーリー',
     isActive: (path: string) => path.startsWith('/[productId]/story'),
-    onlyAdmin: false,
+    onlyMember: false,
   },
   {
     path: (productId: string) => URLS.TEAMS_SETTINGS(productId),
     text: '設定',
     isActive: (path: string) => path.startsWith('/[productId]/settings'),
-    onlyAdmin: true,
+    onlyMember: true,
   },
 ];
 
@@ -39,6 +40,11 @@ export const TeamPageLayout: FC<Props> = ({ team, children }) => {
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUser();
+
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
+  const isMemberOfTeam = useMemo(() => {
+    return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
+  }, [currentUser, teamUsers]);
 
   return (
     <div className="min-vh-100 h-100 pb-md-0 pb-5 mb-md-0 mb-5">
@@ -54,7 +60,7 @@ export const TeamPageLayout: FC<Props> = ({ team, children }) => {
         </div>
         <Nav tabs>
           {navItems.map((v, index) => {
-            if (v.onlyAdmin && team.adminUserId !== currentUser?._id) return null;
+            if (v.onlyMember && !isMemberOfTeam) return null;
 
             return (
               <NavItem key={index} active={v.isActive(router.pathname)}>
