@@ -54,7 +54,7 @@ export const TeamSettingTab: VFC<Props> = ({ currentUser, team }) => {
         </div>
         <div className="col-12 col-md-9">
           {activeContent === 'basic' && <TeamForm currentUser={currentUser} team={team} />}
-          {activeContent === 'member' && <TeamMemberSettingCard team={team} />}
+          {activeContent === 'member' && <TeamMemberSettingCard currentUser={currentUser} team={team} />}
         </div>
       </div>
     </>

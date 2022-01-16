@@ -1,25 +1,40 @@
 import { GetStaticProps } from 'next';
 
 import styled from 'styled-components';
+import { useEffect, useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { Team } from '~/domains';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamPageLayout } from '~/components/parts/layout/TeamPageLayout';
-
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
 
 import { restClient } from '~/utils/rest-client';
 
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { TeamSettingTab } from '~/components/domains/team/TeamSettingTab';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useTeamUsers } from '~/stores/team';
+import { URLS } from '~/constants';
 
 type Props = {
   team?: Team;
 };
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
+  const router = useRouter();
+
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
+  const isMemberOfTeam = useMemo(() => {
+    return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
+  }, [currentUser, teamUsers]);
+
+  useEffect(() => {
+    if (team && ((!currentUser && !isValidatingCurrentUser) || !isMemberOfTeam)) {
+      router.push(URLS.TEAMS(team.productId));
+    }
+  }, [currentUser, team, router, isValidatingCurrentUser, isMemberOfTeam]);
 
   if (!team) {
     return null;
@@ -28,7 +43,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   return (
     <TeamPageLayout team={team}>
       <StyledDiv className="mx-auto py-3">
-        {currentUser && team.adminUserId === currentUser._id && <TeamSettingTab currentUser={currentUser} team={team} />}
+        {currentUser && isMemberOfTeam && <TeamSettingTab currentUser={currentUser} team={team} />}
       </StyledDiv>
     </TeamPageLayout>
   );

@@ -7,21 +7,24 @@ type Props = {
   onSelectImage: (file: ChangeEvent<HTMLInputElement>) => void;
   currentImagePath?: string;
   size?: number;
+  disabled?: boolean;
 };
 
-export const IconUpload: VFC<Props> = ({ onSelectImage, currentImagePath, size = 100 }) => {
+export const IconUpload: VFC<Props> = ({ onSelectImage, currentImagePath, size = 100, disabled }) => {
   return (
-    <label className="position-relative" htmlFor="image">
+    <label className="position-relative" htmlFor="image" aria-disabled={disabled}>
       {currentImagePath ? (
         <img className="rounded-circle border border-primary border-2" width={size} height={size} src={currentImagePath} />
       ) : (
         <GuestTeamIcon size={size} />
       )}
-      <StyledOverlay className="d-flex gap-2 align-items-center">
-        <StyledIcon icon="IMAGE" color="WHITE" size={20} />
-        <p className="fs-4 mb-0 text-white">写真を変更</p>
-      </StyledOverlay>
-      <input className="d-none" type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" />
+      {!disabled && (
+        <StyledOverlay className="d-flex gap-2 align-items-center">
+          <StyledIcon icon="IMAGE" color="WHITE" size={20} />
+          <p className="fs-4 mb-0 text-white">写真を変更</p>
+        </StyledOverlay>
+      )}
+      <input className="d-none" type="file" name="image" id="image" onChange={onSelectImage} accept="image/*" disabled={disabled} />
     </label>
   );
 };
