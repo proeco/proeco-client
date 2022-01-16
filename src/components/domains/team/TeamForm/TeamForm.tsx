@@ -42,6 +42,8 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
     iconImageId: team?.iconImageId || '',
   });
 
+  const isAdminOfTeam = team?.adminUserId === currentUser._id;
+
   const handleClickFetchByUrl = async () => {
     try {
       const {
@@ -117,29 +119,50 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
               <IconUpload
                 onSelectImage={handleChangeFile}
                 currentImagePath={iconImage ? URL.createObjectURL(iconImage) : attachment?.filePath}
+                disabled={team && !isAdminOfTeam}
               />
             )}
           </div>
           <span className="mb-1 d-inline-block text-light">プロダクトの url</span>
           <div className="d-flex align-items-center">
-            <input className="form-control me-2" value={newTeam.url} onChange={(e) => updateStoryForm({ url: e.target.value })} />
-            <Button color="primary" disabled={!isValidUrl(newTeam.url)} onClick={handleClickFetchByUrl}>
+            <input
+              className="form-control me-2"
+              value={newTeam.url}
+              onChange={(e) => updateStoryForm({ url: e.target.value })}
+              readOnly={team && !isAdminOfTeam}
+            />
+            <Button color="primary" disabled={!isValidUrl(newTeam.url) || (team && !isAdminOfTeam)} onClick={handleClickFetchByUrl}>
               <Icon icon="CLOCKWISE" color="WHITE" />
             </Button>
           </div>
           <span className="mt-3 mb-1 d-inline-block text-light">Product Id</span>
-          <input className="form-control" value={newTeam.productId} onChange={(e) => updateStoryForm({ productId: e.target.value })} />
+          <input
+            className="form-control"
+            value={newTeam.productId}
+            onChange={(e) => updateStoryForm({ productId: e.target.value })}
+            readOnly={team && !isAdminOfTeam}
+          />
           <span className="mt-3 mb-1 d-inline-block text-light">名前</span>
-          <input className="form-control" value={newTeam.name} onChange={(e) => updateStoryForm({ name: e.target.value })} />
+          <input
+            className="form-control"
+            value={newTeam.name}
+            onChange={(e) => updateStoryForm({ name: e.target.value })}
+            readOnly={team && !isAdminOfTeam}
+          />
           <span className="mt-3 mb-1 d-inline-block text-light">どんなプロダクト？</span>
           <textarea
             className="form-control"
             value={newTeam.description}
             rows={6}
             onChange={(e) => updateStoryForm({ description: e.target.value })}
+            readOnly={team && !isAdminOfTeam}
           />
           <div className="text-center mt-3">
-            <Button disabled={isCreating || !isValidForm || isLoadingUploadAttachment} color="primary" onClick={handleClickCreateNewTeam}>
+            <Button
+              disabled={isCreating || !isValidForm || isLoadingUploadAttachment || (team && !isAdminOfTeam)}
+              color="primary"
+              onClick={handleClickCreateNewTeam}
+            >
               <Icon icon="PENCIL" size={20} color="WHITE" />
               {team ? '更新する' : '新規プロダクトを作成する'}
             </Button>
