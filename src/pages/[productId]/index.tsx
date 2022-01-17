@@ -34,7 +34,7 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   }
 
   return (
-    <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
+    <TeamPageLayout team={team}>
       <StyledDiv className="mx-auto py-3">
         <TeamHomeTab team={team} currentUser={currentUser} editable={isMemberOfTeam} />
       </StyledDiv>
@@ -75,27 +75,10 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
 };
 
 export async function getStaticPaths() {
-  try {
-    const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?page=1&limit=10`);
-
-    const paths = pagination.docs.map((v) => {
-      return {
-        params: {
-          productId: v.productId,
-        },
-      };
-    });
-
-    return {
-      paths,
-      fallback: true,
-    };
-  } catch (error) {
-    return {
-      paths: [],
-      fallback: true,
-    };
-  }
+  return {
+    paths: [],
+    fallback: true,
+  };
 }
 
 Dashboard.generateOgp = (props: Props) => {

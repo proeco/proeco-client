@@ -1,8 +1,9 @@
 import { GetServerSideProps } from 'next';
 import { addDays, isPast } from 'date-fns';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import styled from 'styled-components';
 import { DashboardLayout } from '~/components/parts/layout/DashboardLayout';
 import { Button, Link } from '~/components/parts/commons';
 import { TeamCard } from '~/components/domains/team/TeamCard';
@@ -29,6 +30,8 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
+  const [isApprovingInvite, setIsApprovingInvite] = useState(false);
+
   useEffect(() => {
     if (!currentUser && !isValidatingCurrentUser) {
       notifySuccessMessage('ログイン後再度招待リンクを開いてください');
@@ -37,17 +40,21 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
   }, [currentUser, team, router, notifySuccessMessage, isValidatingCurrentUser]);
 
   useEffect(() => {
-    if (currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id)) {
+    if (!currentUser || isApprovingInvite) {
+      return;
+    }
+    if (teamUsers.some((teamUser) => teamUser._id === currentUser._id)) {
       notifySuccessMessage('すでにプロダクトに所属しています');
       router.push(URLS.TEAMS(team.productId));
     }
-  }, [currentUser, notifySuccessMessage, router, team, teamUsers]);
+  }, [currentUser, notifySuccessMessage, router, team, teamUsers, isApprovingInvite]);
 
   const handleApproveInvite = async () => {
     try {
       await restClient.apiPost<UserTeamRelation>('/user-team-relations', {
         token: router.query.token,
       });
+      setIsApprovingInvite(true);
       await mutateTeamUsers();
       notifySuccessMessage('プロダクトに参加しました！');
       router.push(URLS.TEAMS(team.productId));
@@ -62,9 +69,9 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
         <h1 className="fw-normal mb-4">
           <span className="fw-bold">{team.name}</span>があなたをプロダクトに招待しました！
         </h1>
-        <div className="mb-4">
+        <StyledDiv className="mb-4 w-100">
           <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
-        </div>
+        </StyledDiv>
         <div className="d-flex align-items-center gap-3">
           <Button color="primary" onClick={handleApproveInvite}>
             プロダクトに参加する
@@ -75,6 +82,10 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
     </DashboardLayout>
   );
 };
+
+const StyledDiv = styled.div`
+  max-width: 500px;
+`;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { productId, token } = context.query;

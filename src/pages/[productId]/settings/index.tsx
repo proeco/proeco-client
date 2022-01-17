@@ -1,41 +1,49 @@
 import { GetStaticProps } from 'next';
-import { useMemo } from 'react';
 
 import styled from 'styled-components';
+import { useEffect, useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { Team } from '~/domains';
 
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamPageLayout } from '~/components/parts/layout/TeamPageLayout';
-
-import { useCurrentUser } from '~/stores/user/useCurrentUser';
-import { useTeamUsers } from '~/stores/team';
 
 import { restClient } from '~/utils/rest-client';
 
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { TeamSettingTab } from '~/components/domains/team/TeamSettingTab';
+import { useCurrentUser } from '~/stores/user/useCurrentUser';
+import { useTeamUsers } from '~/stores/team';
+import { URLS } from '~/constants';
 
 type Props = {
   team?: Team;
 };
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
-  const { data: currentUser } = useCurrentUser();
-  const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
+  const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
+  const router = useRouter();
 
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
   const isMemberOfTeam = useMemo(() => {
     return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
   }, [currentUser, teamUsers]);
+
+  useEffect(() => {
+    if (team && ((!currentUser && !isValidatingCurrentUser) || !isMemberOfTeam)) {
+      router.push(URLS.TEAMS(team.productId));
+    }
+  }, [currentUser, team, router, isValidatingCurrentUser, isMemberOfTeam]);
 
   if (!team) {
     return null;
   }
 
   return (
-    <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
+    <TeamPageLayout team={team}>
       <StyledDiv className="mx-auto py-3">
-        {isMemberOfTeam && currentUser && <TeamSettingTab currentUser={currentUser} team={team} />}
+        {currentUser && isMemberOfTeam && <TeamSettingTab currentUser={currentUser} team={team} />}
       </StyledDiv>
     </TeamPageLayout>
   );
@@ -74,28 +82,10 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
 };
 
 export async function getStaticPaths() {
-  try {
-    const { data: pagination } = await restClient.apiGet<PaginationResult<Team>>(`/teams?page=1&limit=10`);
-
-    const paths = pagination.docs.map((v) => {
-      return {
-        params: {
-          productId: v.productId,
-        },
-      };
-    });
-    console.log(paths);
-
-    return {
-      paths,
-      fallback: true,
-    };
-  } catch (error) {
-    return {
-      paths: [],
-      fallback: true,
-    };
-  }
+  return {
+    paths: [],
+    fallback: true,
+  };
 }
 
 Dashboard.generateOgp = (props: Props) => {

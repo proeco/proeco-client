@@ -61,13 +61,14 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 
   const page = router.query.page ? Number(router.query.page) : 1;
 
-  const { data: storyPosts = [] } = useStoryPosts({
+  const { data: storyPosts } = useStoryPosts({
     storyId,
     page,
     limit: 100,
   });
 
   const customStoryPosts: Array<StoryPost & { currentUserReaction?: Reaction }> = useMemo(() => {
+    if (!storyPosts) return [];
     return storyPosts.map((s) => {
       return {
         ...s,
@@ -135,11 +136,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   }
 
   return (
-    <TeamPageLayout team={team} isMemberOfTeam={isMemberOfTeam}>
+    <TeamPageLayout team={team}>
       <StyledDiv className="mx-auto my-3">
         <div className="mb-3 d-flex align-items-center">
-          <Emoji emojiId={story.emojiId} size={40} />
-          <StyledTitle className="ms-2 me-auto fw-bold mb-0">{story.title}</StyledTitle>
+          <Emoji emojiId={story.emojiId} size={32} />
+          <h2 className="ms-2 me-auto fw-bold mb-0 text-break">{story.title}</h2>
           {isMemberOfTeam && (
             <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
               {menuItems.map((menuItem, i) => (
@@ -240,12 +241,6 @@ const StyledRightSide = styled.div`
   top: 86px;
 `;
 
-const StyledTitle = styled.h1`
-  overflow-x: scroll;
-  height: 40px;
-  white-space: nowrap;
-`;
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getStaticProps: any = async (context: any) => {
   const { storyId, productId } = context.params;
@@ -280,30 +275,10 @@ export const getStaticProps: any = async (context: any) => {
 };
 
 export async function getStaticPaths() {
-  try {
-    const { data: pagination } = await restClient.apiGet<PaginationResult<Story>>(`/stories`);
-
-    const paths = await Promise.all(
-      pagination.docs.map(async (v) => {
-        return {
-          params: {
-            productId: await restClient.apiGet<Team>(`/teams/${v.teamId}`).then((v) => v.data.productId),
-            storyId: v._id,
-          },
-        };
-      }),
-    );
-
-    return {
-      paths,
-      fallback: true,
-    };
-  } catch (error) {
-    return {
-      paths: [],
-      fallback: true,
-    };
-  }
+  return {
+    paths: [],
+    fallback: true,
+  };
 }
 
 StoryPage.generateOgp = ({ storyFromServerSide: story, team, teamIconAttachment }: Props) => {
