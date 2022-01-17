@@ -16,6 +16,7 @@ import { TeamSettingTab } from '~/components/domains/team/TeamSettingTab';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeamUsers } from '~/stores/team';
 import { URLS } from '~/constants';
+import { Spinner } from '~/components/parts/commons';
 
 type Props = {
   team?: Team;
@@ -37,7 +38,11 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   }, [currentUser, team, router, isValidatingCurrentUser, isMemberOfTeam]);
 
   if (!team) {
-    return null;
+    return (
+      <div className="min-vh-100 text-center pt-5">
+        <Spinner />
+      </div>
+    );
   }
 
   return (

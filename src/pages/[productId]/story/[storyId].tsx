@@ -17,7 +17,7 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useReactionsByUserId } from '~/stores/reaction';
 import { useTeamUsers } from '~/stores/team';
 
-import { Button, Card, Emoji, FixedImage, Icon, TimeLineItem } from '~/components/parts/commons';
+import { Button, Card, Emoji, FixedImage, Icon, Spinner, TimeLineItem } from '~/components/parts/commons';
 import { ProecoOgpHead } from '~/components/parts/layout/ProecoOgpHead';
 import { TeamPageLayout } from '~/components/parts/layout/TeamPageLayout';
 import { CreateNewStoryPostCard } from '~/components/domains/storyPost/CreateNewStoryPostCard/CreateNewStoryPostCard';
@@ -132,7 +132,11 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   }, [storyId, team?.productId]);
 
   if (!story || !storyPosts) {
-    return null;
+    return (
+      <div className="min-vh-100 text-center pt-5">
+        <Spinner />
+      </div>
+    );
   }
 
   return (

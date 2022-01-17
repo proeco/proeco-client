@@ -16,6 +16,7 @@ import { restClient } from '~/utils/rest-client';
 
 import { PaginationResult } from '~/interfaces';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
+import { Spinner } from '~/components/parts/commons';
 
 type Props = {
   team?: Team;
@@ -30,7 +31,11 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   }, [currentUser, teamUsers]);
 
   if (!team) {
-    return null;
+    return (
+      <div className="min-vh-100 text-center pt-5">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
