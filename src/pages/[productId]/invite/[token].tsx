@@ -40,7 +40,10 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
   }, [currentUser, team, router, notifySuccessMessage, isValidatingCurrentUser]);
 
   useEffect(() => {
-    if (currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id) && !isApprovingInvite) {
+    if (!currentUser || isApprovingInvite) {
+      return;
+    }
+    if (teamUsers.some((teamUser) => teamUser._id === currentUser._id)) {
       notifySuccessMessage('すでにプロダクトに所属しています');
       router.push(URLS.TEAMS(team.productId));
     }
