@@ -1,6 +1,7 @@
 export class Story {
   _id: string;
   title: string;
+  description?: string;
   emojiId: string;
   teamId: string;
   isPrivate: boolean;
@@ -12,6 +13,7 @@ export class Story {
   constructor(init: Story) {
     this._id = init._id;
     this.title = init.title;
+    this.description = init.description;
     this.emojiId = init.emojiId;
     this.teamId = init.teamId;
     this.isPrivate = init.isPrivate;

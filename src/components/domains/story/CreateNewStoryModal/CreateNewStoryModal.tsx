@@ -24,10 +24,11 @@ export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, 
   const { notifyErrorMessage } = useErrorNotification();
 
   const [isDisabled, setIsDisabled] = useState(true);
-  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'teamId'>>({
+  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'description' | 'teamId'>>({
     emojiId: 'open_file_folder',
     title: '',
     teamId,
+    description: '',
   });
 
   useEffect(() => {
@@ -75,6 +76,12 @@ export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, 
           <SelectableEmoji emojiId={newStory.emojiId} size={40} onSelectEmoji={(emojiId) => updateStoryForm({ emojiId })} />
           <input className="ms-2 form-control" value={newStory.title} onChange={(e) => updateStoryForm({ title: e.target.value })} />
         </div>
+        <textarea
+          className="form-control my-3"
+          value={newStory.description}
+          onChange={(e) => updateStoryForm({ description: e.target.value })}
+          rows={3}
+        />
       </div>
       <div className="text-center">
         <Button onClick={handleClickCreateNewStoryButton} disabled={isDisabled} color="primary">
