@@ -30,6 +30,7 @@ export const MarkdownToHtmlBody: VFC<Props> = ({ content }) => {
         }}
         plugins={[gfm]}
         unwrapDisallowed={false}
+        linkTarget="_blank"
       >
         {content}
       </ReactMarkdown>
