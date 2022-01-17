@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { addDays, isPast } from 'date-fns';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import styled from 'styled-components';
@@ -30,6 +30,8 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
+  const [isApprovingInvite, setIsApprovingInvite] = useState(false);
+
   useEffect(() => {
     if (!currentUser && !isValidatingCurrentUser) {
       notifySuccessMessage('ログイン後再度招待リンクを開いてください');
@@ -38,17 +40,21 @@ const InvitePage: ProecoNextPage<Props> = ({ team }) => {
   }, [currentUser, team, router, notifySuccessMessage, isValidatingCurrentUser]);
 
   useEffect(() => {
-    if (currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id)) {
+    if (!currentUser || isApprovingInvite) {
+      return;
+    }
+    if (teamUsers.some((teamUser) => teamUser._id === currentUser._id)) {
       notifySuccessMessage('すでにプロダクトに所属しています');
       router.push(URLS.TEAMS(team.productId));
     }
-  }, [currentUser, notifySuccessMessage, router, team, teamUsers]);
+  }, [currentUser, notifySuccessMessage, router, team, teamUsers, isApprovingInvite]);
 
   const handleApproveInvite = async () => {
     try {
       await restClient.apiPost<UserTeamRelation>('/user-team-relations', {
         token: router.query.token,
       });
+      setIsApprovingInvite(true);
       await mutateTeamUsers();
       notifySuccessMessage('プロダクトに参加しました！');
       router.push(URLS.TEAMS(team.productId));
