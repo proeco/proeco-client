@@ -48,7 +48,7 @@ const StyledMarkdownBody = styled.div`
       background-color: rgb(30, 30, 30);
     }
     code {
-      color: white;
+      background-color: #215aa012;
     }
     p::selection,
     li::selection,
