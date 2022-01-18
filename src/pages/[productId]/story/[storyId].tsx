@@ -201,6 +201,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                 <div className="mb-2 rounded-2 overflow-hidden">
                   <FixedImage imageUrl={ogpUrl} />
                 </div>
+                <p className="fs-2">{story.description}</p>
                 {isMemberOfTeam && (
                   <div className="text-center mb-3">
                     <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
@@ -289,7 +290,12 @@ StoryPage.generateOgp = ({ storyFromServerSide: story, team, teamIconAttachment 
   const ogpUrl = story && team && teamIconAttachment ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : '';
 
   return (
-    <ProecoOgpHead title={story?.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story?._id}`} />
+    <ProecoOgpHead
+      title={story?.title}
+      image={ogpUrl}
+      url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story?._id}`}
+      description={story?.description}
+    />
   );
 };
 

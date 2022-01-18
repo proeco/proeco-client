@@ -30,9 +30,10 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
   });
 
   const [isDisabled, setIsDisabled] = useState(true);
-  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title'>>({
+  const [newStory, setNewStory] = useState<Pick<Story, 'emojiId' | 'title' | 'description'>>({
     emojiId: 'open_file_folder',
     title: '',
+    description: '',
   });
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
       return;
     }
 
-    setNewStory({ emojiId: story.emojiId, title: story.title });
+    setNewStory({ emojiId: story.emojiId, title: story.title, description: story.description });
   }, [story]);
 
   const handleClickUpdateStoryButton = async () => {
@@ -87,6 +88,12 @@ export const UpdateStoryModal: VFC<Props> = ({ isOpen, onCloseModal, story, team
           <input className="ms-2 form-control" value={newStory.title} onChange={(e) => updateStoryForm({ title: e.target.value })} />
         </div>
       </div>
+      <textarea
+        className="form-control my-3"
+        value={newStory.description}
+        onChange={(e) => updateStoryForm({ description: e.target.value })}
+        rows={3}
+      />
       <div className="text-center mt-5">
         <Button color="primary" onClick={handleClickUpdateStoryButton} disabled={isDisabled}>
           <Icon icon="CLOCKWISE" size={20} color="WHITE" />
