@@ -21,12 +21,7 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team, currentUser }) => {
           メンバーを招待する
         </Button>
       </Card>
-      <ManageInviteLinkModal
-        team={team}
-        currentUser={currentUser}
-        isOpen={isOpenManageInviteLinkModal}
-        onCloseModal={() => setIsOpenManageInviteLinkModal(false)}
-      />
+      <ManageInviteLinkModal team={team} isOpen={isOpenManageInviteLinkModal} onCloseModal={() => setIsOpenManageInviteLinkModal(false)} />
     </>
   );
 };
