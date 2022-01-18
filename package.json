@@ -1,6 +1,6 @@
 {
   "name": "proeco-client",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": false,
   "author": "itizawa <itizawa.pen@gmail.com>",
   "homepage": "https://github.com/proeco/proeco#readme",
@@ -62,7 +62,7 @@
     "@types/throttle-debounce": "2.1.0",
     "@types/toastr": "2.1.39",
     "@typescript-eslint/eslint-plugin": "rc-v5",
-    "@typescript-eslint/parser": "5.9.1",
+    "@typescript-eslint/parser": "5.10.0",
     "babel-loader": "8.2.3",
     "babel-preset-react-app": "10.0.1",
     "cross-env": "7.0.3",
