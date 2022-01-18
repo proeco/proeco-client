@@ -201,6 +201,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                 <div className="mb-2 rounded-2 overflow-hidden">
                   <FixedImage imageUrl={ogpUrl} />
                 </div>
+                <p className="fs-2">{story.description}</p>
                 {isMemberOfTeam && (
                   <div className="text-center mb-3">
                     <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
