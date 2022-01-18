@@ -12,12 +12,10 @@ type Props = {
 export const TeamMemberSettingCard: VFC<Props> = ({ team, currentUser }) => {
   const [isOpenManageInviteLinkModal, setIsOpenManageInviteLinkModal] = useState(false);
 
-  const isAdminOfTeam = team.adminUserId === currentUser._id;
-
   return (
     <>
       <Card>
-        <Button color="primary" onClick={() => setIsOpenManageInviteLinkModal(true)} disabled={!isAdminOfTeam}>
+        <Button color="primary" onClick={() => setIsOpenManageInviteLinkModal(true)} disabled={team.adminUserId !== currentUser._id}>
           メンバーを招待する
         </Button>
       </Card>
