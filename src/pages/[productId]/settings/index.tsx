@@ -94,7 +94,7 @@ export async function getStaticPaths() {
 }
 
 Dashboard.generateOgp = (props: Props) => {
-  return <ProecoOgpHead title={`${props?.team?.name}のホーム`} />;
+  return <ProecoOgpHead title={`${props?.team?.name}のホーム`} description={props?.team?.description} />;
 };
 
 Dashboard.getAccessControl = () => {

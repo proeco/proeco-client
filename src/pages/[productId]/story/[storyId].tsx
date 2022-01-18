@@ -290,7 +290,12 @@ StoryPage.generateOgp = ({ storyFromServerSide: story, team, teamIconAttachment 
   const ogpUrl = story && team && teamIconAttachment ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : '';
 
   return (
-    <ProecoOgpHead title={story?.title} image={ogpUrl} url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story?._id}`} />
+    <ProecoOgpHead
+      title={story?.title}
+      image={ogpUrl}
+      url={`${process.env.NEXT_PUBLIC_ROOT_URL}/${team?.productId}/story/${story?._id}`}
+      description={story?.description}
+    />
   );
 };
 
