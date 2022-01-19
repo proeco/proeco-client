@@ -14,7 +14,7 @@ import { restClient } from '~/utils/rest-client';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 
-import { Button, Icon, IconUpload, Card } from '~/components/parts/commons';
+import { Button, Icon, IconUpload, Card, Tooltip } from '~/components/parts/commons';
 import { useAttachment } from '~/stores/attachment';
 import { useUploadAttachment } from '~/hooks/attachments';
 
@@ -135,12 +135,15 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
               <Icon icon="CLOCKWISE" color="WHITE" />
             </Button>
           </div>
-          <span className="mt-3 mb-1 d-inline-block text-light">Product Id</span>
+          <span className="mt-3 me-2 mb-1 d-inline-block text-light">Product Id</span>
+          <Tooltip text="一度設定した productId は変更できません">
+            <Icon icon="QUESTION" size={18} color="LIGHT" />
+          </Tooltip>
           <input
             className="form-control"
             value={newTeam.productId}
             onChange={(e) => updateStoryForm({ productId: e.target.value })}
-            readOnly={team && !isAdminOfTeam}
+            readOnly={!!team}
           />
           <span className="mt-3 mb-1 d-inline-block text-light">名前</span>
           <input
