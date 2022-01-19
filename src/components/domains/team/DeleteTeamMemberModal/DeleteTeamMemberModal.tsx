@@ -3,6 +3,7 @@ import React, { VFC } from 'react';
 import { Button, Icon, Modal } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useSuccessNotification } from '~/hooks/useSuccessNotification';
+import { useTeamUsers } from '~/stores/team';
 import { restClient } from '~/utils/rest-client';
 
 type Props = {
@@ -13,16 +14,19 @@ type Props = {
 };
 
 export const DeleteTeamMemberModal: VFC<Props> = ({ isOpen, onCloseModal, userId, teamId }) => {
+  const { mutate: mutateTeamUsers } = useTeamUsers({ teamId });
+
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
   const handleClickDeleteTeamMember = async () => {
     try {
-      await restClient.apiDelete('user-team-relations', {
+      await restClient.apiDelete('/user-team-relations', {
         userId,
         teamId,
       });
       notifySuccessMessage('プロダクトからメンバーを削除しました!');
+      await mutateTeamUsers();
       onCloseModal();
     } catch (error) {
       notifyErrorMessage('プロダクトからメンバーを削除に失敗しました!');
@@ -40,7 +44,5 @@ export const DeleteTeamMemberModal: VFC<Props> = ({ isOpen, onCloseModal, userId
       </div>
     </>
   );
-  return (
-    <Modal open={isOpen} title="プロダクトからメンバーを削除しますか？" emojiId="wastebasket" onClose={onCloseModal} content={content} />
-  );
+  return <Modal open={isOpen} title="プロダクトからメンバーを削除しますか？" emojiId="airplane" onClose={onCloseModal} content={content} />;
 };
