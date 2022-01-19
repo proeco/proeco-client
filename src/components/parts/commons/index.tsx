@@ -18,3 +18,4 @@ export { SelectableEmoji } from './SelectableEmoji';
 export { SideBarListItem } from './SideBarListItem';
 export { Spinner } from './Spinner';
 export { TimeLineItem } from './TimeLineItem';
+export { Tooltip } from './Tooltip';
