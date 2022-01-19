@@ -62,7 +62,7 @@ export const NavigationBar: VFC = memo(() => {
               {teams.map((team, i) => (
                 <Link key={i} href={`/${team.productId}`}>
                   <DropdownItem>
-                    <TeamIcon attachmentId={team.iconImageId} size={20} />
+                    <TeamIcon attachmentId={team.iconImageId} size={28} />
                     <span className="ms-2">{team.name}</span>
                   </DropdownItem>
                 </Link>
