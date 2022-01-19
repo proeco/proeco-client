@@ -67,6 +67,10 @@ export const NavigationBar: VFC = memo(() => {
                   </DropdownItem>
                 </Link>
               ))}
+              <DropdownItem divider />
+              <Link href={URLS.DASHBOARD_TEAMS_NEW}>
+                <DropdownItem>新規プロダクトを作成する</DropdownItem>
+              </Link>
             </Dropdown>
           )}
           <Dropdown toggle={<UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="div">
