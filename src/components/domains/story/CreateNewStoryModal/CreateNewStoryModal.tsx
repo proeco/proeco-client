@@ -76,8 +76,9 @@ export const CreateNewStoryModal: VFC<Props> = ({ isOpen, onCloseModal, teamId, 
           <SelectableEmoji emojiId={newStory.emojiId} size={40} onSelectEmoji={(emojiId) => updateStoryForm({ emojiId })} />
           <input className="ms-2 form-control" value={newStory.title} onChange={(e) => updateStoryForm({ title: e.target.value })} />
         </div>
+        <p className="mt-3 mb-1 text-light">詳細(省略可)</p>
         <textarea
-          className="form-control my-3"
+          className="form-control mb-3"
           value={newStory.description}
           onChange={(e) => updateStoryForm({ description: e.target.value })}
           rows={3}
