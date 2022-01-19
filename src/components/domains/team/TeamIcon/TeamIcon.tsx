@@ -27,9 +27,7 @@ export const SkeltonTeamIcon: VFC<Pick<Props, 'size'>> = ({ size }) => {
 export const TeamIcon: VFC<Props> = ({ attachmentId, size }) => {
   const { data: attachment } = useAttachment(attachmentId);
 
-  return (
-    <img className="rounded-circle border border-primary border-2 bg-white d-block" width={size} height={size} src={attachment?.filePath} />
-  );
+  return <img className="rounded-circle border bg-white d-block" width={size} height={size} src={attachment?.filePath} />;
 };
 
 const StyledIconWrapper = styled.div<{ size: number }>`

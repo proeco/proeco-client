@@ -19,9 +19,9 @@ export const Dropdown: FC<Props> = ({ toggle, tag, children }) => {
   );
 };
 
-export const DropdownItem: FC<{ onClick?: () => void }> = ({ onClick, children }) => {
+export const DropdownItem: FC<{ onClick?: () => void; divider?: boolean }> = ({ onClick, divider, children }) => {
   return (
-    <DropdownItemOOriginal onClick={onClick} className="d-flex align-items-center">
+    <DropdownItemOOriginal onClick={onClick} divider={divider} className="d-flex align-items-center">
       {children}
     </DropdownItemOOriginal>
   );
