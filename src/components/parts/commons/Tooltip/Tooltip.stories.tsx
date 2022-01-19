@@ -9,7 +9,11 @@ export default {
 } as ComponentMeta<typeof Tooltip>;
 
 const Template: ComponentStory<typeof Tooltip> = ({ ...rest }) => {
-  return <Tooltip {...rest}>SampleText</Tooltip>;
+  return (
+    <div className="p-5">
+      <Tooltip {...rest}>SampleText</Tooltip>
+    </div>
+  );
 };
 
 export const DefaultTimeLineItem = Template.bind({});
