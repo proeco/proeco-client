@@ -32,10 +32,13 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   }, [currentUser, teamUsers]);
 
   useEffect(() => {
-    if (team && ((!currentUser && !isValidatingCurrentUser) || !isMemberOfTeam)) {
+    if (!team) return;
+    if (teamUsers.length === 0) return;
+
+    if ((!currentUser && !isValidatingCurrentUser) || (currentUser && !isMemberOfTeam)) {
       router.push(URLS.TEAMS(team.productId));
     }
-  }, [currentUser, team, router, isValidatingCurrentUser, isMemberOfTeam]);
+  }, [currentUser, team, router, isValidatingCurrentUser, isMemberOfTeam, teamUsers]);
 
   if (!team) {
     return (
