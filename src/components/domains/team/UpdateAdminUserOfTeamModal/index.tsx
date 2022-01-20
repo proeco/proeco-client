@@ -1,0 +1,1 @@
+export { UpdateAdminUserOfTeamModal } from './UpdateAdminUserOfTeamModal';
