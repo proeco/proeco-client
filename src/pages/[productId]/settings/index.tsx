@@ -19,14 +19,14 @@ import { URLS } from '~/constants';
 import { Spinner } from '~/components/parts/commons';
 
 type Props = {
-  team?: Team;
+  team: Team;
 };
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
   const router = useRouter();
 
-  const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
   const isMemberOfTeam = useMemo(() => {
     return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
   }, [currentUser, teamUsers]);
@@ -94,7 +94,9 @@ export async function getStaticPaths() {
 }
 
 Dashboard.generateOgp = (props: Props) => {
-  return <ProecoOgpHead title={`${props?.team?.name}のホーム`} description={props?.team?.description} />;
+  if (!props.team) return <></>;
+
+  return <ProecoOgpHead title={`${props.team.name}のホーム`} description={props.team.description} />;
 };
 
 Dashboard.getAccessControl = () => {
