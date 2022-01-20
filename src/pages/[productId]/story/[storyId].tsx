@@ -33,9 +33,9 @@ import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { createOgpUrl } from '~/utils/createOgpUrl';
 
 type Props = {
-  storyFromServerSide?: Story;
+  storyFromServerSide: Story;
   team: Team;
-  teamIconAttachment?: Attachment;
+  teamIconAttachment: Attachment;
 };
 
 const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconAttachment }) => {
@@ -116,7 +116,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   ];
 
   const ogpUrl = useMemo(
-    () => (story && team && teamIconAttachment ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : ''),
+    () => (story ? createOgpUrl(story.title, team.name, teamIconAttachment.filePath) : ''),
     [story, team, teamIconAttachment],
   );
 
@@ -282,7 +282,7 @@ export const getStaticProps: any = async (context: any) => {
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 }
 
