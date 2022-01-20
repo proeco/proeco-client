@@ -1,4 +1,4 @@
-import React, { VFC } from 'react';
+import React, { useState, VFC } from 'react';
 
 import { Button, Icon, Modal } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
@@ -20,6 +20,8 @@ export const UpdateTeamAdminUserModal: VFC<Props> = ({ isOpen, onCloseModal, use
   const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
+  const [inputValue, setInputValue] = useState('');
+
   const handleClickUpdateTeamAdminUser = async () => {
     try {
       await restClient.apiPut(`/teams/${teamId}`, {
@@ -37,9 +39,9 @@ export const UpdateTeamAdminUserModal: VFC<Props> = ({ isOpen, onCloseModal, use
     <>
       <p className="mb-3 text-center">※この操作を行うと、あなたは管理者権限を失います。</p>
       <p>フォームに {userName} と入力してください</p>
-      <input className="form-control" />
+      <input className="form-control" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
       <div className="text-center mt-5">
-        <Button color="danger" onClick={handleClickUpdateTeamAdminUser}>
+        <Button color="danger" onClick={handleClickUpdateTeamAdminUser} disabled={inputValue !== userName}>
           <Icon icon="CLOCKWISE" size={20} color="WHITE" />
           管理者を変更する
         </Button>
