@@ -16,7 +16,6 @@ import { TeamSettingTab } from '~/components/domains/team/TeamSettingTab';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeamUsers } from '~/stores/team';
 import { URLS } from '~/constants';
-import { Spinner } from '~/components/parts/commons';
 
 type Props = {
   team: Team;
@@ -32,18 +31,10 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   }, [currentUser, teamUsers]);
 
   useEffect(() => {
-    if (team && ((!currentUser && !isValidatingCurrentUser) || !isMemberOfTeam)) {
+    if ((!currentUser && !isValidatingCurrentUser) || !isMemberOfTeam) {
       router.push(URLS.TEAMS(team.productId));
     }
   }, [currentUser, team, router, isValidatingCurrentUser, isMemberOfTeam]);
-
-  if (!team) {
-    return (
-      <div className="min-vh-100 text-center pt-5">
-        <Spinner />
-      </div>
-    );
-  }
 
   return (
     <TeamPageLayout team={team}>
