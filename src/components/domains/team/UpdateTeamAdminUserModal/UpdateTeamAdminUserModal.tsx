@@ -10,10 +10,11 @@ type Props = {
   isOpen: boolean;
   onCloseModal: () => void;
   userId: string;
+  userName: string;
   teamId: string;
 };
 
-export const UpdateTeamAdminUserModal: VFC<Props> = ({ isOpen, onCloseModal, userId, teamId }) => {
+export const UpdateTeamAdminUserModal: VFC<Props> = ({ isOpen, onCloseModal, userId, userName, teamId }) => {
   const { mutate: mutateTeam } = useTeam({ teamId });
 
   const { notifySuccessMessage } = useSuccessNotification();
@@ -34,10 +35,12 @@ export const UpdateTeamAdminUserModal: VFC<Props> = ({ isOpen, onCloseModal, use
 
   const content = (
     <>
-      <div className="mb-3 text-center">※ この操作は戻すことが出来ません。</div>
+      <p className="mb-3 text-center">※この操作を行うと、あなたは管理者権限を失います。</p>
+      <p>フォームに {userName} と入力してください</p>
+      <input className="form-control" />
       <div className="text-center mt-5">
         <Button color="danger" onClick={handleClickUpdateTeamAdminUser}>
-          <Icon icon="TRASH" size={20} color="WHITE" />
+          <Icon icon="CLOCKWISE" size={20} color="WHITE" />
           管理者を変更する
         </Button>
       </div>
