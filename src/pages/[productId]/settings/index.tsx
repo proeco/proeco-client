@@ -26,19 +26,19 @@ const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
   const router = useRouter();
 
-  const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
+  const { data: teamUsers = [], isValidating: isValidatingTeamUsers } = useTeamUsers({ teamId: team?._id });
   const isMemberOfTeam = useMemo(() => {
     return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
   }, [currentUser, teamUsers]);
 
   useEffect(() => {
     if (!team) return;
-    if (teamUsers.length === 0) return;
+    if (isValidatingTeamUsers) return;
 
-    if ((!currentUser && !isValidatingCurrentUser) || (currentUser && !isMemberOfTeam)) {
+    if (!isValidatingCurrentUser && !isMemberOfTeam) {
       router.push(URLS.TEAMS(team.productId));
     }
-  }, [currentUser, team, router, isValidatingCurrentUser, isMemberOfTeam, teamUsers]);
+  }, [team, router, isValidatingCurrentUser, isMemberOfTeam, isValidatingTeamUsers]);
 
   if (!team) {
     return (
