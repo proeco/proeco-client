@@ -16,37 +16,25 @@ import { TeamSettingTab } from '~/components/domains/team/TeamSettingTab';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeamUsers } from '~/stores/team';
 import { URLS } from '~/constants';
-import { Spinner } from '~/components/parts/commons';
 
 type Props = {
-  team?: Team;
+  team: Team;
 };
 
 const Dashboard: ProecoNextPage<Props> = ({ team }) => {
   const { data: currentUser, isValidating: isValidatingCurrentUser } = useCurrentUser();
   const router = useRouter();
 
-  const { data: teamUsers = [], isValidating: isValidatingTeamUsers } = useTeamUsers({ teamId: team?._id });
+  const { data: teamUsers = [], isValidating: isValidatingTeamUsers } = useTeamUsers({ teamId: team._id });
   const isMemberOfTeam = useMemo(() => {
     return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
   }, [currentUser, teamUsers]);
 
   useEffect(() => {
-    if (!team) return;
-    if (isValidatingTeamUsers) return;
-
     if (!isValidatingCurrentUser && !isMemberOfTeam) {
       router.push(URLS.TEAMS(team.productId));
     }
   }, [team, router, isValidatingCurrentUser, isMemberOfTeam, isValidatingTeamUsers]);
-
-  if (!team) {
-    return (
-      <div className="min-vh-100 text-center pt-5">
-        <Spinner />
-      </div>
-    );
-  }
 
   return (
     <TeamPageLayout team={team}>
@@ -92,12 +80,14 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 }
 
 Dashboard.generateOgp = (props: Props) => {
-  return <ProecoOgpHead title={`${props?.team?.name}のホーム`} description={props?.team?.description} />;
+  if (!props.team) return <></>;
+
+  return <ProecoOgpHead title={`${props.team.name}のホーム`} description={props.team.description} />;
 };
 
 Dashboard.getAccessControl = () => {
