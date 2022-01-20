@@ -24,13 +24,15 @@ export const UpdateTeamAdminUserModal: VFC<Props> = ({ isOpen, onCloseModal, use
 
   const handleClickUpdateTeamAdminUser = async () => {
     try {
-      await restClient.apiPut(`/teams/${teamId}`, {
-        team: { adminUserId: userId },
+      await restClient.apiPut(`/teams/${teamId}/admin-user-id`, {
+        adminUserId: userId,
       });
       notifySuccessMessage('プロダクトの管理者を変更しました!');
       await mutateTeam();
       setInputValue('');
       onCloseModal();
+      // adminUserIdの変更を反映するため
+      window.location.reload();
     } catch (error) {
       notifyErrorMessage('プロダクトの管理者の変更に失敗しました!');
     }
