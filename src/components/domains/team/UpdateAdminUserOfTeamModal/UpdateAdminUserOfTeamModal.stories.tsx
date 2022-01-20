@@ -1,19 +1,19 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { UpdateTeamAdminUserModal } from './UpdateTeamAdminUserModal';
+import { UpdateAdminUserOfTeamModal } from './UpdateAdminUserOfTeamModal';
 import { createMockTeam, createMockUser } from '~/mocks/domains';
 
 export default {
-  title: 'domains/team/UpdateTeamAdminUserModal',
-  component: UpdateTeamAdminUserModal,
+  title: 'domains/team/UpdateAdminUserOfTeamModal',
+  component: UpdateAdminUserOfTeamModal,
   argTypes: {
     onCloseModal: { action: 'onCloseModal' },
   },
-} as ComponentMeta<typeof UpdateTeamAdminUserModal>;
+} as ComponentMeta<typeof UpdateAdminUserOfTeamModal>;
 
-const Template: ComponentStory<typeof UpdateTeamAdminUserModal> = (args) => {
-  return <UpdateTeamAdminUserModal {...args} />;
+const Template: ComponentStory<typeof UpdateAdminUserOfTeamModal> = (args) => {
+  return <UpdateAdminUserOfTeamModal {...args} />;
 };
 
 const mockUser = createMockUser();
