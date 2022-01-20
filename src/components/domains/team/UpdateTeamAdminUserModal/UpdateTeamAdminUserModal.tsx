@@ -29,6 +29,7 @@ export const UpdateTeamAdminUserModal: VFC<Props> = ({ isOpen, onCloseModal, use
       });
       notifySuccessMessage('プロダクトの管理者を変更しました!');
       await mutateTeam();
+      setInputValue('');
       onCloseModal();
     } catch (error) {
       notifyErrorMessage('プロダクトの管理者の変更に失敗しました!');
