@@ -131,9 +131,11 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
               onChange={(e) => updateStoryForm({ url: e.target.value })}
               readOnly={team && !isAdminOfTeam}
             />
-            <Button color="primary" disabled={!isValidUrl(newTeam.url) || (team && !isAdminOfTeam)} onClick={handleClickFetchByUrl}>
-              <Icon icon="CLOCKWISE" color="WHITE" />
-            </Button>
+            <Tooltip text="入力された url からデータを取得してきます">
+              <Button color="primary" disabled={!isValidUrl(newTeam.url) || (team && !isAdminOfTeam)} onClick={handleClickFetchByUrl}>
+                <Icon icon="CLOCKWISE" color="WHITE" />
+              </Button>
+            </Tooltip>
           </div>
           <span className="mt-3 me-2 mb-1 d-inline-block text-light">Product Id</span>
           <Tooltip text="一度設定した productId は変更できません">
