@@ -59,7 +59,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
       };
     }
 
-    return { props: { team } };
+    return { props: { team }, revalidate: 30 };
   } catch (error) {
     return {
       redirect: {
