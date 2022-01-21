@@ -75,7 +75,7 @@ export const ManageInviteLinkModal: VFC<Props> = ({ team, isOpen, onCloseModal }
                   削除
                 </Button>
               </div>
-              <span>有効期限: {format(expirationDate, DATE_FORMAT.EXCEPT_SECOND)}</span>
+              <span className="ps-2 text-muted">有効期限: {format(expirationDate, DATE_FORMAT.EXCEPT_SECOND)}</span>
             </div>
           );
         })}
