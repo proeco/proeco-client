@@ -55,7 +55,6 @@ export const ManageInviteLinkModal: VFC<Props> = ({ team, isOpen, onCloseModal }
         <Button color="primary" onClick={handleCreateInviteLink}>
           招待リンクを作成
         </Button>
-        <small className="fw-bold">※使用した招待リンクは破棄されます</small>
       </div>
       <div className="mt-4">
         {InvitationTokens.map((invitationToken) => {
