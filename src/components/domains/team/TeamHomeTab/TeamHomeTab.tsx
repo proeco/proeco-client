@@ -89,7 +89,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
             <Icon icon="PEOPLE" size={24} color="BLACK" />
             プロダクトメンバー
           </h5>
-          <div className="mt-2 d-flex gap-2">
+          <div className="mt-2 d-flex gap-2 flex-wrap">
             {teamUsers ? (
               teamUsers?.map((user) => {
                 return <UserIcon key={user._id} attachmentId={user.iconImageId} userId={user._id} isLink size={56} />;
