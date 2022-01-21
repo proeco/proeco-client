@@ -104,7 +104,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       };
     }
 
-    return { props: { team }, revalidate: 30 };
+    return { props: { team } };
   } catch (error) {
     return {
       redirect: {
