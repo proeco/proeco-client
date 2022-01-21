@@ -55,7 +55,6 @@ export const ManageInviteLinkModal: VFC<Props> = ({ team, isOpen, onCloseModal }
         <Button color="primary" onClick={handleCreateInviteLink}>
           招待リンクを作成
         </Button>
-        <small className="fw-bold">※使用した招待リンクは破棄されます</small>
       </div>
       <div className="mt-4">
         {InvitationTokens.map((invitationToken) => {
@@ -76,7 +75,7 @@ export const ManageInviteLinkModal: VFC<Props> = ({ team, isOpen, onCloseModal }
                   削除
                 </Button>
               </div>
-              <span>有効期限: {format(expirationDate, DATE_FORMAT.EXCEPT_SECOND)}</span>
+              <span className="ps-2 text-muted">有効期限: {format(expirationDate, DATE_FORMAT.EXCEPT_SECOND)}</span>
             </div>
           );
         })}
