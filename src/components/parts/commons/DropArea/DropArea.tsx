@@ -36,9 +36,6 @@ export const DropArea: VFC<Props> = ({ children, onDrop }) => {
 };
 
 const StyledDropArea = styled.div<{ hovered: boolean }>`
-  border: 1px dashed ${(props) => props.theme.palette.grey[200]};
-  border-radius: 4px;
-  background-color: ${(props) => props.theme.palette.grey[100]};
   opacity: ${(props) => (props.hovered ? 0.6 : 1)};
   transition: opacity 0.2s;
 `;
