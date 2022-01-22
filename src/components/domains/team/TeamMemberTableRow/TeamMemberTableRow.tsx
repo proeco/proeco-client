@@ -9,10 +9,11 @@ import { Dropdown, DropdownItem, Icon } from '~/components/parts/commons';
 
 type Props = {
   user: User;
+  currentUser: User;
   team: Team;
 };
 
-export const TeamMemberTableRow: VFC<Props> = ({ user, team }) => {
+export const TeamMemberTableRow: VFC<Props> = ({ user, currentUser, team }) => {
   const [isDeleteTeamMemberModal, setIsDeleteTeamMemberModal] = useState(false);
   const [isUpdateAdminUserOfTeamModal, setIsUpdateAdminUserOfTeamModal] = useState(false);
 
@@ -32,19 +33,21 @@ export const TeamMemberTableRow: VFC<Props> = ({ user, team }) => {
   return (
     <tr className="align-middle">
       <th scope="row">
-        <UserIcon attachmentId={user.iconImageId} userId={user._id} size={40} />
+        <UserIcon attachmentId={user.iconImageId} userId={user._id} size={40} isLink />
       </th>
       <td>{user.name}</td>
       <td>{team.adminUserId === user._id ? '管理者' : 'メンバー'}</td>
       <td className="text-end">
-        <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />} tag="span">
-          {menuItems.map((menuItem, i) => (
-            <DropdownItem key={i} onClick={menuItem.onClick}>
-              {menuItem.icon}
-              <span className="ms-2">{menuItem.text}</span>
-            </DropdownItem>
-          ))}
-        </Dropdown>
+        {team.adminUserId === currentUser._id && team.adminUserId !== user._id && (
+          <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />} tag="span">
+            {menuItems.map((menuItem, i) => (
+              <DropdownItem key={i} onClick={menuItem.onClick}>
+                {menuItem.icon}
+                <span className="ms-2">{menuItem.text}</span>
+              </DropdownItem>
+            ))}
+          </Dropdown>
+        )}
       </td>
       <DeleteTeamMemberModal
         isOpen={isDeleteTeamMemberModal}

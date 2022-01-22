@@ -35,7 +35,7 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team, currentUser }) => {
           </thead>
           <tbody>
             {teamUsers.map((user) => (
-              <TeamMemberTableRow key={user._id} team={team} user={user} />
+              <TeamMemberTableRow key={user._id} team={team} user={user} currentUser={currentUser} />
             ))}
           </tbody>
         </table>
