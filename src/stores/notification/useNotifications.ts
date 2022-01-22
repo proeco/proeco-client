@@ -10,15 +10,12 @@ import { PaginationResult } from '~/interfaces';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useNotifications = (): SWRResponse<PaginationResult<Notification>, Error> => {
+export const useNotifications = (): SWRResponse<Notification[], Error> => {
   return useSWR(`/notifications/me`, (endpoint: string) =>
     restClient.apiGet<PaginationResult<Notification>>(endpoint).then((result) => {
-      return {
-        ...result.data,
-        docs: result.data.docs.map((doc) => {
-          return convertNotificationFromServer(doc);
-        }),
-      };
+      return result.data.docs.map((doc) => {
+        return convertNotificationFromServer(doc);
+      });
     }),
   );
 };
