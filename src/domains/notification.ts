@@ -23,3 +23,12 @@ export class Notification {
     this.updatedAt = init.updatedAt;
   }
 }
+
+/**
+ * サーバーから返ってくる日付データをDate型に変換する
+ * @param notification
+ * @returns {Notification}
+ */
+export const convertNotificationFromServer = (story: Notification) => {
+  return new Notification({ ...story, createdAt: new Date(story.createdAt), updatedAt: new Date(story.updatedAt) });
+};
