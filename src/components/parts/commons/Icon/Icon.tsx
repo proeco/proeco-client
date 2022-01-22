@@ -148,6 +148,10 @@ const ArrowDownIcon: VFC = () => (
   />
 );
 
+const Bell: VFC = () => (
+  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+);
+
 const CaretRight: VFC = () => (
   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
 );
@@ -266,6 +270,7 @@ export const IconMap = {
   ARROW: <ArrowUpIcon />,
   ARROW_RIGHT: <ArrowRightIcon />,
   ARROW_DOWN: <ArrowDownIcon />,
+  BELL: <Bell />,
   CARET_RIGHT: <CaretRight />,
   CARET_DOWN: <CaretDown />,
   CHECK: <CheckIcon />,
