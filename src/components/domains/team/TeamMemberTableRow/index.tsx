@@ -1,0 +1,1 @@
+export { TeamMemberTableRow } from './TeamMemberTableRow';
