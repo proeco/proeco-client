@@ -49,30 +49,28 @@ export const NavigationBar: VFC = memo(() => {
     if (currentUser) {
       return (
         <div className="d-flex align-items-center gap-3">
-          {teams.length !== 0 && (
-            <Dropdown
-              toggle={
-                <div className="d-flex flex-column text-white fs-4 align-items-center">
-                  <Icon size={24} icon="COLUMN" color="WHITE" />
-                  プロダクト
-                </div>
-              }
-              tag="div"
-            >
-              {teams.map((team, i) => (
-                <Link key={i} href={`/${team.productId}`}>
-                  <DropdownItem>
-                    <TeamIcon attachmentId={team.iconImageId} size={28} />
-                    <span className="ms-2">{team.name}</span>
-                  </DropdownItem>
-                </Link>
-              ))}
-              <DropdownItem divider />
-              <Link href={URLS.DASHBOARD_TEAMS_NEW}>
-                <DropdownItem>新規プロダクトを作成する</DropdownItem>
+          <Dropdown
+            toggle={
+              <div className="d-flex flex-column text-white fs-4 align-items-center">
+                <Icon size={24} icon="COLUMN" color="WHITE" />
+                プロダクト
+              </div>
+            }
+            tag="div"
+          >
+            {teams.map((team, i) => (
+              <Link key={i} href={`/${team.productId}`}>
+                <DropdownItem>
+                  <TeamIcon attachmentId={team.iconImageId} size={28} />
+                  <span className="ms-2">{team.name}</span>
+                </DropdownItem>
               </Link>
-            </Dropdown>
-          )}
+            ))}
+            {teams.length !== 0 && <DropdownItem divider />}
+            <Link href={URLS.DASHBOARD_TEAMS_NEW}>
+              <DropdownItem>新規プロダクトを作成する</DropdownItem>
+            </Link>
+          </Dropdown>
           <Dropdown toggle={<UserIcon size={40} attachmentId={currentUser.iconImageId} userId={currentUser?._id} />} tag="div">
             {menuItems.map((menuItem, i) => (
               <DropdownItem key={i} onClick={menuItem.onClick}>
