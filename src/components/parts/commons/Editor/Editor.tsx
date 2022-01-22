@@ -1,8 +1,9 @@
-import React, { VFC, useState, ChangeEvent, useRef } from 'react';
+import React, { VFC, useState, ChangeEvent, useRef, useCallback, DragEvent } from 'react';
 import styled from 'styled-components';
 
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import { Spinner } from '../Spinner';
+import { DropArea } from '../DropArea';
 import { Button, MarkdownToHtmlBody, Icon } from '~/components/parts/commons';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { restClient } from '~/utils/rest-client';
@@ -28,30 +29,50 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
     setValue(newValue);
   };
 
+  const uploadFIle = useCallback(
+    async (file: File) => {
+      if (!inputRef.current) return;
+
+      const params = new FormData();
+      params.append('file', file);
+      setIsUploading(true);
+      try {
+        const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/stories`, params, {
+          'Content-Type': 'multipart/form-data',
+        });
+        const selectionStart = inputRef.current.selectionStart;
+        const before = content.substring(0, selectionStart);
+        const after = content.substring(selectionStart, content.length);
+
+        onChangeContent(`${before}![](${attachment.filePath})${after}`);
+      } catch (error) {
+        notifyErrorMessage('画像のアップロードに失敗しました!');
+      } finally {
+        setIsUploading(false);
+      }
+    },
+    [content, currentUser._id, notifyErrorMessage, onChangeContent],
+  );
+
   const handleUploadFile = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files || !inputRef.current) {
+    if (!e.target.files) {
       return;
     }
-    setIsUploading(true);
     const file = e.target.files[0];
-    const params = new FormData();
-    params.append('file', file);
-    try {
-      const { data: attachment } = await restClient.apiPost<Attachment>(`/attachments?path=${currentUser._id}/stories`, params, {
-        'Content-Type': 'multipart/form-data',
-      });
-      const selectionStart = inputRef.current.selectionStart;
-      const before = content.substring(0, selectionStart);
-      const after = content.substring(selectionStart, content.length);
-
-      onChangeContent(`${before}![](${attachment.filePath})${after}`);
-      e.target.value = '';
-    } catch (error) {
-      notifyErrorMessage('画像のアップロードに失敗しました!');
-    } finally {
-      setIsUploading(false);
-    }
+    await uploadFIle(file);
+    e.target.value = '';
   };
+
+  const handleDropFiles = useCallback(
+    (e: DragEvent<Element>) => {
+      e.preventDefault();
+      if (!e.dataTransfer) return;
+
+      const files = Array.from(e.dataTransfer.files);
+      uploadFIle(files[0]);
+    },
+    [uploadFIle],
+  );
 
   return (
     <>
@@ -69,13 +90,17 @@ export const Editor: VFC<Props> = ({ content, isUpdateMode = false, onChangeCont
       </Nav>
       <TabContent activeTab={value}>
         <TabPane tabId="editor">
-          <textarea
-            className="form-control my-3"
-            ref={inputRef}
-            value={content}
-            onChange={(e) => onChangeContent(e.target.value)}
-            rows={(content.match(/\n/g) || []).length + 10}
-          />
+          <div className="py-3">
+            <DropArea onDrop={handleDropFiles}>
+              <textarea
+                className="form-control"
+                ref={inputRef}
+                value={content}
+                onChange={(e) => onChangeContent(e.target.value)}
+                rows={(content.match(/\n/g) || []).length + 10}
+              />
+            </DropArea>
+          </div>
         </TabPane>
         <TabPane tabId="preview">
           {content === '' ? (

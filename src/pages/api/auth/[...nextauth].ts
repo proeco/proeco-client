@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { URLS } from '~/constants';
 import { restClient } from '~/utils/rest-client';
 
 export default NextAuth({
@@ -31,6 +32,10 @@ export default NextAuth({
     },
   },
   secret: process.env.SESSION_COOKIE_SECRET,
+
+  pages: {
+    newUser: URLS.DASHBOARD_SETTINGS,
+  },
 
   jwt: {
     secret: process.env.SESSION_COOKIE_SECRET,
