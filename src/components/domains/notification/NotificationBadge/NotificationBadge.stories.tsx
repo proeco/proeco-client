@@ -3,6 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { action } from '@storybook/addon-actions';
 import { NotificationBadge } from '.';
+import { createMockNotification } from '~/mocks/domains';
 
 export default {
   title: 'domains/notification/NotificationBadge',
@@ -16,17 +17,17 @@ const Template: ComponentStory<typeof NotificationBadge> = (args) => {
 export const Nothing = Template.bind({});
 Nothing.args = {
   onClick: action('onClick'),
-  count: 0,
+  notifications: [],
 };
 
 export const Normal = Template.bind({});
 Normal.args = {
   onClick: action('onClick'),
-  count: 7,
+  notifications: [...Array(7)].map(() => createMockNotification()),
 };
 
 export const Overflow = Template.bind({});
 Overflow.args = {
   onClick: action('onClick'),
-  count: 120,
+  notifications: [...Array(100)].map(() => createMockNotification()),
 };
