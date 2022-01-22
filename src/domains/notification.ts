@@ -6,7 +6,7 @@ export class Notification {
   createdUserId?: string;
   targetUserId: string;
   message: string;
-  url?: string;
+  url: string;
   isChecked: boolean;
   createdAt: Date;
   updatedAt: Date;
