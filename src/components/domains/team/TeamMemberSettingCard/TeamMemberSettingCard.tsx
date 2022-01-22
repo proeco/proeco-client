@@ -1,5 +1,6 @@
 import React, { useState, VFC } from 'react';
 
+import { DeleteTeamMemberModal } from '../DeleteTeamMemberModal';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { ManageInviteLinkModal } from '~/components/domains/team/ManageInviteLinkModal';
 import { Button, Card, Dropdown, DropdownItem, Icon, Tooltip } from '~/components/parts/commons';
@@ -12,10 +13,6 @@ type Props = {
 
 export const TeamMemberSettingCard: VFC<Props> = ({ team, currentUser }) => {
   const [isOpenManageInviteLinkModal, setIsOpenManageInviteLinkModal] = useState(false);
-
-  const handleClickUpdate = () => {};
-
-  const handleClickDelete = () => {};
 
   const menuItems = [
     {
