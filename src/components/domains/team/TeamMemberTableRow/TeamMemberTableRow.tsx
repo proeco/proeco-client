@@ -34,8 +34,8 @@ export const TeamMemberTableRow: VFC<Props> = ({ user, team }) => {
       <th scope="row">
         <UserIcon attachmentId={user.iconImageId} userId={user._id} size={40} />
       </th>
-      <td>カノイ</td>
-      <td>メンバー</td>
+      <td>{user.name}</td>
+      <td>{team.adminUserId === user._id ? '管理者' : 'メンバー'}</td>
       <td className="text-end">
         <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />} tag="span">
           {menuItems.map((menuItem, i) => (

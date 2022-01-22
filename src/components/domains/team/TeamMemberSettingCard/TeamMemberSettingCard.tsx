@@ -1,10 +1,10 @@
 import React, { useState, VFC } from 'react';
 
-import { DeleteTeamMemberModal } from '../DeleteTeamMemberModal';
-import { UserIcon } from '~/components/domains/user/UserIcon';
+import { TeamMemberTableRow } from '../TeamMemberTableRow';
 import { ManageInviteLinkModal } from '~/components/domains/team/ManageInviteLinkModal';
-import { Button, Card, Dropdown, DropdownItem, Icon, Tooltip } from '~/components/parts/commons';
+import { Button, Card, Tooltip } from '~/components/parts/commons';
 import { Team, User } from '~/domains';
+import { useTeamUsers } from '~/stores/team';
 
 type Props = {
   team: Team;
@@ -14,18 +14,7 @@ type Props = {
 export const TeamMemberSettingCard: VFC<Props> = ({ team, currentUser }) => {
   const [isOpenManageInviteLinkModal, setIsOpenManageInviteLinkModal] = useState(false);
 
-  const menuItems = [
-    {
-      icon: <Icon icon="CLOCKWISE" size={16} />,
-      text: 'プロダクトの管理者を変更する',
-      onClick: handleClickUpdate,
-    },
-    {
-      icon: <Icon icon="TRASH" size={16} color="DANGER" />,
-      text: 'プロダクトから削除する',
-      onClick: handleClickDelete,
-    },
-  ];
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
 
   return (
     <>
@@ -45,23 +34,9 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team, currentUser }) => {
             </tr>
           </thead>
           <tbody>
-            <tr className="align-middle">
-              <th scope="row">
-                <UserIcon size={40} />
-              </th>
-              <td>カノイ</td>
-              <td>メンバー</td>
-              <td className="text-end">
-                <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />} tag="span">
-                  {menuItems.map((menuItem, i) => (
-                    <DropdownItem key={i} onClick={menuItem.onClick}>
-                      {menuItem.icon}
-                      <span className="ms-2">{menuItem.text}</span>
-                    </DropdownItem>
-                  ))}
-                </Dropdown>
-              </td>
-            </tr>
+            {teamUsers.map((user) => (
+              <TeamMemberTableRow key={user._id} team={team} user={user} />
+            ))}
           </tbody>
         </table>
       </Card>
