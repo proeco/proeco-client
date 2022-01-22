@@ -1,6 +1,7 @@
 import useSWR, { SWRResponse } from 'swr';
 import { restClient } from '~/utils/rest-client';
 import { Notification, convertNotificationFromServer } from '~/domains';
+import { PaginationResult } from '~/interfaces';
 
 /**
  * Notificationを取得するSWR
@@ -9,8 +10,15 @@ import { Notification, convertNotificationFromServer } from '~/domains';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useNotifications = (): SWRResponse<Notification, Error> => {
+export const useNotifications = (): SWRResponse<PaginationResult<Notification>, Error> => {
   return useSWR(`/notifications/me`, (endpoint: string) =>
-    restClient.apiGet<Notification>(endpoint).then((result) => convertNotificationFromServer(result.data)),
+    restClient.apiGet<PaginationResult<Notification>>(endpoint).then((result) => {
+      return {
+        ...result.data,
+        docs: result.data.docs.map((doc) => {
+          return convertNotificationFromServer(doc);
+        }),
+      };
+    }),
   );
 };
