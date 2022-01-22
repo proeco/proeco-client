@@ -1,8 +1,10 @@
 import React, { useState, VFC } from 'react';
 
+import { TeamMemberTableRow } from '../TeamMemberTableRow';
 import { ManageInviteLinkModal } from '~/components/domains/team/ManageInviteLinkModal';
 import { Button, Card, Tooltip } from '~/components/parts/commons';
 import { Team, User } from '~/domains';
+import { useTeamUsers } from '~/stores/team';
 
 type Props = {
   team: Team;
@@ -12,6 +14,8 @@ type Props = {
 export const TeamMemberSettingCard: VFC<Props> = ({ team, currentUser }) => {
   const [isOpenManageInviteLinkModal, setIsOpenManageInviteLinkModal] = useState(false);
 
+  const { data: teamUsers = [] } = useTeamUsers({ teamId: team._id });
+
   return (
     <>
       <Card>
@@ -20,6 +24,21 @@ export const TeamMemberSettingCard: VFC<Props> = ({ team, currentUser }) => {
             メンバーを招待する
           </Button>
         </Tooltip>
+        <table className="table mt-3">
+          <thead>
+            <tr>
+              <th scope="col">アイコン</th>
+              <th scope="col">ユーザー名</th>
+              <th scope="col">ステータス</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {teamUsers.map((user) => (
+              <TeamMemberTableRow key={user._id} team={team} user={user} currentUser={currentUser} />
+            ))}
+          </tbody>
+        </table>
       </Card>
       <ManageInviteLinkModal team={team} isOpen={isOpenManageInviteLinkModal} onCloseModal={() => setIsOpenManageInviteLinkModal(false)} />
     </>
