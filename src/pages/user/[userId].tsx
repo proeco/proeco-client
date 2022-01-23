@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
@@ -77,7 +77,8 @@ const StyledDiv = styled.div`
   max-width: 1200px;
 `;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getStaticProps: GetStaticProps = async (context: any) => {
   const { userId } = context.query;
 
   try {
@@ -92,7 +93,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       };
     }
 
-    return { props: { user } };
+    return { props: { user }, revalidate: 60 };
   } catch (error) {
     return {
       redirect: {
@@ -102,6 +103,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 };
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 Dashboard.getAccessControl = () => {
   return { loginRequired: null };
