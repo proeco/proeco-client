@@ -28,7 +28,7 @@ export const MarkdownToHtmlBody: VFC<Props> = ({ content }) => {
             );
           },
         }}
-        plugins={[gfm]}
+        remarkPlugins={[gfm]}
         unwrapDisallowed={false}
         linkTarget="_blank"
       >
