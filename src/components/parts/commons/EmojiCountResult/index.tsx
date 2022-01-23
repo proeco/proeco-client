@@ -1,1 +1,0 @@
-export { EmojiCountResult } from './EmojiCountResult';
