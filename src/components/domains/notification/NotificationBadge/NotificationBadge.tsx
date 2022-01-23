@@ -7,6 +7,7 @@ import { Dropdown, Icon, Spinner } from '~/components/parts/commons';
 import { DATE_FORMAT } from '~/constants';
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { useNotifications } from '~/stores/notification';
+import { isValidUrl } from '~/utils/isValidUrl';
 import { restClient } from '~/utils/rest-client';
 
 export const NotificationBadge: VFC = () => {
@@ -20,7 +21,8 @@ export const NotificationBadge: VFC = () => {
     async (url: string, id: string) => {
       try {
         await restClient.apiPut(`/notifications/${id}`, { notification: { isChecked: true } });
-        router.push(url);
+        // 外部のリンクの場合は別タブで開く
+        isValidUrl(url) && window != null ? window.open(url, '_blank') : router.push(url);
       } catch (error) {
         notifyErrorMessage('通信に失敗しました');
       }
