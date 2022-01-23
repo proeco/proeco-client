@@ -1,4 +1,4 @@
-import React, { VFC, useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { VFC, useState, useCallback, useMemo, useRef } from 'react';
 
 import { Emoji } from 'emoji-mart';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -54,15 +54,7 @@ export const DisplayStoryPostCard: VFC<Props> = ({
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const { data: reactionsByStoryPostId = [], mutate: mutateReactionsByStoryPostId } = useReactionsByStoryPostId(storyPost._id);
-  const { data: reactionsByUserId = [], mutate: mutateReactionsByUserId } = useReactionsByUserId(currentUser?._id);
-
-  useEffect(() => {
-    const currentUserReaction = reactionsByUserId.find((reaction) => reaction.targetId === currentStoryPost._id);
-
-    if (currentUserReaction?.emojiId) {
-      setSelectedEmojiId(currentUserReaction.emojiId);
-    }
-  }, [reactionsByUserId, setSelectedEmojiId, currentStoryPost]);
+  const { mutate: mutateReactionsByUserId } = useReactionsByUserId(currentUser?._id);
 
   const emojisInfo: { emojiId: string; count: number }[] = useMemo(() => {
     const countByEmojiId = reactionsByStoryPostId.reduce(

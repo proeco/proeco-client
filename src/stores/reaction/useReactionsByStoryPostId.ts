@@ -1,5 +1,4 @@
-import { SWRResponse } from 'swr';
-import useImmutableSWR from 'swr/immutable';
+import useSWR, { SWRResponse } from 'swr';
 
 import { restClient } from '~/utils/rest-client';
 import { Reaction, StoryPost } from '~/domains';
@@ -17,7 +16,7 @@ import { convertReactionFromServer } from '~/domains/reaction';
 export const useReactionsByStoryPostId = (StoryPostId?: StoryPost['_id']): SWRResponse<Reaction[], Error> => {
   const key = StoryPostId ? `/reactions?targetId=${StoryPostId}` : null;
 
-  return useImmutableSWR(key, (endpoint: string) =>
+  return useSWR(key, (endpoint: string) =>
     restClient.apiGet<{ reactions: PaginationResult<Reaction> }>(endpoint).then((result) => {
       const paginate = {
         ...result.data.reactions,
