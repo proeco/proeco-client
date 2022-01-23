@@ -94,9 +94,9 @@ export const NavigationBar: VFC = memo(() => {
 
   return (
     <>
-      <StyledNavbar className="sticky-top navbar bg-primary p-2 shadow">
+      <StyledNavbar className="sticky-top navbar bg-primary p-2 shadow align-items-center">
         <Link href="/">
-          <Image className="mb-0" src={IMAGE_PATH.LOGO} alt="Proeco Logo" width={195} height={40} />
+          <Image className="mb-0" src={IMAGE_PATH.LOGO} alt="Proeco Logo" width={150} height={30} />
         </Link>
         {Contents}
       </StyledNavbar>
@@ -107,6 +107,6 @@ export const NavigationBar: VFC = memo(() => {
 
 const StyledNavbar = styled.div`
   a {
-    height: 40px;
+    height: 30px;
   }
 `;
