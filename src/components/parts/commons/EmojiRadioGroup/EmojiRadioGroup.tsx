@@ -4,26 +4,33 @@ import styled from 'styled-components';
 import { Emoji } from '~/components/parts/commons';
 
 type Props = {
-  emojiIds: string[];
+  emojisInfo: { emojiId: string; count: number }[];
   onClick: (id: string) => void;
   selectedEmojiId?: string;
+  viewable?: boolean;
 };
 
-export const EmojiRadioGroup: VFC<Props> = ({ emojiIds, onClick, selectedEmojiId }) => {
+export const EmojiRadioGroup: VFC<Props> = ({ emojisInfo, onClick, selectedEmojiId, viewable = false }) => {
   return (
     <div className="d-flex align-items-center gap-3">
-      {emojiIds.map((emojiId, i) => {
+      {emojisInfo.map((emojiInfo, i) => {
         if (selectedEmojiId) {
           return (
-            <SelectedEmojiBox key={i} selected={selectedEmojiId === emojiId}>
-              <Emoji emojiId={emojiId} size={20} onClick={() => onClick(emojiId)} />
-            </SelectedEmojiBox>
+            <div key={i} className="d-flex align-items-center">
+              <SelectedEmojiBox selected={selectedEmojiId === emojiInfo.emojiId}>
+                <Emoji emojiId={emojiInfo.emojiId} size={20} onClick={() => onClick(emojiInfo.emojiId)} />
+              </SelectedEmojiBox>
+              {viewable && <span className="ms-2 fs-2 fw-bold">{emojiInfo.count}</span>}
+            </div>
           );
         }
         return (
-          <StyledBox key={i}>
-            <Emoji emojiId={emojiId} size={20} onClick={() => onClick(emojiId)} />
-          </StyledBox>
+          <div key={i} className="d-flex align-items-center">
+            <StyledBox>
+              <Emoji emojiId={emojiInfo.emojiId} size={20} onClick={() => onClick(emojiInfo.emojiId)} />
+            </StyledBox>
+            {viewable && <span className="ms-2 fs-2 fw-bold">{emojiInfo.count}</span>}
+          </div>
         );
       })}
     </div>
