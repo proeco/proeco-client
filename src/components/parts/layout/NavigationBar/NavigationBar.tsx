@@ -14,6 +14,7 @@ import { IMAGE_PATH, URLS } from '~/constants';
 import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { useTeamsRelatedUser } from '~/stores/team';
 import { TeamIcon } from '~/components/domains/team/TeamIcon';
+import { NotificationBadge } from '~/components/domains/notification/NotificationBadge';
 
 export const NavigationBar: VFC = memo(() => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -49,6 +50,7 @@ export const NavigationBar: VFC = memo(() => {
     if (currentUser) {
       return (
         <div className="d-flex align-items-center gap-3">
+          <NotificationBadge />
           <Dropdown
             toggle={
               <div className="d-flex flex-column text-white fs-4 align-items-center">
