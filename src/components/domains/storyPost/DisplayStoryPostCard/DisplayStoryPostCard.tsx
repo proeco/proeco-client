@@ -1,20 +1,10 @@
-import React, { VFC, useState, useCallback, useMemo, useRef } from 'react';
+import React, { VFC, useState, useCallback, useMemo, useRef, useEffect } from 'react';
 
 import { Emoji } from 'emoji-mart';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 import { GuestUserIcon, UserIcon } from '../../user/UserIcon';
-import {
-  Icon,
-  Link,
-  Dropdown,
-  DropdownItem,
-  Editor,
-  EmojiRadioGroup,
-  MarkdownToHtmlBody,
-  EmojiCountResult,
-  Card,
-} from '~/components/parts/commons';
+import { Icon, Link, Dropdown, DropdownItem, Editor, EmojiRadioGroup, MarkdownToHtmlBody, Card } from '~/components/parts/commons';
 import { DeleteStoryPostModal } from '~/components/domains/storyPost/DeleteStoryPostModal';
 import { Reaction, StoryPost, User } from '~/domains';
 import 'github-markdown-css';
@@ -24,7 +14,7 @@ import { restClient } from '~/utils/rest-client';
 import { useStoryPosts } from '~/stores/storyPost';
 import { URLS } from '~/constants';
 import { useScrollToTargetElement } from '~/hooks/useScrollToTargetElement';
-import { useReactionsByStoryPostId } from '~/stores/reaction';
+import { useReactionsByStoryPostId, useReactionsByUserId } from '~/stores/reaction';
 import { formatDistanceToNow } from '~/utils/formatDistanceToNow';
 import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
@@ -33,7 +23,6 @@ type Props = {
   createdUserAttachmentId?: string;
   createdUserName?: string;
   storyPost: StoryPost & { currentUserReaction?: Reaction };
-  emojiIds?: string[];
   teamId: string;
   productId: string;
   storyId: string;
@@ -48,7 +37,6 @@ export const DisplayStoryPostCard: VFC<Props> = ({
   createdUserAttachmentId,
   createdUserName,
   storyPost,
-  emojiIds = ['disappointed_relieved', 'confused', 'slightly_smiling_face', 'smiling_face_with_3_hearts'],
   teamId,
   productId,
   storyId,
@@ -58,7 +46,6 @@ export const DisplayStoryPostCard: VFC<Props> = ({
   currentUser,
 }) => {
   const boxRef = useRef<HTMLDivElement>(null);
-
   const [currentStoryPost, setCurrentStoryPost] = useState(storyPost);
   const [content, setContent] = useState(currentStoryPost.content);
   const [isUpdate, setIsUpdate] = useState(false);
@@ -66,11 +53,18 @@ export const DisplayStoryPostCard: VFC<Props> = ({
   const [isOpenDeleteStoryPostModal, setIsOpenDeleteStoryPostModal] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  const { data: reactionsByStoryPostId = [] } = useReactionsByStoryPostId(storyPost._id);
+  const { data: reactionsByStoryPostId = [], mutate: mutateReactionsByStoryPostId } = useReactionsByStoryPostId(storyPost._id);
+  const { data: reactionsByUserId = [], mutate: mutateReactionsByUserId } = useReactionsByUserId(currentUser?._id);
+
+  useEffect(() => {
+    const currentUserReaction = reactionsByUserId.find((reaction) => reaction.targetId === currentStoryPost._id);
+
+    if (currentUserReaction?.emojiId) {
+      setSelectedEmojiId(currentUserReaction.emojiId);
+    }
+  }, [reactionsByUserId, setSelectedEmojiId, currentStoryPost]);
 
   const emojisInfo: { emojiId: string; count: number }[] = useMemo(() => {
-    // チーム外のメンバーの場合は表示しない
-    if (!editable) return [];
     const countByEmojiId = reactionsByStoryPostId.reduce(
       (acc: { [key: string]: number }, reaction) => {
         // emojiId が存在する時だけCount
@@ -85,7 +79,7 @@ export const DisplayStoryPostCard: VFC<Props> = ({
     return Object.entries(countByEmojiId).map(([emojiId, count]) => {
       return { emojiId, count };
     });
-  }, [editable, reactionsByStoryPostId]);
+  }, [reactionsByStoryPostId]);
 
   const { mutate: mutateStoryPosts } = useStoryPosts({
     storyId,
@@ -138,6 +132,9 @@ export const DisplayStoryPostCard: VFC<Props> = ({
           },
         });
 
+        await mutateReactionsByStoryPostId();
+        await mutateReactionsByUserId();
+
         setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: result.data });
 
         setSelectedEmojiId(emojiId);
@@ -145,13 +142,16 @@ export const DisplayStoryPostCard: VFC<Props> = ({
         notifyErrorMessage('リアクションの送信に失敗しました!');
       }
     },
-    [notifyErrorMessage, currentStoryPost, setCurrentStoryPost, setSelectedEmojiId],
+    [notifyErrorMessage, currentStoryPost, setCurrentStoryPost, setSelectedEmojiId, mutateReactionsByStoryPostId, mutateReactionsByUserId],
   );
 
   const handleDeleteReaction = useCallback(
     async (reactionId: string) => {
       try {
         await restClient.apiDelete<Reaction>(`/reactions/${reactionId}`);
+
+        await mutateReactionsByStoryPostId();
+        await mutateReactionsByUserId();
 
         setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: undefined });
 
@@ -160,7 +160,7 @@ export const DisplayStoryPostCard: VFC<Props> = ({
         notifyErrorMessage('リアクションの取り消しに失敗しました!');
       }
     },
-    [notifyErrorMessage, setCurrentStoryPost, currentStoryPost, setSelectedEmojiId],
+    [notifyErrorMessage, setCurrentStoryPost, mutateReactionsByStoryPostId, currentStoryPost, setSelectedEmojiId, mutateReactionsByUserId],
   );
 
   const handlePutReaction = useCallback(
@@ -171,13 +171,17 @@ export const DisplayStoryPostCard: VFC<Props> = ({
             emojiId,
           },
         });
+
+        await mutateReactionsByStoryPostId();
+        await mutateReactionsByUserId();
+
         setCurrentStoryPost({ ...currentStoryPost, currentUserReaction: result.data });
         setSelectedEmojiId(emojiId);
       } catch (error) {
         notifyErrorMessage('リアクションの更新に失敗しました!');
       }
     },
-    [notifyErrorMessage, setCurrentStoryPost, currentStoryPost, setSelectedEmojiId],
+    [notifyErrorMessage, setCurrentStoryPost, mutateReactionsByStoryPostId, currentStoryPost, setSelectedEmojiId, mutateReactionsByUserId],
   );
 
   const handleClickEmoji = useCallback(
@@ -288,7 +292,7 @@ export const DisplayStoryPostCard: VFC<Props> = ({
                   </span>
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
-                  <EmojiCountResult emojisInfo={emojisInfo} />
+                  <EmojiRadioGroup emojisInfo={emojisInfo} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} viewable />
                 </div>
               </>
             ) : (
@@ -300,7 +304,7 @@ export const DisplayStoryPostCard: VFC<Props> = ({
                   </span>
                 </div>
                 <div className="d-flex align-items-center justify-content-center">
-                  <EmojiRadioGroup emojiIds={emojiIds} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
+                  <EmojiRadioGroup emojisInfo={emojisInfo} selectedEmojiId={SelectedEmojiId} onClick={handleClickEmoji} />
                 </div>
               </>
             )}
