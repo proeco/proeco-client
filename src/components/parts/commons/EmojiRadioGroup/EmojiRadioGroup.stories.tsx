@@ -24,6 +24,17 @@ const Template: ComponentStory<typeof EmojiRadioGroup> = ({ selectedEmojiId, ...
 
 export const Default = Template.bind({});
 Default.args = {
-  emojiIds: ['sob', 'confused', 'grinning', 'star-struck'],
+  emojisInfo: [
+    { emojiId: 'sob', count: 3 },
+    { emojiId: 'confused', count: 10 },
+    { emojiId: 'grinning', count: 6 },
+    { emojiId: 'star-struck', count: 8 },
+  ],
   selectedEmojiId: undefined,
+};
+
+export const ViewableEmojiRadioGroup = Template.bind({});
+ViewableEmojiRadioGroup.args = {
+  ...Default.args,
+  viewable: true,
 };

@@ -6,7 +6,6 @@ export { Dropdown, DropdownItem } from './Dropdown';
 export { EditableInput } from './EditableText';
 export { Editor } from './Editor';
 export { Emoji } from './Emoji';
-export { EmojiCountResult } from './EmojiCountResult';
 export { EmojiRadioGroup } from './EmojiRadioGroup';
 export { FixedImage, SkeltonFixedImage } from './FixedImage';
 export { Icon } from './Icon';
