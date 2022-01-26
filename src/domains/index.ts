@@ -7,3 +7,4 @@ export { StoryPost, convertStoryPostFromServer } from './storyPost';
 export { Team, convertTeamFromServer } from './team';
 export { User, convertUserFromServer } from './user';
 export { UserTeamRelation, convertUserTeamRelationFromServer } from './userTeamRelation';
+export { Watch, convertWatchFromServer } from './watch';
