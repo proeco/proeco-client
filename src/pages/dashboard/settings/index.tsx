@@ -57,7 +57,9 @@ const DashboardSettingsPage: ProecoNextPage = () => {
       updateUserForm({ iconImageId: attachment._id });
       setIconImage(e.target.files[0]);
     } catch (error) {
-      notifyErrorMessage('ファイルのアップロードに失敗しました');
+      if (error instanceof Error) {
+        notifyErrorMessage(error.message);
+      }
     }
   };
 
