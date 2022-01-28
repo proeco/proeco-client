@@ -38,7 +38,7 @@
     "reactstrap": "9.0.1",
     "remark-gfm": "3.0.1",
     "styled-components": "5.3.3",
-    "swr": "1.1.2",
+    "swr": "1.2.0",
     "toastr": "2.1.4"
   },
   "devDependencies": {
