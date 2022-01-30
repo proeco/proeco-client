@@ -56,7 +56,7 @@ const DashboardHomePage: ProecoNextPage = () => {
             </>
           )}
         </div>
-        <h2 className="fw-bold mb-3">フォローしているストーリー一覧</h2>
+        {storiesWatchedByUser?.length !== 0 && <h2 className="fw-bold mb-3">フォローしているストーリー一覧</h2>}
         <div className="row gy-3">
           {storiesWatchedByUser ? (
             storiesWatchedByUser.map((story) => (
