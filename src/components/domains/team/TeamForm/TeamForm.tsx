@@ -67,7 +67,7 @@ export const TeamForm: VFC<Props> = ({ currentUser, team }) => {
       }
       await mutateTeamsRelatedUser();
       if (!team) {
-        router.push(URLS.DASHBOARD_TEAMS);
+        router.push(URLS.DASHBOARD_HOME);
       }
       setIsCreating(false);
     } catch (error) {
