@@ -11,19 +11,12 @@ import { PaginationResult } from '~/interfaces';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useStoriesWatchedByUser = ({ userId }: { userId: string }): SWRResponse<PaginationResult<Story>, Error> => {
-  const key = `stories/watched-by-user?userId=${userId}`;
+export const useStoriesWatchedByUser = ({ userId }: { userId?: string }): SWRResponse<Story[], Error> => {
+  const key = userId ? `/stories/watched-by-user?userId=${userId}` : null;
   return useSWR(
     key,
     (endpoint: string) =>
-      restClient.apiGet<PaginationResult<Story>>(endpoint).then((result) => {
-        return {
-          ...result.data,
-          docs: result.data.docs.map((doc) => {
-            return convertStoryFromServer(doc);
-          }),
-        };
-      }),
+      restClient.apiGet<PaginationResult<Story>>(endpoint).then((result) => result.data.docs.map((v) => convertStoryFromServer(v))),
     { revalidateOnReconnect: true },
   );
 };
