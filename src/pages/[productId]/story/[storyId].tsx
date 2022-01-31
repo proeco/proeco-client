@@ -211,7 +211,12 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                     </Reward>
                   </div>
                 )}
-                <Button color="secondary"></Button>
+                <div className="mb-3">
+                  <Button color="orange" fullWidth outlined={false}>
+                    <Icon icon="EYE_SLASH" size={16} color="WHITE" />
+                    ストーリーをフォローする
+                  </Button>
+                </div>
                 <Button color="primary" onClick={handleClickShareButton}>
                   <Icon icon="TWITTER" size={16} color="WHITE" />
                 </Button>
