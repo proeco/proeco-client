@@ -10,10 +10,8 @@ import { convertWatchFromServer, Watch } from '~/domains';
  * @returns error エラー
  * @returns mutate データの更新関数
  */
-export const useWatch = ({ userId, storyId }: { userId: string; storyId: string }): SWRResponse<Watch | null, Error> => {
-  return useSWR('/watches', (endpoint: string) =>
-    restClient
-      .apiGet<Watch | null>(endpoint, { userId, storyId })
-      .then((result) => (result.data ? convertWatchFromServer(result.data) : null)),
+export const useWatch = ({ userId, storyId }: { userId?: string; storyId?: string }): SWRResponse<Watch | null, Error> => {
+  return useSWR(userId && storyId ? `/watches?userId=${userId}&storyId=${storyId}` : null, (endpoint: string) =>
+    restClient.apiGet<Watch | null>(endpoint).then((result) => (result.data ? convertWatchFromServer(result.data) : null)),
   );
 };
