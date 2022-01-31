@@ -26,17 +26,17 @@ export const NavigationBar: VFC = memo(() => {
   const menuItems = useMemo(
     () => [
       {
-        icon: <Icon icon="HOME" size={20} />,
+        icon: <Icon icon="HOME" size={20} color="BLACK" />,
         text: 'ホーム',
         onClick: () => router.push(URLS.DASHBOARD_HOME),
       },
       {
-        icon: <Icon icon="GEAR" size={20} />,
+        icon: <Icon icon="GEAR" size={20} color="BLACK" />,
         text: '個人設定',
         onClick: () => router.push(URLS.DASHBOARD_SETTINGS),
       },
       {
-        icon: <Icon icon="REPLY" size={20} />,
+        icon: <Icon icon="REPLY" size={20} color="BLACK" />,
         text: 'ログアウト',
         onClick: () => signOut(),
       },

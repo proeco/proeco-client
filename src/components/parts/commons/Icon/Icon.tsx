@@ -328,13 +328,13 @@ export const IconMap = {
   TWITTER: <Twitter />,
 };
 
-export const Icon: VFC<Props> = ({ size = 24, icon, color = 'BLACK' }) => {
+export const Icon: VFC<Props> = ({ size = 24, icon, color }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
-      className={`align-text-bottom text-${BootstrapColor[color]}`}
+      className={`align-text-bottom ${color && `text-${BootstrapColor[color]}`}`}
       fill="currentColor"
       viewBox="0 0 16 16"
     >

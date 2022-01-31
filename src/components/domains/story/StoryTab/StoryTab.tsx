@@ -38,7 +38,7 @@ export const StoryTab: VFC<Props> = ({ team, editable }) => {
     <>
       <div className="mb-3 d-flex align-items-center justify-content-between">
         <h3 className="fw-bold mb-0 d-flex align-items-center gap-2">
-          <Icon icon="LIST" size={24} />
+          <Icon icon="LIST" size={24} color="BLACK" />
           進行中のストーリー
         </h3>
         {editable && (

@@ -84,7 +84,7 @@ const DashboardSettingsPage: ProecoNextPage = () => {
       <StyledDiv className="mx-auto">
         <div className="d-flex align-items-center mb-3">
           <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-            <Icon icon="GEAR" size={28} />
+            <Icon icon="GEAR" size={28} color="BLACK" />
             設定
           </h2>
         </div>

@@ -230,13 +230,13 @@ export const DisplayStoryPostCard: VFC<Props> = ({
             {displayDate}
           </time>
           <div className="ms-auto">
-            <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
+            <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} color="BLACK" />}>
               <CopyToClipboard
                 text={process.env.NEXT_PUBLIC_ROOT_URL + URLS.TEAMS_STORY(productId, storyId, storyPost._id)}
                 onCopy={() => notifySuccessMessage('共有リンクをコピーしました')}
               >
                 <DropdownItem>
-                  <Icon icon="LINK" size={20} />
+                  <Icon icon="LINK" size={20} color="BLACK" />
                   <span className="ms-2">共有リンク</span>
                 </DropdownItem>
               </CopyToClipboard>
@@ -246,7 +246,7 @@ export const DisplayStoryPostCard: VFC<Props> = ({
               </DropdownItem>
               {editable && (
                 <DropdownItem onClick={handleClickUpdate}>
-                  <Icon icon="CLOCKWISE" size={20} />
+                  <Icon icon="CLOCKWISE" size={20} color="BLACK" />
                   <span className="ms-2">更新する</span>
                 </DropdownItem>
               )}

@@ -19,7 +19,7 @@ export const TeamMemberTableRow: VFC<Props> = ({ user, currentUser, team }) => {
 
   const menuItems = [
     {
-      icon: <Icon icon="CLOCKWISE" size={16} />,
+      icon: <Icon icon="CLOCKWISE" size={16} color="BLACK" />,
       text: 'プロダクトの管理者を変更する',
       onClick: () => setIsUpdateAdminUserOfTeamModal(true),
     },
@@ -39,7 +39,7 @@ export const TeamMemberTableRow: VFC<Props> = ({ user, currentUser, team }) => {
       <td>{team.adminUserId === user._id ? '管理者' : 'メンバー'}</td>
       <td className="text-end">
         {team.adminUserId === currentUser._id && team.adminUserId !== user._id && (
-          <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />} tag="span">
+          <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} color="BLACK" />} tag="span">
             {menuItems.map((menuItem, i) => (
               <DropdownItem key={i} onClick={menuItem.onClick}>
                 {menuItem.icon}

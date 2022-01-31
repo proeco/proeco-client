@@ -121,7 +121,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 
   const menuItems = [
     {
-      icon: <Icon icon="CLOCKWISE" size={16} />,
+      icon: <Icon icon="CLOCKWISE" size={16} color="BLACK" />,
       text: '更新する',
       onClick: handleClickUpdate,
     },
@@ -197,7 +197,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
           <Emoji emojiId={story.emojiId} size={32} />
           <h2 className="ms-2 me-auto fw-bold mb-0 text-break">{story.title}</h2>
           {isMemberOfTeam && (
-            <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
+            <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} color="BLACK" />}>
               {menuItems.map((menuItem, i) => (
                 <DropdownItem key={i} onClick={menuItem.onClick}>
                   {menuItem.icon}
@@ -268,8 +268,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                   </div>
                 )}
                 <div className="mb-3">
-                  <Button color="primary" fullWidth onClick={watch ? handleDeleteWatch : handleCreateWatch}>
-                    <Icon icon={watch ? 'EYE_SLASH' : 'EYE'} size={16} color="WHITE" />
+                  <Button color="primary" fullWidth outlined={!!watch} onClick={watch ? handleDeleteWatch : handleCreateWatch}>
+                    <Icon icon={watch ? 'EYE_SLASH' : 'EYE'} size={16} />
                     {watch ? 'ストーリーのフォローを外す' : 'ストーリーをフォローする'}
                   </Button>
                 </div>
