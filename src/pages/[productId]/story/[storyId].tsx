@@ -211,6 +211,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                     </Reward>
                   </div>
                 )}
+                <Button color="secondary"></Button>
                 <Button color="primary" onClick={handleClickShareButton}>
                   <Icon icon="TWITTER" size={16} color="WHITE" />
                 </Button>
