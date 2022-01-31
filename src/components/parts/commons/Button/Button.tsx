@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const Button: FC<Props> = ({ children, disabled, size, color, outlined, fullWidth, onClick }) => {
-  const classNames = ['btn text-nowrap text-truncate fw-bold'];
+  const classNames = ['btn text-nowrap text-truncate fw-bold d-inline-flex align-items-center gap-1'];
   if (disabled) classNames.push('disabled');
   if (size) classNames.push(`btn-${size}`);
   if (outlined) {
@@ -19,7 +19,7 @@ export const Button: FC<Props> = ({ children, disabled, size, color, outlined, f
   } else {
     classNames.push(`btn-${color}`);
   }
-  fullWidth ? classNames.push('w-100 text-center') : classNames.push('d-inline-flex align-items-center gap-1');
+  if (fullWidth) classNames.push('w-100 justify-content-center');
 
   return (
     <button type="button" className={classNames.join(' ')} onClick={onClick} disabled={disabled}>
