@@ -268,9 +268,8 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                   </div>
                 )}
                 <div className="mb-3">
-                  <Button color="primary" fullWidth outlined={!!watch} onClick={watch ? handleDeleteWatch : handleCreateWatch}>
-                    <Icon icon={watch ? 'EYE_SLASH' : 'EYE'} size={16} />
-                    {watch ? 'ストーリーのフォローを外す' : 'ストーリーをフォローする'}
+                  <Button color="primary" fullWidth outlined={!watch} onClick={watch ? handleDeleteWatch : handleCreateWatch}>
+                    {watch ? 'ストーリーのフォロー中' : 'ストーリーをフォローする'}
                   </Button>
                 </div>
                 <Button color="primary" onClick={handleClickShareButton}>
