@@ -53,7 +53,7 @@ export const TeamHomeTab: VFC<Props> = ({ team, editable, currentUser }) => {
     <>
       <div className="mb-3 d-flex align-items-center justify-content-between">
         <h3 className="fw-bold mb-0 d-flex align-items-center gap-2">
-          <Icon icon="FILE_WITH_EARMARK" size={24} />
+          <Icon icon="FILE_WITH_EARMARK" size={24} color="BLACK" />
           プロダクトについて
         </h3>
         {editable && (

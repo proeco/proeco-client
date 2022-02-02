@@ -23,7 +23,7 @@ const DashboardTeamPage: ProecoNextPage = () => {
       <StyledDiv className="mx-auto">
         <div className="d-flex align-items-center justify-content-between mb-3">
           <h2 className="fw-bold mb-0 d-flex align-items-center gap-2">
-            <Icon icon="PEOPLE" size={28} />
+            <Icon icon="PEOPLE" size={28} color="BLACK" />
             プロダクトリスト
           </h2>
           <Link href={URLS.DASHBOARD_TEAMS_NEW}>

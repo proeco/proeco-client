@@ -24,13 +24,16 @@ import { CreateNewStoryPostCard } from '~/components/domains/storyPost/CreateNew
 import { Dropdown, DropdownItem } from '~/components/parts/commons/Dropdown';
 import { UserIcon } from '~/components/domains/user/UserIcon';
 import { DisplayStoryPostCard } from '~/components/domains/storyPost/DisplayStoryPostCard';
-import { Attachment, Reaction, StoryPost, Team } from '~/domains';
+import { Attachment, Reaction, StoryPost, Team, Watch } from '~/domains';
 import { UpdateStoryModal } from '~/components/domains/story/UpdateStoryModal';
 import { DeleteStoryModal } from '~/components/domains/story/DeleteStoryModal';
 import { PaginationResult } from '~/interfaces';
 
 import { useErrorNotification } from '~/hooks/useErrorNotification';
 import { createOgpUrl } from '~/utils/createOgpUrl';
+import { useWatch } from '~/stores/watch';
+import { useSuccessNotification } from '~/hooks/useSuccessNotification';
+import { LoginModal } from '~/components/parts/authentication/LoginModal';
 
 type Props = {
   storyFromServerSide: Story;
@@ -42,16 +45,19 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
   const router = useRouter();
   const closeButtonRef = useRef<RewardElement>(null);
 
+  const { notifySuccessMessage } = useSuccessNotification();
   const { notifyErrorMessage } = useErrorNotification();
 
   const [isOpenUpdateStoryModal, setIsOpenUpdateStoryModal] = useState(false);
   const [isOpenDeleteStoryModal, setIsOpenDeleteStoryModal] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const storyId = storyFromServerSide?._id;
   const storyPostId = router.query.storyPostId as string;
 
   const { data: story, mutate: mutateStory } = useStory(storyId, storyFromServerSide);
   const { data: currentUser } = useCurrentUser();
   const { data: teamUsers = [] } = useTeamUsers({ teamId: team?._id });
+  const { data: watch, mutate: mutateWatch } = useWatch({ userId: currentUser?._id, storyId });
 
   const isMemberOfTeam = useMemo(() => {
     return !!currentUser && teamUsers.some((teamUser) => teamUser._id === currentUser._id);
@@ -85,15 +91,26 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     setIsOpenDeleteStoryModal(true);
   };
 
-  const handleClickIsCompletedButton = useCallback(async () => {
+  const handleCompleteStory = useCallback(async () => {
     if (!story) return;
     try {
       if (!story.isCompleted) {
         closeButtonRef.current?.rewardMe();
       }
 
+      await restClient.apiPut<Story>(`/stories/${story._id}/close`);
+
+      mutateStory();
+    } catch (error) {
+      notifyErrorMessage('ストーリーのCloseに失敗しました!');
+    }
+  }, [mutateStory, notifyErrorMessage, story]);
+
+  const handleReopenStory = useCallback(async () => {
+    if (!story) return;
+    try {
       await restClient.apiPut<Story>(`/stories/${story._id}`, {
-        newObject: { isCompleted: !story.isCompleted },
+        newObject: { isCompleted: false },
       });
 
       mutateStory();
@@ -104,7 +121,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
 
   const menuItems = [
     {
-      icon: <Icon icon="CLOCKWISE" size={16} />,
+      icon: <Icon icon="CLOCKWISE" size={16} color="BLACK" />,
       text: '更新する',
       onClick: handleClickUpdate,
     },
@@ -131,7 +148,41 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
     }
   }, [storyId, team?.productId]);
 
-  if (!story || !storyPosts || !reactions) {
+  const handleDeleteWatch = useCallback(async () => {
+    if (!watch) return;
+    if (!currentUser) {
+      notifySuccessMessage('ログインが必要です！');
+      return setIsLoginModalOpen(true);
+    }
+
+    try {
+      await restClient.apiDelete<Watch>(`/watches/${watch._id}`);
+
+      mutateWatch();
+      notifySuccessMessage('ストーリーのフォローを外しました!');
+    } catch (error) {
+      notifyErrorMessage('ストーリーのフォローの解除に失敗しました!');
+    }
+  }, [watch, mutateWatch, currentUser, notifySuccessMessage, notifyErrorMessage]);
+
+  const handleCreateWatch = useCallback(async () => {
+    if (!currentUser) {
+      notifySuccessMessage('ログインが必要です！');
+      return setIsLoginModalOpen(true);
+    }
+    try {
+      await restClient.apiPost<Watch>(`/watches`, {
+        targetStoryId: storyId,
+      });
+
+      mutateWatch();
+      notifySuccessMessage('ストーリーをフォローしました!');
+    } catch (error) {
+      notifyErrorMessage('ストーリーのフォローに失敗しました!');
+    }
+  }, [mutateWatch, currentUser, storyId, notifySuccessMessage, notifyErrorMessage]);
+
+  if (!story || !storyPosts) {
     return (
       <div className="min-vh-100 text-center pt-5">
         <Spinner />
@@ -146,7 +197,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
           <Emoji emojiId={story.emojiId} size={32} />
           <h2 className="ms-2 me-auto fw-bold mb-0 text-break">{story.title}</h2>
           {isMemberOfTeam && (
-            <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} />}>
+            <Dropdown toggle={<Icon icon="THREE_DOTS_VERTICAL" size={20} color="BLACK" />}>
               {menuItems.map((menuItem, i) => (
                 <DropdownItem key={i} onClick={menuItem.onClick}>
                   {menuItem.icon}
@@ -205,12 +256,22 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
                 {isMemberOfTeam && (
                   <div className="text-center mb-3">
                     <Reward ref={closeButtonRef} type="confetti" config={{ elementCount: 200, springAnimation: false }}>
-                      <Button color="primary" fullWidth outlined={story.isCompleted} onClick={handleClickIsCompletedButton}>
+                      <Button
+                        color="primary"
+                        fullWidth
+                        outlined={story.isCompleted}
+                        onClick={story.isCompleted ? handleReopenStory : handleCompleteStory}
+                      >
                         {story.isCompleted ? 'ストーリーをReopenする' : 'ストーリーをCloseする'}
                       </Button>
                     </Reward>
                   </div>
                 )}
+                <div className="mb-3">
+                  <Button color="primary" fullWidth outlined={!watch} onClick={watch ? handleDeleteWatch : handleCreateWatch}>
+                    {watch ? 'ストーリーのフォロー中' : 'ストーリーをフォローする'}
+                  </Button>
+                </div>
                 <Button color="primary" onClick={handleClickShareButton}>
                   <Icon icon="TWITTER" size={16} color="WHITE" />
                 </Button>
@@ -234,6 +295,7 @@ const StoryPage: ProecoNextPage<Props> = ({ storyFromServerSide, team, teamIconA
         productId={team?.productId || ''}
         story={story}
       />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </TeamPageLayout>
   );
 };
