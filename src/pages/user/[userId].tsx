@@ -46,7 +46,7 @@ const Dashboard: ProecoNextPage<Props> = ({ user, teams }) => {
           </div>
         </div>
         <h2 className="fw-bold mb-4 d-flex align-items-center gap-2">
-          <Icon icon="PEOPLE" size={32} />
+          <Icon icon="PEOPLE" size={32} color="BLACK" />
           プロダクトリスト
         </h2>
         <StyledRow className="row mx-auto gy-3">{teamsContent}</StyledRow>

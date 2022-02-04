@@ -16,11 +16,11 @@ const Template: ComponentStory<typeof Dropdown> = ({ ...rest }) => {
     <div className="p-4">
       <Dropdown {...rest}>
         <DropdownItem onClick={action('clickSettings')}>
-          <Icon icon="GEAR" size={20} />
+          <Icon icon="GEAR" size={20} color="BLACK" />
           Settings
         </DropdownItem>
         <DropdownItem onClick={action('clickLogout')}>
-          <Icon icon="REPLY" size={20} />
+          <Icon icon="REPLY" size={20} color="BLACK" />
           Logout
         </DropdownItem>
       </Dropdown>
@@ -30,5 +30,5 @@ const Template: ComponentStory<typeof Dropdown> = ({ ...rest }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  toggle: <Icon icon="THREE_DOTS_VERTICAL" size={24} />,
+  toggle: <Icon icon="THREE_DOTS_VERTICAL" size={24} color="BLACK" />,
 };

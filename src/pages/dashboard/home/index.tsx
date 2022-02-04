@@ -11,12 +11,15 @@ import { useCurrentUser } from '~/stores/user/useCurrentUser';
 import { ProecoNextPage } from '~/interfaces/proecoNextPage';
 import { TeamCard } from '~/components/domains/team/TeamCard';
 import { SkeltonTeamCard } from '~/components/domains/team/TeamCard/TeamCard';
+import { useStoriesWatchedByUser } from '~/stores/story';
+import { StoryCard } from '~/components/domains/story/StoryCard';
 
-const DashboardTeamPage: ProecoNextPage = () => {
+const DashboardHomePage: ProecoNextPage = () => {
   const { data: currentUser } = useCurrentUser();
   const { data: teams } = useTeamsRelatedUser({
     userId: currentUser?._id,
   });
+  const { data: storiesWatchedByUser } = useStoriesWatchedByUser({ userId: currentUser?._id });
 
   return (
     <DashboardLayout>
@@ -33,13 +36,32 @@ const DashboardTeamPage: ProecoNextPage = () => {
             </Button>
           </Link>
         </div>
-        <div className="row gy-3">
+        <div className="row gy-3 mb-5">
           {teams ? (
             teams.map((team) => (
               <div key={`my-teams-${team._id}`} className="col-12 col-sm-6 col-md-4">
                 <Link href={URLS.TEAMS(team.productId)}>
                   <TeamCard name={team.name} description={team.description} attachmentId={team.iconImageId} url={team.url} />
                 </Link>
+              </div>
+            ))
+          ) : (
+            <>
+              <div className="col-12 col-sm-6 col-md-4">
+                <SkeltonTeamCard />
+              </div>
+              <div className="col-12 col-sm-6 col-md-4">
+                <SkeltonTeamCard />
+              </div>
+            </>
+          )}
+        </div>
+        {storiesWatchedByUser?.length !== 0 && <h2 className="fw-bold mb-3">フォローしているストーリー一覧</h2>}
+        <div className="row gy-3">
+          {storiesWatchedByUser ? (
+            storiesWatchedByUser.map((story) => (
+              <div key={`my-teams-${story._id}`} className="col-12 col-sm-6 col-md-4">
+                <StoryCard story={story} />
               </div>
             ))
           ) : (
@@ -62,7 +84,7 @@ const StyledDiv = styled.div`
   max-width: 1200px;
 `;
 
-DashboardTeamPage.getAccessControl = () => {
+DashboardHomePage.getAccessControl = () => {
   return { destination: URLS.TOP, loginRequired: true };
 };
-export default DashboardTeamPage;
+export default DashboardHomePage;

@@ -23,7 +23,7 @@ export const Pagination: VFC<Props> = ({ count, page, onChange }) => {
           onClick={() => onChange(1)}
           tag="button"
         >
-          <Icon icon="CHEVRON_DOUBLE_LEFT" size={12} />
+          <Icon icon="CHEVRON_DOUBLE_LEFT" size={12} color="BLACK" />
         </StyledPaginationLink>
       </PaginationItem>
       <PaginationItem className="p-1">
@@ -32,7 +32,7 @@ export const Pagination: VFC<Props> = ({ count, page, onChange }) => {
           onClick={() => onChange(page - 1 < 1 ? null : page - 1)}
           tag="button"
         >
-          <Icon icon="CHEVRON_LEFT" size={12} />
+          <Icon icon="CHEVRON_LEFT" size={12} color="BLACK" />
         </StyledPaginationLink>
       </PaginationItem>
       {countArr.map((num) => (
@@ -55,7 +55,7 @@ export const Pagination: VFC<Props> = ({ count, page, onChange }) => {
           onClick={() => onChange(page + 1 > count ? null : page + 1)}
           tag="button"
         >
-          <Icon icon="CHEVRON_RIGHT" size={12} />
+          <Icon icon="CHEVRON_RIGHT" size={12} color="BLACK" />
         </StyledPaginationLink>
       </PaginationItem>
       <PaginationItem className="p-1">
@@ -65,7 +65,7 @@ export const Pagination: VFC<Props> = ({ count, page, onChange }) => {
           onClick={() => onChange(count)}
           tag="button"
         >
-          <Icon icon="CHEVRON_DOUBLE_RIGHT" size={12} />
+          <Icon icon="CHEVRON_DOUBLE_RIGHT" size={12} color="BLACK" />
         </StyledPaginationLink>
       </PaginationItem>
     </PaginationOriginal>
