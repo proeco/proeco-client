@@ -18,7 +18,7 @@ jobs:
           yarn install
           yarn build-storybook
       - name: deploy storybook
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4.3.0
         with:
           branch: gh-pages
           folder: storybook-static
