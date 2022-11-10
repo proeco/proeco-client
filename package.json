@@ -63,7 +63,7 @@
     "@types/throttle-debounce": "5.0.0",
     "@types/toastr": "2.1.40",
     "@typescript-eslint/eslint-plugin": "rc-v5",
-    "@typescript-eslint/parser": "5.41.0",
+    "@typescript-eslint/parser": "5.42.1",
     "babel-loader": "9.0.0",
     "babel-preset-react-app": "10.0.1",
     "cross-env": "7.0.3",
