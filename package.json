@@ -64,7 +64,7 @@
     "@types/toastr": "2.1.40",
     "@typescript-eslint/eslint-plugin": "rc-v5",
     "@typescript-eslint/parser": "5.42.1",
-    "babel-loader": "9.0.0",
+    "babel-loader": "9.0.1",
     "babel-preset-react-app": "10.0.1",
     "cross-env": "7.0.3",
     "css-loader": "6.7.1",
