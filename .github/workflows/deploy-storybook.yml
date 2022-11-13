@@ -12,13 +12,13 @@ jobs:
     name: build-and-deploy storybook
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install and Build
         run: |
           yarn install
           yarn build-storybook
       - name: deploy storybook
-        uses: JamesIves/github-pages-deploy-action@v4.2.3
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
           folder: storybook-static
