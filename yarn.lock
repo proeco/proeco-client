@@ -6434,10 +6434,10 @@ emittery@^0.13.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.13.1.tgz#c04b8c3457490e0847ae51fced3af52d338e3dad"
   integrity sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==
 
-emoji-mart@5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-5.3.1.tgz#0572a46fff292da83ca2b85fe68f6e760198e2d4"
-  integrity sha512-jBZMB5AehlNXViZk1vpru/pnJRbZ/el01zp0y9xjw96JXR72Asc+Vi2YO5e/6X7KZ50DNa63a6IknYp9YUZd/g==
+emoji-mart@5.3.3:
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-5.3.3.tgz#f079700be84d5b13653378cf7bba45fb0217452b"
+  integrity sha512-rr3wXUimYFQ5Mf50P/5UOsRibr5JSJE3Nj4zw0aDglb3GSHzn/wGKBoXoSkjtWaji8UcmXcYn3cdilD2Eix6iQ==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
