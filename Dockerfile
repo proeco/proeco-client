@@ -1,4 +1,4 @@
-FROM node:17.8.0
+FROM node:19.9.0
 
 RUN mkdir /client
 
